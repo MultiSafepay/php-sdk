@@ -1,0 +1,39 @@
+name: Build
+on: [push]
+jobs:
+  object_calisthenics_rules:
+    runs-on: ubuntu-latest
+    name: Check coding conventions
+    steps:
+      - name: Install php
+        uses: shivammathur/setup-php@master
+        with:
+          php-version: '7.3'
+      - name: Checkout SDK
+        uses: actions/checkout@v1
+      - name: Install dependencies
+        run:  composer install
+      - name: Run MultiSafepay Coding Standards
+        run:  vendor/bin/phpcs --standard=phpcs.ruleset.xml .
+  php_unit_test:
+    runs-on: ubuntu-latest
+    name: PHP Unit Test with PHP version ${{ matrix.php-version }}
+    strategy:
+      matrix:
+        php-version:
+          - '7.0'
+          - '7.1'
+          - '7.2'
+          - '7.3'
+    steps:
+      - name: Install php
+        uses: shivammathur/setup-php@master
+        with:
+          php-version: ${{ matrix.php-version }}
+          extension-csv: dom, mbstring
+      - name: Checkout SDK
+        uses: actions/checkout@v1
+      - name: Install dependencies
+        run:  composer install
+      - name: Run PHPUnit tests
+        run:  vendor/bin/phpunit
