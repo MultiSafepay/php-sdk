@@ -2,8 +2,10 @@
 <ruleset name="MultiSafepay">
     <description>MultiSafepay coding styles rules</description>
     <exclude-pattern>*/vendor/*</exclude-pattern>
+    <exclude-pattern>*/tests/bootstrap.php</exclude-pattern>
     <rule ref="PSR2"/>
     <rule ref="./vendor/object-calisthenics/phpcs-calisthenics-rules/src/ObjectCalisthenics/ruleset.xml">
+        <exclude name="ObjectCalisthenics.CodeAnalysis.OneObjectOperatorPerLine"/>
         <properties>
             <property name="maxLength" value="25"/>
         </properties>
