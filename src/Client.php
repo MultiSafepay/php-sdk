@@ -18,6 +18,7 @@ class Client
     public const LIVE_URL = 'https://api.multisafepay.com/v1/json/';
     public const TEST_URL = 'https://testapi.multisafepay.com/v1/json/';
     public const METHOD_POST = 'POST';
+    public const METHOD_GET = 'GET';
 
     /** @var string */
     private $apiKey;
@@ -66,6 +67,37 @@ class Client
         }
         return $apiResponse;
     }
+
+
+    /**
+     * @param string $endpoint
+     * @param array|null $query
+     * @return array
+     * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @throws ApiException
+     */
+    public function createGetRequest(string $endpoint, array $options = []): array
+    {
+        $options = http_build_query($options, '', '&amp;');
+        $endpoint .= $options ? "?$options" : '';
+        $url = $this->getRequestUrl($endpoint);
+
+        $client = $this->getHttpClient();
+        $requestFactory = $this->getRequestFactory();
+        $request = $requestFactory->createRequest(self::METHOD_GET, $url)
+            ->withHeader('api_key', $this->apiKey)
+            ->withHeader('accept-encoding', 'application/json');
+
+        /** @var ResponseInterface $response */
+        $response = $client->sendRequest($request);
+        $apiResponse = json_decode($response->getBody()->getContents(), true);
+
+        if (!$apiResponse['success']) {
+            throw new ApiException($apiResponse['error_info'], $apiResponse['error_code']);
+        }
+        return $apiResponse;
+    }
+
 
     /**
      * Get the ClientInterface

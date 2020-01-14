@@ -41,4 +41,17 @@ class Transactions
 
         return new Transaction($response);
     }
+
+    /**
+     * Get all data from a transaction.
+     * @param string $id
+     * @return Transaction
+     */
+    public function get(string $id): Transaction
+    {
+        $endpoint = 'orders/' . $id;
+        $client = new Client($this->apiKey, $this->isProduction);
+        $response =  $client->createGetRequest($endpoint);
+        return new Transaction($response);
+    }
 }
