@@ -40,4 +40,6 @@ jobs:
           cp .env.php.example .env.php
           sed -i "s/'API_KEY' => ''/'API_KEY' => '${{ secrets.API_KEY }}'/g" .env.php
       - name: Run PHPUnit tests
-        run:  vendor/bin/phpunit
+        run:  vendor/bin/phpunit --coverage-clover=coverage.xml
+      - name: Send clover to codecov
+        run: bash <(curl -s https://codecov.io/bash) -t ${{ secrets.CODECOV_TOKEN }} -Z -R .
