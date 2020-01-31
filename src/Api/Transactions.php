@@ -7,27 +7,9 @@
 namespace MultiSafepay\Api;
 
 use MultiSafepay\Api\Transactions\Transaction;
-use MultiSafepay\Client;
 
-class Transactions
+class Transactions extends Base
 {
-    /** @var string */
-    private $apiKey;
-    /** @var bool */
-    private $isProduction;
-
-    /**
-     * Transaction constructor.
-     * @param string $apiKey
-     * @param bool $isProduction
-     */
-    public function __construct(string $apiKey, bool $isProduction)
-    {
-        $this->apiKey = $apiKey;
-        $this->isProduction = $isProduction;
-    }
-
-
     /**
      * @param array $body
      * @return Transaction
@@ -36,9 +18,7 @@ class Transactions
      */
     public function create(array $body): Transaction
     {
-        $client = new Client($this->apiKey, $this->isProduction);
-        $response = $client->createPostRequest('orders', $body);
-
+        $response = $this->client->createPostRequest('orders', $body);
         return new Transaction($response);
     }
 
@@ -50,8 +30,8 @@ class Transactions
     public function get(string $id): Transaction
     {
         $endpoint = 'orders/' . $id;
-        $client = new Client($this->apiKey, $this->isProduction);
-        $response =  $client->createGetRequest($endpoint);
+        $response =  $this->client->createGetRequest($endpoint);
+
         return new Transaction($response);
     }
 }

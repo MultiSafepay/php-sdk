@@ -10,10 +10,8 @@ use MultiSafepay\Api\Transactions;
 
 class Api
 {
-    /** @var string */
-    private $apiKey;
-    /** @var bool */
-    private $isProduction;
+    /** @var Client */
+    private $client;
 
     /**
      * Api constructor.
@@ -22,8 +20,7 @@ class Api
      */
     public function __construct(string $apiKey, bool $isProduction = true)
     {
-        $this->apiKey = $apiKey;
-        $this->isProduction = $isProduction;
+        $this->client = new Client($apiKey, $isProduction);
     }
 
     /**
@@ -31,6 +28,6 @@ class Api
      */
     public function transactions(): Transactions
     {
-        return new Transactions($this->apiKey, $this->isProduction);
+        return new Transactions($this->client);
     }
 }
