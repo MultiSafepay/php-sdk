@@ -74,6 +74,7 @@ class Client
      * @param array $options
      * @return array
      * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @throws ApiException
      */
     public function createGetRequest(string $endpoint, array $options = []): array
     {
