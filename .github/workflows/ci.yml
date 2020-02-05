@@ -27,10 +27,10 @@ jobs:
           - '7.4'
     steps:
       - name: Install php
-        uses: shivammathur/setup-php@master
+        uses: shivammathur/setup-php@v1
         with:
           php-version: ${{ matrix.php-version }}
-          extension-csv: dom, mbstring
+          extensions: dom, mbstring
       - name: Checkout SDK
         uses: actions/checkout@v1
       - name: Install dependencies
