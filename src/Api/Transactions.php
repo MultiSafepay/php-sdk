@@ -13,8 +13,8 @@ class Transactions extends Base
     /**
      * @param array $body
      * @return Transaction
-     * @throws \Http\Client\Exception
-     * @throws \MultiSafepay\Exception\ApiException
+     * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @throws MultiSafepay\Exception\ApiException
      */
     public function create(array $body): Transaction
     {
@@ -26,6 +26,7 @@ class Transactions extends Base
      * Get all data from a transaction.
      * @param string $id
      * @return Transaction
+     * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function get(string $id): Transaction
     {
