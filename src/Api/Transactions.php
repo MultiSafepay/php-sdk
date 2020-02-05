@@ -14,7 +14,7 @@ class Transactions extends Base
      * @param array $body
      * @return Transaction
      * @throws \Psr\Http\Client\ClientExceptionInterface
-     * @throws MultiSafepay\Exception\ApiException
+     * @throws \MultiSafepay\Exception\ApiException
      */
     public function create(array $body): Transaction
     {
@@ -27,6 +27,7 @@ class Transactions extends Base
      * @param string $orderId
      * @return Transaction
      * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @throws \MultiSafepay\Exception\ApiException
      */
     public function get(string $orderId): Transaction
     {
