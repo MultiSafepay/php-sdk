@@ -24,13 +24,13 @@ class Transactions extends Base
 
     /**
      * Get all data from a transaction.
-     * @param string $id
+     * @param string $orderId
      * @return Transaction
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function get(string $id): Transaction
+    public function get(string $orderId): Transaction
     {
-        $endpoint = 'orders/' . $id;
+        $endpoint = 'orders/' . $orderId;
         $response =  $this->client->createGetRequest($endpoint);
 
         return new Transaction($response);
