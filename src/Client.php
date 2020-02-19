@@ -22,21 +22,21 @@ class Client
 
     /** @var string */
     private $apiKey;
-    /** @var bool */
-    private $isProduction;
     /** @var string */
     private $url;
+    private $httpClient;
 
     /**
      * Client constructor.
      * @param string $apiKey
      * @param bool $isProduction
+     * @param ClientInterface|null $httpClient
      */
-    public function __construct(string $apiKey, bool $isProduction)
+    public function __construct(string $apiKey, bool $isProduction, ClientInterface $httpClient = null)
     {
         $this->apiKey = $apiKey;
-        $this->isProduction = $isProduction;
         $this->url = $isProduction ? self::LIVE_URL : self::TEST_URL;
+        $this->httpClient = $httpClient ?: Psr18ClientDiscovery::find();
     }
 
     /**
@@ -48,7 +48,7 @@ class Client
      */
     public function createPostRequest(string $endpoint, array $body = null): array
     {
-        $client = $this->getHttpClient();
+        $client = $this->httpClient;
         $requestFactory = $this->getRequestFactory();
         $url = $this->getRequestUrl($endpoint);
         $request = $requestFactory->createRequest(self::METHOD_POST, $url)
@@ -61,7 +61,6 @@ class Client
         /** @var ResponseInterface $response */
         $response = $client->sendRequest($request);
         $apiResponse = json_decode($response->getBody()->getContents(), true);
-
         if (!$apiResponse['success']) {
             throw new ApiException($apiResponse['error_info'], $apiResponse['error_code']);
         }
@@ -82,7 +81,7 @@ class Client
         $endpoint .= $options ? "?$options" : '';
         $url = $this->getRequestUrl($endpoint);
 
-        $client = $this->getHttpClient();
+        $client = $this->httpClient;
         $requestFactory = $this->getRequestFactory();
         $request = $requestFactory->createRequest(self::METHOD_GET, $url)
             ->withHeader('api_key', $this->apiKey)
@@ -96,17 +95,6 @@ class Client
             throw new ApiException($apiResponse['error_info'], $apiResponse['error_code']);
         }
         return $apiResponse;
-    }
-
-
-    /**
-     * Get the ClientInterface
-     *
-     * @return ClientInterface
-     */
-    public function getHttpClient(): ClientInterface
-    {
-        return Psr18ClientDiscovery::find();
     }
 
     /**
