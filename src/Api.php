@@ -7,6 +7,7 @@
 namespace MultiSafepay;
 
 use MultiSafepay\Api\Transactions;
+use Psr\Http\Client\ClientInterface;
 
 class Api
 {
@@ -17,10 +18,11 @@ class Api
      * Api constructor.
      * @param string $apiKey
      * @param bool $isProduction
+     * @param ClientInterface|null $httpClient
      */
-    public function __construct(string $apiKey, bool $isProduction = true)
+    public function __construct(string $apiKey, bool $isProduction, ClientInterface $httpClient = null)
     {
-        $this->client = new Client($apiKey, $isProduction);
+        $this->client = new Client($apiKey, $isProduction, $httpClient);
     }
 
     /**
