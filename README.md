@@ -2,7 +2,6 @@
 
 ## Installation
 
-**TL;DR**
 ```bash
 composer require multisafepay/php-sdk php-http/guzzle6-adapter guzzlehttp/psr7
 ```
