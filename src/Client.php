@@ -70,7 +70,7 @@ class Client
 
     /**
      * @param string $endpoint
-     * @param array|null $query
+     * @param array $options
      * @return array
      * @throws \Psr\Http\Client\ClientExceptionInterface
      * @throws ApiException

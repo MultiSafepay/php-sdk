@@ -13,7 +13,7 @@ class Transactions extends Base
     /**
      * @param array $body
      * @return Transaction
-     * @throws \Http\Client\Exception
+     * @throws \Psr\Http\Client\ClientExceptionInterface
      * @throws \MultiSafepay\Exception\ApiException
      */
     public function create(array $body): Transaction
@@ -24,12 +24,14 @@ class Transactions extends Base
 
     /**
      * Get all data from a transaction.
-     * @param string $id
+     * @param string $orderId
      * @return Transaction
+     * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @throws \MultiSafepay\Exception\ApiException
      */
-    public function get(string $id): Transaction
+    public function get(string $orderId): Transaction
     {
-        $endpoint = 'orders/' . $id;
+        $endpoint = 'orders/' . $orderId;
         $response =  $this->client->createGetRequest($endpoint);
 
         return new Transaction($response);
