@@ -69,7 +69,7 @@ class TransactionsTest extends TestCase
         $multisafepay->transactions()->create($orderData);
     }
 
-     /**
+    /**
      * Test if we can collect the payment data
      */
     public function testGetTransactionWithValidApiKey(): void
