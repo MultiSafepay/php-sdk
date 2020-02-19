@@ -17,7 +17,7 @@ class TransactionsTest extends TestCase
     /**
      * Test the creation of a transaction
      */
-    public function testCreateTransactionWithValidApiKey()
+    public function testCreateTransactionWithValidApiKey(): void
     {
         $orderId = time();
         $mockClient = new MockClient();
@@ -51,7 +51,7 @@ class TransactionsTest extends TestCase
     /**
      * Test the return of an Exception when an invalid API key is being used.
      */
-    public function testCreateTransactionWithInvalidApiKey()
+    public function testCreateTransactionWithInvalidApiKey(): void
     {
         $orderId = time();
         $orderData = [
@@ -100,7 +100,7 @@ class TransactionsTest extends TestCase
     /**
      * Test the return of an Exception when an invalid API key is being used.
      */
-    public function testGetTransactionWithInvalidApiKey(): void
+    public function testGetTransactionWithInvalidOrderId(): void
     {
         $orderId = strval(time());
         $multisafepay = new Api('__invalid__', false);
