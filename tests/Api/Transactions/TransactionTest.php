@@ -1,8 +1,10 @@
 <?php
-
+/**
+ * Copyright © 2019 MultiSafepay, Inc. All rights reserved.
+ * See DISCLAIMER.md for disclaimer details.
+ */
 
 namespace MultiSafepay\Tests\Api\Transactions;
-
 
 use GuzzleHttp\Psr7\Response;
 use Http\Mock\Client as MockClient;
@@ -15,7 +17,7 @@ class TransactionTest extends TestCase
     /**
      * Test if we can refund an order
      */
-    public function testRefundWithValidData(): void
+    public function testRefund(): void
     {
         $orderId = (string)time();
         $transactionId = 4051824;
