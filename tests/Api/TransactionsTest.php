@@ -17,7 +17,7 @@ class TransactionsTest extends TestCase
     /**
      * Test the creation of a transaction
      */
-    public function testCreateTransactionWithValidApiKey()
+    public function testCreateTransactionWithValidApiKey(): void
     {
         $orderId = time();
         $mockClient = new MockClient();
@@ -51,8 +51,20 @@ class TransactionsTest extends TestCase
     /**
      * Test the return of an Exception when an invalid API key is being used.
      */
-    public function testCreateTransactionWithInvalidApiKey()
+    public function testCreateTransactionWithInvalidApiKey(): void
     {
+        $mockClient = new MockClient();
+        $mockClient->addResponse(new Response(
+            401,
+            ['content-type' => 'application/json'],
+            json_encode([
+                'success' => false,
+                'data' => [],
+                'error_code' => 1032,
+                'error_info' => 'Invalid API key'
+            ])
+        ));
+
         $orderId = time();
         $orderData = [
             'type' => 'redirect',
@@ -62,19 +74,19 @@ class TransactionsTest extends TestCase
             'description' => 'Test transaction'
         ];
 
-        $multisafepay = new Api('__invalid__', false);
+        $multisafepay = new Api('__invalid__', false, $mockClient);
         $this->expectException(ApiException::class);
         $this->expectExceptionCode(1032);
         $this->expectExceptionMessage('Invalid API key');
         $multisafepay->transactions()->create($orderData);
     }
 
-     /**
+    /**
      * Test if we can collect the payment data
      */
     public function testGetTransactionWithValidApiKey(): void
     {
-        $orderId = strval(time());
+        $orderId = (string)time();
         $mockClient = new MockClient();
         $mockClient->addResponse(new Response(
             200,
@@ -98,12 +110,24 @@ class TransactionsTest extends TestCase
     }
 
     /**
-     * Test the return of an Exception when an invalid API key is being used.
+     * Test the return of an Exception when an invalid order Id is being used.
      */
-    public function testGetTransactionWithInvalidApiKey(): void
+    public function testGetTransactionWithInvalidOrderId(): void
     {
-        $orderId = strval(time());
-        $multisafepay = new Api('__invalid__', false);
+        $mockClient = new MockClient();
+        $mockClient->addResponse(new Response(
+            401,
+            ['content-type' => 'application/json'],
+            json_encode([
+                'success' => false,
+                'data' => [],
+                'error_code' => 1006,
+                'error_info' => 'Invalid transaction ID'
+            ])
+        ));
+
+        $orderId = (string)time();
+        $multisafepay = new Api('__invalid__', false, $mockClient);
         $this->expectException(ApiException::class);
         $this->expectExceptionCode(1006);
         $this->expectExceptionMessage('Invalid transaction ID');
