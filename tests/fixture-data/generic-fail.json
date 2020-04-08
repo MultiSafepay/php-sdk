@@ -1,0 +1,6 @@
+{
+  "success": false,
+  "error_info": "I'm a teapot",
+  "error_code": 418,
+  "data": []
+}

@@ -1,0 +1,69 @@
+{
+    "success": true,
+    "data": [
+        {
+            "code": 999,
+            "description": "Adult"
+        },
+        {
+            "code": 100,
+            "description": "Cadeaus en gadgets"
+        },
+        {
+            "code": 101,
+            "description": "Elektronica en computers"
+        },
+        {
+            "code": 102,
+            "description": "Games"
+        },
+        {
+            "code": 103,
+            "description": "Gezondheid"
+        },
+        {
+            "code": 104,
+            "description": "Huis en tuin"
+        },
+        {
+            "code": 105,
+            "description": "Kantoorartikelen"
+        },
+        {
+            "code": 106,
+            "description": "Kind en speelgoed"
+        },
+        {
+            "code": 107,
+            "description": "Levensmiddelen"
+        },
+        {
+            "code": 108,
+            "description": "Mode en verzorging"
+        },
+        {
+            "code": 109,
+            "description": "Muziek, films en boeken"
+        },
+        {
+            "code": 114,
+            "description": "Overig"
+        },
+        {
+            "code": 110,
+            "description": "Sport en vrije tijd"
+        },
+        {
+            "code": 111,
+            "description": "Telefonie en internet"
+        },
+        {
+            "code": 112,
+            "description": "Vakantie en reizen"
+        },
+        {
+            "code": 113,
+            "description": "Verkoop en veiling"
+        }
+    ]
+}

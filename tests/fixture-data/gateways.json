@@ -1,0 +1,45 @@
+{
+    "success": true,
+    "data": [
+        {
+            "id": "MAESTRO",
+            "description": "Maestro"
+        },
+        {
+            "id": "BANKTRANS",
+            "description": "Wire Transfer"
+        },
+        {
+            "id": "DIRECTBANK",
+            "description": "SOFORT Banking"
+        },
+        {
+            "id": "GIROPAY",
+            "description": "Giropay"
+        },
+        {
+            "id": "MISTERCASH",
+            "description": "Bancontact"
+        },
+        {
+            "id": "EPS",
+            "description": "EPS"
+        },
+        {
+            "id": "IDEAL",
+            "description": "iDEAL"
+        },
+        {
+            "id": "TRUSTLY",
+            "description": "Trustly"
+        },
+        {
+            "id": "MASTERCARD",
+            "description": "MasterCard"
+        },
+        {
+            "id": "VISA",
+            "description": "Visa"
+        }
+    ]
+}
