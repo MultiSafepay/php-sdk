@@ -4,7 +4,7 @@
  * See DISCLAIMER.md for disclaimer details.
  */
 
-namespace MultiSafepay\Tests\Model;
+namespace MultiSafepay\Tests\Model\Unit;
 
 use MultiSafepay\Exception\MissingPluginVersionException;
 use MultiSafepay\Model\Version;

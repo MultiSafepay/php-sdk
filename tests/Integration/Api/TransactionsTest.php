@@ -4,7 +4,7 @@
  * See DISCLAIMER.md for disclaimer details.
  */
 
-namespace MultiSafepay\Tests\Api;
+namespace MultiSafepay\Tests\Api\Integration;
 
 use MultiSafepay\Api;
 use MultiSafepay\Exception\ApiException;
