@@ -70,16 +70,14 @@ class Client
 
     /**
      * @param string $endpoint
-     * @param array $options
+     * @param array $parameters
      * @return array
      * @throws \Psr\Http\Client\ClientExceptionInterface
      * @throws ApiException
      */
-    public function createGetRequest(string $endpoint, array $options = []): array
+    public function createGetRequest(string $endpoint, array $parameters = []): array
     {
-        $options = http_build_query($options, '', '&amp;');
-        $endpoint .= $options ? "?$options" : '';
-        $url = $this->getRequestUrl($endpoint);
+        $url = $this->getRequestUrl($endpoint, $parameters);
 
         $client = $this->httpClient;
         $requestFactory = $this->getRequestFactory();
@@ -109,10 +107,14 @@ class Client
 
     /**
      * @param string $endpoint
+     * @param array $parameters
      * @return string
      */
-    public function getRequestUrl(string $endpoint): string
+    public function getRequestUrl(string $endpoint, $parameters = []): string
     {
+        if (!empty($parameters)) {
+            $endpoint .= '?' . http_build_query($parameters);
+        }
         return $this->url . $endpoint;
     }
 
