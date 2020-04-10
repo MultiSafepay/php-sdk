@@ -26,7 +26,7 @@ class Transactions extends Base
         $body = Version::append($body);
 
         $response = $this->client->createPostRequest('orders', $body);
-        return new Transaction($response);
+        return new Transaction($response, $this->client);
     }
 
     /**
@@ -41,7 +41,7 @@ class Transactions extends Base
         $endpoint = 'orders/' . $orderId;
         $response =  $this->client->createGetRequest($endpoint);
 
-        return new Transaction($response);
+        return new Transaction($response, $this->client);
     }
 
     /**
