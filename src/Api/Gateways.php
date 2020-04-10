@@ -22,10 +22,10 @@ class Gateways extends Base
      * @throws ClientExceptionInterface
      * @todo Convert response into an array of Gateway Value Objects
      */
-    public function getAll()
+    public function getAll(): array
     {
         $response = $this->client->createGetRequest('gateways');
-        return $response['data'];
+        return $response->getResponseData();
     }
 
     /**
@@ -43,6 +43,6 @@ class Gateways extends Base
         $endpoint = 'gateways/' . $gatewayCode;
         $response = $this->client->createGetRequest($endpoint, $options);
 
-        return $response['data'];
+        return $response->getResponseData();
     }
 }

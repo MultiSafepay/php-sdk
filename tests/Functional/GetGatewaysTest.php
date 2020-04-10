@@ -13,11 +13,9 @@ class GetGatewaysTest extends AbstractTestCase
     public function testGetGateways()
     {
         $response = $this->getClient()->createGetRequest('gateways');
-        $this->assertNotEmpty($response);
-        $this->assertNotEmpty($response['data']);
-        $this->assertEquals(1, $response['success']);
+        $data = $response->getResponseData();
 
-        foreach ($response['data'] as $gateway) {
+        foreach ($data as $gateway) {
             $this->assertIsArray($gateway);
             $this->assertNotEmpty($gateway['id']);
             $this->assertNotEmpty($gateway['description']);

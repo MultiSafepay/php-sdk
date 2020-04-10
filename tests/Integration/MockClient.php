@@ -10,6 +10,7 @@ use Exception;
 use GuzzleHttp\Psr7\Response;
 use MultiSafepay\Client;
 use Http\Mock\Client as MockHttpClient;
+use MultiSafepay\Util\Version;
 
 class MockClient extends Client
 {
@@ -19,6 +20,8 @@ class MockClient extends Client
      */
     public static function getInstance(string $apiKey = '__valid__')
     {
+        Version::getInstance()->addPluginVersion('integration-test');
+
         $mockClient = new MockHttpClient();
         return new self('__valid__', false, $mockClient);
     }

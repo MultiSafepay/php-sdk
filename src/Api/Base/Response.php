@@ -4,13 +4,13 @@
  * See DISCLAIMER.md for disclaimer details.
  */
 
-namespace MultiSafepay\Api;
+namespace MultiSafepay\Api\Base;
 
 use MultiSafepay\Exception\ApiException;
 
 /**
  * Class Response
- * @package MultiSafepay\Api
+ * @package MultiSafepay\Api\Base
  */
 class Response
 {
@@ -21,6 +21,15 @@ class Response
      * @var array
      */
     private $data = [];
+
+    /**
+     * @param string $json
+     * @return Response
+     */
+    public static function withJson(string $json)
+    {
+        return new self(json_decode($json, true));
+    }
 
     /**
      * Response constructor.

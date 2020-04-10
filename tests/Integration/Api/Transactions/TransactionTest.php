@@ -25,7 +25,7 @@ class TransactionTest extends TestCase
         $orderData = $this->createOrder();
         $transaction = new Transaction($orderData, MockClient::getInstance());
 
-        $data = $transaction->getOrderData();
+        $data = $transaction->getData();
         $this->assertArrayHasKey('type', $data, var_export($data, true));
     }
 

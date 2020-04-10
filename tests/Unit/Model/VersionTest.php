@@ -7,7 +7,7 @@
 namespace MultiSafepay\Tests\Model\Unit;
 
 use MultiSafepay\Exception\MissingPluginVersionException;
-use MultiSafepay\Model\Version;
+use MultiSafepay\Util\Version;
 use MultiSafepay\Tests\Fixtures\Order;
 use PHPUnit\Framework\TestCase;
 
@@ -16,17 +16,33 @@ class VersionTest extends TestCase
     use Order;
 
     /**
-     * Test if the function correctly appends the SDK version in the plugin data
+     * Test whether the version could be fetched
      */
-    public function testVersionAppendWithPluginData(): void
+    public function testGetVersion(): void
     {
-        $orderData = $this->createOrder();
-        $newOrderData = Version::append($orderData);
+        $version = Version::getInstance();
+        $this->assertNotEmpty($version->getVersion());
+    }
 
-        $expected = '1.6.4 - PHP SDK '. Version::SDK_VERSION;
+    /**
+     * Test whether the SDK version could be fetched
+     */
+    public function testGetSdkVersion(): void
+    {
+        $version = Version::getInstance();
+        $this->assertNotEmpty($version->getSdkVersion());
+    }
 
-        $actual = $newOrderData['plugin']['plugin_version'];
+    /**
+     * Test whether the plugin version can be set and retrieved again
+     */
+    public function testGetAndSetSdkVersion(): void
+    {
+        $version = Version::getInstance();
+        $version->addPluginVersion('0.0.1');
+        $this->assertEquals('0.0.1', $version->getPluginVersion());
 
-        $this->assertEquals($expected, $actual);
+        $newVersion = Version::getInstance();
+        $this->assertEquals('0.0.1', $newVersion->getPluginVersion());
     }
 }

@@ -8,7 +8,9 @@ namespace MultiSafepay;
 
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
+use MultiSafepay\Api\Base\Response;
 use MultiSafepay\Exception\ApiException;
+use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Client\ClientInterface;
@@ -46,11 +48,11 @@ class Client
     /**
      * @param string $endpoint
      * @param array|null $body
-     * @return array
-     * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @return Response
+     * @throws ClientExceptionInterface
      * @throws ApiException
      */
-    public function createPostRequest(string $endpoint, array $body = null): array
+    public function createPostRequest(string $endpoint, array $body = null): Response
     {
         $client = $this->httpClient;
         $requestFactory = $this->getRequestFactory();
@@ -64,22 +66,18 @@ class Client
 
         /** @var ResponseInterface $response */
         $response = $client->sendRequest($request);
-        $apiResponse = json_decode($response->getBody()->getContents(), true);
-        if (!$apiResponse['success']) {
-            throw new ApiException((string)$apiResponse['error_info'], (int)$apiResponse['error_code']);
-        }
-        return $apiResponse;
+        return Response::withJson($response->getBody()->getContents());
     }
 
 
     /**
      * @param string $endpoint
      * @param array $parameters
-     * @return array
-     * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @return Response
+     * @throws ClientExceptionInterface
      * @throws ApiException
      */
-    public function createGetRequest(string $endpoint, array $parameters = []): array
+    public function createGetRequest(string $endpoint, array $parameters = []): Response
     {
         $url = $this->getRequestUrl($endpoint, $parameters);
 
@@ -91,12 +89,7 @@ class Client
 
         /** @var ResponseInterface $response */
         $response = $client->sendRequest($request);
-        $apiResponse = json_decode($response->getBody()->getContents(), true);
-
-        if (!$apiResponse['success']) {
-            throw new ApiException($apiResponse['error_info'], $apiResponse['error_code']);
-        }
-        return $apiResponse;
+        return Response::withJson($response->getBody()->getContents());
     }
 
     /**

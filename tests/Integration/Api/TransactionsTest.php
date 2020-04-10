@@ -8,6 +8,8 @@ namespace MultiSafepay\Tests\Integration\Api;
 
 use Money\Money;
 use MultiSafepay\Api;
+use MultiSafepay\Api\Base\RequestBody;
+use MultiSafepay\Api\Transactions;
 use MultiSafepay\Exception\ApiException;
 use MultiSafepay\Exception\MissingPluginVersionException;
 use MultiSafepay\Tests\Fixtures\Order;
@@ -21,6 +23,7 @@ class TransactionsTest extends TestCase
 
     /**
      * Test the creation of a transaction
+     * @throws ClientExceptionInterface
      */
     public function testCreateTransaction(): void
     {
@@ -32,31 +35,14 @@ class TransactionsTest extends TestCase
             'payment_url' => 'https://testpayv2.multisafepay.com/'
         ]);
 
-        $transactions = new Api\Transactions($mockClient);
-        $transaction = $transactions->create($orderData);
+        $transactions = new Transactions($mockClient);
+        $requestBody = new RequestBody($orderData);
+        $transaction = $transactions->create($requestBody);
 
         $this->assertEquals($orderData['order_id'], $transaction->getOrderId());
 
         $paymentLink = $transaction->getPaymentLink();
         $this->assertStringStartsWith('https://testpayv2.multisafepay.com/', $paymentLink);
-    }
-
-
-    /**
-     * Test the return of an Exception when an invalid API key is being used.
-     *
-     * @todo: Move this to a ClientTest class because it is not related to Transactions
-     */
-    public function testCreateTransactionWithInvalidApiKey(): void
-    {
-        $mockClient = MockClient::getInstance('__invalid__');
-        $mockClient->mockResponse([], false, 1032, 'Invalid API key');
-        $transactions = new Api\Transactions($mockClient);
-
-        $this->expectException(ApiException::class);
-        $this->expectExceptionCode(1032);
-        $this->expectExceptionMessage('Invalid API key');
-        $transactions->create($this->createOrder());
     }
 
     /**
@@ -76,7 +62,7 @@ class TransactionsTest extends TestCase
             'amount' => 9743
         ]);
 
-        $transactions = new Api\Transactions($mockClient);
+        $transactions = new Transactions($mockClient);
         $transaction = $transactions->get($orderId);
 
         $this->assertNull($transaction->getPaymentLink());
@@ -101,7 +87,7 @@ class TransactionsTest extends TestCase
             'amount' => 10000
         ]);
 
-        $transactions = new Api\Transactions($mockClient);
+        $transactions = new Transactions($mockClient);
         $transaction = $transactions->get($fakeOrderId);
 
         $mockClient->mockResponse([
@@ -109,7 +95,7 @@ class TransactionsTest extends TestCase
             'transaction_id' => $fakeTransactionId,
         ]);
 
-        $transactions = new Api\Transactions($mockClient);
+        $transactions = new Transactions($mockClient);
         $refund = $transactions->refund($transaction, Money::EUR(50));
 
         $this->assertArrayHasKey('refund_id', $refund, var_export($refund, true));
@@ -126,29 +112,11 @@ class TransactionsTest extends TestCase
     {
         $mockClient = MockClient::getInstance();
         $mockClient->mockResponse([], false, 1006, 'Invalid transaction ID');
-        $transactions = new Api\Transactions($mockClient);
+        $transactions = new Transactions($mockClient);
 
         $this->expectException(ApiException::class);
         $this->expectExceptionCode(1006);
         $this->expectExceptionMessage('Invalid transaction ID');
         $transactions->get('42');
-    }
-
-    /**
-     * Test if the validation will throw an error if the plugin version is missing
-     *
-     * @throws ClientExceptionInterface
-     */
-    public function testValidateVersionWithoutPluginData(): void
-    {
-        $orderData = $this->createOrder();
-        unset($orderData['plugin']);
-
-        $this->expectException(MissingPluginVersionException::class);
-        $this->expectExceptionMessage('Plugin version is missing');
-
-        $mockClient = MockClient::getInstance();
-        $transactions = new Api\Transactions($mockClient);
-        $transactions->create($orderData);
     }
 }

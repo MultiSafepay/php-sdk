@@ -33,19 +33,11 @@ class Transaction extends Base
 
     /**
      * @return array
-     */
-    public function getOrderData(): array
-    {
-        return $this->data;
-    }
-
-    /**
-     * @return array
      * @todo: Why is this method public?
      */
     public function getData(): array
     {
-        return isset($this->data['data']) ? $this->data['data'] : [];
+        return $this->data;
     }
 
     /**
@@ -66,10 +58,10 @@ class Transaction extends Base
      */
     public function getOrderId(): string
     {
-        if (empty($this->data['data']['order_id'])) {
+        if (empty($this->data['order_id'])) {
             throw new InvalidOrderDataException('No order ID found');
         }
 
-        return (string)$this->data['data']['order_id'];
+        return (string)$this->data['order_id'];
     }
 }

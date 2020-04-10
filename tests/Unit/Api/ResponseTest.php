@@ -2,7 +2,7 @@
 
 namespace MultiSafepay\Tests\Unit\Api;
 
-use MultiSafepay\Api\Response;
+use MultiSafepay\Api\Base\Response;
 use MultiSafepay\Exception\ApiException;
 use PHPUnit\Framework\TestCase;
 
