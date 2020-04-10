@@ -7,6 +7,7 @@
 namespace MultiSafepay;
 
 use MultiSafepay\Api\Transactions;
+use MultiSafepay\Api\Gateways;
 use Psr\Http\Client\ClientInterface;
 
 class Api
@@ -31,5 +32,13 @@ class Api
     public function transactions(): Transactions
     {
         return new Transactions($this->client);
+    }
+
+    /**
+     * @return Gateways
+     */
+    public function gateways(): Gateways
+    {
+        return new Gateways($this->client);
     }
 }
