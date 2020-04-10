@@ -6,11 +6,14 @@
 
 namespace MultiSafepay\Api\Transactions;
 
-use MultiSafepay\Api;
 use MultiSafepay\Api\Base;
 use MultiSafepay\Client;
-use MultiSafepay\Exception\ApiException;
+use MultiSafepay\Exception\InvalidOrderDataException;
 
+/**
+ * Model Transaction for containing transaction data received from the API
+ * @package MultiSafepay\Api\Transactions
+ */
 class Transaction extends Base
 {
     /** @var array */
@@ -18,24 +21,36 @@ class Transaction extends Base
 
     /**
      * Transaction constructor.
-     * @param array $transaction
+     * @param array $transactionData
+     * @param Client $client
+     * @todo Why input $transactionData here, if it is only used by create() and not refund()?
      */
-    public function __construct(array $transaction, Client $client)
+    public function __construct(array $transactionData, Client $client)
     {
         parent::__construct($client);
-        $this->data = $transaction;
+        $this->data = $transactionData;
     }
 
     /**
      * @return array
      */
-    public function getData():array
+    public function getOrderData(): array
     {
-        return $this->data['data'];
+        return $this->data;
+    }
+
+    /**
+     * @return array
+     * @todo: Why is this method public?
+     */
+    public function getData(): array
+    {
+        return isset($this->data['data']) ? $this->data['data'] : [];
     }
 
     /**
      * @return string|null
+     * @todo: Why return a `null` when an empty string would suffice?
      */
     public function getPaymentLink(): ?string
     {
@@ -46,24 +61,15 @@ class Transaction extends Base
     }
 
     /**
-     * @param float $amount
-     * @param string|null $description
-     * @throws \Psr\Http\Client\ClientExceptionInterface
-     * @throws ApiException
+     * @return string
+     * @todo: Should this be a string or an integer?
      */
-    public function refund(float $amount, ?string $description = null): array
+    public function getOrderId(): string
     {
-        $refundData = [
-            'amount' => $amount * 100,
-            'currency' => $this->getData()['currency'],
-            'description' => $description
-        ];
+        if (empty($this->data['data']['order_id'])) {
+            throw new InvalidOrderDataException('No order ID found');
+        }
 
-        $response = $this->client->createPostRequest(
-            'orders/' . $this->getData()['order_id'] . '/refunds',
-            $refundData
-        );
-
-        return $response['data'];
+        return (string)$this->data['data']['order_id'];
     }
 }

@@ -6,12 +6,18 @@
 
 namespace MultiSafepay\Api;
 
+use Money\Money;
 use MultiSafepay\Api\Transactions\Transaction;
 use MultiSafepay\Exception\ApiException;
 use MultiSafepay\Exception\MissingPluginVersionException;
 use MultiSafepay\Model\Version;
 use Psr\Http\Client\ClientExceptionInterface;
 
+/**
+ * Class Transactions
+ * @package MultiSafepay\Api
+ * @todo Rename this to TransactionsManager?
+ */
 class Transactions extends Base
 {
     /**
@@ -33,8 +39,8 @@ class Transactions extends Base
      * Get all data from a transaction.
      * @param string $orderId
      * @return Transaction
-     * @throws \Psr\Http\Client\ClientExceptionInterface
-     * @throws \MultiSafepay\Exception\ApiException
+     * @throws ClientExceptionInterface
+     * @throws ApiException
      */
     public function get(string $orderId): Transaction
     {
@@ -42,6 +48,30 @@ class Transactions extends Base
         $response =  $this->client->createGetRequest($endpoint);
 
         return new Transaction($response, $this->client);
+    }
+
+    /**
+     * @param Transaction $transaction
+     * @param Money $amount
+     * @param string|null $description
+     * @return array
+     * @throws ClientExceptionInterface
+     * @todo: Return a new ApiResponse object
+     */
+    public function refund(Transaction $transaction, Money $amount, ?string $description = null): array
+    {
+        $refundData = [
+            'amount' => $amount->getAmount(),
+            'currency' => $amount->getCurrency(),
+            'description' => $description
+        ];
+
+        $response = $this->client->createPostRequest(
+            'orders/' . $transaction->getOrderId() . '/refunds',
+            $refundData
+        );
+
+        return $response['data'];
     }
 
     /**

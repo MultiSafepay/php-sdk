@@ -3,6 +3,7 @@
  * Copyright © 2019 MultiSafepay, Inc. All rights reserved.
  * See DISCLAIMER.md for disclaimer details.
  */
+
 namespace MultiSafepay;
 
 use Http\Discovery\Psr17FactoryDiscovery;
@@ -22,9 +23,12 @@ class Client
 
     /** @var string */
     private $apiKey;
+
     /** @var string */
     private $url;
-    private $httpClient;
+
+    /** @var ClientInterface */
+    protected $httpClient;
 
     /**
      * Client constructor.
@@ -62,7 +66,7 @@ class Client
         $response = $client->sendRequest($request);
         $apiResponse = json_decode($response->getBody()->getContents(), true);
         if (!$apiResponse['success']) {
-            throw new ApiException($apiResponse['error_info'], $apiResponse['error_code']);
+            throw new ApiException((string)$apiResponse['error_info'], (int)$apiResponse['error_code']);
         }
         return $apiResponse;
     }
