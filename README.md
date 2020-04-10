@@ -22,6 +22,17 @@ require 'vendor/autoload.php';
 use MultiSafepay\Api;
 ```
 
+## Code quality checks
+The following checks are in place to maintain code quality:
+
+- PHP CodeSniffer (via `./vendor/bin/phpcs --standard=phpcs.ruleset.xml .`)
+    - PSR-2
+    - Object Calisthenics
+- PHPUnit tests (via `./vendor/bin/phpunit`)
+    - Unit tests
+    - Integration tests
+    - Functional tests
+
 ## Testing
 
 The following definitions have been made regarding tests:
