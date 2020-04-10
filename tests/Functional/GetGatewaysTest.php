@@ -3,9 +3,13 @@
 namespace MultiSafepay\Tests\Functional;
 
 use MultiSafepay\Exception\ApiException;
+use Psr\Http\Client\ClientExceptionInterface;
 
 class GetGatewaysTest extends AbstractTestCase
 {
+    /**
+     * @throws ClientExceptionInterface
+     */
     public function testGetGateways()
     {
         $response = $this->getClient()->createGetRequest('gateways');
@@ -20,6 +24,9 @@ class GetGatewaysTest extends AbstractTestCase
         }
     }
 
+    /**
+     * @throws ClientExceptionInterface
+     */
     public function testGetGatewaysWithWrongPath()
     {
         $this->expectException(ApiException::class);
