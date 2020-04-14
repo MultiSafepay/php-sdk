@@ -7,9 +7,10 @@
 namespace MultiSafepay\Api;
 
 use MultiSafepay\Api\Gateways\Gateway;
+use MultiSafepay\Api\Gateways\GatewayListing;
 use Psr\Http\Client\ClientExceptionInterface;
 
-class Gateways extends Base
+class GatewayManager extends AbstractManager
 {
     const ALLOWED_OPTIONS = [
         'country' => '',
@@ -20,10 +21,10 @@ class Gateways extends Base
 
     /**
      * @param bool $includeCoupons Include coupons (aka giftcards)
-     * @return Gateways
+     * @return Gateway[]
      * @throws ClientExceptionInterface
      */
-    public function getGateways(bool $includeCoupons = false): Gateways\Gateways
+    public function getGateways(bool $includeCoupons = false): array
     {
         $options = [];
         if ($includeCoupons) {
@@ -31,7 +32,7 @@ class Gateways extends Base
         }
 
         $response = $this->client->createGetRequest('gateways', $options);
-        return new Gateways\Gateways($response->getResponseData());
+        return (new GatewayListing($response->getResponseData()))->getGateways();
     }
 
     /**

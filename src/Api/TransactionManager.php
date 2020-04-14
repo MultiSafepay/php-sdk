@@ -13,11 +13,10 @@ use MultiSafepay\Exception\ApiException;
 use Psr\Http\Client\ClientExceptionInterface;
 
 /**
- * Class Transactions
+ * Class TransactionManager
  * @package MultiSafepay\Api
- * @todo Rename this to TransactionsManager?
  */
-class Transactions extends Base
+class TransactionManager extends AbstractManager
 {
     /**
      * @param RequestBody $requestBody

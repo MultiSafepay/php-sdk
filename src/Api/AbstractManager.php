@@ -8,7 +8,7 @@ namespace MultiSafepay\Api;
 
 use MultiSafepay\Client;
 
-abstract class Base
+abstract class AbstractManager
 {
     /** @var Client */
     protected $client;

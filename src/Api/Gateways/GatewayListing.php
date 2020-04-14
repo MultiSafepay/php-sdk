@@ -6,7 +6,7 @@
 
 namespace MultiSafepay\Api\Gateways;
 
-class Gateways
+class GatewayListing
 {
     /** @var array */
     private $gateways;
