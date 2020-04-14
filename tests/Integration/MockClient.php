@@ -21,9 +21,8 @@ class MockClient extends Client
     public static function getInstance(string $apiKey = '__valid__')
     {
         Version::getInstance()->addPluginVersion('integration-test');
-
         $mockClient = new MockHttpClient();
-        return new self('__valid__', false, $mockClient);
+        return new self($apiKey, false, $mockClient);
     }
 
     /**

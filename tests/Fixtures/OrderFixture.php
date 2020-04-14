@@ -6,12 +6,12 @@
 
 namespace MultiSafepay\Tests\Fixtures;
 
-trait Order
+trait OrderFixture
 {
     /**
      * @return array
      */
-    public function createOrder(): array
+    public function createOrderRequestFixture(): array
     {
         $orderId = time();
         return [
