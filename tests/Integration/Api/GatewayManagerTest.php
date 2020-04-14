@@ -3,7 +3,7 @@
 namespace MultiSafepay\Tests\Integration\Api;
 
 use Exception;
-use MultiSafepay\Api\Gateways;
+use MultiSafepay\Api\GatewayManager;
 use MultiSafepay\Exception\ApiException;
 use MultiSafepay\Tests\Integration\MockClient;
 use PHPUnit\Framework\TestCase;
@@ -13,7 +13,7 @@ use Psr\Http\Client\ClientExceptionInterface;
  * Class GatewaysTest
  * @package MultiSafepay\Tests\Integration\Api
  */
-class GatewaysTest extends TestCase
+class GatewayManagerTest extends TestCase
 {
     /**
      * @throws ClientExceptionInterface
@@ -24,7 +24,7 @@ class GatewaysTest extends TestCase
         $mockClient = MockClient::getInstance();
         $mockClient->mockResponseFromFixtureFile('gateways');
 
-        $gateways = new Gateways($mockClient);
+        $gateways = new GatewayManager($mockClient);
         $gateways = $gateways->getAll();
 
         $this->assertNotEmpty($gateways);
@@ -45,7 +45,7 @@ class GatewaysTest extends TestCase
         $mockClient = MockClient::getInstance();
         $mockClient->mockResponseFromFixtureFile('gateways-empty');
 
-        $gateways = new Gateways($mockClient);
+        $gateways = new GatewayManager($mockClient);
         $gateways = $gateways->getAll();
 
         $this->assertEmpty($gateways);
@@ -60,7 +60,7 @@ class GatewaysTest extends TestCase
         $mockClient = MockClient::getInstance();
         $mockClient->mockResponseFromFixtureFile('gateways-with-coupons');
 
-        $gateways = new Gateways($mockClient);
+        $gateways = new GatewayManager($mockClient);
         $gateways = $gateways->getAll();
 
         $this->assertNotEmpty($gateways);
@@ -86,7 +86,7 @@ class GatewaysTest extends TestCase
             'description' => 'iDEAL'
         ]);
 
-        $gateways = new Gateways($mockClient);
+        $gateways = new GatewayManager($mockClient);
         $gateway = $gateways->getByCode('IDEAL');
 
         $this->assertNotEmpty($gateway);
@@ -105,7 +105,7 @@ class GatewaysTest extends TestCase
         $this->expectExceptionCode(1023);
         $this->expectExceptionMessage('No gateway (payment method) available');
 
-        $gateways = new Gateways($mockClient);
+        $gateways = new GatewayManager($mockClient);
         $gateways->getByCode('IDEAL');
     }
 
@@ -121,7 +121,7 @@ class GatewaysTest extends TestCase
             'description' => 'Bancontact'
         ]);
 
-        $gateways = new Gateways($mockClient);
+        $gateways = new GatewayManager($mockClient);
         $gateway = $gateways->getByCode('MISTERCASH', ['country' => 'BE']);
 
         $this->assertNotEmpty($gateway);
