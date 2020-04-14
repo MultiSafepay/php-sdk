@@ -26,7 +26,7 @@ class TransactionManager extends AbstractManager
     public function create(RequestBody $requestBody): Transaction
     {
         $response = $this->client->createPostRequest('orders', $requestBody->getData());
-        return new Transaction($response->getResponseData(), $this->client);
+        return new Transaction($response->getResponseData());
     }
 
     /**
@@ -40,7 +40,7 @@ class TransactionManager extends AbstractManager
     {
         $endpoint = 'orders/' . $orderId;
         $response = $this->client->createGetRequest($endpoint);
-        return new Transaction($response->getResponseData(), $this->client);
+        return new Transaction($response->getResponseData());
     }
 
     /**

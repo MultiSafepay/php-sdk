@@ -28,7 +28,12 @@ class Response
      */
     public static function withJson(string $json)
     {
-        return new self(json_decode($json, true));
+        $data = json_decode($json, true);
+        if (empty($data)) {
+            $data = [];
+        }
+
+        return new self($data);
     }
 
     /**

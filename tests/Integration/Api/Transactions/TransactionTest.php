@@ -8,6 +8,7 @@ namespace MultiSafepay\Tests\Api\Integration\Transactions;
 
 use Money\Money;
 use MultiSafepay\Api\Transactions\Transaction;
+use MultiSafepay\Tests\Fixtures\OrderFixture;
 use MultiSafepay\Tests\Integration\MockClient;
 use MultiSafepay\Tests\Fixtures\Order;
 use PHPUnit\Framework\TestCase;
@@ -15,15 +16,15 @@ use Psr\Http\Client\ClientExceptionInterface;
 
 class TransactionTest extends TestCase
 {
-    use Order;
+    use OrderFixture;
 
     /**
      * Test the simple data transfer of a transaction object
      */
     public function testGetOrderData(): void
     {
-        $orderData = $this->createOrder();
-        $transaction = new Transaction($orderData, MockClient::getInstance());
+        $orderData = $this->createOrderRequestFixture();
+        $transaction = new Transaction($orderData);
 
         $data = $transaction->getData();
         $this->assertArrayHasKey('type', $data, var_export($data, true));

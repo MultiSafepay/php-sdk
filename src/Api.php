@@ -6,8 +6,9 @@
 
 namespace MultiSafepay;
 
-use MultiSafepay\Api\Transactions;
-use MultiSafepay\Api\Gateways;
+use MultiSafepay\Api\GatewayManager;
+use MultiSafepay\Api\IssuerManager;
+use MultiSafepay\Api\TransactionManager;
 use Psr\Http\Client\ClientInterface;
 
 class Api
@@ -27,18 +28,26 @@ class Api
     }
 
     /**
-     * @return Transactions
+     * @return TransactionManager
      */
-    public function transactions(): Transactions
+    public function getTransactionManager(): TransactionManager
     {
-        return new Transactions($this->client);
+        return new TransactionManager($this->client);
     }
 
     /**
-     * @return Gateways
+     * @return GatewayManager
      */
-    public function gateways(): Gateways
+    public function getGatewayManager(): GatewayManager
     {
-        return new Gateways($this->client);
+        return new GatewayManager($this->client);
+    }
+
+    /**
+     * @return IssuerManager
+     */
+    public function getIssuerManager(): IssuerManager
+    {
+        return new IssuerManager($this->client);
     }
 }

@@ -10,14 +10,14 @@ use Money\Money;
 use MultiSafepay\Api\Base\RequestBody;
 use MultiSafepay\Api\TransactionManager;
 use MultiSafepay\Exception\ApiException;
-use MultiSafepay\Tests\Fixtures\Order;
+use MultiSafepay\Tests\Fixtures\OrderFixture;
 use MultiSafepay\Tests\Integration\MockClient;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientExceptionInterface;
 
 class TransactionManagerTest extends TestCase
 {
-    use Order;
+    use OrderFixture;
 
     /**
      * Test the creation of a transaction
@@ -25,7 +25,7 @@ class TransactionManagerTest extends TestCase
      */
     public function testCreateTransaction(): void
     {
-        $orderData = $this->createOrder();
+        $orderData = $this->createOrderRequestFixture();
 
         $mockClient = MockClient::getInstance();
         $mockClient->mockResponse([
@@ -33,9 +33,9 @@ class TransactionManagerTest extends TestCase
             'payment_url' => 'https://testpayv2.multisafepay.com/'
         ]);
 
-        $transactions = new TransactionManager($mockClient);
+        $transactionManager = new TransactionManager($mockClient);
         $requestBody = new RequestBody($orderData);
-        $transaction = $transactions->create($requestBody);
+        $transaction = $transactionManager->create($requestBody);
 
         $this->assertEquals($orderData['order_id'], $transaction->getOrderId());
 
@@ -60,8 +60,8 @@ class TransactionManagerTest extends TestCase
             'amount' => 9743
         ]);
 
-        $transactions = new TransactionManager($mockClient);
-        $transaction = $transactions->get($orderId);
+        $transactionManager = new TransactionManager($mockClient);
+        $transaction = $transactionManager->get($orderId);
 
         $this->assertEmpty($transaction->getPaymentLink());
         $this->assertSame('completed', $transaction->getData()['status']);
@@ -85,16 +85,15 @@ class TransactionManagerTest extends TestCase
             'amount' => 10000
         ]);
 
-        $transactions = new TransactionManager($mockClient);
-        $transaction = $transactions->get($fakeOrderId);
+        $transactionManager = new TransactionManager($mockClient);
+        $transaction = $transactionManager->get($fakeOrderId);
 
         $mockClient->mockResponse([
             'refund_id' => $fakeRefundId,
             'transaction_id' => $fakeTransactionId,
         ]);
 
-        $transactions = new TransactionManager($mockClient);
-        $refund = $transactions->refund($transaction, Money::EUR(50));
+        $refund = $transactionManager->refund($transaction, Money::EUR(50));
 
         $this->assertArrayHasKey('refund_id', $refund, var_export($refund, true));
         $this->assertEquals($fakeRefundId, $refund['refund_id'], var_export($refund, true));
@@ -104,17 +103,18 @@ class TransactionManagerTest extends TestCase
 
     /**
      * Test the return of an Exception when an invalid order Id is being used.
+     *
      * @throws ClientExceptionInterface
      */
     public function testGetTransactionWithInvalidOrderId(): void
     {
         $mockClient = MockClient::getInstance();
         $mockClient->mockResponse([], false, 1006, 'Invalid transaction ID');
-        $transactions = new TransactionManager($mockClient);
+        $transactionManager = new TransactionManager($mockClient);
 
         $this->expectException(ApiException::class);
         $this->expectExceptionCode(1006);
         $this->expectExceptionMessage('Invalid transaction ID');
-        $transactions->get('42');
+        $transactionManager->get('42');
     }
 }

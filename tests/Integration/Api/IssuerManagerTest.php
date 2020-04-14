@@ -2,12 +2,14 @@
 
 namespace MultiSafepay\Tests\Integration\Api\Issuers;
 
+use Exception;
 use InvalidArgumentException;
 use MultiSafepay\Api\Gateways;
 use MultiSafepay\Api\IssuerManager;
 use MultiSafepay\Client;
 use MultiSafepay\Tests\Integration\MockClient;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Client\ClientExceptionInterface;
 
 /**
  * Class IssuerTest
@@ -17,6 +19,9 @@ class IssuerManagerTest extends TestCase
 {
     /**
      * Test if initialization fails if invalid gateway code is used
+     *
+     * @throws Exception
+     * @throws ClientExceptionInterface
      */
     public function testGetIssuersByGatewayCode()
     {
