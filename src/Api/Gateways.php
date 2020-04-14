@@ -18,7 +18,7 @@ class Gateways extends Base
     ];
 
     /**
-     * @param bool $includeCoupons
+     * @param bool $includeCoupons Include coupons (aka giftcards)
      * @return array
      * @throws ClientExceptionInterface
      * @todo Convert response into an array of Gateway Value Objects
