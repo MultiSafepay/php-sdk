@@ -42,6 +42,14 @@ class Gateway
     }
 
     /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->data['type'] ?? '';
+    }
+
+    /**
      * @param array $data
      * @return bool
      */

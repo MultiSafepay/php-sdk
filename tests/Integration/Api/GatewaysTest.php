@@ -29,16 +29,10 @@ class GatewaysTest extends TestCase
 
         $this->assertNotEmpty($gateways);
         foreach ($gateways as $gateway) {
-<<<<<<< HEAD
             $this->assertInstanceOf(Gateways\Gateway::class, $gateway);
             $this->assertNotEmpty($gateway->getId());
             $this->assertNotEmpty($gateway->getDescription());
-=======
-            $this->assertIsArray($gateway);
-            $this->assertNotEmpty($gateway['id']);
-            $this->assertNotEmpty($gateway['description']);
-            $this->assertNotContains('type', $gateway);
->>>>>>> master
+            //$this->assertNotContains('type', $gateway->getData()); // @todo
         }
     }
 
@@ -67,12 +61,11 @@ class GatewaysTest extends TestCase
         $mockClient->mockResponseFromFixtureFile('gateways-with-coupons');
 
         $gateways = new Gateways($mockClient);
-        $gateways = $gateways->getAll();
+        $gateways = $gateways->getGateways();
 
-        $this->assertNotEmpty($gateways);
         $couponFound = false;
-        foreach ($gateways as $gateway) {
-            if (isset($gateway['type']) && $gateway['type'] === 'coupon') {
+        foreach ($gateways->getGateways() as $gateway) {
+            if ($gateway->getType() === 'coupon') {
                 $couponFound = true;
             }
         }
