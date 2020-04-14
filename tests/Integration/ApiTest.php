@@ -8,7 +8,10 @@ namespace MultiSafepay\Tests\Integration;
 
 use Http\Mock\Client as MockHttpClient;
 use MultiSafepay\Api;
+use MultiSafepay\Api\Base\RequestBody;
+use MultiSafepay\Exception\ApiException;
 use MultiSafepay\Tests\Fixtures\Order;
+use MultiSafepay\Tests\Fixtures\OrderFixture;
 use MultiSafepay\Util\Version;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -19,6 +22,8 @@ use Psr\Http\Client\ClientExceptionInterface;
  */
 class ApiTest extends TestCase
 {
+    use OrderFixture;
+
     /**
      * @throws ClientExceptionInterface
      */
@@ -26,6 +31,11 @@ class ApiTest extends TestCase
     {
         $api = self::getInstance();
         $transactionManager = $api->getTransactionManager();
+        $requestBody = new RequestBody($this->createOrderRequestFixture());
+
+        $this->expectException(ApiException::class);
+        $this->expectExceptionMessage('Unknown data');
+        $transactionManager->create($requestBody);
     }
 
     /**
@@ -35,8 +45,10 @@ class ApiTest extends TestCase
     {
         $api = self::getInstance();
         $gatewayManager = $api->getGatewayManager();
-        $gateways = $gatewayManager->getGateways();
-        $this->assertIsArray($gateways);
+
+        $this->expectException(ApiException::class);
+        $this->expectExceptionMessage('Unknown data');
+        $gatewayManager->getGateways();
     }
 
     /**
@@ -46,6 +58,9 @@ class ApiTest extends TestCase
     {
         $api = self::getInstance();
         $issuerManager = $api->getIssuerManager();
+
+        $this->expectException(ApiException::class);
+        $this->expectExceptionMessage('Unknown data');
         $issuerManager->getIssuersByGatewayCode('ideal');
     }
 

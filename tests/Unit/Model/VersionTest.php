@@ -7,13 +7,14 @@
 namespace MultiSafepay\Tests\Model\Unit;
 
 use MultiSafepay\Exception\MissingPluginVersionException;
+use MultiSafepay\Tests\Fixtures\OrderFixture;
 use MultiSafepay\Util\Version;
 use MultiSafepay\Tests\Fixtures\Order;
 use PHPUnit\Framework\TestCase;
 
 class VersionTest extends TestCase
 {
-    use Order;
+    use OrderFixture;
 
     /**
      * Test whether the version could be fetched

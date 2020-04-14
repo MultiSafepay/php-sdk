@@ -10,14 +10,14 @@ use Money\Money;
 use MultiSafepay\Api\Base\RequestBody;
 use MultiSafepay\Api\TransactionManager;
 use MultiSafepay\Exception\ApiException;
-use MultiSafepay\Tests\Fixtures\Order;
+use MultiSafepay\Tests\Fixtures\OrderFixture;
 use MultiSafepay\Tests\Integration\MockClient;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientExceptionInterface;
 
 class TransactionManagerTest extends TestCase
 {
-    use Order;
+    use OrderFixture;
 
     /**
      * Test the creation of a transaction
@@ -25,7 +25,7 @@ class TransactionManagerTest extends TestCase
      */
     public function testCreateTransaction(): void
     {
-        $orderData = $this->createOrder();
+        $orderData = $this->createOrderRequestFixture();
 
         $mockClient = MockClient::getInstance();
         $mockClient->mockResponse([
@@ -103,6 +103,7 @@ class TransactionManagerTest extends TestCase
 
     /**
      * Test the return of an Exception when an invalid order Id is being used.
+     *
      * @throws ClientExceptionInterface
      */
     public function testGetTransactionWithInvalidOrderId(): void
