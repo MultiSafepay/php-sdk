@@ -11,7 +11,7 @@ use MultiSafepay\Api\Issuers\Issuer;
 use MultiSafepay\Api\Issuers\IssuerListing;
 use Psr\Http\Client\ClientExceptionInterface;
 
-class IssuerManager extends Base
+class IssuerManager extends AbstractManager
 {
     /**
      * @return Issuer[]
