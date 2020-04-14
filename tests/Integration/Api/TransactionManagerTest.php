@@ -7,17 +7,15 @@
 namespace MultiSafepay\Tests\Integration\Api;
 
 use Money\Money;
-use MultiSafepay\Api;
 use MultiSafepay\Api\Base\RequestBody;
-use MultiSafepay\Api\Transactions;
+use MultiSafepay\Api\TransactionManager;
 use MultiSafepay\Exception\ApiException;
-use MultiSafepay\Exception\MissingPluginVersionException;
 use MultiSafepay\Tests\Fixtures\Order;
 use MultiSafepay\Tests\Integration\MockClient;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientExceptionInterface;
 
-class TransactionsTest extends TestCase
+class TransactionManagerTest extends TestCase
 {
     use Order;
 
@@ -35,7 +33,7 @@ class TransactionsTest extends TestCase
             'payment_url' => 'https://testpayv2.multisafepay.com/'
         ]);
 
-        $transactions = new Transactions($mockClient);
+        $transactions = new TransactionManager($mockClient);
         $requestBody = new RequestBody($orderData);
         $transaction = $transactions->create($requestBody);
 
@@ -62,7 +60,7 @@ class TransactionsTest extends TestCase
             'amount' => 9743
         ]);
 
-        $transactions = new Transactions($mockClient);
+        $transactions = new TransactionManager($mockClient);
         $transaction = $transactions->get($orderId);
 
         $this->assertNull($transaction->getPaymentLink());
@@ -87,7 +85,7 @@ class TransactionsTest extends TestCase
             'amount' => 10000
         ]);
 
-        $transactions = new Transactions($mockClient);
+        $transactions = new TransactionManager($mockClient);
         $transaction = $transactions->get($fakeOrderId);
 
         $mockClient->mockResponse([
@@ -95,7 +93,7 @@ class TransactionsTest extends TestCase
             'transaction_id' => $fakeTransactionId,
         ]);
 
-        $transactions = new Transactions($mockClient);
+        $transactions = new TransactionManager($mockClient);
         $refund = $transactions->refund($transaction, Money::EUR(50));
 
         $this->assertArrayHasKey('refund_id', $refund, var_export($refund, true));
@@ -112,7 +110,7 @@ class TransactionsTest extends TestCase
     {
         $mockClient = MockClient::getInstance();
         $mockClient->mockResponse([], false, 1006, 'Invalid transaction ID');
-        $transactions = new Transactions($mockClient);
+        $transactions = new TransactionManager($mockClient);
 
         $this->expectException(ApiException::class);
         $this->expectExceptionCode(1006);

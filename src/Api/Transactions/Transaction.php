@@ -14,21 +14,19 @@ use MultiSafepay\Exception\InvalidOrderDataException;
  * Model Transaction for containing transaction data received from the API
  * @package MultiSafepay\Api\Transactions
  */
-class Transaction extends Base
+class Transaction
 {
     /** @var array */
     private $data;
 
     /**
      * Transaction constructor.
-     * @param array $transactionData
-     * @param Client $client
+     * @param array $data
      * @todo Why input $transactionData here, if it is only used by create() and not refund()?
      */
-    public function __construct(array $transactionData, Client $client)
+    public function __construct(array $data)
     {
-        parent::__construct($client);
-        $this->data = $transactionData;
+        $this->data = $data;
     }
 
     /**
