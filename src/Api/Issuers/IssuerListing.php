@@ -7,10 +7,10 @@
 namespace MultiSafepay\Api\Issuers;
 
 /**
- * Class Issuers
+ * Class IssuerListing
  * @package MultiSafepay\Api\Issuers
  */
-class Issuers
+class IssuerListing
 {
     private $issuers;
 

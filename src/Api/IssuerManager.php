@@ -8,16 +8,16 @@ namespace MultiSafepay\Api;
 
 use InvalidArgumentException;
 use MultiSafepay\Api\Issuers\Issuer;
-use MultiSafepay\Api\Issuers\Issuers;
+use MultiSafepay\Api\Issuers\IssuerListing;
 use Psr\Http\Client\ClientExceptionInterface;
 
 class IssuerManager extends Base
 {
     /**
-     * @return Issuers
+     * @return Issuer[]
      * @throws ClientExceptionInterface
      */
-    public function getIssuersByGatewayCode(string $gatewayCode): Issuers
+    public function getIssuersByGatewayCode(string $gatewayCode): array
     {
         $gatewayCode = strtolower($gatewayCode);
         if (!in_array($gatewayCode, Issuer::ALLOWED_GATEWAY_CODES)) {
@@ -25,6 +25,6 @@ class IssuerManager extends Base
         }
 
         $response = $this->client->createGetRequest('gateways');
-        return new Issuers($gatewayCode, $response->getResponseData());
+        return (new IssuerListing($gatewayCode, $response->getResponseData()))->getIssuers();
     }
 }
