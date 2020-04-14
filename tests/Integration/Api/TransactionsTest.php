@@ -65,7 +65,7 @@ class TransactionsTest extends TestCase
         $transactions = new Transactions($mockClient);
         $transaction = $transactions->get($orderId);
 
-        $this->assertNull($transaction->getPaymentLink());
+        $this->assertEmpty($transaction->getPaymentLink());
         $this->assertSame('completed', $transaction->getData()['status']);
     }
 

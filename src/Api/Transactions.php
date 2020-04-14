@@ -47,11 +47,11 @@ class Transactions extends Base
     /**
      * @param Transaction $transaction
      * @param Money $amount
-     * @param string|null $description
+     * @param string $description
      * @return array
      * @throws ClientExceptionInterface
      */
-    public function refund(Transaction $transaction, Money $amount, ?string $description = null): array
+    public function refund(Transaction $transaction, Money $amount, string $description = ''): array
     {
         $requestBody = new RequestBody([
             'amount' => $amount->getAmount(),

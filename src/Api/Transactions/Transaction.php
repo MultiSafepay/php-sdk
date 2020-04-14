@@ -23,7 +23,6 @@ class Transaction extends Base
      * Transaction constructor.
      * @param array $transactionData
      * @param Client $client
-     * @todo Why input $transactionData here, if it is only used by create() and not refund()?
      */
     public function __construct(array $transactionData, Client $client)
     {
@@ -41,20 +40,18 @@ class Transaction extends Base
     }
 
     /**
-     * @return string|null
-     * @todo: Why return a `null` when an empty string would suffice?
+     * @return string
      */
-    public function getPaymentLink(): ?string
+    public function getPaymentLink(): string
     {
         if (!isset($this->getData()['payment_url'])) {
-            return null;
+            return '';
         }
         return $this->getData()['payment_url'];
     }
 
     /**
      * @return string
-     * @todo: Should this be a string or an integer?
      */
     public function getOrderId(): string
     {
