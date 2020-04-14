@@ -29,7 +29,10 @@ class Response
     public static function withJson(string $json)
     {
         $data = json_decode($json, true);
-        if (empty($data)) $data = [];
+        if (empty($data)) {
+            $data = [];
+        }
+
         return new self($data);
     }
 
