@@ -30,13 +30,13 @@ class Gateways extends Base
 
     /**
      * Get all or specific gateway
-     * @param string|null $gatewayCode
+     * @param string $gatewayCode
      * @param array $options
      * @return array
      * @throws ClientExceptionInterface
      * @todo Convert response into a Gateway Value Object
      */
-    public function getByCode(?string $gatewayCode = null, array $options = []): array
+    public function getByCode(string $gatewayCode, array $options = []): array
     {
         $options = array_intersect_key(self::ALLOWED_OPTIONS, $options);
 
