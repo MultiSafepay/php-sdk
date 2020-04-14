@@ -63,7 +63,7 @@ class TransactionManagerTest extends TestCase
         $transactions = new TransactionManager($mockClient);
         $transaction = $transactions->get($orderId);
 
-        $this->assertNull($transaction->getPaymentLink());
+        $this->assertEmpty($transaction->getPaymentLink());
         $this->assertSame('completed', $transaction->getData()['status']);
     }
 

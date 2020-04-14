@@ -22,7 +22,6 @@ class Transaction
     /**
      * Transaction constructor.
      * @param array $data
-     * @todo Why input $transactionData here, if it is only used by create() and not refund()?
      */
     public function __construct(array $data)
     {
@@ -31,7 +30,6 @@ class Transaction
 
     /**
      * @return array
-     * @todo: Why is this method public?
      */
     public function getData(): array
     {
@@ -39,20 +37,18 @@ class Transaction
     }
 
     /**
-     * @return string|null
-     * @todo: Why return a `null` when an empty string would suffice?
+     * @return string
      */
-    public function getPaymentLink(): ?string
+    public function getPaymentLink(): string
     {
-        if (!isset($this->getData()['payment_url'])) {
-            return null;
+        if (!isset($this->data['payment_url'])) {
+            return '';
         }
-        return $this->getData()['payment_url'];
+        return $this->data['payment_url'];
     }
 
     /**
      * @return string
-     * @todo: Should this be a string or an integer?
      */
     public function getOrderId(): string
     {
