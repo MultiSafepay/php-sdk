@@ -6,6 +6,8 @@
 
 namespace MultiSafepay\Api;
 
+use MultiSafepay\Api\Gateways\Gateway;
+use MultiSafepay\Api\Gateways\GatewayListing;
 use Psr\Http\Client\ClientExceptionInterface;
 
 class GatewayManager extends AbstractManager
@@ -19,12 +21,10 @@ class GatewayManager extends AbstractManager
 
     /**
      * @param bool $includeCoupons Include coupons (aka giftcards)
-     * @return array
+     * @return Gateway[]
      * @throws ClientExceptionInterface
-     * @todo Convert response into an array of Gateway Value Objects
-     * @todo Add a new field `type` and method `getType()` to the Gateway Value Object
      */
-    public function getAll(bool $includeCoupons = false): array
+    public function getGateways(bool $includeCoupons = false): array
     {
         $options = [];
         if ($includeCoupons) {
@@ -32,24 +32,23 @@ class GatewayManager extends AbstractManager
         }
 
         $response = $this->client->createGetRequest('gateways', $options);
-        return $response->getResponseData();
+        return (new GatewayListing($response->getResponseData()))->getGateways();
     }
 
     /**
      * Get all or specific gateway
      * @param string $gatewayCode
      * @param array $options
-     * @return array
+     * @return Gateway
      * @throws ClientExceptionInterface
-     * @todo Convert response into a Gateway Value Object
      */
-    public function getByCode(string $gatewayCode, array $options = []): array
+    public function getByCode(string $gatewayCode, array $options = []): Gateway
     {
         $options = array_intersect_key(self::ALLOWED_OPTIONS, $options);
 
         $endpoint = 'gateways/' . $gatewayCode;
         $response = $this->client->createGetRequest($endpoint, $options);
 
-        return $response->getResponseData();
+        return new Gateway($response->getResponseData());
     }
 }

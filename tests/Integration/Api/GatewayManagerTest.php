@@ -4,6 +4,7 @@ namespace MultiSafepay\Tests\Integration\Api;
 
 use Exception;
 use MultiSafepay\Api\GatewayManager;
+use MultiSafepay\Api\Gateways\Gateway;
 use MultiSafepay\Exception\ApiException;
 use MultiSafepay\Tests\Integration\MockClient;
 use PHPUnit\Framework\TestCase;
@@ -24,15 +25,15 @@ class GatewayManagerTest extends TestCase
         $mockClient = MockClient::getInstance();
         $mockClient->mockResponseFromFixtureFile('gateways');
 
-        $gateways = new GatewayManager($mockClient);
-        $gateways = $gateways->getAll();
+        $gatewayManager = new GatewayManager($mockClient);
+        $gateways = $gatewayManager->getGateways();
 
         $this->assertNotEmpty($gateways);
         foreach ($gateways as $gateway) {
-            $this->assertIsArray($gateway);
-            $this->assertNotEmpty($gateway['id']);
-            $this->assertNotEmpty($gateway['description']);
-            $this->assertNotContains('type', $gateway);
+            $this->assertInstanceOf(Gateway::class, $gateway);
+            $this->assertNotEmpty($gateway->getId());
+            $this->assertNotEmpty($gateway->getDescription());
+            $this->assertEmpty($gateway->getType());
         }
     }
 
@@ -45,10 +46,9 @@ class GatewayManagerTest extends TestCase
         $mockClient = MockClient::getInstance();
         $mockClient->mockResponseFromFixtureFile('gateways-empty');
 
-        $gateways = new GatewayManager($mockClient);
-        $gateways = $gateways->getAll();
-
-        $this->assertEmpty($gateways);
+        $gatewayManager = new GatewayManager($mockClient);
+        $gateways = $gatewayManager->getGateways();
+        $this->assertEquals(0, count($gateways));
     }
 
     /**
@@ -60,13 +60,12 @@ class GatewayManagerTest extends TestCase
         $mockClient = MockClient::getInstance();
         $mockClient->mockResponseFromFixtureFile('gateways-with-coupons');
 
-        $gateways = new GatewayManager($mockClient);
-        $gateways = $gateways->getAll();
+        $gatewayManager = new GatewayManager($mockClient);
+        $gateways = $gatewayManager->getGateways();
 
-        $this->assertNotEmpty($gateways);
         $couponFound = false;
         foreach ($gateways as $gateway) {
-            if (isset($gateway['type']) && $gateway['type'] === 'coupon') {
+            if ($gateway->getType() === 'coupon') {
                 $couponFound = true;
             }
         }
@@ -89,7 +88,7 @@ class GatewayManagerTest extends TestCase
         $gateways = new GatewayManager($mockClient);
         $gateway = $gateways->getByCode('IDEAL');
 
-        $this->assertNotEmpty($gateway);
+        $this->assertEquals('IDEAL', $gateway->getId());
     }
 
     /**
@@ -123,7 +122,6 @@ class GatewayManagerTest extends TestCase
 
         $gateways = new GatewayManager($mockClient);
         $gateway = $gateways->getByCode('MISTERCASH', ['country' => 'BE']);
-
-        $this->assertNotEmpty($gateway);
+        $this->assertEquals('MISTERCASH', $gateway->getId());
     }
 }
