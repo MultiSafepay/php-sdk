@@ -25,7 +25,7 @@ class IssuerManagerTest extends TestCase
 
         $issuerManager = new IssuerManager($mockClient);
         $issuers = $issuerManager->getIssuersByGatewayCode('ideal');
-        foreach ($issuers->getIssuers() as $issuer) {
+        foreach ($issuers as $issuer) {
             $this->assertEquals('ideal', $issuer->getGatewayCode());
             $this->assertNotEmpty($issuer->getCode());
             $this->assertNotEmpty($issuer->getDescription());
