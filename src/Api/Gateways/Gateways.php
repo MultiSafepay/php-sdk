@@ -9,22 +9,28 @@ namespace MultiSafepay\Api\Gateways;
 class Gateways
 {
     /** @var array */
-    private $data;
+    private $gateways;
 
     /**
      * Transaction constructor.
-     * @param array $gateways
+     * @param array $data
      */
-    public function __construct(array $gateways)
+    public function __construct(array $data)
     {
-        $this->data = $gateways;
+        $gateways = [];
+        if (!empty($data)) {
+            foreach ($data as $gatewayData) {
+                $gateways[] = new Gateway($gatewayData);
+            }
+        }
+        $this->gateways = $gateways;
     }
 
     /**
-     * @return array
+     * @return Gateway[]
      */
-    public function getData():array
+    public function getGateways(): array
     {
-        return $this->data['data'];
+        return $this->gateways;
     }
 }

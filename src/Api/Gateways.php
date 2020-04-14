@@ -6,6 +6,7 @@
 
 namespace MultiSafepay\Api;
 
+use MultiSafepay\Api\Gateways\Gateway;
 use Psr\Http\Client\ClientExceptionInterface;
 
 class Gateways extends Base
@@ -18,31 +19,29 @@ class Gateways extends Base
     ];
 
     /**
-     * @return array
+     * @return Gateways
      * @throws ClientExceptionInterface
-     * @todo Convert response into an array of Gateway Value Objects
      */
-    public function getAll(): array
+    public function getGateways(): Gateways\Gateways
     {
         $response = $this->client->createGetRequest('gateways');
-        return $response->getResponseData();
+        return new Gateways\Gateways($response->getResponseData());
     }
 
     /**
      * Get all or specific gateway
      * @param string|null $gatewayCode
      * @param array $options
-     * @return array
+     * @return Gateway
      * @throws ClientExceptionInterface
-     * @todo Convert response into a Gateway Value Object
      */
-    public function getByCode(?string $gatewayCode = null, array $options = []): array
+    public function getByCode(?string $gatewayCode = null, array $options = []): Gateway
     {
         $options = array_intersect_key(self::ALLOWED_OPTIONS, $options);
 
         $endpoint = 'gateways/' . $gatewayCode;
         $response = $this->client->createGetRequest($endpoint, $options);
 
-        return $response->getResponseData();
+        return new Gateway($response->getResponseData());
     }
 }

@@ -25,13 +25,13 @@ class GatewaysTest extends TestCase
         $mockClient->mockResponseFromFixtureFile('gateways');
 
         $gateways = new Gateways($mockClient);
-        $gateways = $gateways->getAll();
+        $gateways = $gateways->getGateways();
 
         $this->assertNotEmpty($gateways);
         foreach ($gateways as $gateway) {
-            $this->assertIsArray($gateway);
-            $this->assertNotEmpty($gateway['id']);
-            $this->assertNotEmpty($gateway['description']);
+            $this->assertInstanceOf(Gateways\Gateway::class, $gateway);
+            $this->assertNotEmpty($gateway->getId());
+            $this->assertNotEmpty($gateway->getDescription());
         }
     }
 
@@ -45,9 +45,9 @@ class GatewaysTest extends TestCase
         $mockClient->mockResponseFromFixtureFile('gateways-empty');
 
         $gateways = new Gateways($mockClient);
-        $gateways = $gateways->getAll();
+        $gateways = $gateways->getGateways();
 
-        $this->assertEmpty($gateways);
+        $this->assertEquals(0, count($gateways->getGateways()));
     }
 
     /**
@@ -65,7 +65,7 @@ class GatewaysTest extends TestCase
         $gateways = new Gateways($mockClient);
         $gateway = $gateways->getByCode('IDEAL');
 
-        $this->assertNotEmpty($gateway);
+        $this->assertEquals('IDEAL', $gateway->getId());
     }
 
     /**
@@ -99,7 +99,6 @@ class GatewaysTest extends TestCase
 
         $gateways = new Gateways($mockClient);
         $gateway = $gateways->getByCode('MISTERCASH', ['country' => 'BE']);
-
-        $this->assertNotEmpty($gateway);
+        $this->assertEquals('MISTERCASH', $gateway->getId());
     }
 }

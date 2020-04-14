@@ -21,6 +21,7 @@ class VersionTest extends TestCase
     public function testGetVersion(): void
     {
         $version = Version::getInstance();
+        $version->addPluginVersion('0.0.1');
         $this->assertNotEmpty($version->getVersion());
     }
 
@@ -30,6 +31,7 @@ class VersionTest extends TestCase
     public function testGetSdkVersion(): void
     {
         $version = Version::getInstance();
+        $version->addPluginVersion('0.0.1');
         $this->assertNotEmpty($version->getSdkVersion());
     }
 
