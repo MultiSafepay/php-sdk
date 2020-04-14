@@ -13,11 +13,10 @@ use MultiSafepay\Exception\ApiException;
 use Psr\Http\Client\ClientExceptionInterface;
 
 /**
- * Class Transactions
+ * Class TransactionManager
  * @package MultiSafepay\Api
- * @todo Rename this to TransactionsManager?
  */
-class Transactions extends Base
+class TransactionManager extends AbstractManager
 {
     /**
      * @param RequestBody $requestBody
@@ -47,11 +46,11 @@ class Transactions extends Base
     /**
      * @param Transaction $transaction
      * @param Money $amount
-     * @param string|null $description
+     * @param string $description
      * @return array
      * @throws ClientExceptionInterface
      */
-    public function refund(Transaction $transaction, Money $amount, ?string $description = null): array
+    public function refund(Transaction $transaction, Money $amount, string $description = ''): array
     {
         $requestBody = new RequestBody([
             'amount' => $amount->getAmount(),

@@ -8,7 +8,7 @@ namespace MultiSafepay\Api;
 
 use Psr\Http\Client\ClientExceptionInterface;
 
-class Gateways extends Base
+class GatewayManager extends AbstractManager
 {
     const ALLOWED_OPTIONS = [
         'country' => '',
@@ -18,25 +18,32 @@ class Gateways extends Base
     ];
 
     /**
+     * @param bool $includeCoupons Include coupons (aka giftcards)
      * @return array
      * @throws ClientExceptionInterface
      * @todo Convert response into an array of Gateway Value Objects
+     * @todo Add a new field `type` and method `getType()` to the Gateway Value Object
      */
-    public function getAll(): array
+    public function getAll(bool $includeCoupons = false): array
     {
-        $response = $this->client->createGetRequest('gateways');
+        $options = [];
+        if ($includeCoupons) {
+            $options['include'] = 'coupons';
+        }
+
+        $response = $this->client->createGetRequest('gateways', $options);
         return $response->getResponseData();
     }
 
     /**
      * Get all or specific gateway
-     * @param string|null $gatewayCode
+     * @param string $gatewayCode
      * @param array $options
      * @return array
      * @throws ClientExceptionInterface
      * @todo Convert response into a Gateway Value Object
      */
-    public function getByCode(?string $gatewayCode = null, array $options = []): array
+    public function getByCode(string $gatewayCode, array $options = []): array
     {
         $options = array_intersect_key(self::ALLOWED_OPTIONS, $options);
 
