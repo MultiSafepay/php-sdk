@@ -18,13 +18,20 @@ class GatewayManager extends AbstractManager
     ];
 
     /**
+     * @param bool $includeCoupons Include coupons (aka giftcards)
      * @return array
      * @throws ClientExceptionInterface
      * @todo Convert response into an array of Gateway Value Objects
+     * @todo Add a new field `type` and method `getType()` to the Gateway Value Object
      */
-    public function getAll(): array
+    public function getAll(bool $includeCoupons = false): array
     {
-        $response = $this->client->createGetRequest('gateways');
+        $options = [];
+        if ($includeCoupons) {
+            $options['include'] = 'coupons';
+        }
+
+        $response = $this->client->createGetRequest('gateways', $options);
         return $response->getResponseData();
     }
 
