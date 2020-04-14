@@ -8,7 +8,7 @@ namespace MultiSafepay\Api;
 
 use Psr\Http\Client\ClientExceptionInterface;
 
-class Gateways extends Base
+class GatewayManager extends AbstractManager
 {
     const ALLOWED_OPTIONS = [
         'country' => '',
