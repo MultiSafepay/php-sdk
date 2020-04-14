@@ -60,7 +60,7 @@ class GatewayManagerTest extends TestCase
         $mockClient = MockClient::getInstance();
         $mockClient->mockResponseFromFixtureFile('gateways-with-coupons');
 
-        $gateways = new Gateways($mockClient);
+        $gateways = new GatewayManager($mockClient);
         $gateways = $gateways->getAll();
 
         $this->assertNotEmpty($gateways);
