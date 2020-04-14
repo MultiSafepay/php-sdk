@@ -17,12 +17,12 @@ class IssuerTest extends TestCase
      */
     public function testNormalInitialization()
     {
-        $issuer = new Issuer('ideal', '1234', 'bar');
+        $issuer = new Issuer('ideal', 1234, 'bar');
         $this->assertEquals('ideal', $issuer->getGatewayCode());
-        $this->assertEquals('1234', $issuer->getCode());
+        $this->assertEquals(1234, $issuer->getCode());
         $this->assertEquals('bar', $issuer->getDescription());
 
-        $issuer = new Issuer('IDEAL', '1234', 'bar');
+        $issuer = new Issuer('IDEAL', 1234, 'bar');
         $this->assertEquals('ideal', $issuer->getGatewayCode());
     }
 
@@ -32,6 +32,6 @@ class IssuerTest extends TestCase
     public function testInitializationWithWrongGatewayCode()
     {
         $this->expectException(InvalidArgumentException::class);
-        new Issuer('wrong', 'bar', 'foobar');
+        new Issuer('wrong', 1234, 'foobar');
     }
 }

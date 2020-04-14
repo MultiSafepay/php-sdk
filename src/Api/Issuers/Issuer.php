@@ -20,7 +20,7 @@ class Issuer
     private $gatewayCode;
 
     /**
-     * @var string
+     * @var int
      */
     private $code;
 
@@ -37,13 +37,13 @@ class Issuer
     /**
      * Issuer constructor.
      * @param string $gatewayCode
-     * @param string $code
+     * @param int $code
      * @param string $description
      */
-    public function __construct(string $gatewayCode, string $code, string $description)
+    public function __construct(string $gatewayCode, int $code, string $description)
     {
         $this->initGatewayCode($gatewayCode);
-        $this->initCode($code);
+        $this->code = $code;
         $this->description = $description;
     }
 
@@ -62,20 +62,6 @@ class Issuer
     }
 
     /**
-     * @param string $code
-     * @todo Does it need to be verified that this is a number?
-     * @todo Does this need to be an integer instead of a string?
-     */
-    private function initCode(string $code)
-    {
-        if (!is_numeric($code)) {
-            throw new InvalidArgumentException('Code needs to have a numeric value');
-        }
-
-        $this->code = $code;
-    }
-
-    /**
      * @return string
      */
     public function getGatewayCode(): string
@@ -84,9 +70,9 @@ class Issuer
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getCode(): string
+    public function getCode(): int
     {
         return $this->code;
     }

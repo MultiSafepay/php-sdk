@@ -22,7 +22,7 @@ class IssuerListing
     public function __construct(string $gatewayCode, array $data)
     {
         foreach ($data as $issuerData) {
-            $this->issuers[] = new Issuer($gatewayCode, $issuerData['code'], $issuerData['description']);
+            $this->issuers[] = new Issuer($gatewayCode, (int)$issuerData['code'], $issuerData['description']);
         }
     }
 
