@@ -19,12 +19,18 @@ class Gateways extends Base
     ];
 
     /**
+     * @param bool $includeCoupons Include coupons (aka giftcards)
      * @return Gateways
      * @throws ClientExceptionInterface
      */
-    public function getGateways(): Gateways\Gateways
+    public function getGateways(bool $includeCoupons = false): Gateways\Gateways
     {
-        $response = $this->client->createGetRequest('gateways');
+        $options = [];
+        if ($includeCoupons) {
+            $options['include'] = 'coupons';
+        }
+
+        $response = $this->client->createGetRequest('gateways', $options);
         return new Gateways\Gateways($response->getResponseData());
     }
 
