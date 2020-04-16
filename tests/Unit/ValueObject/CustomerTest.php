@@ -2,6 +2,7 @@
 
 namespace MultiSafepay\Tests\Unit\ValueObject;
 
+use MultiSafepay\Tests\Fixtures\AddressFixture;
 use MultiSafepay\ValueObject\Customer;
 use MultiSafepay\ValueObject\Customer\Address;
 use MultiSafepay\ValueObject\Customer\Country;
@@ -15,26 +16,16 @@ use PHPUnit\Framework\TestCase;
  */
 class CustomerTest extends TestCase
 {
+    use AddressFixture;
+
     /**
      * Test whether basic values can be set
      */
     public function testAddThings()
     {
-        $country = new Country('NL', 'Nederland');
-        $address = new Address(
-            'Kraanspoor',
-            '',
-            '18',
-            '',
-            '1000AA',
-            'Amsterdam',
-            'Noord Holland',
-            $country,
-            ['0123456789']
-        );
+        $address = $this->createAddressFixture();
         $ipAddress = new IpAddress('10.0.0.1');
         $emailAddress = new EmailAddress('info@example.org');
-
         $customer = new Customer('John', 'Doe', $address, $ipAddress, $emailAddress);
 
         $this->assertEquals('10.0.0.1', $customer->getIpAddress()->get());
