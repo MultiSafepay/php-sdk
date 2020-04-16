@@ -23,7 +23,7 @@ class DataObject
      * RequestBody constructor.
      * @param array $data
      */
-    public function __construct(array $data)
+    public function __construct(array $data = [])
     {
         $this->addData($data);
     }
@@ -42,6 +42,24 @@ class DataObject
 
         $this->data = array_merge($this->data, $data);
         return $this;
+    }
+
+    /**
+     * @param string $name
+     * @return mixed
+     */
+    public function get(string $name)
+    {
+        return $this->data[$name];
+    }
+
+    /**
+     * @param string $name
+     * @param $value
+     */
+    private function set(string $name, $value)
+    {
+        $this->data['name'] = $value;
     }
 
     /**

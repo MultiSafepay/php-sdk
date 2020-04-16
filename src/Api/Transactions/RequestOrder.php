@@ -9,6 +9,7 @@ namespace MultiSafepay\Api\Transactions;
 use InvalidArgumentException;
 use Money\Money;
 use MultiSafepay\Api\Base;
+use MultiSafepay\Api\Transactions\RequestOrder\CustomerDetails;
 
 /**
  * Class RequestOrder
@@ -90,9 +91,9 @@ class RequestOrder extends Base\RequestBody
     }
 
     /**
-     * @param Customer $customer
+     * @param CustomerDetails $customer
      */
-    public function addCustomer(Customer $customer)
+    public function addCustomerDetails(CustomerDetails $customer)
     {
         $this->addData(['customer' => $customer->getData()]);
     }
