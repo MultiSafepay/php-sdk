@@ -7,8 +7,8 @@
 namespace MultiSafepay\Tests\Integration\Api;
 
 use Money\Money;
-use MultiSafepay\Api\Base\RequestBody;
 use MultiSafepay\Api\TransactionManager;
+use MultiSafepay\Api\Transactions\RequestOrder;
 use MultiSafepay\Exception\ApiException;
 use MultiSafepay\Tests\Fixtures\OrderFixture;
 use MultiSafepay\Tests\Integration\MockClient;
@@ -34,8 +34,8 @@ class TransactionManagerTest extends TestCase
         ]);
 
         $transactionManager = new TransactionManager($mockClient);
-        $requestBody = new RequestBody($orderData);
-        $transaction = $transactionManager->create($requestBody);
+        $requestOrder = new RequestOrder($orderData);
+        $transaction = $transactionManager->create($requestOrder);
 
         $this->assertEquals($orderData['order_id'], $transaction->getOrderId());
 

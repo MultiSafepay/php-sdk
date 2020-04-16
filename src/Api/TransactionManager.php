@@ -8,6 +8,7 @@ namespace MultiSafepay\Api;
 
 use Money\Money;
 use MultiSafepay\Api\Base\RequestBody;
+use MultiSafepay\Api\Transactions\RequestOrder;
 use MultiSafepay\Api\Transactions\Transaction;
 use MultiSafepay\Exception\ApiException;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -19,13 +20,13 @@ use Psr\Http\Client\ClientExceptionInterface;
 class TransactionManager extends AbstractManager
 {
     /**
-     * @param RequestBody $requestBody
+     * @param RequestOrder $requestOrder
      * @return Transaction
      * @throws ClientExceptionInterface
      */
-    public function create(RequestBody $requestBody): Transaction
+    public function create(RequestOrder $requestOrder): Transaction
     {
-        $response = $this->client->createPostRequest('orders', $requestBody->getData());
+        $response = $this->client->createPostRequest('orders', $requestOrder->getData());
         return new Transaction($response->getResponseData());
     }
 
