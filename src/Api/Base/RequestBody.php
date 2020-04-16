@@ -27,7 +27,17 @@ class RequestBody
      */
     public function __construct(array $data)
     {
-        $this->data = $data;
+        $this->addData($data);
+    }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    public function addData(array $data): array
+    {
+        $this->data = array_merge_recursive($this->data, $data);
+        return $this->data;
     }
 
     /**

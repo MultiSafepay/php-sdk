@@ -7,9 +7,11 @@
 namespace MultiSafepay\Api\Transactions;
 
 use MultiSafepay\Api\Base;
-use MultiSafepay\Client;
-use MultiSafepay\Exception\InvalidOrderDataException;
 
+/**
+ * Class RequestOrder
+ * @package MultiSafepay\Api\Transactions
+ */
 class RequestOrder extends Base\RequestBody
 {
 
