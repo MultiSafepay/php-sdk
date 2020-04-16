@@ -32,12 +32,16 @@ class RequestBody
 
     /**
      * @param array $data
+     * @param bool $recursive
      * @return array
      */
-    public function addData(array $data): array
+    public function addData(array $data, bool $recursive = false): array
     {
-        $this->data = array_merge_recursive($this->data, $data);
-        return $this->data;
+        if ($recursive) {
+            return $this->data = array_merge_recursive($this->data, $data);
+        }
+
+        return $this->data = array_merge($this->data, $data);
     }
 
     /**
