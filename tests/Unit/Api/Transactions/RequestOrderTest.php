@@ -5,6 +5,11 @@ namespace MultiSafepay\Tests\Unit\Api\Issuers;
 use InvalidArgumentException;
 use Money\Money;
 use MultiSafepay\Api\Transactions\RequestOrder;
+use MultiSafepay\Tests\Fixtures\AddressFixture;
+use MultiSafepay\Tests\Fixtures\CustomerDetailsFixture;
+use MultiSafepay\Tests\Fixtures\OrderDirectFixture;
+use MultiSafepay\Tests\Fixtures\OrderRedirectFixture;
+use MultiSafepay\Tests\Fixtures\PaymentOptionsFixture;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -13,28 +18,42 @@ use PHPUnit\Framework\TestCase;
  */
 class RequestOrderTest extends TestCase
 {
+    use OrderRedirectFixture;
+    use OrderDirectFixture;
+    use CustomerDetailsFixture;
+    use AddressFixture;
+    use PaymentOptionsFixture;
+
     /**
      * Test if regular creation of an order works
      */
-    public function testRegularInitialization()
+    public function testRequestOrderWithTypeRedirect()
     {
-        $requestOrder = new RequestOrder();
-        $data = $requestOrder->getData();
-        $this->assertEquals('direct', $data['type'], var_export($data, true));
-
-        $requestOrder->addType('redirect');
-        $requestOrder->addGateway('custom');
-        $requestOrder->addOrderId('1234');
-        $requestOrder->addMoney(Money::EUR(200));
-        $requestOrder->addDescription('Bedankt vor die bloemen');
+        $requestOrder = $this->createOrderRedirectRequestFixture();
 
         $data = $requestOrder->getData();
         $this->assertEquals('redirect', $data['type']);
-        $this->assertEquals('custom', $data['gateway']);
-        $this->assertEquals('1234', $data['order_id']);
+        $this->assertEquals('IDEAL', $data['gateway']);
+        $this->assertIsNumeric($data['order_id']);
         $this->assertEquals('EUR', $data['currency']);
-        $this->assertEquals('200', $data['amount']);
-        $this->assertEquals('Bedankt vor die bloemen', $data['description']);
+        $this->assertEquals('20', $data['amount']);
+        $this->assertEquals('Foobar', $data['description']);
+    }
+
+    /**
+     * Test if regular creation of an order works
+     */
+    public function testRequestOrderWithTypeDirect()
+    {
+        $requestOrder = $this->createOrderDirectRequestFixture();
+
+        $data = $requestOrder->getData();
+        $this->assertEquals('direct', $data['type']);
+        $this->assertEquals('IDEAL', $data['gateway']);
+        $this->assertIsNumeric($data['order_id']);
+        $this->assertEquals('EUR', $data['currency']);
+        $this->assertEquals('20', $data['amount']);
+        $this->assertEquals('Foobar', $data['description']);
     }
 
     /**

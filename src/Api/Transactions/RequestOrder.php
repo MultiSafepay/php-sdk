@@ -10,6 +10,9 @@ use InvalidArgumentException;
 use Money\Money;
 use MultiSafepay\Api\Base;
 use MultiSafepay\Api\Transactions\RequestOrder\CustomerDetails;
+use MultiSafepay\Api\Transactions\RequestOrder\PaymentOptions;
+use MultiSafepay\Exception\OrderDataWithWrongTypeException;
+use MultiSafepay\ValueObject\Customer;
 
 /**
  * Class RequestOrder
@@ -17,7 +20,7 @@ use MultiSafepay\Api\Transactions\RequestOrder\CustomerDetails;
  */
 class RequestOrder extends Base\RequestBody
 {
-    const ALLOWED_TYPES = ['direct', 'redirect'];
+    const ALLOWED_TYPES = ['direct', 'redirect', 'checkout', 'paymentlink'];
 
     /**
      * RequestOrder constructor.
@@ -50,10 +53,11 @@ class RequestOrder extends Base\RequestBody
     }
 
     /**
-     * @param string $orderId
+     * @param mixed $orderId
      */
-    public function addOrderId(string $orderId)
+    public function addOrderId($orderId)
     {
+        $orderId = (string)$orderId;
         $this->addData(['order_id' => $orderId]);
     }
 
@@ -63,7 +67,20 @@ class RequestOrder extends Base\RequestBody
      */
     public function addGateway(string $gateway)
     {
+        $gateway = strtoupper($gateway);
         $this->addData(['gateway' => $gateway]);
+    }
+
+    /**
+     * @param array $gatewayInfo
+     */
+    public function addGatewayInfo(array $gatewayInfo)
+    {
+        if ($this->get('type') !== 'direct') {
+            throw new OrderDataWithWrongTypeException('Method "addGatewayInfo" can only be used with type "direct');
+        }
+
+        $this->addData(['gateway_info' => $gatewayInfo]);
     }
 
     /**
@@ -79,6 +96,10 @@ class RequestOrder extends Base\RequestBody
      */
     public function addDescription(string $description)
     {
+        if (strlen($description) > 200) {
+            throw new InvalidArgumentException('Description can not be more than 200 characters');
+        }
+
         $this->addData(['description' => $description]);
     }
 
@@ -99,10 +120,34 @@ class RequestOrder extends Base\RequestBody
     }
 
     /**
+     * @param Customer $customer
+     */
+    public function addDelivery(Customer $customer)
+    {
+        $this->addData(['delivery' => $customer->getData()]);
+    }
+
+    /**
+     * @param int $recurringId
+     */
+    public function addRecurringId(int $recurringId)
+    {
+        if ($this->get('type') !== 'direct') {
+            throw new OrderDataWithWrongTypeException('Method "addRecurringId" can only be used with type "direct');
+        }
+
+        $this->addData(['recurring_id' => $recurringId]);
+    }
+
+    /**
      * @param bool $sendEmail
      */
     public function addSecondChance(bool $sendEmail)
     {
+        if ($this->get('type') !== 'redirect') {
+            throw new OrderDataWithWrongTypeException('Method "addSecondChance" can only be used with type "redirect');
+        }
+
         $this->addData(['second_chance' => ['send_email' => $sendEmail]]);
     }
 }

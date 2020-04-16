@@ -4,45 +4,97 @@
  * See DISCLAIMER.md for disclaimer details.
  */
 
-namespace MultiSafepay\Api\Transactions;
+namespace MultiSafepay\Api\Transactions\RequestOrder;
 
 use MultiSafepay\Api\Base;
 
 /**
  * Class PaymentOptions
- * @package MultiSafepay\Api\Transactions
+ * @package MultiSafepay\Api\Transactions\RequestOrder
  */
-class PaymentOptions extends Base\DataObject
+class PaymentOptions
 {
     /**
+     * @var string
+     */
+    private $notificationUrl = '';
+
+    /**
+     * @var string
+     */
+    private $redirectUrl = '';
+
+    /**
+     * @var string
+     */
+    private $cancelUrl = '';
+
+    /**
+     * @var bool
+     */
+    private $closeWindow = true;
+
+    /**
+     * PaymentOptions constructor.
      * @param string $notificationUrl
-     */
-    public function addNotificationUrl(string $notificationUrl)
-    {
-        $this->addData(['notification_url' => $notificationUrl]);
-    }
-
-    /**
      * @param string $redirectUrl
-     */
-    public function addRedirectUrl(string $redirectUrl)
-    {
-        $this->addData(['redirect_url' => $redirectUrl]);
-    }
-
-    /**
      * @param string $cancelUrl
+     * @param bool $closeWindow
      */
-    public function addCancelUrl(string $cancelUrl)
-    {
-        $this->addData(['cancel_url' => $cancelUrl]);
+    public function __construct(
+        string $notificationUrl,
+        string $redirectUrl,
+        string $cancelUrl,
+        bool $closeWindow
+    ) {
+        $this->notificationUrl = $notificationUrl;
+        $this->redirectUrl = $redirectUrl;
+        $this->cancelUrl = $cancelUrl;
+        $this->closeWindow = $closeWindow;
     }
 
     /**
-     * @param string $closeWindow
+     * @return string
      */
-    public function addCloseWindow(string $closeWindow)
+    public function getNotificationUrl(): string
     {
-        $this->addData(['close_window' => $closeWindow]);
+        return $this->notificationUrl;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRedirectUrl(): string
+    {
+        return $this->redirectUrl;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCancelUrl(): string
+    {
+        return $this->cancelUrl;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCloseWindow(): bool
+    {
+        return $this->closeWindow;
+    }
+
+    /**
+     * @return array
+     */
+    public function getData(): array
+    {
+        return [
+            'notification_url' => $this->getNotificationUrl(),
+            'redirect_url' => $this->getRedirectUrl(),
+            'cancel_url' => $this->getCancelUrl(),
+            'close_window' => $this->isCloseWindow()
+        ];
     }
 }
