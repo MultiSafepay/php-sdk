@@ -3,6 +3,7 @@
 namespace MultiSafepay\Tests\Unit\Api\Issuers;
 
 use InvalidArgumentException;
+use Money\Money;
 use MultiSafepay\Api\Transactions\RequestOrder;
 use PHPUnit\Framework\TestCase;
 
@@ -21,16 +22,25 @@ class RequestOrderTest extends TestCase
         $data = $requestOrder->getData();
         $this->assertEquals('direct', $data['type'], var_export($data, true));
 
-        $requestOrder = new RequestOrder();
         $requestOrder->addType('redirect');
+        $requestOrder->addGateway('custom');
+        $requestOrder->addOrderId('1234');
+        $requestOrder->addMoney(Money::EUR(200));
+        $requestOrder->addDescription('Bedankt vor die bloemen');
+
         $data = $requestOrder->getData();
-        $this->assertEquals('redirect', $data['type'], var_export($data, true));
+        $this->assertEquals('redirect', $data['type']);
+        $this->assertEquals('custom', $data['gateway']);
+        $this->assertEquals('1234', $data['order_id']);
+        $this->assertEquals('EUR', $data['currency']);
+        $this->assertEquals('200', $data['amount']);
+        $this->assertEquals('Bedankt vor die bloemen', $data['description']);
     }
 
     /**
-     * Test wrong order creation
+     * Test order creation with wrong type
      */
-    public function testWrongInitialization()
+    public function testInitializationWithWrongType()
     {
         $this->expectException(InvalidArgumentException::class);
         $requestOrder = new RequestOrder();

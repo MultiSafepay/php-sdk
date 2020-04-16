@@ -7,6 +7,7 @@
 namespace MultiSafepay\Api\Transactions;
 
 use InvalidArgumentException;
+use Money\Money;
 use MultiSafepay\Api\Base;
 
 /**
@@ -45,5 +46,62 @@ class RequestOrder extends Base\RequestBody
         }
 
         $this->addData(['type' => $type]);
+    }
+
+    /**
+     * @param string $orderId
+     */
+    public function addOrderId(string $orderId)
+    {
+        $this->addData(['order_id' => $orderId]);
+    }
+
+    /**
+     * @param string $gateway
+     * @todo Add validation of whether the gateway is correct?
+     */
+    public function addGateway(string $gateway)
+    {
+        $this->addData(['gateway' => $gateway]);
+    }
+
+    /**
+     * @param Money $money
+     */
+    public function addMoney(Money $money)
+    {
+        $this->addData(['currency' => $money->getCurrency(), 'amount' => $money->getAmount()]);
+    }
+
+    /**
+     * @param string $description
+     */
+    public function addDescription(string $description)
+    {
+        $this->addData(['description' => $description]);
+    }
+
+    /**
+     * @param PaymentOptions $paymentOptions
+     */
+    public function addPaymentOptions(PaymentOptions $paymentOptions)
+    {
+        $this->addData(['payment_options' => $paymentOptions->getData()]);
+    }
+
+    /**
+     * @param Customer $customer
+     */
+    public function addCustomer(Customer $customer)
+    {
+        $this->addData(['customer' => $customer->getData()]);
+    }
+
+    /**
+     * @param bool $sendEmail
+     */
+    public function addSecondChance(bool $sendEmail)
+    {
+        $this->addData(['second_chance' => ['send_email' => $sendEmail]]);
     }
 }

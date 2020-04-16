@@ -11,39 +11,11 @@ use MultiSafepay\Exception\MissingPluginVersionException;
 use MultiSafepay\Util\Version;
 
 /**
- * Class Response
+ * Class RequestBody
  * @package MultiSafepay\Api\Base
  */
-class RequestBody
+class RequestBody extends DataObject
 {
-    /**
-     * @var array
-     */
-    private $data = [];
-
-    /**
-     * RequestBody constructor.
-     * @param array $data
-     */
-    public function __construct(array $data)
-    {
-        $this->addData($data);
-    }
-
-    /**
-     * @param array $data
-     * @param bool $recursive
-     * @return array
-     */
-    public function addData(array $data, bool $recursive = false): array
-    {
-        if ($recursive) {
-            return $this->data = array_merge_recursive($this->data, $data);
-        }
-
-        return $this->data = array_merge($this->data, $data);
-    }
-
     /**
      * @return array
      */
