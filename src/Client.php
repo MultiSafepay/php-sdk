@@ -18,10 +18,13 @@ use Psr\Http\Message\StreamInterface;
 
 class Client
 {
-    public const LIVE_URL = 'https://api.multisafepay.com/v1/json/';
-    public const TEST_URL = 'https://testapi.multisafepay.com/v1/json/';
-    public const METHOD_POST = 'POST';
-    public const METHOD_GET = 'GET';
+    const LIVE_URL = 'https://api.multisafepay.com/v1/json/';
+
+    const TEST_URL = 'https://testapi.multisafepay.com/v1/json/';
+
+    const METHOD_POST = 'POST';
+
+    const METHOD_GET = 'GET';
 
     /** @var string */
     private $apiKey;
