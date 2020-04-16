@@ -3,6 +3,7 @@
 namespace MultiSafepay\Tests\Unit\Api\Issuers\RequestOrder;
 
 use MultiSafepay\Api\Transactions\RequestOrder\CustomerDetails;
+use MultiSafepay\Tests\Fixtures\AddressFixture;
 use MultiSafepay\ValueObject\Customer\Address;
 use MultiSafepay\ValueObject\Customer\Country;
 use MultiSafepay\ValueObject\Customer\EmailAddress;
@@ -15,24 +16,14 @@ use PHPUnit\Framework\TestCase;
  */
 class CustomerDetailsTest extends TestCase
 {
+    use AddressFixture;
+
     /**
      * Test case to guarantee that CustomerDetails transfers all details properly
      */
     public function testWorkingCustomerDetails()
     {
-        $country = new Country('NL', 'Nederland');
-        $address = new Address(
-            'Kraanspoor',
-            '(blue door)',
-            '18',
-            'A',
-            '1000AA',
-            'Amsterdam',
-            'Noord Holland',
-            $country,
-            ['0123456789']
-        );
-
+        $address = $this->createAddressFixture();
         $customerDetails = new CustomerDetails(
             'John',
             'Doe',

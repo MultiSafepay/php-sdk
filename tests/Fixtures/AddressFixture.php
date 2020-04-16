@@ -23,9 +23,9 @@ trait AddressFixture
         $country = new Country('NL', 'Nederland');
         return new Address(
             'Kraanspoor',
-            '',
+            '(blue door)',
             '18',
-            '',
+            'A',
             '1000AA',
             'Amsterdam',
             'Noord Holland',
