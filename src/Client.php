@@ -47,8 +47,12 @@ class Client
      * @param ClientInterface|null $httpClient
      * @param string $locale
      */
-    public function __construct(string $apiKey, bool $isProduction, ClientInterface $httpClient = null, string $locale = 'en')
-    {
+    public function __construct(
+        string $apiKey,
+        bool $isProduction,
+        ClientInterface $httpClient = null,
+        string $locale = 'en'
+    ) {
         $this->apiKey = $apiKey;
         $this->url = $isProduction ? self::LIVE_URL : self::TEST_URL;
         $this->httpClient = $httpClient ?: Psr18ClientDiscovery::find();
