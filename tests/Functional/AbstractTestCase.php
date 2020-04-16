@@ -2,6 +2,7 @@
 
 namespace MultiSafepay\Tests\Functional;
 
+use MultiSafepay\Util\Version;
 use PHPUnit\Framework\TestCase;
 use MultiSafepay\Client;
 
@@ -16,6 +17,8 @@ abstract class AbstractTestCase extends TestCase
      */
     protected function getClient(): Client
     {
+        Version::getInstance()->addPluginVersion('functional-test');
+
         require_once __DIR__ . '/../bootstrap.php';
 
         $apiKey = getenv('API_KEY');

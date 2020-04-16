@@ -21,6 +21,7 @@ trait OrderDirectFixture
     public function createOrderDirectRequestFixture(): RequestOrder
     {
         $gatewayInfo = [
+            "issuer_id" => "0031",
             'birthday' => '1980-01-30',
             'bank_account' => '0417164300',
             'phone' => '0208500500',
