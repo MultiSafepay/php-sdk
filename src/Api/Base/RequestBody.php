@@ -21,12 +21,7 @@ class RequestBody extends DataObject
      */
     public function getData(): array
     {
-        if (!isset($this->data['plugin'])) {
-            $this->data['plugin'] = [];
-        }
-
         $this->data['plugin']['plugin_version'] = Version::getInstance()->getVersion();
-
         $this->validate();
 
         return $this->data;
