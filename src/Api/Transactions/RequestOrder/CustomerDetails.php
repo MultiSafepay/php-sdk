@@ -36,7 +36,31 @@ class CustomerDetails extends Customer
     public function getData(): array
     {
         $address = $this->getAddress();
-        $phoneNumbers = $address->getPhoneNumbers();
+        return [
+            'address1' => $address->getStreetName(),
+            'address2' => $address->getStreetNameAdditional(),
+            'house_number' => $this->getHouseNumber(),
+            'zip_code' => $address->getZipCode(),
+            'city' => $address->getCity(),
+            'state' => $address->getState(),
+            'country' => $address->getCountry()->getCode(),
+            'country_name' => $address->getCountry()->getName(),
+            'phone1' => $address->getPhoneNumbers()[0] ?? '',
+            'phone2' => $address->getPhoneNumbers()[1] ?? '',
+            'email' => $this->getEmailAddress()->get(),
+            'ip_address' => $this->getIpAddress()->get(),
+            'locale' => $this->getLocale(),
+            'referrer' => $this->getReferrer(),
+            'user_agent' => $this->getUserAgent(),
+        ];
+    }
+
+    /**
+     * @return string
+     */
+    private function getHouseNumber(): string
+    {
+        $address = $this->getAddress();
         $houseNumber = $address->getHouseNumber();
         $houseNumberSuffix = $address->getHouseNumberSuffix();
 
@@ -44,23 +68,7 @@ class CustomerDetails extends Customer
             $houseNumber .= ' ' . $houseNumberSuffix;
         }
 
-        return [
-            'address1' => $address->getStreetName(),
-            'address2' => $address->getStreetNameAdditional(),
-            'house_number' => $houseNumber,
-            'zip_code' => $address->getZipCode(),
-            'city' => $address->getCity(),
-            'state' => $address->getState(),
-            'country' => $address->getCountry()->getCode(),
-            'country_name' => $address->getCountry()->getName(),
-            'phone1' => $phoneNumbers[0] ?? '',
-            'phone2' => $phoneNumbers[1] ?? '',
-            'email' => $this->getEmailAddress()->get(),
-            'ip_address' => $this->getIpAddress()->get(),
-            'locale' => $this->getLocale(),
-            'referrer' => $this->getReferrer(),
-            'user_agent' => $this->getUserAgent(),
-        ];
+        return $houseNumber;
     }
 
     /**
