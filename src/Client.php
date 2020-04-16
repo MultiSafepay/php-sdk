@@ -32,6 +32,11 @@ class Client
     /** @var string */
     private $url;
 
+    /**
+     * @var string
+     */
+    private $locale = 'en';
+
     /** @var ClientInterface */
     protected $httpClient;
 
@@ -40,12 +45,14 @@ class Client
      * @param string $apiKey
      * @param bool $isProduction
      * @param ClientInterface|null $httpClient
+     * @param string $locale
      */
-    public function __construct(string $apiKey, bool $isProduction, ClientInterface $httpClient = null)
+    public function __construct(string $apiKey, bool $isProduction, ClientInterface $httpClient = null, string $locale = 'en')
     {
         $this->apiKey = $apiKey;
         $this->url = $isProduction ? self::LIVE_URL : self::TEST_URL;
         $this->httpClient = $httpClient ?: Psr18ClientDiscovery::find();
+        $this->locale = $locale;
     }
 
     /**
@@ -112,9 +119,8 @@ class Client
      */
     public function getRequestUrl(string $endpoint, $parameters = []): string
     {
-        if (!empty($parameters)) {
-            $endpoint .= '?' . http_build_query($parameters);
-        }
+        $parameters['locale'] = $this->locale;
+        $endpoint .= '?' . http_build_query($parameters);
         return $this->url . $endpoint;
     }
 
