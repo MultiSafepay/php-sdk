@@ -19,7 +19,7 @@ class RequestBody
     /**
      * @var array
      */
-    private $data;
+    private $data = [];
 
     /**
      * RequestBody constructor.
