@@ -42,19 +42,33 @@ class Customer
     private $lastName = '';
 
     /**
+     * Customer constructor.
+     * @param string $firstName
+     * @param string $lastName
+     * @param Address $address
+     * @param IpAddress $ipAddress
+     * @param EmailAddress $emailAddress
+     */
+    public function __construct(
+        string $firstName,
+        string $lastName,
+        Address $address,
+        IpAddress $ipAddress,
+        EmailAddress $emailAddress
+    ) {
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
+        $this->address = $address;
+        $this->ipAddress = $ipAddress;
+        $this->emailAddress = $emailAddress;
+    }
+
+    /**
      * @return IpAddress
      */
     public function getIpAddress(): IpAddress
     {
         return $this->ipAddress;
-    }
-
-    /**
-     * @param IpAddress $ipAddress
-     */
-    public function changeIpAddress(IpAddress $ipAddress): void
-    {
-        $this->ipAddress = $ipAddress;
     }
 
     /**
@@ -66,27 +80,11 @@ class Customer
     }
 
     /**
-     * @param EmailAddress $emailAddress
-     */
-    public function changeEmailAddress(EmailAddress $emailAddress): void
-    {
-        $this->emailAddress = $emailAddress;
-    }
-
-    /**
      * @return Address
      */
     public function getAddress(): Address
     {
         return $this->address;
-    }
-
-    /**
-     * @param Address $address
-     */
-    public function changeAddress(Address $address): void
-    {
-        $this->address = $address;
     }
 
     /**
@@ -98,26 +96,10 @@ class Customer
     }
 
     /**
-     * @param string $firstName
-     */
-    public function changeFirstName(string $firstName): void
-    {
-        $this->firstName = $firstName;
-    }
-
-    /**
      * @return string
      */
     public function getLastName(): string
     {
         return $this->lastName;
-    }
-
-    /**
-     * @param string $lastName
-     */
-    public function changeLastName(string $lastName): void
-    {
-        $this->lastName = $lastName;
     }
 }

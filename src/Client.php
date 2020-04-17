@@ -18,16 +18,24 @@ use Psr\Http\Message\StreamInterface;
 
 class Client
 {
-    public const LIVE_URL = 'https://api.multisafepay.com/v1/json/';
-    public const TEST_URL = 'https://testapi.multisafepay.com/v1/json/';
-    public const METHOD_POST = 'POST';
-    public const METHOD_GET = 'GET';
+    const LIVE_URL = 'https://api.multisafepay.com/v1/json/';
+
+    const TEST_URL = 'https://testapi.multisafepay.com/v1/json/';
+
+    const METHOD_POST = 'POST';
+
+    const METHOD_GET = 'GET';
 
     /** @var string */
     private $apiKey;
 
     /** @var string */
     private $url;
+
+    /**
+     * @var string
+     */
+    private $locale = 'en';
 
     /** @var ClientInterface */
     protected $httpClient;
@@ -37,12 +45,18 @@ class Client
      * @param string $apiKey
      * @param bool $isProduction
      * @param ClientInterface|null $httpClient
+     * @param string $locale
      */
-    public function __construct(string $apiKey, bool $isProduction, ClientInterface $httpClient = null)
-    {
+    public function __construct(
+        string $apiKey,
+        bool $isProduction,
+        ClientInterface $httpClient = null,
+        string $locale = 'en'
+    ) {
         $this->apiKey = $apiKey;
         $this->url = $isProduction ? self::LIVE_URL : self::TEST_URL;
         $this->httpClient = $httpClient ?: Psr18ClientDiscovery::find();
+        $this->locale = $locale;
     }
 
     /**
@@ -109,9 +123,8 @@ class Client
      */
     public function getRequestUrl(string $endpoint, $parameters = []): string
     {
-        if (!empty($parameters)) {
-            $endpoint .= '?' . http_build_query($parameters);
-        }
+        $parameters['locale'] = $this->locale;
+        $endpoint .= '?' . http_build_query($parameters);
         return $this->url . $endpoint;
     }
 

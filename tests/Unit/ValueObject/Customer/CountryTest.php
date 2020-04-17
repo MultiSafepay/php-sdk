@@ -16,7 +16,7 @@ class CountryTest extends TestCase
      */
     public function testWhetherValueCanBeSetAndUsed()
     {
-        $country = new Country('NL', 'Nederland');
+        $country = new Country('nl', 'Nederland');
         $this->assertEquals('NL', $country->getCode());
         $this->assertEquals('Nederland', $country->getName());
     }

@@ -29,7 +29,7 @@ class Country
      */
     public function __construct(string $code, string $name)
     {
-        $this->code = $code;
+        $this->code = strtoupper($code);
         $this->name = $name;
     }
 

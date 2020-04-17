@@ -9,6 +9,7 @@ namespace MultiSafepay\Tests\Integration;
 use Http\Mock\Client as MockHttpClient;
 use MultiSafepay\Api;
 use MultiSafepay\Api\Base\RequestBody;
+use MultiSafepay\Api\Transactions\RequestOrder;
 use MultiSafepay\Exception\ApiException;
 use MultiSafepay\Tests\Fixtures\Order;
 use MultiSafepay\Tests\Fixtures\OrderFixture;
@@ -31,11 +32,11 @@ class ApiTest extends TestCase
     {
         $api = self::getInstance();
         $transactionManager = $api->getTransactionManager();
-        $requestBody = new RequestBody($this->createOrderRequestFixture());
+        $requestOrder = new RequestOrder($this->createOrderRequestFixture());
 
         $this->expectException(ApiException::class);
         $this->expectExceptionMessage('Unknown data');
-        $transactionManager->create($requestBody);
+        $transactionManager->create($requestOrder);
     }
 
     /**

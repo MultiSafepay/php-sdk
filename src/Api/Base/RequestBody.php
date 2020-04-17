@@ -11,36 +11,17 @@ use MultiSafepay\Exception\MissingPluginVersionException;
 use MultiSafepay\Util\Version;
 
 /**
- * Class Response
+ * Class RequestBody
  * @package MultiSafepay\Api\Base
  */
-class RequestBody
+class RequestBody extends DataObject
 {
-    /**
-     * @var array
-     */
-    private $data;
-
-    /**
-     * RequestBody constructor.
-     * @param array $data
-     */
-    public function __construct(array $data)
-    {
-        $this->data = $data;
-    }
-
     /**
      * @return array
      */
     public function getData(): array
     {
-        if (!isset($this->data['plugin'])) {
-            $this->data['plugin'] = [];
-        }
-
         $this->data['plugin']['plugin_version'] = Version::getInstance()->getVersion();
-
         $this->validate();
 
         return $this->data;

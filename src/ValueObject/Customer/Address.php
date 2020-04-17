@@ -159,22 +159,6 @@ class Address
     }
 
     /**
-     * @return string
-     */
-    public function getCountryCode(): string
-    {
-        return $this->country->getCode();
-    }
-
-    /**
-     * @return string
-     */
-    public function getCountryName(): string
-    {
-        return $this->country->getCode();
-    }
-
-    /**
      * @return string[]
      */
     public function getPhoneNumbers(): array
