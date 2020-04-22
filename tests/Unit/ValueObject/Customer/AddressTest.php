@@ -26,8 +26,7 @@ class AddressTest extends TestCase
             '1000AA',
             'Amsterdam',
             'Noord Holland',
-            $country,
-            ['0123456789']
+            $country
         );
 
         $this->assertEquals('Kraanspoor', $address->getStreetName());
@@ -42,8 +41,5 @@ class AddressTest extends TestCase
         $country = $address->getCountry();
         $this->assertEquals('NL', $country->getCode());
         $this->assertEquals('Nederland', $country->getName());
-
-        $phoneNumbers = $address->getPhoneNumbers();
-        $this->assertContains('0123456789', $phoneNumbers);
     }
 }

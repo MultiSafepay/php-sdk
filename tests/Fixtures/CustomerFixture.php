@@ -25,7 +25,7 @@ trait CustomerFixture
         $address = $this->createAddressFixture();
         $ipAddress = new IpAddress('10.0.0.1');
         $emailAddress = new EmailAddress('info@example.org');
-        $customer = new Customer('John', 'Doe', $address, $ipAddress, $emailAddress);
+        $customer = new Customer('John', 'Doe', $address, $ipAddress, $emailAddress, ['0123456789']);
 
         return $customer;
     }

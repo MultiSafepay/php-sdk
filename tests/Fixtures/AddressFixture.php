@@ -29,8 +29,7 @@ trait AddressFixture
             '1000AA',
             'Amsterdam',
             'Noord Holland',
-            $country,
-            ['0123456789']
+            $country
         );
     }
 }

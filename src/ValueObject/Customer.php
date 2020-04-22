@@ -42,25 +42,36 @@ class Customer
     private $lastName = '';
 
     /**
+     * @var string[]
+     */
+    private $phoneNumbers = [
+        0 => '',
+        1 => '',
+    ];
+
+    /**
      * Customer constructor.
      * @param string $firstName
      * @param string $lastName
      * @param Address $address
      * @param IpAddress $ipAddress
      * @param EmailAddress $emailAddress
+     * @param array $phoneNumbers
      */
     public function __construct(
         string $firstName,
         string $lastName,
         Address $address,
         IpAddress $ipAddress,
-        EmailAddress $emailAddress
+        EmailAddress $emailAddress,
+        array $phoneNumbers
     ) {
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->address = $address;
         $this->ipAddress = $ipAddress;
         $this->emailAddress = $emailAddress;
+        $this->phoneNumbers = $phoneNumbers;
     }
 
     /**
@@ -101,5 +112,13 @@ class Customer
     public function getLastName(): string
     {
         return $this->lastName;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getPhoneNumbers(): array
+    {
+        return $this->phoneNumbers;
     }
 }
