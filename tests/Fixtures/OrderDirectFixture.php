@@ -8,7 +8,8 @@ namespace MultiSafepay\Tests\Fixtures;
 
 use Money\Money;
 use MultiSafepay\Api\Transactions\RequestOrder\Description;
-use MultiSafepay\Api\Transactions\RequestOrder\GatewayInfo;
+use MultiSafepay\Api\Transactions\RequestOrder\GoogleAnalytics;
+use MultiSafepay\Api\Transactions\RequestOrder\SecondChance;
 use MultiSafepay\Api\Transactions\RequestOrderDirect;
 
 /**
@@ -25,10 +26,12 @@ trait OrderDirectFixture
         return new RequestOrderDirect(
             (string)time(),
             Money::EUR(20),
-            'ideal',
             $this->createPaymentOptionsFixture(),
-            new GatewayInfo('0031'),
-            new Description('Foobar')
+            $this->createCustomerDetailsFixture(),
+            'DIRDEB',
+            new Description('Foobar'),
+            new SecondChance(true),
+            new GoogleAnalytics('foobar')
         );
     }
 }
