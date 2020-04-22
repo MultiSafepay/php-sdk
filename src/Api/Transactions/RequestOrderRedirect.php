@@ -8,7 +8,7 @@ namespace MultiSafepay\Api\Transactions;
 
 use Money\Money;
 use MultiSafepay\Api\Transactions\RequestOrder\Description;
-use MultiSafepay\Api\Transactions\RequestOrder\GatewayInfo;
+use MultiSafepay\Api\Transactions\RequestOrder\GatewayInfoInterface;
 use MultiSafepay\Api\Transactions\RequestOrder\PaymentOptions;
 
 /**
@@ -43,7 +43,7 @@ class RequestOrderRedirect implements RequestOrderInterface
     private $paymentOptions;
 
     /**
-     * @var GatewayInfo
+     * @var GatewayInfoInterface
      */
     private $gatewayInfo;
 
@@ -58,7 +58,7 @@ class RequestOrderRedirect implements RequestOrderInterface
      * @param Money $money
      * @param string $gatewayCode
      * @param PaymentOptions $paymentOptions
-     * @param GatewayInfo $gatewayInfo
+     * @param GatewayInfoInterface $gatewayInfo
      * @param Description $description
      */
     public function __construct(
@@ -66,7 +66,7 @@ class RequestOrderRedirect implements RequestOrderInterface
         Money $money,
         string $gatewayCode,
         PaymentOptions $paymentOptions,
-        GatewayInfo $gatewayInfo,
+        GatewayInfoInterface $gatewayInfo,
         Description $description = null
     ) {
         $this->orderId = $orderId;

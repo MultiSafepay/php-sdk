@@ -9,7 +9,7 @@ namespace MultiSafepay\Api\Transactions;
 use Money\Money;
 use MultiSafepay\Api\Transactions\RequestOrder\CustomerDetails;
 use MultiSafepay\Api\Transactions\RequestOrder\Description;
-use MultiSafepay\Api\Transactions\RequestOrder\GatewayInfo;
+use MultiSafepay\Api\Transactions\RequestOrder\GatewayInfoInterface;
 use MultiSafepay\Api\Transactions\RequestOrder\GoogleAnalytics;
 use MultiSafepay\Api\Transactions\RequestOrder\PaymentOptions;
 use MultiSafepay\Api\Transactions\RequestOrder\SecondChance;
@@ -51,7 +51,7 @@ class RequestOrderDirect implements RequestOrderInterface
     private $gatewayCode;
 
     /**
-     * @var GatewayInfo|null
+     * @var GatewayInfoInterface|null
      */
     private $gatewayInfo;
 
@@ -77,7 +77,7 @@ class RequestOrderDirect implements RequestOrderInterface
      * @param PaymentOptions $paymentOptions
      * @param CustomerDetails $customerDetails
      * @param string $gatewayCode
-     * @param GatewayInfo|null $gatewayInfo
+     * @param GatewayInfoInterface|null $gatewayInfo
      * @param Description $description
      * @param SecondChance|null $secondChance
      * @param GoogleAnalytics|null $googleAnalytics
@@ -88,7 +88,7 @@ class RequestOrderDirect implements RequestOrderInterface
         PaymentOptions $paymentOptions,
         CustomerDetails $customerDetails,
         string $gatewayCode = '',
-        GatewayInfo $gatewayInfo = null,
+        GatewayInfoInterface $gatewayInfo = null,
         Description $description = null,
         SecondChance $secondChance = null,
         GoogleAnalytics $googleAnalytics = null

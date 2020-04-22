@@ -8,7 +8,7 @@ namespace MultiSafepay\Tests\Fixtures;
 
 use Money\Money;
 use MultiSafepay\Api\Transactions\RequestOrder\Description;
-use MultiSafepay\Api\Transactions\RequestOrder\GatewayInfo;
+use MultiSafepay\Api\Transactions\RequestOrder\GatewayInfoIdeal;
 use MultiSafepay\Api\Transactions\RequestOrderRedirect;
 
 /**
@@ -27,7 +27,7 @@ trait OrderRedirectFixture
             Money::EUR(20),
             'ideal',
             $this->createPaymentOptionsFixture(),
-            new GatewayInfo('0031'),
+            new GatewayInfoIdeal('0031'),
             new Description('Foobar')
         );
     }

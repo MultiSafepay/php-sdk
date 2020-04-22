@@ -7,10 +7,10 @@
 namespace MultiSafepay\Api\Transactions\RequestOrder;
 
 /**
- * Class GatewayInfo
+ * Class GatewayInfoIdeal
  * @package MultiSafepay\Api\Transactions\RequestOrder
  */
-class GatewayInfo
+class GatewayInfoIdeal implements GatewayInfoInterface
 {
     /**
      * @var string
@@ -18,7 +18,7 @@ class GatewayInfo
     private $issuerId;
 
     /**
-     * GatewayInfo constructor.
+     * GatewayInfoIdeal constructor.
      * @param string $issuerId
      */
     public function __construct(string $issuerId)
