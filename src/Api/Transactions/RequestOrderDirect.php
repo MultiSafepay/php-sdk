@@ -48,6 +48,11 @@ class RequestOrderDirect implements RequestOrderInterface
     /**
      * @var string
      */
+    private $recurringId;
+
+    /**
+     * @var string
+     */
     private $gatewayCode;
 
     /**
@@ -76,6 +81,7 @@ class RequestOrderDirect implements RequestOrderInterface
      * @param Money $money
      * @param PaymentOptions $paymentOptions
      * @param CustomerDetails $customerDetails
+     * @param string $recurringId
      * @param string $gatewayCode
      * @param GatewayInfoInterface|null $gatewayInfo
      * @param Description $description
@@ -87,6 +93,7 @@ class RequestOrderDirect implements RequestOrderInterface
         Money $money,
         PaymentOptions $paymentOptions,
         CustomerDetails $customerDetails,
+        string $recurringId = '',
         string $gatewayCode = '',
         GatewayInfoInterface $gatewayInfo = null,
         Description $description = null,
@@ -97,6 +104,7 @@ class RequestOrderDirect implements RequestOrderInterface
         $this->money = $money;
         $this->paymentOptions = $paymentOptions;
         $this->customerDetails = $customerDetails;
+        $this->recurringId = $recurringId;
         $this->gatewayCode = strtoupper($gatewayCode);
         $this->gatewayInfo = $gatewayInfo;
         $this->description = $description;
@@ -113,6 +121,7 @@ class RequestOrderDirect implements RequestOrderInterface
             'type' => $this->type,
             'order_id' => $this->orderId,
             'gateway' => $this->gatewayCode,
+            'recurring_id' => $this->recurringId ?? null,
             'currency' => (string) $this->money->getCurrency(),
             'amount' => (string) $this->money->getAmount() * 100,
             'payment_options' => $this->paymentOptions->getData(),
