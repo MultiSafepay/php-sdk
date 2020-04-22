@@ -55,8 +55,8 @@ class RequestRefund implements RequestOrderInterface
     public function getData(): array
     {
         return [
-            'currency' => $this->money->getCurrency(),
-            'amount' => $this->money->getAmount(),
+            'currency' => (string) $this->money->getCurrency(),
+            'amount' => (string) $this->money->getAmount(),
             'description' => $this->description->getData() ?? null,
         ];
     }

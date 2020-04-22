@@ -85,8 +85,8 @@ class RequestOrderDirect implements RequestOrderInterface
         return [
             'type' => $this->type,
             'order_id' => $this->orderId,
-            'currency' => $this->money->getCurrency(),
-            'amount' => $this->money->getAmount(),
+            'currency' => (string)$this->money->getCurrency(),
+            'amount' => (string)$this->money->getAmount(),
             'gateway' => $this->gatewayCode,
             'gateway_info' => $this->gatewayInfo->getData(),
             'payment_options' => $this->paymentOptions->getData(),
