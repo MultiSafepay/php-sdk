@@ -55,14 +55,4 @@ class RequestOrderTest extends TestCase
         $this->assertEquals('20', $data['amount']);
         $this->assertEquals('Foobar', $data['description']);
     }
-
-    /**
-     * Test order creation with wrong type
-     */
-    public function testInitializationWithWrongType()
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $requestOrder = new RequestOrder();
-        $requestOrder->addType('wrong');
-    }
 }

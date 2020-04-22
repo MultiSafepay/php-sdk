@@ -21,7 +21,7 @@ class Description
 
     /**
      * GoogleAnalytics constructor.
-     * @param string $accountId
+     * @param string $description
      */
     public function __construct(string $description)
     {

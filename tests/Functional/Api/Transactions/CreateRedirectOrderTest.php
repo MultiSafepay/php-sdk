@@ -27,7 +27,7 @@ class CreateRedirectOrderTest extends AbstractTestCase
     {
         $requestOrder = $this->createOrderRedirectRequestFixture();
 
-        $response = $this->getClient()->createPostRequest('orders', $requestOrder->getData());
+        $response = $this->getClient()->createPostRequest('orders', $requestOrder);
         $data = $response->getResponseData();
         $this->assertIsNumeric($data['order_id']);
         $this->assertNotEmpty($data['payment_url']);

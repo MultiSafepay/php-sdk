@@ -21,7 +21,8 @@ class GatewayInfo
      * GatewayInfo constructor.
      * @param string $issuerId
      */
-    public function __construct(string $issuerId) {
+    public function __construct(string $issuerId)
+    {
         $this->issuerId = $issuerId;
     }
 

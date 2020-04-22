@@ -6,25 +6,24 @@
 
 namespace MultiSafepay\Tests\Api\Integration\Transactions;
 
-use Money\Money;
 use MultiSafepay\Api\Transactions\Transaction;
-use MultiSafepay\Tests\Fixtures\OrderFixture;
+use MultiSafepay\Tests\Fixtures\OrderDirectFixture;
+use MultiSafepay\Tests\Fixtures\PaymentOptionsFixture;
 use MultiSafepay\Tests\Integration\MockClient;
-use MultiSafepay\Tests\Fixtures\Order;
 use PHPUnit\Framework\TestCase;
-use Psr\Http\Client\ClientExceptionInterface;
 
 class TransactionTest extends TestCase
 {
-    use OrderFixture;
+    use OrderDirectFixture;
+    use PaymentOptionsFixture;
 
     /**
      * Test the simple data transfer of a transaction object
      */
     public function testGetOrderData(): void
     {
-        $orderData = $this->createOrderRequestFixture();
-        $transaction = new Transaction($orderData);
+        $requestDirectOrder = $this->createOrderDirectRequestFixture();
+        $transaction = new Transaction($requestDirectOrder->getData());
 
         $data = $transaction->getData();
         $this->assertArrayHasKey('type', $data, var_export($data, true));

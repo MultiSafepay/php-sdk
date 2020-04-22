@@ -7,12 +7,9 @@
 namespace MultiSafepay\Tests\Fixtures;
 
 use Money\Money;
-use MultiSafepay\Api\Transactions\RequestOrder;
 use MultiSafepay\Api\Transactions\RequestOrder\Description;
-use MultiSafepay\Api\Transactions\RequestOrder\GatewayInfo;
 use MultiSafepay\Api\Transactions\RequestOrder\GoogleAnalytics;
 use MultiSafepay\Api\Transactions\RequestOrder\SecondChance;
-use MultiSafepay\Api\Transactions\RequestOrderDirect;
 use MultiSafepay\Api\Transactions\RequestOrderRedirect;
 
 /**

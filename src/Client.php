@@ -8,6 +8,7 @@ namespace MultiSafepay;
 
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
+use MultiSafepay\Api\Base\RequestBodyInterface;
 use MultiSafepay\Api\Base\Response;
 use MultiSafepay\Exception\ApiException;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -61,22 +62,22 @@ class Client
 
     /**
      * @param string $endpoint
-     * @param array|null $body
+     * @param RequestBodyInterface|null $requestBody
      * @return Response
      * @throws ClientExceptionInterface
      * @throws ApiException
      */
-    public function createPostRequest(string $endpoint, array $body = null): Response
+    public function createPostRequest(string $endpoint, RequestBodyInterface $requestBody = null): Response
     {
         $client = $this->httpClient;
         $requestFactory = $this->getRequestFactory();
         $url = $this->getRequestUrl($endpoint);
         $request = $requestFactory->createRequest(self::METHOD_POST, $url)
-            ->withBody($this->createBody(json_encode($body)))
+            ->withBody($this->createBody(json_encode($requestBody->getData())))
             ->withHeader('api_key', $this->apiKey)
             ->withHeader('accept-encoding', 'application/json')
             ->withHeader('Content-Type', 'application/json')
-            ->withHeader('Content-Length', strlen(json_encode($body)));
+            ->withHeader('Content-Length', strlen(json_encode($requestBody->getData())));
 
         /** @var ResponseInterface $response */
         $response = $client->sendRequest($request);

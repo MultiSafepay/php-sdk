@@ -21,7 +21,8 @@ class GoogleAnalytics
      * GoogleAnalytics constructor.
      * @param string $accountId
      */
-    public function __construct(string $accountId) {
+    public function __construct(string $accountId)
+    {
         $this->accountId = $accountId;
     }
 

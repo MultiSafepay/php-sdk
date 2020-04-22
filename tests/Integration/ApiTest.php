@@ -8,11 +8,7 @@ namespace MultiSafepay\Tests\Integration;
 
 use Http\Mock\Client as MockHttpClient;
 use MultiSafepay\Api;
-use MultiSafepay\Api\Base\RequestBody;
-use MultiSafepay\Api\Transactions\RequestOrder;
 use MultiSafepay\Exception\ApiException;
-use MultiSafepay\Tests\Fixtures\Order;
-use MultiSafepay\Tests\Fixtures\OrderFixture;
 use MultiSafepay\Util\Version;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -23,8 +19,6 @@ use Psr\Http\Client\ClientExceptionInterface;
  */
 class ApiTest extends TestCase
 {
-    use OrderFixture;
-
     /**
      * @throws ClientExceptionInterface
      */
