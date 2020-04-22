@@ -8,6 +8,12 @@ namespace MultiSafepay\Tests\Fixtures;
 
 use Money\Money;
 use MultiSafepay\Api\Transactions\RequestOrder;
+use MultiSafepay\Api\Transactions\RequestOrder\Description;
+use MultiSafepay\Api\Transactions\RequestOrder\GatewayInfo;
+use MultiSafepay\Api\Transactions\RequestOrder\GoogleAnalytics;
+use MultiSafepay\Api\Transactions\RequestOrder\SecondChance;
+use MultiSafepay\Api\Transactions\RequestOrderDirect;
+use MultiSafepay\Api\Transactions\RequestOrderRedirect;
 
 /**
  * Trait OrderRedirectFixture
@@ -16,21 +22,19 @@ use MultiSafepay\Api\Transactions\RequestOrder;
 trait OrderRedirectFixture
 {
     /**
-     * @return array
+     * @return RequestOrderRedirect
      */
-    public function createOrderRedirectRequestFixture(): RequestOrder
+    public function createOrderRedirectRequestFixture(): RequestOrderRedirect
     {
-        $orderId = time();
-        $requestOrder = new RequestOrder();
-        $requestOrder->addType('redirect');
-        $requestOrder->addCustomerDetails($this->createCustomerDetailsFixture());
-        $requestOrder->addDescription('Foobar');
-        $requestOrder->addMoney(Money::EUR(20));
-        $requestOrder->addGateway('ideal');
-        $requestOrder->addSecondChance(true);
-        $requestOrder->addOrderId($orderId);
-        $requestOrder->addPaymentOptions($this->createPaymentOptionsFixture());
-
-        return $requestOrder;
+        return new RequestOrderRedirect(
+            (string)time(),
+            Money::EUR(20),
+            $this->createPaymentOptionsFixture(),
+            $this->createCustomerDetailsFixture(),
+            'ideal',
+            new Description('Foobar'),
+            new SecondChance(true),
+            new GoogleAnalytics('foobar')
+        );
     }
 }
