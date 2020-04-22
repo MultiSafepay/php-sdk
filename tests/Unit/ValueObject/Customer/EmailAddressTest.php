@@ -2,6 +2,7 @@
 
 namespace MultiSafepay\Tests\Unit\ValueObject\Customer;
 
+use MultiSafepay\Exception\InvalidArgumentException;
 use MultiSafepay\ValueObject\Customer\EmailAddress;
 use PHPUnit\Framework\TestCase;
 
@@ -18,5 +19,14 @@ class EmailAddressTest extends TestCase
     {
         $emailAddress = new EmailAddress('info@example.org');
         $this->assertEquals('info@example.org', $emailAddress->get());
+    }
+
+    /**
+     * Test whether a value could be set and used
+     */
+    public function testWhetherWrongValueCanNotBeSetAndUsed()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        new EmailAddress('foobar');
     }
 }

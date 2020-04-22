@@ -2,6 +2,7 @@
 
 namespace MultiSafepay\Tests\Unit\ValueObject;
 
+use MultiSafepay\Exception\InvalidArgumentException;
 use MultiSafepay\ValueObject\IpAddress;
 use PHPUnit\Framework\TestCase;
 
@@ -18,5 +19,14 @@ class IpAddressTest extends TestCase
     {
         $ipAddress = new IpAddress('10.0.0.1');
         $this->assertEquals('10.0.0.1', $ipAddress->get());
+    }
+
+    /**
+     * Test whether a value could be set and used
+     */
+    public function testWhetherWrongValueCanNotBeSetAndUsed()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        new IpAddress('foobar');
     }
 }
