@@ -29,6 +29,7 @@ trait OrderDirectFixture
             Money::EUR(20),
             $this->createPaymentOptionsFixture(),
             $this->createCustomerDetailsFixture(),
+            null,
             'IDEAL',
             new GatewayInfoIdeal('0021'),
             new Description('Foobar'),
