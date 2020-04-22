@@ -7,9 +7,11 @@
 namespace MultiSafepay\Api\Transactions;
 
 use Money\Money;
+use MultiSafepay\Api\Transactions\RequestOrder\CustomerDetails;
 use MultiSafepay\Api\Transactions\RequestOrder\Description;
-use MultiSafepay\Api\Transactions\RequestOrder\GatewayInfo;
+use MultiSafepay\Api\Transactions\RequestOrder\GoogleAnalytics;
 use MultiSafepay\Api\Transactions\RequestOrder\PaymentOptions;
+use MultiSafepay\Api\Transactions\RequestOrder\SecondChance;
 
 /**
  * Class RequestOrderDirect
@@ -33,48 +35,64 @@ class RequestOrderDirect implements RequestOrderInterface
     private $money;
 
     /**
-     * @var string
-     */
-    private $gatewayCode;
-
-    /**
      * @var PaymentOptions
      */
     private $paymentOptions;
 
     /**
-     * @var GatewayInfo
+     * @var CustomerDetails
      */
-    private $gatewayInfo;
+    private $customerDetails;
 
     /**
-     * @var Description
+     * @var string
+     */
+    private $gatewayCode;
+
+    /**
+     * @var string
      */
     private $description;
+
+    /**
+     * @var SecondChance|null
+     */
+    private $secondChance;
+
+    /**
+     * @var GoogleAnalytics|null
+     */
+    private $googleAnalytics;
 
     /**
      * RequestOrderDirect constructor.
      * @param string $orderId
      * @param Money $money
-     * @param string $gatewayCode
      * @param PaymentOptions $paymentOptions
-     * @param GatewayInfo $gatewayInfo
-     * @param Description $description
+     * @param CustomerDetails $customerDetails
+     * @param string $gatewayCode
+     * @param string $description
+     * @param SecondChance|null $secondChance
+     * @param GoogleAnalytics|null $googleAnalytics
      */
     public function __construct(
         string $orderId,
         Money $money,
-        string $gatewayCode,
         PaymentOptions $paymentOptions,
-        GatewayInfo $gatewayInfo,
-        Description $description = null
+        CustomerDetails $customerDetails,
+        string $gatewayCode = '',
+        Description $description = null,
+        SecondChance $secondChance = null,
+        GoogleAnalytics $googleAnalytics = null
     ) {
         $this->orderId = $orderId;
         $this->money = $money;
-        $this->gatewayCode = strtoupper($gatewayCode);
         $this->paymentOptions = $paymentOptions;
-        $this->gatewayInfo = $gatewayInfo;
+        $this->customerDetails = $customerDetails;
+        $this->gatewayCode = strtoupper($gatewayCode);
         $this->description = $description;
+        $this->secondChance = $secondChance;
+        $this->googleAnalytics = $googleAnalytics;
     }
 
     /**
@@ -85,12 +103,14 @@ class RequestOrderDirect implements RequestOrderInterface
         return [
             'type' => $this->type,
             'order_id' => $this->orderId,
-            'currency' => (string)$this->money->getCurrency(),
-            'amount' => (string)$this->money->getAmount(),
             'gateway' => $this->gatewayCode,
-            'gateway_info' => $this->gatewayInfo->getData(),
+            'currency' => (string) $this->money->getCurrency(),
+            'amount' => (string) $this->money->getAmount(),
             'payment_options' => $this->paymentOptions->getData(),
+            'customer' => $this->customerDetails->getData(),
             'description' => $this->description->getData() ?? null,
+            'google_analytics' => $this->googleAnalytics->getData() ?? null,
+            'second_chance' => $this->secondChance->getData() ?? null,
         ];
     }
 }
