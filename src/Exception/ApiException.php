@@ -9,4 +9,15 @@ use LogicException;
 
 class ApiException extends LogicException
 {
+    /**
+     * @param array $additionalData
+     * @return string
+     */
+    public function getDetails(array $additionalData = []): string
+    {
+        $lines = [];
+        $lines[] = ApiException::class.': '.$this->getMessage();
+        $lines[] = var_export($additionalData, true);
+        return implode("\n", $lines);
+    }
 }
