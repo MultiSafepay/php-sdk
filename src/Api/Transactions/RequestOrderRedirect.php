@@ -86,7 +86,7 @@ class RequestOrderRedirect implements RequestOrderInterface
             'type' => $this->type,
             'order_id' => $this->orderId,
             'currency' => (string)$this->money->getCurrency(),
-            'amount' => (string)$this->money->getAmount(),
+            'amount' => (string)$this->money->getAmount() * 100,
             'gateway' => $this->gatewayCode,
             'gateway_info' => $this->gatewayInfo->getData(),
             'payment_options' => $this->paymentOptions->getData(),
