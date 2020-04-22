@@ -7,7 +7,7 @@ use MultiSafepay\Tests\Fixtures\AddressFixture;
 use MultiSafepay\ValueObject\Customer\Address;
 use MultiSafepay\ValueObject\Customer\Country;
 use MultiSafepay\ValueObject\Customer\EmailAddress;
-use MultiSafepay\ValueObject\Customer\IpAddress;
+use MultiSafepay\ValueObject\IpAddress;
 use PHPUnit\Framework\TestCase;
 
 /**

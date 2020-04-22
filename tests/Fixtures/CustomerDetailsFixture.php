@@ -10,7 +10,7 @@ use MultiSafepay\Api\Transactions\RequestOrder\CustomerDetails;
 use MultiSafepay\ValueObject\Customer;
 use MultiSafepay\ValueObject\Customer\Address;
 use MultiSafepay\ValueObject\Customer\EmailAddress;
-use MultiSafepay\ValueObject\Customer\IpAddress;
+use MultiSafepay\ValueObject\IpAddress;
 
 /**
  * Trait CustomerFixture

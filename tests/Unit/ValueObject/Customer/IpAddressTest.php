@@ -2,7 +2,7 @@
 
 namespace MultiSafepay\Tests\Unit\ValueObject\Customer;
 
-use MultiSafepay\ValueObject\Customer\IpAddress;
+use MultiSafepay\ValueObject\IpAddress;
 use PHPUnit\Framework\TestCase;
 
 /**
