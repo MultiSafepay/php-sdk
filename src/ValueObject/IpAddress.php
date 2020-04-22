@@ -4,11 +4,13 @@
  * See DISCLAIMER.md for disclaimer details.
  */
 
-namespace MultiSafepay\ValueObject\Customer;
+namespace MultiSafepay\ValueObject;
+
+use MultiSafepay\Exception\InvalidArgumentException;
 
 /**
  * Class IpAddress
- * @package MultiSafepay\ValueObject\Customer
+ * @package MultiSafepay\ValueObject
  */
 class IpAddress
 {
@@ -23,6 +25,10 @@ class IpAddress
      */
     public function __construct(string $ipAddress)
     {
+        if (filter_var($ipAddress, FILTER_VALIDATE_IP) === false) {
+            throw new InvalidArgumentException('Value "' . $ipAddress . '" is not a valid IP address');
+        }
+
         $this->ipAddress = $ipAddress;
     }
 

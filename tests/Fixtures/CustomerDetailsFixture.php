@@ -10,7 +10,7 @@ use MultiSafepay\Api\Transactions\RequestOrder\CustomerDetails;
 use MultiSafepay\ValueObject\Customer;
 use MultiSafepay\ValueObject\Customer\Address;
 use MultiSafepay\ValueObject\Customer\EmailAddress;
-use MultiSafepay\ValueObject\Customer\IpAddress;
+use MultiSafepay\ValueObject\IpAddress;
 
 /**
  * Trait CustomerFixture
@@ -26,7 +26,7 @@ trait CustomerDetailsFixture
         $address = $this->createAddressFixture();
         $ipAddress = new IpAddress('10.0.0.1');
         $emailAddress = new EmailAddress('info@example.org');
-        $customerDetails = new CustomerDetails('John', 'Doe', $address, $ipAddress, $emailAddress);
+        $customerDetails = new CustomerDetails('John', 'Doe', $address, $ipAddress, $emailAddress, ['0123456789']);
 
         $customerDetails->addLocale('nl');
         $customerDetails->addReferrer('http://example.org');
