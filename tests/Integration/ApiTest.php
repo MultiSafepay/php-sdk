@@ -28,20 +28,6 @@ class ApiTest extends TestCase
     /**
      * @throws ClientExceptionInterface
      */
-    public function testGetTransactionManager()
-    {
-        $api = self::getInstance();
-        $transactionManager = $api->getTransactionManager();
-        $requestOrder = new RequestOrder($this->createOrderRequestFixture());
-
-        $this->expectException(ApiException::class);
-        $this->expectExceptionMessage('Unknown data');
-        $transactionManager->create($requestOrder);
-    }
-
-    /**
-     * @throws ClientExceptionInterface
-     */
     public function testGetGatewayManager()
     {
         $api = self::getInstance();
