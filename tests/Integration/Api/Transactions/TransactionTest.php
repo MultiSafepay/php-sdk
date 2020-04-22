@@ -7,6 +7,8 @@
 namespace MultiSafepay\Tests\Api\Integration\Transactions;
 
 use MultiSafepay\Api\Transactions\Transaction;
+use MultiSafepay\Tests\Fixtures\AddressFixture;
+use MultiSafepay\Tests\Fixtures\CustomerDetailsFixture;
 use MultiSafepay\Tests\Fixtures\OrderDirectFixture;
 use MultiSafepay\Tests\Fixtures\PaymentOptionsFixture;
 use MultiSafepay\Tests\Integration\MockClient;
@@ -16,6 +18,8 @@ class TransactionTest extends TestCase
 {
     use OrderDirectFixture;
     use PaymentOptionsFixture;
+    use CustomerDetailsFixture;
+    use AddressFixture;
 
     /**
      * Test the simple data transfer of a transaction object

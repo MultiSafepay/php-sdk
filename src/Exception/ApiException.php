@@ -3,6 +3,7 @@
  * Copyright © 2019 MultiSafepay, Inc. All rights reserved.
  * See DISCLAIMER.md for disclaimer details.
  */
+
 namespace MultiSafepay\Exception;
 
 use LogicException;
@@ -16,8 +17,8 @@ class ApiException extends LogicException
     public function getDetails(array $additionalData = []): string
     {
         $lines = [];
-        $lines[] = ApiException::class.': '.$this->getMessage();
-        $lines[] = var_export($additionalData, true);
+        $lines[] = ApiException::class . ': ' . $this->getMessage();
+        $lines[] = 'Additional data: ' . var_export($additionalData, true);
         return implode("\n", $lines);
     }
 }
