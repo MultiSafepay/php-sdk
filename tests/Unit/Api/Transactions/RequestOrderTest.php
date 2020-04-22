@@ -49,7 +49,7 @@ class RequestOrderTest extends TestCase
 
         $data = $requestOrder->getData();
         $this->assertEquals('direct', $data['type']);
-        $this->assertEquals('DIRDEB', $data['gateway']);
+        $this->assertEquals('IDEAL', $data['gateway']);
         $this->assertIsNumeric($data['order_id']);
         $this->assertEquals('EUR', $data['currency']);
         $this->assertEquals('2000', $data['amount']);

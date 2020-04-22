@@ -32,7 +32,7 @@ class GatewayInfo
     public function getData(): array
     {
         return [
-            'issuerId' => $this->issuerId,
+            'issuer_id' => $this->issuerId,
         ];
     }
 }
