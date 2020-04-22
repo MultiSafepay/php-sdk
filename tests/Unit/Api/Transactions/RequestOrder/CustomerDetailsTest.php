@@ -7,7 +7,7 @@ use MultiSafepay\Tests\Fixtures\AddressFixture;
 use MultiSafepay\ValueObject\Customer\Address;
 use MultiSafepay\ValueObject\Customer\Country;
 use MultiSafepay\ValueObject\Customer\EmailAddress;
-use MultiSafepay\ValueObject\Customer\IpAddress;
+use MultiSafepay\ValueObject\IpAddress;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -29,7 +29,8 @@ class CustomerDetailsTest extends TestCase
             'Doe',
             $address,
             new IpAddress('127.0.0.1'),
-            new EmailAddress('info@example.org')
+            new EmailAddress('info@example.org'),
+            ['0123456789']
         );
         $customerDetails->addLocale('nl');
         $customerDetails->addReferrer('http://example.org');

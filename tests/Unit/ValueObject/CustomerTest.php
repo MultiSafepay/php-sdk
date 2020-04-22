@@ -7,7 +7,7 @@ use MultiSafepay\ValueObject\Customer;
 use MultiSafepay\ValueObject\Customer\Address;
 use MultiSafepay\ValueObject\Customer\Country;
 use MultiSafepay\ValueObject\Customer\EmailAddress;
-use MultiSafepay\ValueObject\Customer\IpAddress;
+use MultiSafepay\ValueObject\IpAddress;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -26,9 +26,12 @@ class CustomerTest extends TestCase
         $address = $this->createAddressFixture();
         $ipAddress = new IpAddress('10.0.0.1');
         $emailAddress = new EmailAddress('info@example.org');
-        $customer = new Customer('John', 'Doe', $address, $ipAddress, $emailAddress);
+        $customer = new Customer('John', 'Doe', $address, $ipAddress, $emailAddress, ['0123456789']);
 
         $this->assertEquals('10.0.0.1', $customer->getIpAddress()->get());
         $this->assertEquals('info@example.org', $customer->getEmailAddress()->get());
+
+        $phoneNumbers = $customer->getPhoneNumbers();
+        $this->assertContains('0123456789', $phoneNumbers);
     }
 }

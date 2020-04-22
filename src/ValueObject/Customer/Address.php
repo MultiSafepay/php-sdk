@@ -53,14 +53,6 @@ class Address
     private $country;
 
     /**
-     * @var string[]
-     */
-    private $phoneNumbers = [
-        0 => '',
-        1 => '',
-    ];
-
-    /**
      * Address constructor.
      * @param string $streetName
      * @param string $streetNameAdditional
@@ -70,7 +62,6 @@ class Address
      * @param string $city
      * @param string $state
      * @param Country $country
-     * @param array $phoneNumbers
      */
     public function __construct(
         string $streetName,
@@ -80,8 +71,7 @@ class Address
         string $zipCode,
         string $city,
         string $state,
-        Country $country,
-        array $phoneNumbers
+        Country $country
     ) {
         $this->streetName = $streetName;
         $this->streetNameAdditional = $streetNameAdditional;
@@ -91,7 +81,6 @@ class Address
         $this->city = $city;
         $this->state = $state;
         $this->country = $country;
-        $this->phoneNumbers = $phoneNumbers;
     }
 
     /**
@@ -156,13 +145,5 @@ class Address
     public function getCountry(): Country
     {
         return $this->country;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getPhoneNumbers(): array
-    {
-        return $this->phoneNumbers;
     }
 }

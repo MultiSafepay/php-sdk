@@ -1,24 +1,24 @@
 <?php declare(strict_types=1);
 
-namespace MultiSafepay\Tests\Unit\ValueObject\Customer;
+namespace MultiSafepay\Tests\Unit\ValueObject;
 
 use MultiSafepay\Exception\InvalidArgumentException;
-use MultiSafepay\ValueObject\Customer\EmailAddress;
+use MultiSafepay\ValueObject\IpAddress;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class EmailAddressTest
- * @package MultiSafepay\Tests\Unit\ValueObject\Customer
+ * Class IpAddressTest
+ * @package MultiSafepay\Tests\Unit\ValueObject
  */
-class EmailAddressTest extends TestCase
+class IpAddressTest extends TestCase
 {
     /**
      * Test whether a value could be set and used
      */
     public function testWhetherValueCanBeSetAndUsed()
     {
-        $emailAddress = new EmailAddress('info@example.org');
-        $this->assertEquals('info@example.org', $emailAddress->get());
+        $ipAddress = new IpAddress('10.0.0.1');
+        $this->assertEquals('10.0.0.1', $ipAddress->get());
     }
 
     /**
@@ -27,6 +27,6 @@ class EmailAddressTest extends TestCase
     public function testWhetherWrongValueCanNotBeSetAndUsed()
     {
         $this->expectException(InvalidArgumentException::class);
-        new EmailAddress('foobar');
+        new IpAddress('foobar');
     }
 }
