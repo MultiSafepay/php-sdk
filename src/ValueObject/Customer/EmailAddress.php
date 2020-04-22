@@ -26,7 +26,7 @@ class EmailAddress
     public function __construct(string $emailAddress)
     {
         if (filter_var($emailAddress, FILTER_VALIDATE_EMAIL) === false) {
-            throw new InvalidArgumentException('Value "' . $ipAddress . '" is not a valid email address');
+            throw new InvalidArgumentException('Value "' . $emailAddress . '" is not a valid email address');
         }
 
         $this->emailAddress = $emailAddress;
