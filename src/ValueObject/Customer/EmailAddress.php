@@ -6,6 +6,8 @@
 
 namespace MultiSafepay\ValueObject\Customer;
 
+use MultiSafepay\Exception\InvalidArgumentException;
+
 /**
  * Class EmailAddress
  * @package MultiSafepay\ValueObject\Customer
@@ -23,6 +25,10 @@ class EmailAddress
      */
     public function __construct(string $emailAddress)
     {
+        if (filter_var($emailAddress, FILTER_VALIDATE_EMAIL) === false) {
+            throw new InvalidArgumentException('Value "' . $ipAddress . '" is not a valid email address');
+        }
+
         $this->emailAddress = $emailAddress;
     }
 
