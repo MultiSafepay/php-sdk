@@ -36,7 +36,7 @@ class RequestOrderTest extends TestCase
         $this->assertEquals('IDEAL', $data['gateway']);
         $this->assertIsNumeric($data['order_id']);
         $this->assertEquals('EUR', $data['currency']);
-        $this->assertEquals('20', $data['amount']);
+        $this->assertEquals('2000', $data['amount']);
         $this->assertEquals('Foobar', $data['description']);
     }
 
@@ -49,10 +49,10 @@ class RequestOrderTest extends TestCase
 
         $data = $requestOrder->getData();
         $this->assertEquals('direct', $data['type']);
-        $this->assertEquals('IDEAL', $data['gateway']);
+        $this->assertEquals('DIRDEB', $data['gateway']);
         $this->assertIsNumeric($data['order_id']);
         $this->assertEquals('EUR', $data['currency']);
-        $this->assertEquals('20', $data['amount']);
+        $this->assertEquals('2000', $data['amount']);
         $this->assertEquals('Foobar', $data['description']);
     }
 }
