@@ -1,0 +1,48 @@
+<?php declare(strict_types=1);
+/**
+ * Copyright © 2020 MultiSafepay, Inc. All rights reserved.
+ * See DISCLAIMER.md for disclaimer details.
+ */
+
+namespace MultiSafepay\ValueObject;
+
+use MultiSafepay\Exception\InvalidArgumentException;
+
+/**
+ * Class Gender
+ * @package MultiSafepay\ValueObject
+ */
+class Gender
+{
+    /**
+     * Allowed values
+     * @todo: With AfterPay this should be one of [mr, mrs, miss]
+     */
+    const ALLOWED_VALUES = ['male', 'female'];
+
+    /**
+     * @var string
+     */
+    private $gender = 'female';
+
+    /**
+     * Country constructor.
+     * @param string $gender
+     */
+    public function __construct(string $gender = 'female')
+    {
+        if (!in_array($gender, self::ALLOWED_VALUES)) {
+            throw new InvalidArgumentException('Gender "'.$gender.'" value is unknown');
+        }
+
+        $this->gender = $gender;
+    }
+
+    /**
+     * @return string
+     */
+    public function get(): string
+    {
+        return $this->gender;
+    }
+}

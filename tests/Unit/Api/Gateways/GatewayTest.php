@@ -19,9 +19,9 @@ class GatewayTest extends TestCase
      */
     public function testNormalInitialization()
     {
-        $gateway = new Gateway(['id' => 'foo', 'description' => 'bar']);
-        $this->assertEquals('foo', $gateway->getId());
-        $this->assertEquals('bar', $gateway->getDescription());
+        $gateway = new Gateway(['id' => 'IDEAL', 'description' => 'iDEAL']);
+        $this->assertEquals('IDEAL', $gateway->getId());
+        $this->assertEquals('iDEAL', $gateway->getDescription());
     }
 
     /**

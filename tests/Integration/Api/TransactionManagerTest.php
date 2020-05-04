@@ -34,7 +34,7 @@ class TransactionManagerTest extends TestCase
      */
     public function testCreateTransaction(): void
     {
-        $requestRedirectOrder = $this->createOrderRedirectRequestFixture();
+        $requestRedirectOrder = $this->createIdealOrderRedirectRequestFixture();
         $orderData = $requestRedirectOrder->getData();
 
         $mockClient = MockClient::getInstance();

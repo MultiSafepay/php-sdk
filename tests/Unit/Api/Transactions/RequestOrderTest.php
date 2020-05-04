@@ -2,9 +2,7 @@
 
 namespace MultiSafepay\Tests\Unit\Api\Issuers;
 
-use InvalidArgumentException;
-use Money\Money;
-use MultiSafepay\Api\Transactions\RequestOrder;
+use MultiSafepay\Api\Gateways\Gateway;
 use MultiSafepay\Tests\Fixtures\AddressFixture;
 use MultiSafepay\Tests\Fixtures\CustomerDetailsFixture;
 use MultiSafepay\Tests\Fixtures\OrderDirectFixture;
@@ -29,11 +27,11 @@ class RequestOrderTest extends TestCase
      */
     public function testRequestOrderWithTypeRedirect()
     {
-        $requestOrder = $this->createOrderRedirectRequestFixture();
+        $requestOrder = $this->createIdealOrderRedirectRequestFixture();
 
         $data = $requestOrder->getData();
         $this->assertEquals('redirect', $data['type']);
-        $this->assertEquals('IDEAL', $data['gateway']);
+        $this->assertEquals(Gateway::IDEAL, $data['gateway']);
         $this->assertIsNumeric($data['order_id']);
         $this->assertEquals('EUR', $data['currency']);
         $this->assertEquals('2000', $data['amount']);
@@ -45,11 +43,11 @@ class RequestOrderTest extends TestCase
      */
     public function testRequestOrderWithTypeDirect()
     {
-        $requestOrder = $this->createOrderDirectRequestFixture();
+        $requestOrder = $this->createOrderIdealDirectRequestFixture();
 
         $data = $requestOrder->getData();
         $this->assertEquals('direct', $data['type']);
-        $this->assertEquals('IDEAL', $data['gateway']);
+        $this->assertEquals(Gateway::IDEAL, $data['gateway']);
         $this->assertIsNumeric($data['order_id']);
         $this->assertEquals('EUR', $data['currency']);
         $this->assertEquals('2000', $data['amount']);

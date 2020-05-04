@@ -20,12 +20,12 @@ class GatewayListingTest extends TestCase
      */
     public function testGetGateways()
     {
-        $gatewayListing = new GatewayListing([['id' => 'foo', 'description' => 'bar']]);
+        $gatewayListing = new GatewayListing([['id' => 'IDEAL', 'description' => 'iDEAL']]);
         $gateways = $gatewayListing->getGateways();
         $this->assertEquals(1, count($gateways));
 
         $gateway = array_shift($gateways);
-        $this->assertEquals('foo', $gateway->getId());
-        $this->assertEquals('bar', $gateway->getDescription());
+        $this->assertEquals('IDEAL', $gateway->getId());
+        $this->assertEquals('iDEAL', $gateway->getDescription());
     }
 }

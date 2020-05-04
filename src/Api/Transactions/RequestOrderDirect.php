@@ -20,10 +20,7 @@ use MultiSafepay\Api\Transactions\RequestOrder\SecondChance;
  */
 class RequestOrderDirect implements RequestOrderInterface
 {
-    /**
-     * @var string
-     */
-    protected $type = 'direct';
+    const TYPE = 'direct';
 
     /**
      * @var string
@@ -118,7 +115,7 @@ class RequestOrderDirect implements RequestOrderInterface
     public function getData(): array
     {
         return [
-            'type' => $this->type,
+            'type' => self::TYPE,
             'order_id' => $this->orderId,
             'gateway' => $this->gatewayCode,
             'recurring_id' => $this->recurringId ?? null,

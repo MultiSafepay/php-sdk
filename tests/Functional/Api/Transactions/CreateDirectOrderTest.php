@@ -2,8 +2,6 @@
 
 namespace MultiSafepay\Tests\Functional\Api\Transactions;
 
-use Money\Money;
-use MultiSafepay\Api\Transactions\RequestOrder;
 use MultiSafepay\Exception\ApiException;
 use MultiSafepay\Tests\Fixtures\AddressFixture;
 use MultiSafepay\Tests\Fixtures\CustomerDetailsFixture;
@@ -26,9 +24,9 @@ class CreateDirectOrderTest extends AbstractTestCase
     /**
      * @throws ClientExceptionInterface
      */
-    public function testCreateRedirectOrder()
+    public function testCreateIdealRedirectOrder()
     {
-        $requestOrder = $this->createOrderDirectRequestFixture();
+        $requestOrder = $this->createOrderIdealDirectRequestFixture();
 
         try {
             $response = $this->getClient()->createPostRequest('orders', $requestOrder);

@@ -8,7 +8,7 @@ namespace MultiSafepay\Tests\Fixtures;
 
 use Money\Money;
 use MultiSafepay\Api\Transactions\RequestOrder\Description;
-use MultiSafepay\Api\Transactions\RequestOrder\GatewayInfoIdeal;
+use MultiSafepay\Api\Transactions\RequestOrder\Direct\GatewayInfo\Ideal as IdealGatewayInfo;
 use MultiSafepay\Api\Transactions\RequestOrder\GoogleAnalytics;
 use MultiSafepay\Api\Transactions\RequestOrder\SecondChance;
 use MultiSafepay\Api\Transactions\RequestOrderDirect;
@@ -22,7 +22,7 @@ trait OrderDirectFixture
     /**
      * @return RequestOrderDirect
      */
-    public function createOrderDirectRequestFixture(): RequestOrderDirect
+    public function createOrderIdealDirectRequestFixture(): RequestOrderDirect
     {
         return new RequestOrderDirect(
             (string)time(),
@@ -31,7 +31,7 @@ trait OrderDirectFixture
             $this->createCustomerDetailsFixture(),
             null,
             'IDEAL',
-            new GatewayInfoIdeal('0021'),
+            new IdealGatewayInfo('0021'),
             new Description('Foobar'),
             new SecondChance(true),
             new GoogleAnalytics('foobar')

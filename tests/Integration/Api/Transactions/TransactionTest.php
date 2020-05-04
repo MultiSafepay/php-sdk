@@ -11,7 +11,6 @@ use MultiSafepay\Tests\Fixtures\AddressFixture;
 use MultiSafepay\Tests\Fixtures\CustomerDetailsFixture;
 use MultiSafepay\Tests\Fixtures\OrderDirectFixture;
 use MultiSafepay\Tests\Fixtures\PaymentOptionsFixture;
-use MultiSafepay\Tests\Integration\MockClient;
 use PHPUnit\Framework\TestCase;
 
 class TransactionTest extends TestCase
@@ -26,38 +25,10 @@ class TransactionTest extends TestCase
      */
     public function testGetOrderData(): void
     {
-        $requestDirectOrder = $this->createOrderDirectRequestFixture();
+        $requestDirectOrder = $this->createOrderIdealDirectRequestFixture();
         $transaction = new Transaction($requestDirectOrder->getData());
 
         $data = $transaction->getData();
         $this->assertArrayHasKey('type', $data, var_export($data, true));
-    }
-
-    /**
-     * @return MockClient
-     */
-    private function getMockedClientWithOrderResponse(int $orderId): MockClient
-    {
-        $client = MockClient::getInstance();
-        $client->mockResponse([
-            'order_id' => $orderId,
-            'payment_url' => 'https://testpayv2.multisafepay.com/'
-        ]);
-
-        return $client;
-    }
-
-    /**
-     * @return MockClient
-     */
-    private function getMockedClientWithRefundResponse(int $orderId): MockClient
-    {
-        $client = MockClient::getInstance();
-        $client->mockResponse([
-            'transaction_id' => 42,
-            'refund_id' => 42,
-        ]);
-
-        return $client;
     }
 }
