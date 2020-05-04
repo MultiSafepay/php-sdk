@@ -11,10 +11,10 @@ use MultiSafepay\Api\Transactions\RequestOrder\GatewayInfoInterface;
 use MultiSafepay\Api\Transactions\RequestOrderDirect;
 
 /**
- * Class Qr
+ * Class QrCode
  * @package MultiSafepay\Api\Transactions\RequestOrder\Direct\GatewayInfo
  */
-class Qr implements GatewayInfoInterface
+class QrCode implements GatewayInfoInterface
 {
     /**
      * @var int
@@ -37,7 +37,7 @@ class Qr implements GatewayInfoInterface
     private $maxAmount;
 
     /**
-     * Qr constructor.
+     * QrCode constructor.
      * @param int $qrSize
      * @param bool $allowMultiple
      * @param bool $allowChangeAmount

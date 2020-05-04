@@ -48,22 +48,14 @@ class TaxRate
         string $state = '',
         string $postcode = ''
     ) {
-        $this->setRate($rate);
-        $this->country = $country;
-        $this->state = $state;
-        $this->postcode = $postcode;
-    }
-
-    /**
-     * @param float $rate
-     */
-    private function setRate(float $rate)
-    {
         if (($rate > 0 && $rate < 1) || $rate > 100) {
             throw new InvalidArgumentException('Rate is supposed to be a number between 1 and 100 (or just 0)');
         }
 
         $this->rate = $rate;
+        $this->country = $country;
+        $this->state = $state;
+        $this->postcode = $postcode;
     }
 
     /**

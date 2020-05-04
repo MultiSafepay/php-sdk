@@ -77,17 +77,7 @@ class Payafter extends RequestOrderRedirect
     public function getData(): array
     {
         $data = parent::getData();
-        /*
-         * @todo: Do all these values need to be in here?
-        $data['plugin'] = [
-          'shop' =>  'ApiTestTool',
-          'plugin_version' => '1.0.0',
-          'shop_version' => '1',
-          'partner' => 'partner',
-          'shop_root_url' => 'https://multisafepay.com'
-        ];
-        */
-
+        $data['plugin'] = $this->getPluginData();
         $data['customer'] = $this->customerDetails->getData();
         $data['delivery'] = $this->delivery->getData();
         $data['shopping_cart'] = $this->shoppingCart->getData();
@@ -96,5 +86,20 @@ class Payafter extends RequestOrderRedirect
         ];
 
         return $data;
+    }
+
+    /**
+     * @return array
+     * @todo: Do all these values need to be in here?
+     */
+    private function getPluginData(): array
+    {
+        return [
+            'shop' =>  'ApiTestTool',
+            'plugin_version' => '1.0.0',
+            'shop_version' => '1',
+            'partner' => 'partner',
+            'shop_root_url' => 'https://multisafepay.com'
+        ];
     }
 }

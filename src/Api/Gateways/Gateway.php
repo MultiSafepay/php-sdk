@@ -85,7 +85,7 @@ class Gateway
         }
 
         if (!in_array($data['id'], self::getAvailableGateways())) {
-            throw new InvalidDataInitializationException('ID "'.$data['id'].'" is not a known gateway code');
+            throw new InvalidDataInitializationException('ID "' . $data['id'] . '" is not a known gateway code');
         }
 
         return true;
@@ -94,7 +94,7 @@ class Gateway
     /**
      * @return array
      */
-    static public function getAvailableGateways():array
+    public static function getAvailableGateways(): array
     {
         return [
             self::AFTERPAY,

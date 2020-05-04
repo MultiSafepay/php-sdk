@@ -25,13 +25,13 @@ class ShoppingCart
      */
     public function __construct(array $items)
     {
-        $this->setItems($items);
+        $this->addItems($items);
     }
 
     /**
      * @param array $items
      */
-    public function setItems(array $items)
+    public function addItems(array $items)
     {
         foreach ($items as $item) {
             $this->addItem($item);
