@@ -24,4 +24,11 @@
             <property name="maxCount" value="20"/>
         </properties>
     </rule>
+    <!--
+    <rule ref="ObjectCalisthenics.Files.FunctionLengthSniff">
+        <properties>
+            <property name="maxLength" value="80"/>
+        </properties>
+    </rule>
+    -->
 </ruleset>

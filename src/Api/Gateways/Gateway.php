@@ -8,6 +8,11 @@ namespace MultiSafepay\Api\Gateways;
 
 use MultiSafepay\Exception\InvalidDataInitializationException;
 
+/**
+ * Class Gateway
+ * @package MultiSafepay\Api\Gateways
+ * phpcs:disable ObjectCalisthenics.Files.FunctionLength
+ */
 class Gateway
 {
     /**

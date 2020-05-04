@@ -11,6 +11,7 @@ use MultiSafepay\Exception\InvalidArgumentException;
 /**
  * Class IbanNumber
  * @package MultiSafepay\ValueObject
+ * phpcs:disable ObjectCalisthenics.Files.FunctionLength
  */
 class IbanNumber
 {
