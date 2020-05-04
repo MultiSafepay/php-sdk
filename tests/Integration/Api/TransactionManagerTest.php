@@ -8,16 +8,25 @@ namespace MultiSafepay\Tests\Integration\Api;
 
 use Money\Money;
 use MultiSafepay\Api\TransactionManager;
-use MultiSafepay\Api\Transactions\RequestOrder;
+use MultiSafepay\Api\Transactions\RequestOrder\Description;
+use MultiSafepay\Api\Transactions\RequestRefund;
 use MultiSafepay\Exception\ApiException;
-use MultiSafepay\Tests\Fixtures\OrderFixture;
+use MultiSafepay\Tests\Fixtures\AddressFixture;
+use MultiSafepay\Tests\Fixtures\CustomerDetailsFixture;
+use MultiSafepay\Tests\Fixtures\OrderDirectFixture;
+use MultiSafepay\Tests\Fixtures\OrderRedirectFixture;
+use MultiSafepay\Tests\Fixtures\PaymentOptionsFixture;
 use MultiSafepay\Tests\Integration\MockClient;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientExceptionInterface;
 
 class TransactionManagerTest extends TestCase
 {
-    use OrderFixture;
+    use OrderRedirectFixture;
+    use OrderDirectFixture;
+    use PaymentOptionsFixture;
+    use CustomerDetailsFixture;
+    use AddressFixture;
 
     /**
      * Test the creation of a transaction
@@ -25,7 +34,8 @@ class TransactionManagerTest extends TestCase
      */
     public function testCreateTransaction(): void
     {
-        $orderData = $this->createOrderRequestFixture();
+        $requestRedirectOrder = $this->createOrderRedirectRequestFixture();
+        $orderData = $requestRedirectOrder->getData();
 
         $mockClient = MockClient::getInstance();
         $mockClient->mockResponse([
@@ -34,8 +44,7 @@ class TransactionManagerTest extends TestCase
         ]);
 
         $transactionManager = new TransactionManager($mockClient);
-        $requestOrder = new RequestOrder($orderData);
-        $transaction = $transactionManager->create($requestOrder);
+        $transaction = $transactionManager->create($requestRedirectOrder);
 
         $this->assertEquals($orderData['order_id'], $transaction->getOrderId());
 
@@ -93,7 +102,8 @@ class TransactionManagerTest extends TestCase
             'transaction_id' => $fakeTransactionId,
         ]);
 
-        $refund = $transactionManager->refund($transaction, Money::EUR(50));
+        $requestRefund = new RequestRefund(Money::EUR(21), new Description('Give me my money back'));
+        $refund = $transactionManager->refund($transaction, $requestRefund);
 
         $this->assertArrayHasKey('refund_id', $refund, var_export($refund, true));
         $this->assertEquals($fakeRefundId, $refund['refund_id'], var_export($refund, true));

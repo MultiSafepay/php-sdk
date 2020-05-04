@@ -8,7 +8,9 @@ namespace MultiSafepay\Api;
 
 use Money\Money;
 use MultiSafepay\Api\Base\RequestBody;
-use MultiSafepay\Api\Transactions\RequestOrder;
+use MultiSafepay\Api\Transactions\RequestOrder\Description;
+use MultiSafepay\Api\Transactions\RequestOrderInterface;
+use MultiSafepay\Api\Transactions\RequestRefund;
 use MultiSafepay\Api\Transactions\Transaction;
 use MultiSafepay\Exception\ApiException;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -20,13 +22,13 @@ use Psr\Http\Client\ClientExceptionInterface;
 class TransactionManager extends AbstractManager
 {
     /**
-     * @param RequestOrder $requestOrder
+     * @param RequestOrderInterface $requestOrder
      * @return Transaction
      * @throws ClientExceptionInterface
      */
-    public function create(RequestOrder $requestOrder): Transaction
+    public function create(RequestOrderInterface $requestOrder): Transaction
     {
-        $response = $this->client->createPostRequest('orders', $requestOrder->getData());
+        $response = $this->client->createPostRequest('orders', $requestOrder);
         return new Transaction($response->getResponseData());
     }
 
@@ -46,22 +48,15 @@ class TransactionManager extends AbstractManager
 
     /**
      * @param Transaction $transaction
-     * @param Money $amount
-     * @param string $description
+     * @param RequestRefund $requestRefund
      * @return array
      * @throws ClientExceptionInterface
      */
-    public function refund(Transaction $transaction, Money $amount, string $description = ''): array
+    public function refund(Transaction $transaction, RequestRefund $requestRefund): array
     {
-        $requestBody = new RequestBody([
-            'amount' => $amount->getAmount(),
-            'currency' => $amount->getCurrency(),
-            'description' => $description,
-        ]);
-
         $response = $this->client->createPostRequest(
             'orders/' . $transaction->getOrderId() . '/refunds',
-            $requestBody->getData()
+            $requestRefund
         );
 
         return $response->getResponseData();

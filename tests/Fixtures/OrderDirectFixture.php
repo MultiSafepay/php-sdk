@@ -7,7 +7,11 @@
 namespace MultiSafepay\Tests\Fixtures;
 
 use Money\Money;
-use MultiSafepay\Api\Transactions\RequestOrder;
+use MultiSafepay\Api\Transactions\RequestOrder\Description;
+use MultiSafepay\Api\Transactions\RequestOrder\GatewayInfoIdeal;
+use MultiSafepay\Api\Transactions\RequestOrder\GoogleAnalytics;
+use MultiSafepay\Api\Transactions\RequestOrder\SecondChance;
+use MultiSafepay\Api\Transactions\RequestOrderDirect;
 
 /**
  * Trait OrderDirectFixture
@@ -16,29 +20,21 @@ use MultiSafepay\Api\Transactions\RequestOrder;
 trait OrderDirectFixture
 {
     /**
-     * @return array
+     * @return RequestOrderDirect
      */
-    public function createOrderDirectRequestFixture(): RequestOrder
+    public function createOrderDirectRequestFixture(): RequestOrderDirect
     {
-        $gatewayInfo = [
-            "issuer_id" => "0031",
-            'birthday' => '1980-01-30',
-            'bank_account' => '0417164300',
-            'phone' => '0208500500',
-            'email' => 'example@multisafepay.com'
-        ];
-
-        $orderId = time();
-        $requestOrder = new RequestOrder();
-        $requestOrder->addType('direct');
-        $requestOrder->addCustomerDetails($this->createCustomerDetailsFixture());
-        $requestOrder->addDescription('Foobar');
-        $requestOrder->addMoney(Money::EUR(20));
-        $requestOrder->addGateway('ideal');
-        $requestOrder->addGatewayInfo($gatewayInfo);
-        $requestOrder->addOrderId($orderId);
-        $requestOrder->addPaymentOptions($this->createPaymentOptionsFixture());
-
-        return $requestOrder;
+        return new RequestOrderDirect(
+            (string)time(),
+            Money::EUR(20),
+            $this->createPaymentOptionsFixture(),
+            $this->createCustomerDetailsFixture(),
+            null,
+            'IDEAL',
+            new GatewayInfoIdeal('0021'),
+            new Description('Foobar'),
+            new SecondChance(true),
+            new GoogleAnalytics('foobar')
+        );
     }
 }

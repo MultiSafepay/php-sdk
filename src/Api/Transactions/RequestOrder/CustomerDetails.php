@@ -31,7 +31,7 @@ class CustomerDetails extends Customer
     private $userAgent = '';
 
     /**
-     * @return Base\DataObject
+     * @return array
      */
     public function getData(): array
     {
