@@ -41,7 +41,7 @@ class IbanNumber
      * @param string $ibanNumber
      * @return bool
      */
-    private function validate(string $ibanNumber): bool
+    public function validate(string $ibanNumber): bool
     {
         $ibanNumber = strtolower(str_replace(' ', '', $ibanNumber));
         $countryMap = $this->getCountryMap();
