@@ -10,7 +10,13 @@ use MultiSafepay\Api\GatewayManager;
 use MultiSafepay\Api\IssuerManager;
 use MultiSafepay\Api\TransactionManager;
 use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 
+/**
+ * Class Api
+ * @package MultiSafepay
+ */
 class Api
 {
     /** @var Client */
@@ -21,10 +27,19 @@ class Api
      * @param string $apiKey
      * @param bool $isProduction
      * @param ClientInterface|null $httpClient
+     * @param RequestFactoryInterface|null $requestFactory
+     * @param StreamFactoryInterface|null $streamFactory
+     * @param string $locale
      */
-    public function __construct(string $apiKey, bool $isProduction, ClientInterface $httpClient = null)
-    {
-        $this->client = new Client($apiKey, $isProduction, $httpClient);
+    public function __construct(
+        string $apiKey,
+        bool $isProduction,
+        ClientInterface $httpClient = null,
+        ?RequestFactoryInterface $requestFactory = null,
+        ?StreamFactoryInterface $streamFactory = null,
+        string $locale = 'en'
+    ) {
+        $this->client = new Client($apiKey, $isProduction, $httpClient, $requestFactory, $streamFactory, $locale);
     }
 
     /**

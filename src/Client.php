@@ -15,8 +15,13 @@ use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
 
+/**
+ * Class Client
+ * @package MultiSafepay
+ */
 class Client
 {
     const LIVE_URL = 'https://api.multisafepay.com/v1/json/';
@@ -27,36 +32,58 @@ class Client
 
     const METHOD_GET = 'GET';
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $apiKey;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $url;
+
+    /**
+     * @var ClientInterface
+     */
+    protected $httpClient;
+
+    /**
+     * @var RequestFactoryInterface|null
+     */
+    private $requestFactory;
+
+    /**
+     * @var StreamFactoryInterface|null
+     */
+    private $streamFactory;
 
     /**
      * @var string
      */
     private $locale = 'en';
 
-    /** @var ClientInterface */
-    protected $httpClient;
-
     /**
      * Client constructor.
      * @param string $apiKey
      * @param bool $isProduction
      * @param ClientInterface|null $httpClient
+     * @param RequestFactoryInterface|null $requestFactory
+     * @param StreamFactoryInterface|null $streamFactory
      * @param string $locale
      */
     public function __construct(
         string $apiKey,
         bool $isProduction,
-        ClientInterface $httpClient = null,
+        ?ClientInterface $httpClient = null,
+        ?RequestFactoryInterface $requestFactory = null,
+        ?StreamFactoryInterface $streamFactory = null,
         string $locale = 'en'
     ) {
         $this->apiKey = $apiKey;
         $this->url = $isProduction ? self::LIVE_URL : self::TEST_URL;
         $this->httpClient = $httpClient ?: Psr18ClientDiscovery::find();
+        $this->requestFactory = $requestFactory;
+        $this->streamFactory = $streamFactory ?: Psr17FactoryDiscovery::findStreamFactory();
         $this->locale = $locale;
     }
 
@@ -114,7 +141,11 @@ class Client
      */
     public function getRequestFactory(): RequestFactoryInterface
     {
-        return Psr17FactoryDiscovery::findRequestFactory();
+        if (!$this->requestFactory instanceof RequestFactoryInterface) {
+            $this->requestFactory = Psr17FactoryDiscovery::findRequestFactory();
+        }
+
+        return $this->requestFactory;
     }
 
     /**
@@ -137,7 +168,10 @@ class Client
      */
     public function createBody(string $body): StreamInterface
     {
-        $stream = Psr17FactoryDiscovery::findStreamFactory();
-        return $stream->createStream($body);
+        if (!$this->streamFactory instanceof StreamFactoryInterface) {
+            $this->streamFactory = Psr17FactoryDiscovery::findStreamFactory();
+        }
+
+        return $this->streamFactory->createStream($body);
     }
 }
