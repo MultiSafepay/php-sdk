@@ -4,17 +4,22 @@
  * See DISCLAIMER.md for disclaimer details.
  */
 
-namespace MultiSafepay\Api\Transactions\RequestOrder;
+namespace MultiSafepay\Api\Transactions\RequestOrder\Direct\GatewayInfo;
 
+use MultiSafepay\Api\Gateways\Gateway;
+use MultiSafepay\Api\Transactions\RequestOrder\GatewayInfoInterface;
+use MultiSafepay\Api\Transactions\RequestOrderDirect;
+use MultiSafepay\ValueObject\BankAccount;
 use MultiSafepay\ValueObject\Customer\EmailAddress;
+use MultiSafepay\ValueObject\Customer\PhoneNumber;
 use MultiSafepay\ValueObject\Date;
 use MultiSafepay\ValueObject\Gender;
 
 /**
- * Class GatewayInfoMeta
- * @package MultiSafepay\Api\Transactions\RequestOrder
+ * Class Meta
+ * @package MultiSafepay\Api\Transactions\RequestOrder\Direct\GatewayInfo
  */
-class GatewayInfoMeta implements GatewayInfoInterface
+class Meta implements GatewayInfoInterface
 {
     /**
      * @var Date
@@ -42,17 +47,17 @@ class GatewayInfoMeta implements GatewayInfoInterface
     private $gender;
 
     /**
-     * GatewayInfoBankTransfer constructor.
+     * Meta constructor.
      * @param Date $birthday
-     * @param string $bankAccount
-     * @param string $phone
+     * @param BankAccount $bankAccount
+     * @param PhoneNumber $phone
      * @param EmailAddress $emailAddress
      * @param Gender|null $gender
      */
     public function __construct(
         ?Date $birthday = null,
-        string $bankAccount = '',
-        string $phone = '',
+        ?BankAccount $bankAccount = null,
+        ?PhoneNumber $phone = null,
         ?EmailAddress $emailAddress = null,
         ?Gender $gender = null
     ) {
@@ -69,10 +74,11 @@ class GatewayInfoMeta implements GatewayInfoInterface
     public function getData(): array
     {
         return [
-            'birthday' => $this->birthday->get(),
-            'bankaccount' => $this->bankAccount,
-            'phone' => $this->phone,
-            'email' => $this->emailAddress->get()
+            'birthday' => $this->birthday->get() ?? null,
+            'bankaccount' => $this->bankAccount->get() ?? null,
+            'phone' => $this->phone->get() ?? null,
+            'email' => $this->emailAddress->get() ?? null,
+            'gender' => $this->emailAddress->get() ?? null,
         ];
     }
 
@@ -82,6 +88,10 @@ class GatewayInfoMeta implements GatewayInfoInterface
     public function getCompatibleGateways(): array
     {
         return [
+            Gateway::AFTERPAY,
+            Gateway::EINVOICE,
+            Gateway::PAYAFTER,
+            Gateway::SANTANDER,
         ];
     }
 
@@ -91,7 +101,7 @@ class GatewayInfoMeta implements GatewayInfoInterface
     public function getCompatibleTypes(): array
     {
         return [
-            'redirect'
+            RequestOrderDirect::TYPE
         ];
     }
 }

@@ -4,15 +4,18 @@
  * See DISCLAIMER.md for disclaimer details.
  */
 
-namespace MultiSafepay\Api\Transactions\RequestOrder;
+namespace MultiSafepay\Api\Transactions\RequestOrder\Direct\GatewayInfo;
 
+use MultiSafepay\Api\Gateways\Gateway;
+use MultiSafepay\Api\Transactions\RequestOrder\GatewayInfoInterface;
+use MultiSafepay\Api\Transactions\RequestOrderDirect;
 use MultiSafepay\ValueObject\IbanNumber;
 
 /**
- * Class GatewayInfoAccount
- * @package MultiSafepay\Api\Transactions\RequestOrder
+ * Class Account
+ * @package MultiSafepay\Api\Transactions\RequestOrder\Direct\GatewayInfo
  */
-class GatewayInfoDirectAccount implements GatewayInfoInterface
+class Account implements GatewayInfoInterface
 {
     /**
      * @var IbanNumber
@@ -72,7 +75,7 @@ class GatewayInfoDirectAccount implements GatewayInfoInterface
     public function getCompatibleGateways(): array
     {
         return [
-            'DIRDEB',
+            Gateway::DIRDEB
         ];
     }
 
@@ -82,7 +85,7 @@ class GatewayInfoDirectAccount implements GatewayInfoInterface
     public function getCompatibleTypes(): array
     {
         return [
-            'direct'
+            RequestOrderDirect::TYPE
         ];
     }
 }

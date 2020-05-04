@@ -29,10 +29,11 @@ class Date
     }
 
     /**
+     * @param string $format
      * @return string
      */
-    public function get(): string
+    public function get(string $format = 'Y-m-d'): string
     {
-        return date('Y-m-d', $this->timestamp);
+        return date($format, $this->timestamp);
     }
 }

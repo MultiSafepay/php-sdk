@@ -17,10 +17,7 @@ use MultiSafepay\Api\Transactions\RequestOrder\PaymentOptions;
  */
 class RequestOrderRedirect implements RequestOrderInterface
 {
-    /**
-     * @var string
-     */
-    protected $type = 'redirect';
+    const TYPE = 'redirect';
 
     /**
      * @var string
@@ -64,7 +61,7 @@ class RequestOrderRedirect implements RequestOrderInterface
     public function __construct(
         string $orderId,
         Money $money,
-        string $gatewayCode,
+        string $gatewayCode, // @todo: Replace this with actual Gateway class
         PaymentOptions $paymentOptions,
         GatewayInfoInterface $gatewayInfo,
         Description $description = null
@@ -83,7 +80,7 @@ class RequestOrderRedirect implements RequestOrderInterface
     public function getData(): array
     {
         return [
-            'type' => $this->type,
+            'type' => self::TYPE,
             'order_id' => $this->orderId,
             'currency' => (string)$this->money->getCurrency(),
             'amount' => (string)$this->money->getAmount() * 100,

@@ -6,17 +6,17 @@
 
 namespace MultiSafepay\Api\Transactions\RequestOrder;
 
+use MultiSafepay\Api\Gateways\Gateway;
+use MultiSafepay\Api\Transactions\RequestOrderDirect;
 use MultiSafepay\ValueObject\Creditcard\CardNumber;
 use MultiSafepay\ValueObject\Creditcard\Cvc;
-use MultiSafepay\ValueObject\Customer\EmailAddress;
 use MultiSafepay\ValueObject\Date;
-use MultiSafepay\ValueObject\Gender;
 
 /**
- * Class GatewayInfoCreditcard
+ * Class Creditcard
  * @package MultiSafepay\Api\Transactions\RequestOrder
  */
-class GatewayInfoCreditcard implements GatewayInfoInterface
+class Creditcard implements GatewayInfoInterface
 {
     /**
      * @var CardNumber
@@ -37,13 +37,14 @@ class GatewayInfoCreditcard implements GatewayInfoInterface
      * @var Cvc
      */
     private $cvc;
+
     /**
      * @var bool
      */
     private $flexible3d;
 
     /**
-     * GatewayInfoCreditcard constructor.
+     * Creditcard constructor.
      * @param CardNumber $cardNumber
      * @param string $cardHolderName
      * @param Date $cardExpiryDate
@@ -72,9 +73,9 @@ class GatewayInfoCreditcard implements GatewayInfoInterface
         return [
             'card_number' => $this->cardNumber->get(),
             'cart_holder_name' => $this->cardHolderName,
-            'cart_expiry_date' => $this->cardExpiryDate->get(),
-            'cvc' => $this->cvc->get(),
-            'card_cvc' => $this->cvc->get(),
+            'cart_expiry_date' => $this->cardExpiryDate->get('my'),
+            'cvc' => $this->cvc->get(), // @todo: Needed for CREDITCARD
+            'card_cvc' => $this->cvc->get(), // @todo: Needed for
             'flexible_3d' => $this->flexible3d
         ];
     }
@@ -85,6 +86,8 @@ class GatewayInfoCreditcard implements GatewayInfoInterface
     public function getCompatibleGateways(): array
     {
         return [
+            Gateway::CREDITCARD,
+            Gateway::VISA,
         ];
     }
 
@@ -94,7 +97,7 @@ class GatewayInfoCreditcard implements GatewayInfoInterface
     public function getCompatibleTypes(): array
     {
         return [
-            'redirect'
+            RequestOrderDirect::TYPE
         ];
     }
 }

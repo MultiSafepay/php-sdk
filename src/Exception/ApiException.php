@@ -18,7 +18,7 @@ class ApiException extends LogicException
     {
         $lines = [];
         $lines[] = ApiException::class . ': ' . $this->getMessage();
-        $lines[] = 'Additional data: ' . var_export($additionalData, true);
+        $lines[] = 'Additional data: ' . json_encode($additionalData, JSON_PRETTY_PRINT);
         return implode("\n", $lines);
     }
 }

@@ -4,13 +4,17 @@
  * See DISCLAIMER.md for disclaimer details.
  */
 
-namespace MultiSafepay\Api\Transactions\RequestOrder;
+namespace MultiSafepay\Api\Transactions\RequestOrder\Redirect\GatewayInfo;
+
+use MultiSafepay\Api\Gateways\Gateway;
+use MultiSafepay\Api\Transactions\RequestOrder\GatewayInfoInterface;
+use MultiSafepay\Api\Transactions\RequestOrderRedirect;
 
 /**
- * Class GatewayInfoBanContactQr
- * @package MultiSafepay\Api\Transactions\RequestOrder
+ * Class QrEnabled
+ * @package MultiSafepay\Api\Transactions\RequestOrder\Redirect\GatewayInfo
  */
-class GatewayInfoBanContactQr implements GatewayInfoInterface
+class QrEnabled implements GatewayInfoInterface
 {
     /**
      * @var bool
@@ -18,7 +22,7 @@ class GatewayInfoBanContactQr implements GatewayInfoInterface
     private $qrEnabled;
 
     /**
-     * GatewayInfoIdeal constructor.
+     * QrEnabled constructor.
      * @param bool $qrEnabled
      */
     public function __construct(bool $qrEnabled = true)
@@ -43,6 +47,7 @@ class GatewayInfoBanContactQr implements GatewayInfoInterface
     public function getCompatibleGateways(): array
     {
         return [
+            Gateway::MISTERCASH
         ];
     }
 
@@ -52,7 +57,7 @@ class GatewayInfoBanContactQr implements GatewayInfoInterface
     public function getCompatibleTypes(): array
     {
         return [
-            'redirect'
+            RequestOrderRedirect::TYPE
         ];
     }
 }

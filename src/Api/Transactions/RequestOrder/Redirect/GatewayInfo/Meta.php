@@ -4,8 +4,11 @@
  * See DISCLAIMER.md for disclaimer details.
  */
 
-namespace MultiSafepay\Api\Transactions\RequestOrder;
+namespace MultiSafepay\Api\Transactions\RequestOrder\Redirect\GatewayInfo;
 
+use MultiSafepay\Api\Gateways\Gateway;
+use MultiSafepay\Api\Transactions\RequestOrder\GatewayInfoInterface;
+use MultiSafepay\Api\Transactions\RequestOrderRedirect;
 use MultiSafepay\ValueObject\BankAccount;
 use MultiSafepay\ValueObject\Customer\EmailAddress;
 use MultiSafepay\ValueObject\Customer\PhoneNumber;
@@ -13,10 +16,10 @@ use MultiSafepay\ValueObject\Date;
 use MultiSafepay\ValueObject\Gender;
 
 /**
- * Class GatewayInfoRedirectMeta
- * @package MultiSafepay\Api\Transactions\RequestOrder
+ * Class Meta
+ * @package MultiSafepay\Api\Transactions\RequestOrder\Redirect\GatewayInfo
  */
-class GatewayInfoRedirectMeta implements GatewayInfoInterface
+class Meta implements GatewayInfoInterface
 {
     /**
      * @var Date
@@ -44,7 +47,7 @@ class GatewayInfoRedirectMeta implements GatewayInfoInterface
     private $gender;
 
     /**
-     * GatewayInfoBankTransfer constructor.
+     * Meta constructor.
      * @param Date|null $birthday
      * @param BankAccount|null $bankAccount
      * @param PhoneNumber|null $phoneNumber
@@ -84,7 +87,8 @@ class GatewayInfoRedirectMeta implements GatewayInfoInterface
     public function getCompatibleGateways(): array
     {
         return [
-            'PAYAFTER',
+            Gateway::PAYAFTER,
+            Gateway::KLARNA,
         ];
     }
 
@@ -94,7 +98,7 @@ class GatewayInfoRedirectMeta implements GatewayInfoInterface
     public function getCompatibleTypes(): array
     {
         return [
-            'redirect'
+            RequestOrderRedirect::TYPE
         ];
     }
 }

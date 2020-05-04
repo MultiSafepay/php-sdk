@@ -4,19 +4,17 @@
  * See DISCLAIMER.md for disclaimer details.
  */
 
-namespace MultiSafepay\Api\Transactions\RequestOrder;
+namespace MultiSafepay\Api\Transactions\RequestOrder\Redirect\GatewayInfo;
 
-use MultiSafepay\ValueObject\Creditcard\CardNumber;
-use MultiSafepay\ValueObject\Creditcard\Cvc;
-use MultiSafepay\ValueObject\Customer\EmailAddress;
-use MultiSafepay\ValueObject\Date;
-use MultiSafepay\ValueObject\Gender;
+use MultiSafepay\Api\Gateways\Gateway;
+use MultiSafepay\Api\Transactions\RequestOrder\GatewayInfoInterface;
+use MultiSafepay\Api\Transactions\RequestOrderRedirect;
 
 /**
- * Class GatewayInfoRedirectCreditcard
- * @package MultiSafepay\Api\Transactions\RequestOrder
+ * Class Creditcard
+ * @package MultiSafepay\Api\Transactions\RequestOrder\Redirect\GatewayInfo
  */
-class GatewayInfoRedirectCreditcard implements GatewayInfoInterface
+class Creditcard implements GatewayInfoInterface
 {
     /**
      * @var bool
@@ -29,7 +27,7 @@ class GatewayInfoRedirectCreditcard implements GatewayInfoInterface
     private $termUrl;
 
     /**
-     * GatewayInfoCreditcard constructor.
+     * Creditcard constructor.
      * @param bool $flexible3d
      * @param string $termUrl
      */
@@ -47,7 +45,8 @@ class GatewayInfoRedirectCreditcard implements GatewayInfoInterface
     public function getData(): array
     {
         return [
-            'flexible_3d' => $this->flexible3d
+            'flexible_3d' => $this->flexible3d,
+            'term_url' => $this->termUrl,
         ];
     }
 
@@ -57,6 +56,8 @@ class GatewayInfoRedirectCreditcard implements GatewayInfoInterface
     public function getCompatibleGateways(): array
     {
         return [
+            Gateway::VISA,
+            Gateway::MASTERCARD,
         ];
     }
 
@@ -66,7 +67,7 @@ class GatewayInfoRedirectCreditcard implements GatewayInfoInterface
     public function getCompatibleTypes(): array
     {
         return [
-            'redirect'
+            RequestOrderRedirect::TYPE
         ];
     }
 }

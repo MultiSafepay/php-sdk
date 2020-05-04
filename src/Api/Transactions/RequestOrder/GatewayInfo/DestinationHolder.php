@@ -10,7 +10,7 @@ namespace MultiSafepay\Api\Transactions\RequestOrder\GatewayInfo;
  * Class DestinationHolder
  * @package MultiSafepay\Api\Transactions\RequestOrder\GatewayInfo
  */
-class DestinationHolder implements GatewayInfoInterface
+class DestinationHolder
 {
     /**
      * @var string
