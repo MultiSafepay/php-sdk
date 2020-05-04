@@ -2,10 +2,8 @@
 
 namespace MultiSafepay\Tests\Unit\ValueObject;
 
-use MultiSafepay\Tests\Fixtures\AddressFixture;
+use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
 use MultiSafepay\ValueObject\Customer;
-use MultiSafepay\ValueObject\Customer\Address;
-use MultiSafepay\ValueObject\Customer\Country;
 use MultiSafepay\ValueObject\Customer\EmailAddress;
 use MultiSafepay\ValueObject\IpAddress;
 use PHPUnit\Framework\TestCase;
