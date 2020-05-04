@@ -2,6 +2,7 @@
 
 namespace MultiSafepay\Tests\Functional\Api\Transactions;
 
+use MultiSafepay\Exception\ApiException;
 use MultiSafepay\Tests\Fixtures\AddressFixture;
 use MultiSafepay\Tests\Fixtures\CustomerDetailsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRedirectFixture;
@@ -27,7 +28,12 @@ class CreateRedirectOrderTest extends AbstractTestCase
     {
         $requestOrder = $this->createOrderRedirectRequestFixture();
 
-        $response = $this->getClient()->createPostRequest('orders', $requestOrder->getData());
+        try {
+            $response = $this->getClient()->createPostRequest('orders', $requestOrder);
+        } catch (ApiException $apiException) {
+            $this->assertTrue(false, $apiException->getDetails($requestOrder->getData()));
+        }
+
         $data = $response->getResponseData();
         $this->assertIsNumeric($data['order_id']);
         $this->assertNotEmpty($data['payment_url']);

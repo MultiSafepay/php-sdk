@@ -19,4 +19,9 @@
             <property name="maxCount" value="20"/>
         </properties>
     </rule>
+    <rule ref="ObjectCalisthenics.Metrics.PropertyPerClassLimit">
+        <properties>
+            <property name="maxCount" value="20"/>
+        </properties>
+    </rule>
 </ruleset>

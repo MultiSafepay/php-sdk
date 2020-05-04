@@ -6,15 +6,13 @@
 
 namespace MultiSafepay\Api\Base;
 
-use MultiSafepay\Exception\InvalidRequestBodyException;
-use MultiSafepay\Exception\MissingPluginVersionException;
 use MultiSafepay\Util\Version;
 
 /**
  * Class RequestBody
  * @package MultiSafepay\Api\Base
  */
-class RequestBody extends DataObject
+class RequestBody extends DataObject implements RequestBodyInterface
 {
     /**
      * @return array
@@ -22,19 +20,7 @@ class RequestBody extends DataObject
     public function getData(): array
     {
         $this->data['plugin']['plugin_version'] = Version::getInstance()->getVersion();
-        $this->validate();
 
         return $this->data;
-    }
-
-    /**
-     * @param $body
-     * @todo: With which API calls would a type be used?
-     */
-    private function validate(): void
-    {
-        /*if (!isset($this->data['type'])) {
-            throw new InvalidRequestBodyException('No type definition');
-        }*/
     }
 }

@@ -4,6 +4,7 @@ namespace MultiSafepay\Tests\Functional\Api\Transactions;
 
 use Money\Money;
 use MultiSafepay\Api\Transactions\RequestOrder;
+use MultiSafepay\Exception\ApiException;
 use MultiSafepay\Tests\Fixtures\AddressFixture;
 use MultiSafepay\Tests\Fixtures\CustomerDetailsFixture;
 use MultiSafepay\Tests\Fixtures\OrderDirectFixture;
@@ -29,7 +30,12 @@ class CreateDirectOrderTest extends AbstractTestCase
     {
         $requestOrder = $this->createOrderDirectRequestFixture();
 
-        $response = $this->getClient()->createPostRequest('orders', $requestOrder->getData());
+        try {
+            $response = $this->getClient()->createPostRequest('orders', $requestOrder);
+        } catch (ApiException $apiException) {
+            $this->assertTrue(false, $apiException->getDetails($requestOrder->getData()));
+        }
+
         $data = $response->getResponseData();
         $this->assertIsNumeric($data['order_id']);
         $this->assertNotEmpty($data['transaction_id']);
