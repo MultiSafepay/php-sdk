@@ -6,6 +6,7 @@
 
 namespace MultiSafepay\Tests\Fixtures\RequestOrder;
 
+use Faker\Factory as FakerFactory;
 use Money\Money;
 use MultiSafepay\Api\Transactions\RequestOrder\Arguments\Description;
 use MultiSafepay\Api\Transactions\RequestOrder\Arguments\Direct\GatewayInfo\Ideal as IdealGatewayInfo;
@@ -35,6 +36,27 @@ trait DirectFixture
             new Description('Foobar'),
             new SecondChance(true),
             new GoogleAnalytics('foobar')
+        );
+    }
+
+    /**
+     * @return RequestOrderDirect
+     */
+    public function createRandomOrderIdealDirectRequestFixture(): RequestOrderDirect
+    {
+        $faker = FakerFactory::create();
+
+        return new RequestOrderDirect(
+            (string)time(),
+            Money::EUR(20),
+            $this->createPaymentOptionsFixture(),
+            $this->createRandomCustomerDetailsFixture(),
+            null,
+            'IDEAL',
+            new IdealGatewayInfo('0021'),
+            new Description($faker->sentence),
+            new SecondChance(true),
+            new GoogleAnalytics($faker->word)
         );
     }
 }

@@ -6,6 +6,7 @@
 
 namespace MultiSafepay\Tests\Fixtures\ValueObject;
 
+use Faker\Factory as FakerFactory;
 use Money\Money;
 use MultiSafepay\ValueObject\ShoppingCart;
 use MultiSafepay\ValueObject\Weight;
@@ -30,6 +31,27 @@ trait ShoppingCartFixture
             '1234',
             'none',
             new Weight('KG', 12)
+        );
+
+        return new ShoppingCart($items);
+    }
+
+    /**
+     * @return ShoppingCart
+     * @todo Changing amount and quantiy also requires a different test when sending to testing API
+     */
+    public function createRandomShoppingCartFixture(): ShoppingCart
+    {
+        $faker = FakerFactory::create();
+
+        $items = [];
+        $items[] = new ShoppingCartItem(
+            $faker->sentence(3),
+            Money::EUR(50),
+            2,
+            $faker->uuid,
+            'none',
+            new Weight('KG', rand(1, 10))
         );
 
         return new ShoppingCart($items);

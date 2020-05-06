@@ -26,7 +26,7 @@ class CreateIdealDirectOrderTest extends AbstractTestCase
      */
     public function testCreateIdealDirectOrder()
     {
-        $requestOrder = $this->createOrderIdealDirectRequestFixture();
+        $requestOrder = $this->createRandomOrderIdealDirectRequestFixture();
 
         try {
             $response = $this->getClient()->createPostRequest('orders', $requestOrder);
