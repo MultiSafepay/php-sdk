@@ -17,7 +17,7 @@ class AddressTest extends TestCase
      */
     public function testWhetherValueCanBeSetAndUsed()
     {
-        $country = new Country('NL', 'Nederland');
+        $country = new Country('NL');
         $address = new Address(
             'Kraanspoor',
             '',
@@ -40,6 +40,6 @@ class AddressTest extends TestCase
 
         $country = $address->getCountry();
         $this->assertEquals('NL', $country->getCode());
-        $this->assertEquals('Nederland', $country->getName());
+        $this->assertEquals('Netherlands', $country->getName());
     }
 }
