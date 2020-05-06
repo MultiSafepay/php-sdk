@@ -3,11 +3,11 @@
 namespace MultiSafepay\Tests\Unit\Api\Issuers;
 
 use MultiSafepay\Api\Gateways\Gateway;
-use MultiSafepay\Tests\Fixtures\AddressFixture;
-use MultiSafepay\Tests\Fixtures\CustomerDetailsFixture;
-use MultiSafepay\Tests\Fixtures\OrderDirectFixture;
-use MultiSafepay\Tests\Fixtures\OrderRedirectFixture;
-use MultiSafepay\Tests\Fixtures\PaymentOptionsFixture;
+use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
+use MultiSafepay\Tests\Fixtures\RequestOrder\Arguments\CustomerDetailsFixture;
+use MultiSafepay\Tests\Fixtures\RequestOrder\Arguments\PaymentOptionsFixture;
+use MultiSafepay\Tests\Fixtures\RequestOrder\DirectFixture as RequestOrderDirectFixture;
+use MultiSafepay\Tests\Fixtures\RequestOrder\RedirectFixture as RequestOrderRedirectFixture;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -16,8 +16,8 @@ use PHPUnit\Framework\TestCase;
  */
 class RequestOrderTest extends TestCase
 {
-    use OrderRedirectFixture;
-    use OrderDirectFixture;
+    use RequestOrderRedirectFixture;
+    use RequestOrderDirectFixture;
     use CustomerDetailsFixture;
     use AddressFixture;
     use PaymentOptionsFixture;
