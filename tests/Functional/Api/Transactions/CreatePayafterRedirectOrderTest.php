@@ -2,6 +2,7 @@
 
 namespace MultiSafepay\Tests\Functional\Api\Transactions;
 
+use Faker\Factory as FakerFactory;
 use Money\Money;
 use MultiSafepay\Api\Gateways\Gateway;
 use MultiSafepay\Api\Transactions\RequestOrder\Arguments\Description;
@@ -57,17 +58,19 @@ class CreatePayafterRedirectOrderTest extends AbstractTestCase
      */
     public function getPayafterOrderRedirectRequestFixture(): RequestOrderRedirect
     {
+        $faker = FakerFactory::create();
+
         return new Payafter(
             (string)time(),
             Money::EUR(100), // @todo: Make sure this matches with shopping_cart
             Gateway::PAYAFTER,
             $this->createPaymentOptionsFixture(),
             $this->getMetaGatewayInfoFixture(),
-            $this->createCustomerDetailsFixture(),
-            $this->createCustomerDetailsFixture(),
-            $this->createShoppingCartFixture(), // @todo: Make sure tax_table_selector matches with tax_table
+            $this->createRandomCustomerDetailsFixture(),
+            $this->createRandomCustomerDetailsFixture(),
+            $this->createRandomShoppingCartFixture(), // @todo: Make sure tax_table_selector matches with tax_table
             $this->createTaxTableFixture(),
-            new Description('Foobar')
+            new Description($faker->sentence)
         );
     }
 

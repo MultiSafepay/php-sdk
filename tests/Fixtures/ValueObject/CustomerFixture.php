@@ -6,6 +6,7 @@
 
 namespace MultiSafepay\Tests\Fixtures\ValueObject;
 
+use Faker\Factory as FakerFactory;
 use MultiSafepay\ValueObject\Customer;
 use MultiSafepay\ValueObject\Customer\EmailAddress;
 use MultiSafepay\ValueObject\IpAddress;
@@ -27,6 +28,28 @@ trait CustomerFixture
         $ipAddress = new IpAddress('10.0.0.1');
         $emailAddress = new EmailAddress('info@example.org');
         $customer = new Customer('John', 'Doe', $address, $ipAddress, $emailAddress, ['0123456789']);
+
+        return $customer;
+    }
+
+    /**
+     * @return Customer
+     */
+    public function createRandomCustomerFixture(): Customer
+    {
+        $faker = FakerFactory::create();
+        $address = $this->createRandomAddressFixture();
+        $ipAddress = new IpAddress($faker->ipv4);
+        $emailAddress = new EmailAddress($faker->email);
+
+        $customer = new Customer(
+            $faker->firstName,
+            $faker->lastName,
+            $address,
+            $ipAddress,
+            $emailAddress,
+            [$faker->phoneNumber]
+        );
 
         return $customer;
     }

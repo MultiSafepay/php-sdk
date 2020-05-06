@@ -6,6 +6,7 @@
 
 namespace MultiSafepay\Tests\Fixtures\RequestOrder\Arguments;
 
+use Faker\Factory as FakerFactory;
 use MultiSafepay\Api\Transactions\RequestOrder\Arguments\CustomerDetails;
 use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
 use MultiSafepay\ValueObject\Customer\EmailAddress;
@@ -30,6 +31,32 @@ trait CustomerDetailsFixture
         $customerDetails->addLocale('nl');
         $customerDetails->addReferrer('http://example.org');
         $customerDetails->addUserAgent('Unknown');
+
+        return $customerDetails;
+    }
+
+    /**
+     * @return CustomerDetails
+     */
+    public function createRandomCustomerDetailsFixture(): CustomerDetails
+    {
+        $faker = FakerFactory::create();
+
+        $address = $this->createRandomAddressFixture();
+        $ipAddress = new IpAddress($faker->ipv4);
+        $emailAddress = new EmailAddress($faker->email);
+        $customerDetails = new CustomerDetails(
+            $faker->firstName,
+            $faker->lastName,
+            $address,
+            $ipAddress,
+            $emailAddress,
+            [$faker->phoneNumber]
+        );
+
+        $customerDetails->addLocale('nl');
+        $customerDetails->addReferrer('http://'.$faker->domainName);
+        $customerDetails->addUserAgent($faker->userAgent);
 
         return $customerDetails;
     }
