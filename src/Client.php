@@ -174,4 +174,12 @@ class Client
 
         return $this->streamFactory->createStream($body);
     }
+
+    /**
+     * @return ClientInterface
+     */
+    public function getHttpClient(): ClientInterface
+    {
+        return $this->httpClient;
+    }
 }
