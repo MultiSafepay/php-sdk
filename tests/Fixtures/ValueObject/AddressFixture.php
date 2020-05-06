@@ -21,7 +21,7 @@ trait AddressFixture
      */
     public function createAddressFixture(): Address
     {
-        $country = new Country('NL', 'Nederland');
+        $country = new Country('NL');
         return new Address(
             'Kraanspoor',
             '(blue door)',
