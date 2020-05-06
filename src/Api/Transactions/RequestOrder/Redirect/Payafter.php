@@ -12,7 +12,6 @@ use MultiSafepay\Api\Transactions\RequestOrder\Arguments\Description;
 use MultiSafepay\Api\Transactions\RequestOrder\Arguments\GatewayInfoInterface;
 use MultiSafepay\Api\Transactions\RequestOrder\Arguments\PaymentOptions;
 use MultiSafepay\Api\Transactions\RequestOrder\Redirect as RequestOrderRedirect;
-use MultiSafepay\ValueObject\Customer;
 use MultiSafepay\ValueObject\ShoppingCart;
 use MultiSafepay\ValueObject\Tax\TaxTable;
 
@@ -28,7 +27,7 @@ class Payafter extends RequestOrderRedirect
     private $customerDetails;
 
     /**
-     * @var Customer
+     * @var CustomerDetails
      */
     private $delivery;
 
@@ -50,7 +49,7 @@ class Payafter extends RequestOrderRedirect
      * @param PaymentOptions $paymentOptions
      * @param GatewayInfoInterface $gatewayInfo
      * @param CustomerDetails $customerDetails
-     * @param Customer $delivery
+     * @param CustomerDetails $delivery
      * @param ShoppingCart $shoppingCart
      * @param TaxTable $taxTable
      * @param Description|null $description
@@ -62,7 +61,7 @@ class Payafter extends RequestOrderRedirect
         PaymentOptions $paymentOptions,
         GatewayInfoInterface $gatewayInfo,
         CustomerDetails $customerDetails,
-        Customer $delivery,
+        CustomerDetails $delivery,
         ShoppingCart $shoppingCart,
         TaxTable $taxTable,
         Description $description = null

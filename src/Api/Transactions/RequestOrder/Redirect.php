@@ -84,7 +84,7 @@ class Redirect implements RequestOrderInterface
             'type' => self::TYPE,
             'order_id' => $this->orderId,
             'currency' => (string)$this->money->getCurrency(),
-            'amount' => (string)$this->money->getAmount() * 100,
+            'amount' => (string)((float)$this->money->getAmount() * 100),
             'gateway' => $this->gatewayCode,
             'gateway_info' => $this->gatewayInfo->getData(),
             'payment_options' => $this->paymentOptions->getData(),

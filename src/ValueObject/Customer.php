@@ -11,7 +11,7 @@ use MultiSafepay\ValueObject\Customer\EmailAddress;
 
 /**
  * Class Customer
- * @package MultiSafepay\Api\Base
+ * @package MultiSafepay\ValueObject
  */
 class Customer
 {

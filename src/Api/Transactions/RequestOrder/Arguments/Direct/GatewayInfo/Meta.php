@@ -27,12 +27,12 @@ class Meta implements GatewayInfoInterface
     private $birthday;
 
     /**
-     * @var string
+     * @var BankAccount
      */
     private $bankAccount;
 
     /**
-     * @var string
+     * @var PhoneNumber
      */
     private $phone;
 

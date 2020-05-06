@@ -4,6 +4,7 @@ namespace MultiSafepay\Tests\Utils;
 
 use MultiSafepay\Client;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Client\ClientExceptionInterface;
 
 /**
  * Class MockGenerator
@@ -16,7 +17,7 @@ class MockGenerator extends TestCase
     /**
      * @param array $getRequests
      * @return void
-     * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @throws ClientExceptionInterface
      */
     public function generateGetRequests(array $getRequests)
     {
@@ -39,7 +40,7 @@ class MockGenerator extends TestCase
     }
 
     /**
-     * @param string $fileName
+     * @param string $fileId
      * @param mixed $data
      */
     public function writeFile(string $fileId, $data)

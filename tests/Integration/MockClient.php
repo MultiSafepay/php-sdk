@@ -12,6 +12,10 @@ use MultiSafepay\Client;
 use Http\Mock\Client as MockHttpClient;
 use MultiSafepay\Util\Version;
 
+/**
+ * Class MockClient
+ * @package MultiSafepay\Tests\Integration
+ */
 class MockClient extends Client
 {
     /**
@@ -46,8 +50,10 @@ class MockClient extends Client
             $responseData['error_info'] = $errorInfo;
         }
 
-        $this->httpClient->reset();
-        $this->httpClient->addResponse(new Response(
+        /** @var MockHttpClient $httpClient */
+        $httpClient = $this->httpClient;
+        $httpClient->reset();
+        $httpClient->addResponse(new Response(
             200,
             ['content-type' => 'application/json'],
             json_encode($responseData)
@@ -61,8 +67,11 @@ class MockClient extends Client
     public function mockResponseFromFixtureFile(string $id): void
     {
         $fixtureData = $this->loadFixtureDataById($id);
-        $this->httpClient->reset();
-        $this->httpClient->addResponse(new Response(
+
+        /** @var MockHttpClient $httpClient */
+        $httpClient = $this->httpClient;
+        $httpClient->reset();
+        $httpClient->addResponse(new Response(
             200,
             ['content-type' => 'application/json'],
             json_encode($fixtureData)

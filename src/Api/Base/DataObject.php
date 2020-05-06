@@ -53,7 +53,7 @@ class DataObject
 
     /**
      * @param string $name
-     * @param $value
+     * @param mixed $value
      */
     private function set(string $name, $value)
     {

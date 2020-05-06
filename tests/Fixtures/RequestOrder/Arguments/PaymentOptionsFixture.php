@@ -7,16 +7,15 @@
 namespace MultiSafepay\Tests\Fixtures\RequestOrder\Arguments;
 
 use MultiSafepay\Api\Transactions\RequestOrder\Arguments\PaymentOptions;
-use MultiSafepay\ValueObject\Customer;
 
 /**
- * Trait CustomerFixture
+ * Trait PaymentOptionsFixture
  * @package MultiSafepay\Tests\Fixtures\RequestOrder\Arguments
  */
 trait PaymentOptionsFixture
 {
     /**
-     * @return Customer
+     * @return PaymentOptions
      */
     public function createPaymentOptionsFixture(): PaymentOptions
     {
