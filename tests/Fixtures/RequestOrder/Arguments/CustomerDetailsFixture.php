@@ -8,7 +8,6 @@ namespace MultiSafepay\Tests\Fixtures\RequestOrder\Arguments;
 
 use Faker\Factory as FakerFactory;
 use MultiSafepay\Api\Transactions\RequestOrder\Arguments\CustomerDetails;
-use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
 use MultiSafepay\ValueObject\Customer\EmailAddress;
 use MultiSafepay\ValueObject\IpAddress;
 

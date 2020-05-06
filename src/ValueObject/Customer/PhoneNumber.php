@@ -6,8 +6,6 @@
 
 namespace MultiSafepay\ValueObject\Customer;
 
-use MultiSafepay\Exception\InvalidArgumentException;
-
 /**
  * Class PhoneNumber
  * @package MultiSafepay\ValueObject\Customer

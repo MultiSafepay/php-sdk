@@ -6,8 +6,6 @@
 
 namespace MultiSafepay\Api\Transactions;
 
-use MultiSafepay\Api\Base;
-use MultiSafepay\Client;
 use MultiSafepay\Exception\InvalidOrderDataException;
 
 /**

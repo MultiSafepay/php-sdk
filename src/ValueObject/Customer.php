@@ -7,7 +7,6 @@
 namespace MultiSafepay\ValueObject;
 
 use MultiSafepay\ValueObject\Customer\Address;
-use MultiSafepay\ValueObject\IpAddress;
 use MultiSafepay\ValueObject\Customer\EmailAddress;
 
 /**

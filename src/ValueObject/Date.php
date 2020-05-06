@@ -6,8 +6,6 @@
 
 namespace MultiSafepay\ValueObject;
 
-use MultiSafepay\Exception\InvalidArgumentException;
-
 /**
  * Class Date
  * @package MultiSafepay\ValueObject

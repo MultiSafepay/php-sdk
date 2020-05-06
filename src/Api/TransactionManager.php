@@ -6,8 +6,6 @@
 
 namespace MultiSafepay\Api;
 
-use Money\Money;
-use MultiSafepay\Api\Base\RequestBody;
 use MultiSafepay\Api\Transactions\RequestOrder\Description;
 use MultiSafepay\Api\Transactions\RequestOrderInterface;
 use MultiSafepay\Api\Transactions\RequestRefund;

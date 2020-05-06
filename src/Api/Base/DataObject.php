@@ -6,8 +6,6 @@
 
 namespace MultiSafepay\Api\Base;
 
-use MultiSafepay\Util\Version;
-
 /**
  * Class DataObject
  * @package MultiSafepay\Api\Base
