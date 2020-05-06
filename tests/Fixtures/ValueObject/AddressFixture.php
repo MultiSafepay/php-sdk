@@ -40,7 +40,7 @@ trait AddressFixture
     public function createRandomAddressFixture(): Address
     {
         $faker = FakerFactory::create();
-        $country = new Country('NL', 'Nederland');
+        $country = new Country('NL');
         return new Address(
             $faker->streetName,
             $faker->word,

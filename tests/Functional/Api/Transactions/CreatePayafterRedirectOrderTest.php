@@ -46,6 +46,7 @@ class CreatePayafterRedirectOrderTest extends AbstractTestCase
             $response = $this->getClient()->createPostRequest('orders', $requestOrder);
         } catch (ApiException $apiException) {
             $this->assertTrue(false, $apiException->getDetails($requestOrder->getData()));
+            return;
         }
 
         $data = $response->getResponseData();
