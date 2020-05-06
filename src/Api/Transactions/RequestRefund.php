@@ -7,9 +7,7 @@
 namespace MultiSafepay\Api\Transactions;
 
 use Money\Money;
-use MultiSafepay\Api\Transactions\RequestOrder\Description;
-use MultiSafepay\Api\Transactions\RequestOrder\GatewayInfo;
-use MultiSafepay\Api\Transactions\RequestOrder\PaymentOptions;
+use MultiSafepay\Api\Transactions\RequestOrder\Arguments\Description;
 
 /**
  * Class RequestOrderDirect
@@ -34,11 +32,7 @@ class RequestRefund implements RequestOrderInterface
 
     /**
      * RequestOrderDirect constructor.
-     * @param string $orderId
      * @param Money $money
-     * @param string $gatewayCode
-     * @param PaymentOptions $paymentOptions
-     * @param GatewayInfo $gatewayInfo
      * @param Description $description
      */
     public function __construct(

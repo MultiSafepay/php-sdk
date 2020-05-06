@@ -8,22 +8,22 @@ namespace MultiSafepay\Tests\Integration\Api;
 
 use Money\Money;
 use MultiSafepay\Api\TransactionManager;
-use MultiSafepay\Api\Transactions\RequestOrder\Description;
+use MultiSafepay\Api\Transactions\RequestOrder\Arguments\Description;
 use MultiSafepay\Api\Transactions\RequestRefund;
 use MultiSafepay\Exception\ApiException;
-use MultiSafepay\Tests\Fixtures\AddressFixture;
-use MultiSafepay\Tests\Fixtures\CustomerDetailsFixture;
-use MultiSafepay\Tests\Fixtures\OrderDirectFixture;
-use MultiSafepay\Tests\Fixtures\OrderRedirectFixture;
-use MultiSafepay\Tests\Fixtures\PaymentOptionsFixture;
+use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
+use MultiSafepay\Tests\Fixtures\RequestOrder\Arguments\CustomerDetailsFixture;
+use MultiSafepay\Tests\Fixtures\RequestOrder\DirectFixture as RequestOrderDirectFixture;
+use MultiSafepay\Tests\Fixtures\RequestOrder\RedirectFixture as RequestOrderRedirectFixture;
+use MultiSafepay\Tests\Fixtures\RequestOrder\Arguments\PaymentOptionsFixture;
 use MultiSafepay\Tests\Integration\MockClient;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientExceptionInterface;
 
 class TransactionManagerTest extends TestCase
 {
-    use OrderRedirectFixture;
-    use OrderDirectFixture;
+    use RequestOrderDirectFixture;
+    use RequestOrderRedirectFixture;
     use PaymentOptionsFixture;
     use CustomerDetailsFixture;
     use AddressFixture;

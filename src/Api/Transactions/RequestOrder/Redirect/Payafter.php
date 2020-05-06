@@ -7,11 +7,11 @@
 namespace MultiSafepay\Api\Transactions\RequestOrder\Redirect;
 
 use Money\Money;
-use MultiSafepay\Api\Transactions\RequestOrder\CustomerDetails;
-use MultiSafepay\Api\Transactions\RequestOrder\Description;
-use MultiSafepay\Api\Transactions\RequestOrder\GatewayInfoInterface;
-use MultiSafepay\Api\Transactions\RequestOrder\PaymentOptions;
-use MultiSafepay\Api\Transactions\RequestOrderRedirect;
+use MultiSafepay\Api\Transactions\RequestOrder\Arguments\CustomerDetails;
+use MultiSafepay\Api\Transactions\RequestOrder\Arguments\Description;
+use MultiSafepay\Api\Transactions\RequestOrder\Arguments\GatewayInfoInterface;
+use MultiSafepay\Api\Transactions\RequestOrder\Arguments\PaymentOptions;
+use MultiSafepay\Api\Transactions\RequestOrder\Redirect as RequestOrderRedirect;
 use MultiSafepay\ValueObject\Customer;
 use MultiSafepay\ValueObject\ShoppingCart;
 use MultiSafepay\ValueObject\Tax\TaxTable;
@@ -26,14 +26,17 @@ class Payafter extends RequestOrderRedirect
      * @var CustomerDetails
      */
     private $customerDetails;
+
     /**
      * @var Customer
      */
     private $delivery;
+
     /**
      * @var ShoppingCart
      */
     private $shoppingCart;
+
     /**
      * @var TaxTable
      */
