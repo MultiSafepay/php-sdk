@@ -6,7 +6,7 @@
 
 namespace MultiSafepay\Tests\Api\Integration\Transactions;
 
-use MultiSafepay\Api\Transactions\Transaction;
+use MultiSafepay\Api\Transactions\TransactionResponse;
 use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
 use MultiSafepay\Tests\Fixtures\RequestOrder\Arguments\CustomerDetailsFixture;
 use MultiSafepay\Tests\Fixtures\RequestOrder\DirectFixture as RequestOrderDirectFixture;
@@ -26,7 +26,7 @@ class TransactionTest extends TestCase
     public function testGetOrderData(): void
     {
         $requestDirectOrder = $this->createOrderIdealDirectRequestFixture();
-        $transaction = new Transaction($requestDirectOrder->getData());
+        $transaction = new TransactionResponse($requestDirectOrder->getData());
 
         $data = $transaction->getData();
         $this->assertArrayHasKey('type', $data, var_export($data, true));

@@ -48,7 +48,7 @@ class DataObject
      */
     public function get(string $name)
     {
-        return $this->data[$name];
+        return $this->data[$name] ?? null;
     }
 
     /**
