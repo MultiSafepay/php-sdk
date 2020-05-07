@@ -39,25 +39,4 @@ class QrEnabled implements GatewayInfoInterface
             'qr_enabled' => (int)$this->qrEnabled,
         ];
     }
-
-
-    /**
-     * @return array
-     */
-    public function getCompatibleGateways(): array
-    {
-        return [
-            Gateway::MISTERCASH
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    public function getCompatibleTypes(): array
-    {
-        return [
-            OrderRequestRedirect::TYPE
-        ];
-    }
 }

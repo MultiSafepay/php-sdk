@@ -6,9 +6,7 @@
 
 namespace MultiSafepay\Api\Transactions\OrderRequest\Arguments\Direct\GatewayInfo;
 
-use MultiSafepay\Api\Gateways\Gateway;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfoInterface;
-use MultiSafepay\Api\Transactions\OrderRequest\Direct as OrderRequestDirect;
 use MultiSafepay\ValueObject\Creditcard\CardNumber;
 use MultiSafepay\ValueObject\Creditcard\Cvc;
 use MultiSafepay\ValueObject\Date;
@@ -75,30 +73,9 @@ class Creditcard implements GatewayInfoInterface
             'card_number' => $this->cardNumber->get(),
             'cart_holder_name' => $this->cardHolderName,
             'cart_expiry_date' => $this->cardExpiryDate->get('my'),
-            'cvc' => $this->cvc->get(), // @todo: Needed for CREDITCARD
-            'card_cvc' => $this->cvc->get(), // @todo: Needed for
+            'cvc' => $this->cvc->get(),
+            'card_cvc' => $this->cvc->get(),
             'flexible_3d' => $this->flexible3d
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    public function getCompatibleGateways(): array
-    {
-        return [
-            Gateway::CREDITCARD,
-            Gateway::VISA,
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    public function getCompatibleTypes(): array
-    {
-        return [
-            OrderRequestDirect::TYPE
         ];
     }
 }

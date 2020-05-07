@@ -6,9 +6,7 @@
 
 namespace MultiSafepay\Api\Transactions\OrderRequest\Arguments\Direct\GatewayInfo;
 
-use MultiSafepay\Api\Gateways\Gateway;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfoInterface;
-use MultiSafepay\Api\Transactions\OrderRequest\Direct as OrderRequestDirect;
 
 /**
  * Class Ideal
@@ -37,26 +35,6 @@ class Ideal implements GatewayInfoInterface
     {
         return [
             'issuer_id' => $this->issuerId,
-        ];
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getCompatibleGateways(): array
-    {
-        return [
-            Gateway::IDEAL
-        ];
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getCompatibleTypes(): array
-    {
-        return [
-            OrderRequestDirect::TYPE
         ];
     }
 }

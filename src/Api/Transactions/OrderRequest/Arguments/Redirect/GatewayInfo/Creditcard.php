@@ -49,25 +49,4 @@ class Creditcard implements GatewayInfoInterface
             'term_url' => $this->termUrl,
         ];
     }
-
-    /**
-     * @return array
-     */
-    public function getCompatibleGateways(): array
-    {
-        return [
-            Gateway::VISA,
-            Gateway::MASTERCARD,
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    public function getCompatibleTypes(): array
-    {
-        return [
-            OrderRequestRedirect::TYPE
-        ];
-    }
 }

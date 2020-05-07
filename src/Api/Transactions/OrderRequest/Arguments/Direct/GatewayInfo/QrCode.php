@@ -67,24 +67,4 @@ class QrCode implements GatewayInfoInterface
             'max_amount' => $this->maxAmount,
         ];
     }
-
-    /**
-     * @return array
-     */
-    public function getCompatibleGateways(): array
-    {
-        return [
-            Gateway::IDEALQR
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    public function getCompatibleTypes(): array
-    {
-        return [
-            OrderRequestDirect::TYPE
-        ];
-    }
 }

@@ -80,25 +80,4 @@ class Meta implements GatewayInfoInterface
             'email' => $this->emailAddress->get() ?? null
         ];
     }
-
-    /**
-     * @return array
-     */
-    public function getCompatibleGateways(): array
-    {
-        return [
-            Gateway::PAYAFTER,
-            Gateway::KLARNA,
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    public function getCompatibleTypes(): array
-    {
-        return [
-            OrderRequestRedirect::TYPE
-        ];
-    }
 }

@@ -6,9 +6,7 @@
 
 namespace MultiSafepay\Api\Transactions\OrderRequest\Arguments\Direct\GatewayInfo;
 
-use MultiSafepay\Api\Gateways\Gateway;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfoInterface;
-use MultiSafepay\Api\Transactions\OrderRequest\Direct as OrderRequestDirect;
 use MultiSafepay\ValueObject\IbanNumber;
 
 /**
@@ -66,26 +64,6 @@ class Account implements GatewayInfoInterface
             'account_holder_name' => $this->accountHolderIban,
             'account_holder_iban' => $this->accountHolderName,
             'emandate' => $this->emanDate,
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    public function getCompatibleGateways(): array
-    {
-        return [
-            Gateway::DIRDEB
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    public function getCompatibleTypes(): array
-    {
-        return [
-            OrderRequestDirect::TYPE
         ];
     }
 }

@@ -81,27 +81,4 @@ class Meta implements GatewayInfoInterface
             'gender' => $this->emailAddress->get() ?? null,
         ];
     }
-
-    /**
-     * @return array
-     */
-    public function getCompatibleGateways(): array
-    {
-        return [
-            Gateway::AFTERPAY,
-            Gateway::EINVOICE,
-            Gateway::PAYAFTER,
-            Gateway::SANTANDER,
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    public function getCompatibleTypes(): array
-    {
-        return [
-            OrderRequestDirect::TYPE
-        ];
-    }
 }

@@ -16,14 +16,4 @@ interface GatewayInfoInterface
      * @return array
      */
     public function getData(): array;
-
-    /**
-     * @return array
-     */
-    public function getCompatibleGateways(): array;
-
-    /**
-     * @return array
-     */
-    public function getCompatibleTypes(): array;
 }
