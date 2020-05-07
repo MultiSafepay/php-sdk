@@ -7,12 +7,11 @@
 namespace MultiSafepay\ValueObject;
 
 use MultiSafepay\ValueObject\Customer\Address;
-use MultiSafepay\ValueObject\IpAddress;
 use MultiSafepay\ValueObject\Customer\EmailAddress;
 
 /**
  * Class Customer
- * @package MultiSafepay\Api\Base
+ * @package MultiSafepay\ValueObject
  */
 class Customer
 {

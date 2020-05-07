@@ -2,9 +2,7 @@
 
 namespace MultiSafepay\Tests\Unit\Api\Gateways;
 
-use MultiSafepay\Api\Base\Response;
 use MultiSafepay\Api\Gateways\Gateway;
-use MultiSafepay\Exception\ApiException;
 use MultiSafepay\Exception\InvalidDataInitializationException;
 use PHPUnit\Framework\TestCase;
 

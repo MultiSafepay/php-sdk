@@ -75,6 +75,8 @@ class Response
         if (!$data['success']) {
             throw new ApiException($errorInfo, $errorCode);
         }
+
+        return true;
     }
 
     /**

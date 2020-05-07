@@ -6,8 +6,6 @@
 
 namespace MultiSafepay\Api\Transactions\RequestOrder\Arguments;
 
-use MultiSafepay\Api\Base;
-
 /**
  * Class PaymentOptions
  * @package MultiSafepay\Api\Transactions\RequestOrder\Arguments

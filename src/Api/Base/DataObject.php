@@ -6,8 +6,6 @@
 
 namespace MultiSafepay\Api\Base;
 
-use MultiSafepay\Util\Version;
-
 /**
  * Class DataObject
  * @package MultiSafepay\Api\Base
@@ -55,7 +53,7 @@ class DataObject
 
     /**
      * @param string $name
-     * @param $value
+     * @param mixed $value
      */
     private function set(string $name, $value)
     {

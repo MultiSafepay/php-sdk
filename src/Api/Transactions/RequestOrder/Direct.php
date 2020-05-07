@@ -59,7 +59,7 @@ class Direct implements RequestOrderInterface
     private $gatewayInfo;
 
     /**
-     * @var string
+     * @var Description
      */
     private $description;
 
@@ -121,7 +121,7 @@ class Direct implements RequestOrderInterface
             'gateway' => $this->gatewayCode,
             'recurring_id' => $this->recurringId ?? null,
             'currency' => (string) $this->money->getCurrency(),
-            'amount' => (string) $this->money->getAmount() * 100,
+            'amount' => (string) ((float)$this->money->getAmount() * 100),
             'payment_options' => $this->paymentOptions->getData(),
             'customer' => $this->customerDetails->getData(),
             'gateway_info' => $this->gatewayInfo->getData() ?? null,

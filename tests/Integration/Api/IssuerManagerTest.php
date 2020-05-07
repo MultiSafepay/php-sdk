@@ -3,10 +3,7 @@
 namespace MultiSafepay\Tests\Integration\Api\Issuers;
 
 use Exception;
-use InvalidArgumentException;
-use MultiSafepay\Api\Gateways;
 use MultiSafepay\Api\IssuerManager;
-use MultiSafepay\Client;
 use MultiSafepay\Tests\Integration\MockClient;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientExceptionInterface;

@@ -50,7 +50,7 @@ class RequestRefund implements RequestOrderInterface
     {
         return [
             'currency' => (string) $this->money->getCurrency(),
-            'amount' => (string) $this->money->getAmount() * 100,
+            'amount' => (string) ((float)$this->money->getAmount() * 100),
             'description' => $this->description->getData() ?? null,
         ];
     }

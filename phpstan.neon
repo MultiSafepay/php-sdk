@@ -1,0 +1,4 @@
+parameters:
+	autoload_directories:
+		- src
+		- tests
