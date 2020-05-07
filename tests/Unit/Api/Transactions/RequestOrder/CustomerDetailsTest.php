@@ -2,7 +2,7 @@
 
 namespace MultiSafepay\Tests\Unit\Api\Issuers\RequestOrder;
 
-use MultiSafepay\Api\Transactions\RequestOrder\Arguments\CustomerDetails;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\CustomerDetails;
 use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
 use MultiSafepay\ValueObject\Customer\EmailAddress;
 use MultiSafepay\ValueObject\IpAddress;

@@ -2,7 +2,7 @@
 
 namespace MultiSafepay\Tests\Integration;
 
-use MultiSafepay\Tests\Fixtures\ValueObject\ShoppingCartFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\ShoppingCartFixture;
 use PHPUnit\Framework\TestCase;
 
 /**

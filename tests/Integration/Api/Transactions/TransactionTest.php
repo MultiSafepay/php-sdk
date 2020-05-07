@@ -8,14 +8,14 @@ namespace MultiSafepay\Tests\Api\Integration\Transactions;
 
 use MultiSafepay\Api\Transactions\Transaction;
 use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
-use MultiSafepay\Tests\Fixtures\RequestOrder\Arguments\CustomerDetailsFixture;
-use MultiSafepay\Tests\Fixtures\RequestOrder\DirectFixture as RequestOrderDirectFixture;
-use MultiSafepay\Tests\Fixtures\RequestOrder\Arguments\PaymentOptionsFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CustomerDetailsFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\DirectFixture as DirectOrderRequestFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PaymentOptionsFixture;
 use PHPUnit\Framework\TestCase;
 
 class TransactionTest extends TestCase
 {
-    use RequestOrderDirectFixture;
+    use DirectOrderRequestFixture;
     use PaymentOptionsFixture;
     use CustomerDetailsFixture;
     use AddressFixture;
