@@ -4,14 +4,15 @@
  * See DISCLAIMER.md for disclaimer details.
  */
 
-namespace MultiSafepay\Api\Transactions;
+namespace MultiSafepay\Api\Transactions\TransactionResponse;
 
 use Money\Money;
 use MultiSafepay\Api\Base\ResponseBody;
 
 /**
  * Class PaymentMethod
- * @package MultiSafepay\Api\Transactions
+ * @package MultiSafepay\Api\Transactions\TransactionResponse
+ * phpcs:disable ObjectCalisthenics.Metrics.MethodPerClassLimit
  */
 class PaymentMethod extends ResponseBody
 {

@@ -8,7 +8,12 @@ namespace MultiSafepay\Api\Transactions;
 
 use Money\Money;
 use MultiSafepay\Api\Base\ResponseBody;
-use MultiSafepay\Exception\InvalidArgumentException;
+use MultiSafepay\Api\Transactions\TransactionResponse\CheckoutOptions;
+use MultiSafepay\Api\Transactions\TransactionResponse\Costs;
+use MultiSafepay\Api\Transactions\TransactionResponse\OrderAdjustment;
+use MultiSafepay\Api\Transactions\TransactionResponse\PaymentDetails;
+use MultiSafepay\Api\Transactions\TransactionResponse\PaymentMethod;
+use MultiSafepay\Api\Transactions\TransactionResponse\RelatedTransaction;
 use MultiSafepay\ValueObject\Customer;
 use MultiSafepay\ValueObject\Customer\Address;
 use MultiSafepay\ValueObject\Customer\Country;
@@ -16,14 +21,13 @@ use MultiSafepay\ValueObject\Customer\EmailAddress;
 use MultiSafepay\ValueObject\Customer\PhoneNumber;
 use MultiSafepay\ValueObject\ShoppingCart;
 use MultiSafepay\ValueObject\ShoppingCart\Item;
-use MultiSafepay\ValueObject\Tax\TaxRate;
-use MultiSafepay\ValueObject\Tax\TaxRule;
-use MultiSafepay\ValueObject\Tax\TaxTable;
 use MultiSafepay\ValueObject\Weight;
 
 /**
  * Model TransactionResponse for containing transaction data received from the API
  * @package MultiSafepay\Api\Transactions
+ * phpcs:disable ObjectCalisthenics.Metrics.MethodPerClassLimit
+ * phpcs:disable ObjectCalisthenics.Files.ClassTraitAndInterfaceLength
  */
 class TransactionResponse extends ResponseBody
 {
@@ -191,9 +195,9 @@ class TransactionResponse extends ResponseBody
     }
 
     /**
-     * @return Customer
+     * @return Address
      */
-    public function getCustomer(): Customer
+    public function getAddress(): Address
     {
         $address = new Address(
             (string)$this->get('address1'),
@@ -206,10 +210,18 @@ class TransactionResponse extends ResponseBody
             new Country($this->get('country'))
         );
 
+        return $address;
+    }
+
+    /**
+     * @return Customer
+     */
+    public function getCustomer(): Customer
+    {
         $customer = new Customer(
             (string)$this->get('first_name'),
             (string)$this->get('last_name'),
-            $address,
+            $this->getAddress(),
             null,
             new EmailAddress((string)$this->get('email')),
             [
@@ -287,21 +299,13 @@ class TransactionResponse extends ResponseBody
     {
         $items = [];
         $shoppingCartData = $this->get('shopping_cart');
-        if (is_array($shoppingCartData) && isset($shoppingCartData['items'])) {
-            foreach ((array)$shoppingCartData['items'] as $dataItem) {
-                $currency = $dataItem['currency'];
-                $weight = new Weight($dataItem['weight']['unit'], $dataItem['weight']['value']);
-                // @todo: Implement cashback, image, product_url, options[]
-                $items[] = new Item(
-                    (string)$dataItem['name'],
-                    Money::$currency($dataItem['unit_price']),
-                    (int)$dataItem['quantity'],
-                    (string)$dataItem['merchant_item_id'],
-                    (string)$dataItem['tax_table_selector'],
-                    $weight,
-                    (string)$dataItem['description']
-                );
-            }
+        if (!is_array($shoppingCartData) || empty($shoppingCartData['items'])) {
+            return new ShoppingCart([]);
+        }
+
+        foreach ((array)$shoppingCartData['items'] as $dataItem) {
+            // @todo: Implement cashback, image, product_url, options[]
+            $items[] = $this->getItemFromData($dataItem);
         }
 
         $shoppingCart = new ShoppingCart($items);
@@ -309,40 +313,30 @@ class TransactionResponse extends ResponseBody
     }
 
     /**
-     * @return TaxTable
-     * @todo: Move these constructors to TaxRate, TaxRule classes themselves
+     * @param array $data
+     * @return Item
      */
-    public function getTaxTable(): TaxTable
+    private function getItemFromData(array $data): Item
     {
-        $checkoutOptionsData = $this->get('checkout_options');
-        if (!$checkoutOptionsData) {
-            throw new InvalidArgumentException('Unable to parse checkout options for this response');
-        }
-
-        $default = $checkoutOptionsData['default'];
-        $defaultTaxRate = new TaxRate((float)$default['rate']);
-
-        $taxRules = [];
-        foreach ($checkoutOptionsData['alternate'] as $alternateData) {
-            $taxRates = [];
-            foreach ($alternateData['rules'] as $ruleData) {
-                $taxRates[] = new TaxRate(
-                    (float)$ruleData['rate'],
-                    $ruleData['country'] ? new Country($ruleData['country']) : null,
-                    $ruleData['state'],
-                    $ruleData['postcode']
-                );
-            }
-            $taxRules[] = new TaxRule($alternateData['name'], $taxRates);
-        }
-
-        $taxTable = new TaxTable($defaultTaxRate, $taxRules, (bool)$default['shipping_taxed']);
-        return $taxTable;
+        $currency = $data['currency'];
+        $weight = new Weight($data['weight']['unit'], $data['weight']['value']);
+        return new Item(
+            (string)$data['name'],
+            Money::$currency($data['unit_price']),
+            (int)$data['quantity'],
+            (string)$data['merchant_item_id'],
+            (string)$data['tax_table_selector'],
+            $weight,
+            (string)$data['description']
+        );
     }
 
-    public function getCheckoutOptions()
+    /**
+     * @return CheckoutOptions
+     */
+    public function getCheckoutOptions(): CheckoutOptions
     {
-        // @todo: Implement this or not?
+        return new CheckoutOptions((array)$this->get('checkout_options'));
     }
 
     /**

@@ -4,14 +4,14 @@
  * See DISCLAIMER.md for disclaimer details.
  */
 
-namespace MultiSafepay\Api\Transactions;
+namespace MultiSafepay\Api\Transactions\TransactionResponse;
 
 use Money\Money;
 use MultiSafepay\Api\Base\ResponseBody;
 
 /**
  * Class RelatedTransaction
- * @package MultiSafepay\Api\Transactions
+ * @package MultiSafepay\Api\Transactions\TransactionResponse
  */
 class RelatedTransaction extends ResponseBody
 {

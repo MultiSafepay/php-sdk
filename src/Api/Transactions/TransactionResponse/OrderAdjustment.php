@@ -4,13 +4,13 @@
  * See DISCLAIMER.md for disclaimer details.
  */
 
-namespace MultiSafepay\Api\Transactions;
+namespace MultiSafepay\Api\Transactions\TransactionResponse;
 
 use MultiSafepay\Api\Base\ResponseBody;
 
 /**
  * Class OrderAdjustment
- * @package MultiSafepay\Api\Transactions
+ * @package MultiSafepay\Api\Transactions\TransactionResponse
  */
 class OrderAdjustment extends ResponseBody
 {
