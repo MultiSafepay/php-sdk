@@ -53,34 +53,83 @@ class Address
     private $country;
 
     /**
-     * Address constructor.
      * @param string $streetName
-     * @param string $streetNameAdditional
-     * @param string $houseNumber
-     * @param string $houseNumberSuffix
-     * @param string $zipCode
-     * @param string $city
-     * @param string $state
-     * @param Country $country
+     * @return Address
      */
-    public function __construct(
-        string $streetName,
-        string $streetNameAdditional,
-        string $houseNumber,
-        string $houseNumberSuffix,
-        string $zipCode,
-        string $city,
-        string $state,
-        Country $country
-    ) {
+    public function addStreetName(string $streetName): Address
+    {
         $this->streetName = $streetName;
+        return $this;
+    }
+
+    /**
+     * @param string $streetNameAdditional
+     * @return Address
+     */
+    public function addStreetNameAdditional(string $streetNameAdditional): Address
+    {
         $this->streetNameAdditional = $streetNameAdditional;
+        return $this;
+    }
+
+    /**
+     * @param string $houseNumber
+     * @return Address
+     */
+    public function addHouseNumber(string $houseNumber): Address
+    {
         $this->houseNumber = $houseNumber;
+        return $this;
+    }
+
+    /**
+     * @param string $houseNumberSuffix
+     * @return Address
+     */
+    public function addHouseNumberSuffix(string $houseNumberSuffix): Address
+    {
         $this->houseNumberSuffix = $houseNumberSuffix;
+        return $this;
+    }
+
+    /**
+     * @param string $zipCode
+     * @return Address
+     */
+    public function addZipCode(string $zipCode): Address
+    {
         $this->zipCode = $zipCode;
+        return $this;
+    }
+
+    /**
+     * @param string $city
+     * @return Address
+     */
+    public function addCity(string $city): Address
+    {
         $this->city = $city;
+        return $this;
+    }
+
+    /**
+     * @param string $state
+     * @return Address
+     */
+    public function addState(string $state): Address
+    {
         $this->state = $state;
+        return $this;
+    }
+
+    /**
+     * @param Country $country
+     * @return Address
+     */
+    public function addCountry(Country $country): Address
+    {
         $this->country = $country;
+        return $this;
     }
 
     /**

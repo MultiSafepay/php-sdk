@@ -5,6 +5,7 @@ namespace MultiSafepay\Tests\Unit\Api\Issuers\RequestOrder;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\CustomerDetails;
 use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
 use MultiSafepay\ValueObject\Customer\EmailAddress;
+use MultiSafepay\ValueObject\Customer\PhoneNumber;
 use MultiSafepay\ValueObject\IpAddress;
 use PHPUnit\Framework\TestCase;
 
@@ -21,18 +22,16 @@ class CustomerDetailsTest extends TestCase
      */
     public function testWorkingCustomerDetails()
     {
-        $address = $this->createAddressFixture();
-        $customerDetails = new CustomerDetails(
-            'John',
-            'Doe',
-            $address,
-            new IpAddress('127.0.0.1'),
-            new EmailAddress('info@example.org'),
-            ['0123456789']
-        );
-        $customerDetails->addLocale('nl');
-        $customerDetails->addReferrer('http://example.org');
-        $customerDetails->addUserAgent('Unknown');
+        $customerDetails = (new CustomerDetails())
+            ->addFirstName('John')
+            ->addLastName('Doe')
+            ->addAddress($this->createAddressFixture())
+            ->addIpAddress(new IpAddress('127.0.0.1'))
+            ->addEmailAddress(new EmailAddress('info@example.org'))
+            ->addPhoneNumber(new PhoneNumber('0123456789'))
+            ->addLocale('nl')
+            ->addReferrer('http://example.org')
+            ->addUserAgent('Unknown');
 
         $this->assertEquals('John', $customerDetails->getFirstName());
         $this->assertEquals('nl', $customerDetails->getLocale());

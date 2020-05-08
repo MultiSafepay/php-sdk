@@ -7,6 +7,7 @@
 namespace MultiSafepay\Api\Transactions\OrderRequest\Arguments;
 
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart\Item;
+use MultiSafepay\Exception\InvalidArgumentException;
 
 /**
  * Class ShoppingCart
@@ -51,6 +52,8 @@ class ShoppingCart
      */
     public function getData(): array
     {
+        $this->validate();
+
         $itemsData = [];
         foreach ($this->items as $item) {
             $itemsData[] = $item->getData();
@@ -59,5 +62,17 @@ class ShoppingCart
         return [
             'items' => $itemsData,
         ];
+    }
+
+    /**
+     * @return bool
+     */
+    public function validate(): bool
+    {
+        if (empty($this->items)) {
+            throw new InvalidArgumentException('No items in cart');
+        }
+
+        return true;
     }
 }

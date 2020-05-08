@@ -4,13 +4,13 @@
  * See DISCLAIMER.md for disclaimer details.
  */
 
-namespace MultiSafepay\Api\Transactions\OrderRequest\Arguments\Direct\GatewayInfo;
+namespace MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo;
 
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfoInterface;
 
 /**
  * Class Ideal
- * @package MultiSafepay\Api\Transactions\OrderRequest\Arguments\Direct\GatewayInfo
+ * @package MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo
  */
 class Ideal implements GatewayInfoInterface
 {
@@ -20,15 +20,6 @@ class Ideal implements GatewayInfoInterface
     private $issuerId;
 
     /**
-     * Ideal constructor.
-     * @param string $issuerId
-     */
-    public function __construct(string $issuerId)
-    {
-        $this->issuerId = $issuerId;
-    }
-
-    /**
      * @return array
      */
     public function getData(): array
@@ -36,5 +27,15 @@ class Ideal implements GatewayInfoInterface
         return [
             'issuer_id' => $this->issuerId,
         ];
+    }
+
+    /**
+     * @param string $issuerId
+     * @return Ideal
+     */
+    public function addIssuerId(string $issuerId): Ideal
+    {
+        $this->issuerId = $issuerId;
+        return $this;
     }
 }

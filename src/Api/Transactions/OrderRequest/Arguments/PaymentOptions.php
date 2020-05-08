@@ -33,24 +33,45 @@ class PaymentOptions
     private $closeWindow = true;
 
     /**
-     * PaymentOptions constructor.
      * @param string $notificationUrl
-     * @param string $redirectUrl
-     * @param string $cancelUrl
-     * @param bool $closeWindow
+     * @return PaymentOptions
      */
-    public function __construct(
-        string $notificationUrl,
-        string $redirectUrl,
-        string $cancelUrl,
-        bool $closeWindow
-    ) {
+    public function addNotificationUrl(string $notificationUrl): PaymentOptions
+    {
         $this->notificationUrl = $notificationUrl;
-        $this->redirectUrl = $redirectUrl;
-        $this->cancelUrl = $cancelUrl;
-        $this->closeWindow = $closeWindow;
+        return $this;
     }
 
+    /**
+     * @param string $redirectUrl
+     * @return PaymentOptions
+     */
+    public function addRedirectUrl(string $redirectUrl): PaymentOptions
+    {
+        $this->redirectUrl = $redirectUrl;
+        return $this;
+    }
+
+    /**
+     * @param string $cancelUrl
+     * @return PaymentOptions
+     */
+    public function addCancelUrl(string $cancelUrl): PaymentOptions
+    {
+        $this->cancelUrl = $cancelUrl;
+        return $this;
+    }
+
+    /**
+     * @param bool $closeWindow
+     * @return PaymentOptions
+     */
+    public function addCloseWindow(bool $closeWindow): PaymentOptions
+    {
+        $this->closeWindow = $closeWindow;
+        return $this;
+    }
+    
     /**
      * @return string
      */

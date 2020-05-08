@@ -11,6 +11,8 @@ use MultiSafepay\Api\TransactionManager;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\Description;
 use MultiSafepay\Api\Transactions\RefundRequest;
 use MultiSafepay\Exception\ApiException;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\DescriptionFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PluginDetailsFixture;
 use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CustomerDetailsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\DirectFixture as RequestOrderDirectFixture;
@@ -27,6 +29,8 @@ class TransactionManagerTest extends TestCase
     use PaymentOptionsFixture;
     use CustomerDetailsFixture;
     use AddressFixture;
+    use DescriptionFixture;
+    use PluginDetailsFixture;
 
     /**
      * Test the creation of a transaction

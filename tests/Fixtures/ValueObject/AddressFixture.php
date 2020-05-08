@@ -22,16 +22,15 @@ trait AddressFixture
     public function createAddressFixture(): Address
     {
         $country = new Country('NL');
-        return new Address(
-            'Kraanspoor',
-            '(blue door)',
-            '18',
-            'A',
-            '1000AA',
-            'Amsterdam',
-            'Noord Holland',
-            $country
-        );
+        return (new Address())
+            ->addStreetName('Kraanspoor')
+            ->addStreetNameAdditional('(blue door)')
+            ->addHouseNumber('18')
+            ->addHouseNumberSuffix('A')
+            ->addZipCode('1000AA')
+            ->addCity('Amsterdam')
+            ->addState('Noord Holland')
+            ->addCountry($country);
     }
 
     /**
@@ -40,16 +39,15 @@ trait AddressFixture
     public function createRandomAddressFixture(): Address
     {
         $faker = FakerFactory::create();
-        $country = new Country('NL');
-        return new Address(
-            $faker->streetName,
-            $faker->word,
-            $faker->buildingNumber,
-            $faker->streetSuffix,
-            $faker->postcode,
-            $faker->city,
-            $faker->state,
-            $country
-        );
+        $country = new Country($faker->countryCode);
+        return (new Address())
+            ->addStreetName($faker->streetName)
+            ->addStreetNameAdditional($faker->streetSuffix)
+            ->addHouseNumber($faker->buildingNumber)
+            ->addHouseNumberSuffix($faker->word)
+            ->addZipCode($faker->postcode)
+            ->addCity($faker->city)
+            ->addState($faker->state)
+            ->addCountry($country);
     }
 }

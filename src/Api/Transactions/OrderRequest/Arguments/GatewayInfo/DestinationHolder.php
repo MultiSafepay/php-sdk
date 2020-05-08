@@ -38,20 +38,53 @@ class DestinationHolder
     private $swift;
 
     /**
-     * GatewayInfoIdeal constructor.
      * @param string $name
-     * @param string $city
-     * @param string $country
-     * @param string $iban
-     * @param string $swift
+     * @return DestinationHolder
      */
-    public function __construct(string $name, string $city, string $country, string $iban, string $swift)
+    public function addName(string $name): DestinationHolder
     {
         $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @param string $city
+     * @return DestinationHolder
+     */
+    public function addCity(string $city): DestinationHolder
+    {
         $this->city = $city;
+        return $this;
+    }
+
+    /**
+     * @param string $country
+     * @return DestinationHolder
+     */
+    public function addCountry(string $country): DestinationHolder
+    {
         $this->country = $country;
+        return $this;
+    }
+
+    /**
+     * @param string $iban
+     * @return DestinationHolder
+     */
+    public function addIban(string $iban): DestinationHolder
+    {
         $this->iban = $iban;
+        return $this;
+    }
+
+    /**
+     * @param string $swift
+     * @return DestinationHolder
+     */
+    public function addSwift(string $swift): DestinationHolder
+    {
         $this->swift = $swift;
+        return $this;
     }
 
     /**

@@ -2,13 +2,21 @@
 
 namespace MultiSafepay\Tests\Functional\Api\Transactions;
 
+use Money\Money;
+use Psr\Http\Client\ClientExceptionInterface;
 use MultiSafepay\Exception\ApiException;
-use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
-use MultiSafepay\Tests\Fixtures\OrderRequest\DirectFixture as DirectOrderRequestFixture;
+use MultiSafepay\Api\Gateways\Gateway;
+use MultiSafepay\Api\Transactions\OrderRequest;
+use MultiSafepay\Api\Transactions\OrderRequest\Direct as DirectOrderRequest;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\DescriptionFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\GoogleAnalyticsFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\IdealGatewayInfoFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PluginDetailsFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\SecondChanceFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CustomerDetailsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PaymentOptionsFixture;
+use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
 use MultiSafepay\Tests\Functional\AbstractTestCase;
-use Psr\Http\Client\ClientExceptionInterface;
 
 /**
  * Class CreateIdealDirectOrderTest
@@ -18,15 +26,26 @@ class CreateIdealDirectOrderTest extends AbstractTestCase
 {
     use CustomerDetailsFixture;
     use PaymentOptionsFixture;
+    use PluginDetailsFixture;
+    use GoogleAnalyticsFixture;
     use AddressFixture;
-    use DirectOrderRequestFixture;
+    use IdealGatewayInfoFixture;
+    use DescriptionFixture;
+    use SecondChanceFixture;
 
     /**
      * @throws ClientExceptionInterface
      */
     public function testCreateIdealDirectOrder()
     {
-        $orderRequest = $this->createRandomOrderIdealDirectRequestFixture();
+        $orderRequest = (new DirectOrderRequest())
+            ->addOrderId((string)time())
+            ->addMoney(Money::EUR(20))
+            ->addGatewayCode(Gateway::IDEAL)
+            ->addGatewayInfo($this->createRandomIdealGatewayInfoFixture($this->getApi()))
+            ->addPaymentOptions($this->createPaymentOptionsFixture())
+            ->addDescription($this->createRandomDescriptionFixture())
+            ->addPluginDetails($this->createPluginDetailsFixture());
 
         try {
             $response = $this->getClient()->createPostRequest('orders', $orderRequest);

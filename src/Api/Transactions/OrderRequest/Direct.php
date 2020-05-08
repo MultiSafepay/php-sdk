@@ -53,8 +53,8 @@ class Direct extends OrderRequest
     {
         $data = parent::getData();
         $data['recurring_id'] = $this->recurringId ?? null;
-        $data['google_analytics'] = $this->googleAnalytics->getData() ?? null;
-        $data['second_chance'] = $this->secondChance->getData() ?? null;
+        $data['google_analytics'] = $this->googleAnalytics ? $this->googleAnalytics->getData() : null;
+        $data['second_chance'] = $this->secondChance ? $this->secondChance->getData() : null;
         $data['customer'] = ($this->customerDetails) ? $this->customerDetails->getData() : null;
 
         return $data;
@@ -62,33 +62,41 @@ class Direct extends OrderRequest
 
     /**
      * @param CustomerDetails $customerDetails
+     * @return Direct
      */
-    public function addCustomerDetails(CustomerDetails $customerDetails): void
+    public function addCustomerDetails(CustomerDetails $customerDetails): Direct
     {
         $this->customerDetails = $customerDetails;
+        return $this;
     }
 
     /**
      * @param string $recurringId
+     * @return Direct
      */
-    public function addRecurringId(string $recurringId): void
+    public function addRecurringId(string $recurringId): Direct
     {
         $this->recurringId = $recurringId;
+        return $this;
     }
 
     /**
      * @param SecondChance $secondChance
+     * @return Direct
      */
-    public function addSecondChance(SecondChance $secondChance): void
+    public function addSecondChance(SecondChance $secondChance): Direct
     {
         $this->secondChance = $secondChance;
+        return $this;
     }
 
     /**
      * @param GoogleAnalytics $googleAnalytics
+     * @return Direct
      */
-    public function addGoogleAnalytics(GoogleAnalytics $googleAnalytics): void
+    public function addGoogleAnalytics(GoogleAnalytics $googleAnalytics): Direct
     {
         $this->googleAnalytics = $googleAnalytics;
+        return $this;
     }
 }

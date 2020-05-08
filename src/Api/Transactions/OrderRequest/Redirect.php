@@ -50,34 +50,42 @@ class Redirect extends OrderRequest
 
     /**
      * @param ShoppingCart $shoppingCart
+     * @return Redirect
      */
-    public function addShoppingCart(ShoppingCart $shoppingCart): void
+    public function addShoppingCart(ShoppingCart $shoppingCart): Redirect
     {
         $this->shoppingCart = $shoppingCart;
+        return $this;
     }
 
     /**
      * @param CustomerDetails $customer
+     * @return Redirect
      */
-    public function addCustomer(CustomerDetails $customer): void
+    public function addCustomer(CustomerDetails $customer): Redirect
     {
         $this->customer = $customer;
+        return $this;
     }
 
     /**
      * @param CustomerDetails $delivery
+     * @return Redirect
      */
-    public function addDelivery(CustomerDetails $delivery): void
+    public function addDelivery(CustomerDetails $delivery): Redirect
     {
         $this->delivery = $delivery;
+        return $this;
     }
 
     /**
      * @param TaxTable $taxTable
+     * @return Redirect
      */
-    public function addTaxTable(TaxTable $taxTable): void
+    public function addTaxTable(TaxTable $taxTable): Redirect
     {
         $this->taxTable = $taxTable;
+        return $this;
     }
 
     /**
@@ -86,9 +94,9 @@ class Redirect extends OrderRequest
     public function getData(): array
     {
         $data = parent::getData();
-        $data['customer'] = ($this->customer) ? $this->customer->getData() : null;
-        $data['delivery'] = ($this->delivery) ? $this->delivery->getData() : null;
-        $data['shopping_cart'] = ($this->shoppingCart) ? $this->shoppingCart->getData() : null;
+        $data['customer'] = $this->customer ? $this->customer->getData() : null;
+        $data['delivery'] = $this->delivery ? $this->delivery->getData() : null;
+        $data['shopping_cart'] = $this->shoppingCart ? $this->shoppingCart->getData() : null;
         $data['checkout_options'] = $this->getCheckoutOptions();
 
         return $data;

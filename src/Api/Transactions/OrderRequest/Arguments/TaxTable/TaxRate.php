@@ -18,44 +18,61 @@ class TaxRate
     /**
      * @var float
      */
-    private $rate;
+    private $rate = 0;
 
     /**
-     * @var Country|null
+     * @var Country
      */
     private $country;
 
     /**
      * @var string
      */
-    private $state;
+    private $state = '';
 
     /**
      * @var string
      */
-    private $postcode;
+    private $postcode = '';
 
     /**
-     * TaxRate constructor.
      * @param float $rate
-     * @param Country|null $country
-     * @param string $state
-     * @param string $postcode
+     * @return TaxRate
      */
-    public function __construct(
-        float $rate,
-        ?Country $country = null,
-        string $state = '',
-        string $postcode = ''
-    ) {
-        if (($rate > 0 && $rate < 1) || $rate > 100) {
-            throw new InvalidArgumentException('Rate is supposed to be a number between 1 and 100 (or just 0)');
-        }
-
+    public function addRate(float $rate): TaxRate
+    {
         $this->rate = $rate;
+        return $this;
+    }
+
+    /**
+     * @param Country $country
+     * @return TaxRate
+     */
+    public function addCountry(Country $country): TaxRate
+    {
         $this->country = $country;
+        return $this;
+    }
+
+    /**
+     * @param string $state
+     * @return TaxRate
+     */
+    public function addState(string $state): TaxRate
+    {
         $this->state = $state;
+        return $this;
+    }
+
+    /**
+     * @param string $postcode
+     * @return TaxRate
+     */
+    public function addPostcode(string $postcode): TaxRate
+    {
         $this->postcode = $postcode;
+        return $this;
     }
 
     /**
@@ -88,5 +105,17 @@ class TaxRate
     public function getPostcode(): string
     {
         return $this->postcode;
+    }
+
+    /**
+     * @return bool
+     */
+    public function validate(): bool
+    {
+        if (($this->rate > 0 && $this->rate < 1) || $this->rate > 100) {
+            throw new InvalidArgumentException('Rate is supposed to be a number between 1 and 100 (or just 0)');
+        }
+
+        return true;
     }
 }

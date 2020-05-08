@@ -8,6 +8,7 @@ namespace MultiSafepay\ValueObject;
 
 use MultiSafepay\ValueObject\Customer\Address;
 use MultiSafepay\ValueObject\Customer\EmailAddress;
+use MultiSafepay\ValueObject\Customer\PhoneNumber;
 
 /**
  * Class Customer
@@ -41,42 +42,87 @@ class Customer
     private $lastName = '';
 
     /**
-     * @var string[]
+     * @var PhoneNumber[]
      */
-    private $phoneNumbers = [
-        0 => '',
-        1 => '',
-    ];
+    private $phoneNumbers = [];
 
     /**
-     * Customer constructor.
-     * @param string $firstName
-     * @param string $lastName
-     * @param Address $address
      * @param IpAddress $ipAddress
-     * @param EmailAddress $emailAddress
-     * @param array $phoneNumbers
+     * @return Customer
      */
-    public function __construct(
-        string $firstName,
-        string $lastName,
-        Address $address,
-        IpAddress $ipAddress,
-        EmailAddress $emailAddress,
-        array $phoneNumbers
-    ) {
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->address = $address;
+    public function addIpAddress(IpAddress $ipAddress): Customer
+    {
         $this->ipAddress = $ipAddress;
+        return $this;
+    }
+
+    /**
+     * @param EmailAddress $emailAddress
+     * @return Customer
+     */
+    public function addEmailAddress(EmailAddress $emailAddress): Customer
+    {
         $this->emailAddress = $emailAddress;
-        $this->phoneNumbers = $phoneNumbers;
+        return $this;
+    }
+
+    /**
+     * @param Address $address
+     * @return Customer
+     */
+    public function addAddress(Address $address): Customer
+    {
+        $this->address = $address;
+        return $this;
+    }
+
+    /**
+     * @param string $firstName
+     * @return Customer
+     */
+    public function addFirstName(string $firstName): Customer
+    {
+        $this->firstName = $firstName;
+        return $this;
+    }
+
+    /**
+     * @param string $lastName
+     * @return Customer
+     */
+    public function addLastName(string $lastName): Customer
+    {
+        $this->lastName = $lastName;
+        return $this;
+    }
+
+    /**
+     * @param PhoneNumber[] $phoneNumbers
+     * @return Customer
+     */
+    public function addPhoneNumbers(array $phoneNumbers): Customer
+    {
+        foreach ($phoneNumbers as $phoneNumber) {
+            $this->addPhoneNumber($phoneNumber);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param PhoneNumber $phoneNumber
+     * @return Customer
+     */
+    public function addPhoneNumber(PhoneNumber $phoneNumber): Customer
+    {
+        $this->phoneNumbers[] = $phoneNumber->get();
+        return $this;
     }
 
     /**
      * @return IpAddress
      */
-    public function getIpAddress(): IpAddress
+    public function getIpAddress(): ?IpAddress
     {
         return $this->ipAddress;
     }
@@ -84,7 +130,7 @@ class Customer
     /**
      * @return EmailAddress
      */
-    public function getEmailAddress(): EmailAddress
+    public function getEmailAddress(): ?EmailAddress
     {
         return $this->emailAddress;
     }
@@ -92,7 +138,7 @@ class Customer
     /**
      * @return Address
      */
-    public function getAddress(): Address
+    public function getAddress(): ?Address
     {
         return $this->address;
     }
@@ -114,7 +160,7 @@ class Customer
     }
 
     /**
-     * @return string[]
+     * @return PhoneNumber[]
      */
     public function getPhoneNumbers(): array
     {

@@ -3,6 +3,9 @@
 namespace MultiSafepay\Tests\Functional\Api\Transactions;
 
 use MultiSafepay\Exception\ApiException;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\DescriptionFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PluginDetailsFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\SecondChanceFixture;
 use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CustomerDetailsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\RedirectFixture as OrderRequestRedirectFixture;
@@ -24,6 +27,9 @@ class CreateIdealRedirectOrderTest extends AbstractTestCase
     use AddressFixture;
     use ShoppingCartFixture;
     use TaxTableFixture;
+    use DescriptionFixture;
+    use SecondChanceFixture;
+    use PluginDetailsFixture;
 
     /**
      * @throws ClientExceptionInterface

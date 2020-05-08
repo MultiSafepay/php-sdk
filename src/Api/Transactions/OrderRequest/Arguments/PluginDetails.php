@@ -6,6 +6,7 @@
 
 namespace MultiSafepay\Api\Transactions\OrderRequest\Arguments;
 
+use MultiSafepay\Exception\InvalidArgumentException;
 use MultiSafepay\Util\Version;
 
 /**
@@ -41,16 +42,50 @@ class PluginDetails
 
     /**
      * PluginDetails constructor.
-     * @param string $applicationName
-     * @param string $applicationVersion
      */
-    public function __construct(
-        string $applicationName,
-        string $applicationVersion
-    ) {
+    public function __construct()
+    {
         $this->pluginVersion = new Version();
-        $this->applicationName = $applicationName;
+    }
+
+    /**
+     * @param string $applicationVersion
+     * @return PluginDetails
+     */
+    public function addApplicationVersion(string $applicationVersion): PluginDetails
+    {
         $this->applicationVersion = $applicationVersion;
+        return $this;
+    }
+
+    /**
+     * @param string $applicationName
+     * @return PluginDetails
+     */
+    public function addApplicationName(string $applicationName): PluginDetails
+    {
+        $this->applicationName = $applicationName;
+        return $this;
+    }
+
+    /**
+     * @param string $partner
+     * @return PluginDetails
+     */
+    public function addPartner(string $partner): PluginDetails
+    {
+        $this->partner = $partner;
+        return $this;
+    }
+
+    /**
+     * @param string $shopRootUrl
+     * @return PluginDetails
+     */
+    public function addShopRootUrl(string $shopRootUrl): PluginDetails
+    {
+        $this->shopRootUrl = $shopRootUrl;
+        return $this;
     }
 
     /**
@@ -58,6 +93,8 @@ class PluginDetails
      */
     public function getData(): array
     {
+        $this->validate();
+
         return [
             'sdk_version' => $this->pluginVersion->getSdkVersion(),
             'plugin_version' => $this->pluginVersion->getPluginVersion(),
@@ -69,18 +106,14 @@ class PluginDetails
     }
 
     /**
-     * @param string $partner
+     * @return bool
      */
-    public function addPartner(string $partner): void
+    public function validate(): bool
     {
-        $this->partner = $partner;
-    }
+        if (empty($this->applicationVersion) || empty($this->applicationName)) {
+            throw new InvalidArgumentException('Application name and version can not be empty');
+        }
 
-    /**
-     * @param string $shopRootUrl
-     */
-    public function addShopRootUrl(string $shopRootUrl): void
-    {
-        $this->shopRootUrl = $shopRootUrl;
+        return true;
     }
 }

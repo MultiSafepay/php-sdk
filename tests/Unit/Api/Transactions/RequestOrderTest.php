@@ -3,6 +3,10 @@
 namespace MultiSafepay\Tests\Unit\Api\Issuers;
 
 use MultiSafepay\Api\Gateways\Gateway;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\DescriptionFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\GoogleAnalyticsFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PluginDetailsFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\SecondChanceFixture;
 use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CustomerDetailsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PaymentOptionsFixture;
@@ -21,6 +25,10 @@ class RequestOrderTest extends TestCase
     use CustomerDetailsFixture;
     use AddressFixture;
     use PaymentOptionsFixture;
+    use DescriptionFixture;
+    use PluginDetailsFixture;
+    use SecondChanceFixture;
+    use GoogleAnalyticsFixture;
 
     /**
      * Test if regular creation of an order works
@@ -35,7 +43,7 @@ class RequestOrderTest extends TestCase
         $this->assertIsNumeric($data['order_id']);
         $this->assertEquals('EUR', $data['currency']);
         $this->assertEquals('2000', $data['amount']);
-        $this->assertEquals('Foobar', $data['description']);
+        $this->assertEquals('foobar', $data['description']);
     }
 
     /**
@@ -51,6 +59,6 @@ class RequestOrderTest extends TestCase
         $this->assertIsNumeric($data['order_id']);
         $this->assertEquals('EUR', $data['currency']);
         $this->assertEquals('2000', $data['amount']);
-        $this->assertEquals('Foobar', $data['description']);
+        $this->assertEquals('foobar', $data['description']);
     }
 }

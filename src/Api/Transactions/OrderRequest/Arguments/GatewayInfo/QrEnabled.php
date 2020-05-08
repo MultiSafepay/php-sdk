@@ -4,7 +4,7 @@
  * See DISCLAIMER.md for disclaimer details.
  */
 
-namespace MultiSafepay\Api\Transactions\OrderRequest\Redirect\GatewayInfo;
+namespace MultiSafepay\Api\Transactions\OrderRequest\GatewayInfo;
 
 use MultiSafepay\Api\Gateways\Gateway;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfoInterface;
@@ -12,7 +12,7 @@ use MultiSafepay\Api\Transactions\OrderRequest\Redirect as OrderRequestRedirect;
 
 /**
  * Class QrEnabled
- * @package MultiSafepay\Api\Transactions\OrderRequest\Redirect\GatewayInfo
+ * @package MultiSafepay\Api\Transactions\OrderRequest\GatewayInfo
  */
 class QrEnabled implements GatewayInfoInterface
 {
@@ -22,12 +22,13 @@ class QrEnabled implements GatewayInfoInterface
     private $qrEnabled;
 
     /**
-     * QrEnabled constructor.
      * @param bool $qrEnabled
+     * @return QrEnabled
      */
-    public function __construct(bool $qrEnabled = true)
+    public function setQrEnabled(bool $qrEnabled): QrEnabled
     {
         $this->qrEnabled = $qrEnabled;
+        return $this;
     }
 
     /**

@@ -23,16 +23,23 @@ class TaxRule
     private $taxRates;
 
     /**
-     * TaxRule constructor.
      * @param string $name
-     * @param TaxRate[] $taxRates
+     * @return TaxRule
      */
-    public function __construct(
-        string $name,
-        array $taxRates
-    ) {
+    public function addName(string $name): TaxRule
+    {
         $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @param TaxRate[] $taxRates
+     * @return TaxRule
+     */
+    public function addTaxRates(array $taxRates): TaxRule
+    {
         $this->taxRates = $taxRates;
+        return $this;
     }
 
     /**
