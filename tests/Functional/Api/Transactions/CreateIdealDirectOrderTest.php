@@ -4,9 +4,9 @@ namespace MultiSafepay\Tests\Functional\Api\Transactions;
 
 use MultiSafepay\Exception\ApiException;
 use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
-use MultiSafepay\Tests\Fixtures\RequestOrder\DirectFixture as RequestOrderDirectFixture;
-use MultiSafepay\Tests\Fixtures\RequestOrder\Arguments\CustomerDetailsFixture;
-use MultiSafepay\Tests\Fixtures\RequestOrder\Arguments\PaymentOptionsFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\DirectFixture as DirectOrderRequestFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CustomerDetailsFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PaymentOptionsFixture;
 use MultiSafepay\Tests\Functional\AbstractTestCase;
 use Psr\Http\Client\ClientExceptionInterface;
 
@@ -19,19 +19,19 @@ class CreateIdealDirectOrderTest extends AbstractTestCase
     use CustomerDetailsFixture;
     use PaymentOptionsFixture;
     use AddressFixture;
-    use RequestOrderDirectFixture;
+    use DirectOrderRequestFixture;
 
     /**
      * @throws ClientExceptionInterface
      */
     public function testCreateIdealDirectOrder()
     {
-        $requestOrder = $this->createRandomOrderIdealDirectRequestFixture();
+        $orderRequest = $this->createRandomOrderIdealDirectRequestFixture();
 
         try {
-            $response = $this->getClient()->createPostRequest('orders', $requestOrder);
+            $response = $this->getClient()->createPostRequest('orders', $orderRequest);
         } catch (ApiException $apiException) {
-            $this->assertTrue(false, $apiException->getDetails($requestOrder->getData()));
+            $this->assertTrue(false, $apiException->getDetails($orderRequest->getData()));
             return;
         }
 

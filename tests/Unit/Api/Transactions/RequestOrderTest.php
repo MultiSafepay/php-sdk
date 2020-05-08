@@ -4,10 +4,10 @@ namespace MultiSafepay\Tests\Unit\Api\Issuers;
 
 use MultiSafepay\Api\Gateways\Gateway;
 use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
-use MultiSafepay\Tests\Fixtures\RequestOrder\Arguments\CustomerDetailsFixture;
-use MultiSafepay\Tests\Fixtures\RequestOrder\Arguments\PaymentOptionsFixture;
-use MultiSafepay\Tests\Fixtures\RequestOrder\DirectFixture as RequestOrderDirectFixture;
-use MultiSafepay\Tests\Fixtures\RequestOrder\RedirectFixture as RequestOrderRedirectFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CustomerDetailsFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PaymentOptionsFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\DirectFixture as RequestOrderDirectFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\RedirectFixture as RequestOrderRedirectFixture;
 use PHPUnit\Framework\TestCase;
 
 /**
