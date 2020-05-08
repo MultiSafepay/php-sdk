@@ -100,17 +100,33 @@ class Client
         $requestFactory = $this->getRequestFactory();
         $url = $this->getRequestUrl($endpoint);
         $request = $requestFactory->createRequest(self::METHOD_POST, $url)
-            ->withBody($this->createBody(json_encode($requestBody->getData())))
+            ->withBody($this->createBody($this->getRequestBody($requestBody)))
             ->withHeader('api_key', $this->apiKey)
             ->withHeader('accept-encoding', 'application/json')
             ->withHeader('Content-Type', 'application/json')
-            ->withHeader('Content-Length', strlen(json_encode($requestBody->getData())));
+            ->withHeader('Content-Length', strlen($this->getRequestBody($requestBody)));
 
         /** @var ResponseInterface $response */
         $response = $client->sendRequest($request);
         return Response::withJson($response->getBody()->getContents());
     }
 
+    /**
+     * @param RequestBodyInterface $requestBody
+     * @return string
+     */
+    private function getRequestBody(RequestBodyInterface $requestBody): string
+    {
+        $data = $requestBody->getData();
+        $data = array_filter(
+            $data,
+            function ($value) {
+                return !is_null($value);
+            }
+        );
+
+        return json_encode($data);
+    }
 
     /**
      * @param string $endpoint

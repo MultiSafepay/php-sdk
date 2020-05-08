@@ -37,8 +37,8 @@ class RequestRefund implements RequestOrderInterface
      * @param Description $description
      */
     public function __construct(
-        Money $money,
-        Description $description = null
+        ?Money $money = null,
+        ?Description $description = null
     ) {
         $this->money = $money;
         $this->description = $description;
@@ -50,11 +50,27 @@ class RequestRefund implements RequestOrderInterface
     public function getData(): array
     {
         return [
-            'currency' => (string)$this->money->getCurrency(),
-            'amount' => (string)((float)$this->money->getAmount() * 100),
-            'description' => $this->description->getData() ?? null,
-            'checkout_data' => $this->checkoutData->getData() ?? null,
+            'currency' => $this->money ? (string)$this->money->getCurrency() : null,
+            'amount' => $this->money ? (string)((float)$this->money->getAmount() * 100) : null,
+            'description' => $this->description ? $this->description->getData() : null,
+            'checkout_data' => $this->checkoutData ? $this->checkoutData->getData() : null,
         ];
+    }
+
+    /**
+     * @param Money $money
+     */
+    public function addMoney(Money $money)
+    {
+        $this->money = $money;
+    }
+
+    /**
+     * @param Description $description
+     */
+    public function addDescription(Description $description)
+    {
+        $this->description = $description;
     }
 
     /**

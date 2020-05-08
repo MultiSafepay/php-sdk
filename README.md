@@ -13,7 +13,7 @@ This will give you the flexibility to choose whatever
 you want to use.
 All clients can be replaced without any side effects.
 
-## Usage example
+## Getting started
 
 Use Composer autoloader to automatically load your dependencies. 
 
@@ -21,6 +21,15 @@ Use Composer autoloader to automatically load your dependencies.
 require 'vendor/autoload.php';
 use MultiSafepay\Api;
 ```
+
+Next, instantiate the API with your API key and a flag to identify whether this is the production environment or testing environment.
+
+```php
+$yourApiKey = 'your-api-key';
+$isProduction = false;
+$multiSafepayApi = new Api($yourApiKey, $isProduction);
+```
+
 
 ## Code quality checks
 The following checks are in place to maintain code quality:
