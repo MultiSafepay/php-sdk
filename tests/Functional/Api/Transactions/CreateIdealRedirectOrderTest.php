@@ -4,11 +4,11 @@ namespace MultiSafepay\Tests\Functional\Api\Transactions;
 
 use MultiSafepay\Exception\ApiException;
 use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
-use MultiSafepay\Tests\Fixtures\RequestOrder\Arguments\CustomerDetailsFixture;
-use MultiSafepay\Tests\Fixtures\RequestOrder\RedirectFixture as RequestOrderRedirectFixture;
-use MultiSafepay\Tests\Fixtures\RequestOrder\Arguments\PaymentOptionsFixture;
-use MultiSafepay\Tests\Fixtures\ValueObject\ShoppingCartFixture;
-use MultiSafepay\Tests\Fixtures\ValueObject\TaxTableFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CustomerDetailsFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\RedirectFixture as OrderRequestRedirectFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PaymentOptionsFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\ShoppingCartFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\TaxTableFixture;
 use MultiSafepay\Tests\Functional\AbstractTestCase;
 use Psr\Http\Client\ClientExceptionInterface;
 
@@ -20,7 +20,7 @@ class CreateIdealRedirectOrderTest extends AbstractTestCase
 {
     use CustomerDetailsFixture;
     use PaymentOptionsFixture;
-    use RequestOrderRedirectFixture;
+    use OrderRequestRedirectFixture;
     use AddressFixture;
     use ShoppingCartFixture;
     use TaxTableFixture;
@@ -30,12 +30,12 @@ class CreateIdealRedirectOrderTest extends AbstractTestCase
      */
     public function testCreateIdealRedirectOrder()
     {
-        $requestOrder = $this->createIdealOrderRedirectRequestFixture();
+        $orderRequest = $this->createIdealOrderRedirectRequestFixture();
 
         try {
-            $response = $this->getClient()->createPostRequest('orders', $requestOrder);
+            $response = $this->getClient()->createPostRequest('orders', $orderRequest);
         } catch (ApiException $apiException) {
-            $this->assertTrue(false, $apiException->getDetails($requestOrder->getData()));
+            $this->assertTrue(false, $apiException->getDetails($orderRequest->getData()));
             return;
         }
 

@@ -6,10 +6,10 @@
 
 namespace MultiSafepay\Api;
 
-use MultiSafepay\Api\Transactions\RequestOrder\Description;
-use MultiSafepay\Api\Transactions\RequestOrderInterface;
-use MultiSafepay\Api\Transactions\RequestRefund;
-use MultiSafepay\Api\Transactions\Transaction;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\Description;
+use MultiSafepay\Api\Transactions\OrderRequestInterface;
+use MultiSafepay\Api\Transactions\RefundRequest;
+use MultiSafepay\Api\Transactions\TransactionResponse;
 use MultiSafepay\Exception\ApiException;
 use Psr\Http\Client\ClientExceptionInterface;
 
@@ -20,37 +20,37 @@ use Psr\Http\Client\ClientExceptionInterface;
 class TransactionManager extends AbstractManager
 {
     /**
-     * @param RequestOrderInterface $requestOrder
+     * @param OrderRequestInterface $requestOrder
      * @return Transaction
      * @throws ClientExceptionInterface
      */
-    public function create(RequestOrderInterface $requestOrder): Transaction
+    public function create(OrderRequestInterface $requestOrder): TransactionResponse
     {
         $response = $this->client->createPostRequest('orders', $requestOrder);
-        return new Transaction($response->getResponseData());
+        return new TransactionResponse($response->getResponseData());
     }
 
     /**
      * Get all data from a transaction.
      * @param string $orderId
-     * @return Transaction
+     * @return TransactionResponse
      * @throws ClientExceptionInterface
      * @throws ApiException
      */
-    public function get(string $orderId): Transaction
+    public function get(string $orderId): TransactionResponse
     {
         $endpoint = 'orders/' . $orderId;
         $response = $this->client->createGetRequest($endpoint);
-        return new Transaction($response->getResponseData());
+        return new TransactionResponse($response->getResponseData());
     }
 
     /**
-     * @param Transaction $transaction
-     * @param RequestRefund $requestRefund
+     * @param TransactionResponse $transaction
+     * @param RefundRequest $requestRefund
      * @return array
      * @throws ClientExceptionInterface
      */
-    public function refund(Transaction $transaction, RequestRefund $requestRefund): array
+    public function refund(TransactionResponse $transaction, RefundRequest $requestRefund): array
     {
         $response = $this->client->createPostRequest(
             'orders/' . $transaction->getOrderId() . '/refunds',

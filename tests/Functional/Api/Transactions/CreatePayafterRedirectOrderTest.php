@@ -5,22 +5,21 @@ namespace MultiSafepay\Tests\Functional\Api\Transactions;
 use Faker\Factory as FakerFactory;
 use Money\Money;
 use MultiSafepay\Api\Gateways\Gateway;
-use MultiSafepay\Api\Transactions\RequestOrder\Arguments\Description;
-use MultiSafepay\Api\Transactions\RequestOrder\Arguments\Redirect\GatewayInfo\Meta as MetaGatewayInfo;
-use MultiSafepay\Api\Transactions\RequestOrder\Redirect as RequestOrderRedirect;
-use MultiSafepay\Api\Transactions\RequestOrder\Redirect\Payafter;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\Description;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\PluginDetails;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\Redirect\GatewayInfo\Meta as MetaGatewayInfo;
+use MultiSafepay\Api\Transactions\OrderRequest\Redirect as RedirectOrderRequest;
 use MultiSafepay\Exception\ApiException;
 use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
-use MultiSafepay\Tests\Fixtures\RequestOrder\Arguments\CustomerDetailsFixture;
-use MultiSafepay\Tests\Fixtures\RequestOrder\Arguments\PaymentOptionsFixture;
-use MultiSafepay\Tests\Fixtures\ValueObject\ShoppingCartFixture;
-use MultiSafepay\Tests\Fixtures\ValueObject\TaxTableFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CustomerDetailsFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PaymentOptionsFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\ShoppingCartFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\TaxTableFixture;
 use MultiSafepay\Tests\Functional\AbstractTestCase;
 use MultiSafepay\ValueObject\BankAccount;
 use MultiSafepay\ValueObject\Customer\EmailAddress;
 use MultiSafepay\ValueObject\Customer\PhoneNumber;
 use MultiSafepay\ValueObject\Date;
-use MultiSafepay\ValueObject\ShoppingCart;
 use Psr\Http\Client\ClientExceptionInterface;
 
 /**
@@ -55,33 +54,28 @@ class CreatePayafterRedirectOrderTest extends AbstractTestCase
     }
 
     /**
-     * @return RequestOrderRedirect
+     * @return RedirectOrderRequest
      */
-    public function getPayafterOrderRedirectRequestFixture(): RequestOrderRedirect
+    public function getPayafterOrderRedirectRequestFixture(): RedirectOrderRequest
     {
         $faker = FakerFactory::create();
 
-        return new Payafter(
+        $requestOrder = new RedirectOrderRequest(
             (string)time(),
-            Money::EUR(100), // @todo: Make sure this matches with shopping_cart
+            Money::EUR(100),
             Gateway::PAYAFTER,
-            $this->createPaymentOptionsFixture(),
             $this->getMetaGatewayInfoFixture(),
-            $this->createRandomCustomerDetailsFixture(),
-            $this->createRandomCustomerDetailsFixture(),
-            $this->createRandomShoppingCartFixture(), // @todo: Make sure tax_table_selector matches with tax_table
-            $this->createTaxTableFixture(),
-            new Description($faker->sentence)
+            $this->createPaymentOptionsFixture()
         );
-    }
 
-    /**
-     * @return ShoppingCart
-     * @todo Add a test using this empty cart to trigger ApiException 'Empty shopping cart'
-     */
-    public function getEmptyShoppingCart()
-    {
-        return new ShoppingCart([]);
+        $requestOrder->addCustomer($this->createRandomCustomerDetailsFixture());
+        $requestOrder->addDelivery($this->createRandomCustomerDetailsFixture());
+        $requestOrder->addTaxTable($this->createTaxTableFixture());
+        $requestOrder->addDescription(new Description($faker->sentence));
+        $requestOrder->addShoppingCart($this->createShoppingCartFixture());
+        $requestOrder->addPluginDetails(new PluginDetails('Foobar', '0.0.1'));
+
+        return $requestOrder;
     }
 
     /**
@@ -89,11 +83,13 @@ class CreatePayafterRedirectOrderTest extends AbstractTestCase
      */
     private function getMetaGatewayInfoFixture()
     {
+        $faker = FakerFactory::create();
+
         return new MetaGatewayInfo(
             new Date('17 december 2001'),
             new BankAccount('0417164300'),
-            new PhoneNumber('0208500500'),
-            new EmailAddress('example@multisafepay.com')
+            new PhoneNumber($faker->phoneNumber),
+            new EmailAddress($faker->email)
         );
     }
 }

@@ -8,14 +8,14 @@ namespace MultiSafepay\Tests\Integration\Api;
 
 use Money\Money;
 use MultiSafepay\Api\TransactionManager;
-use MultiSafepay\Api\Transactions\RequestOrder\Arguments\Description;
-use MultiSafepay\Api\Transactions\RequestRefund;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\Description;
+use MultiSafepay\Api\Transactions\RefundRequest;
 use MultiSafepay\Exception\ApiException;
 use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
-use MultiSafepay\Tests\Fixtures\RequestOrder\Arguments\CustomerDetailsFixture;
-use MultiSafepay\Tests\Fixtures\RequestOrder\DirectFixture as RequestOrderDirectFixture;
-use MultiSafepay\Tests\Fixtures\RequestOrder\RedirectFixture as RequestOrderRedirectFixture;
-use MultiSafepay\Tests\Fixtures\RequestOrder\Arguments\PaymentOptionsFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CustomerDetailsFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\DirectFixture as RequestOrderDirectFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\RedirectFixture as RequestOrderRedirectFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PaymentOptionsFixture;
 use MultiSafepay\Tests\Integration\MockClient;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -102,7 +102,7 @@ class TransactionManagerTest extends TestCase
             'transaction_id' => $fakeTransactionId,
         ]);
 
-        $requestRefund = new RequestRefund(Money::EUR(21), new Description('Give me my money back'));
+        $requestRefund = new RefundRequest(Money::EUR(21), new Description('Give me my money back'));
         $refund = $transactionManager->refund($transaction, $requestRefund);
 
         $this->assertArrayHasKey('refund_id', $refund, var_export($refund, true));
