@@ -7,7 +7,8 @@
 namespace MultiSafepay\Api\Transactions;
 
 use Money\Money;
-use MultiSafepay\Api\Transactions\RequestOrder\Arguments\Description;
+use MultiSafepay\Api\Transactions\RefundRequest\Arguments\CheckoutData;
+use MultiSafepay\Api\Transactions\RequestOrder\Arguments\Description; // @todo: Move this to a generic folder?
 
 /**
  * Class RequestOrderDirect
@@ -15,11 +16,6 @@ use MultiSafepay\Api\Transactions\RequestOrder\Arguments\Description;
  */
 class RequestRefund implements RequestOrderInterface
 {
-    /**
-     * @var string
-     */
-    protected $type = 'direct';
-
     /**
      * @var Money
      */
@@ -29,6 +25,11 @@ class RequestRefund implements RequestOrderInterface
      * @var Description
      */
     private $description;
+
+    /**
+     * @var CheckoutData
+     */
+    private $checkoutData;
 
     /**
      * RequestOrderDirect constructor.
@@ -49,9 +50,18 @@ class RequestRefund implements RequestOrderInterface
     public function getData(): array
     {
         return [
-            'currency' => (string) $this->money->getCurrency(),
-            'amount' => (string) ((float)$this->money->getAmount() * 100),
+            'currency' => (string)$this->money->getCurrency(),
+            'amount' => (string)((float)$this->money->getAmount() * 100),
             'description' => $this->description->getData() ?? null,
+            'checkout_data' => $this->checkoutData->getData() ?? null,
         ];
+    }
+
+    /**
+     * @param CheckoutData $checkoutData
+     */
+    public function addCheckoutData(CheckoutData $checkoutData)
+    {
+        $this->checkoutData = $checkoutData;
     }
 }
