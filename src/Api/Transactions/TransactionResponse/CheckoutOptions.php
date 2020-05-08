@@ -7,11 +7,10 @@
 namespace MultiSafepay\Api\Transactions\TransactionResponse;
 
 use MultiSafepay\Api\Base\ResponseBody;
-use MultiSafepay\Exception\InvalidArgumentException;
 use MultiSafepay\ValueObject\Customer\Country;
-use MultiSafepay\ValueObject\Tax\TaxRate;
-use MultiSafepay\ValueObject\Tax\TaxRule;
-use MultiSafepay\ValueObject\Tax\TaxTable;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\TaxTable\TaxRate;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\TaxTable\TaxRule;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\TaxTable;
 
 /**
  * Class CheckoutOptions

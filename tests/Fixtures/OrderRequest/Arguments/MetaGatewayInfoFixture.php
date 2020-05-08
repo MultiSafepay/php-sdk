@@ -12,6 +12,7 @@ use MultiSafepay\ValueObject\BankAccount;
 use MultiSafepay\ValueObject\Customer\EmailAddress;
 use MultiSafepay\ValueObject\Customer\PhoneNumber;
 use MultiSafepay\ValueObject\Date;
+use MultiSafepay\ValueObject\Gender;
 
 /**
  * Trait MetaGatewayInfoFixture
@@ -29,6 +30,7 @@ trait MetaGatewayInfoFixture
             ->addBirthday(new Date($faker->date()))
             ->addEmailAddress(new EmailAddress($faker->email))
             ->addBankAccount(new BankAccount($faker->bankAccountNumber))
-            ->addPhone(new PhoneNumber($faker->phoneNumber));
+            ->addPhone(new PhoneNumber($faker->phoneNumber))
+            ->addGender(new Gender('male'));
     }
 }
