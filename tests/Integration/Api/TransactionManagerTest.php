@@ -12,12 +12,16 @@ use MultiSafepay\Api\Transactions\OrderRequest\Arguments\Description;
 use MultiSafepay\Api\Transactions\RefundRequest;
 use MultiSafepay\Exception\ApiException;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\DescriptionFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\GoogleAnalyticsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PluginDetailsFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\SecondChanceFixture;
 use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CustomerDetailsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\DirectFixture as RequestOrderDirectFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\RedirectFixture as RequestOrderRedirectFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PaymentOptionsFixture;
+use MultiSafepay\Tests\Fixtures\ValueObject\CountryFixture;
+use MultiSafepay\Tests\Fixtures\ValueObject\PhoneNumberFixture;
 use MultiSafepay\Tests\Integration\MockClient;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -31,6 +35,11 @@ class TransactionManagerTest extends TestCase
     use AddressFixture;
     use DescriptionFixture;
     use PluginDetailsFixture;
+    use CountryFixture;
+    use PhoneNumberFixture;
+    use SecondChanceFixture;
+    use GoogleAnalyticsFixture;
+
 
     /**
      * Test the creation of a transaction
@@ -42,10 +51,12 @@ class TransactionManagerTest extends TestCase
         $orderData = $requestRedirectOrder->getData();
 
         $mockClient = MockClient::getInstance();
-        $mockClient->mockResponse([
-            'order_id' => $orderData['order_id'],
-            'payment_url' => 'https://testpayv2.multisafepay.com/'
-        ]);
+        $mockClient->mockResponse(
+            [
+                'order_id' => $orderData['order_id'],
+                'payment_url' => 'https://testpayv2.multisafepay.com/'
+            ]
+        );
 
         $transactionManager = new TransactionManager($mockClient);
         $transaction = $transactionManager->create($requestRedirectOrder);
@@ -65,13 +76,15 @@ class TransactionManagerTest extends TestCase
         $orderId = (string)time();
 
         $mockClient = MockClient::getInstance();
-        $mockClient->mockResponse([
-            'order_id' => $orderId,
-            'status' => 'completed',
-            'transaction_id' => 4051823,
-            'refund_id' => 405223823,
-            'amount' => 9743
-        ]);
+        $mockClient->mockResponse(
+            [
+                'order_id' => $orderId,
+                'status' => 'completed',
+                'transaction_id' => 4051823,
+                'refund_id' => 405223823,
+                'amount' => 9743
+            ]
+        );
 
         $transactionManager = new TransactionManager($mockClient);
         $transaction = $transactionManager->get($orderId);
@@ -90,23 +103,27 @@ class TransactionManagerTest extends TestCase
         $fakeRefundId = 4059285;
 
         $mockClient = MockClient::getInstance();
-        $mockClient->mockResponse([
-            'order_id' => $fakeOrderId,
-            'status' => 'completed',
-            'transaction_id' => $fakeTransactionId,
-            'currency' => 'EUR',
-            'amount' => 10000
-        ]);
+        $mockClient->mockResponse(
+            [
+                'order_id' => $fakeOrderId,
+                'status' => 'completed',
+                'transaction_id' => $fakeTransactionId,
+                'currency' => 'EUR',
+                'amount' => 10000
+            ]
+        );
 
         $transactionManager = new TransactionManager($mockClient);
         $transaction = $transactionManager->get($fakeOrderId);
 
-        $mockClient->mockResponse([
-            'refund_id' => $fakeRefundId,
-            'transaction_id' => $fakeTransactionId,
-        ]);
+        $mockClient->mockResponse(
+            [
+                'refund_id' => $fakeRefundId,
+                'transaction_id' => $fakeTransactionId,
+            ]
+        );
 
-        $requestRefund = new RefundRequest(Money::EUR(21), new Description('Give me my money back'));
+        $requestRefund = new RefundRequest(Money::EUR(21), Description::fromText('Give me my money back'));
         $refund = $transactionManager->refund($transaction, $requestRefund);
 
         $this->assertArrayHasKey('refund_id', $refund, var_export($refund, true));

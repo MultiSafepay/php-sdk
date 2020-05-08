@@ -17,6 +17,8 @@ use MultiSafepay\Tests\Fixtures\OrderRequest\RedirectFixture as OrderRequestRedi
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PaymentOptionsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\ShoppingCartFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\TaxTableFixture;
+use MultiSafepay\Tests\Fixtures\ValueObject\CountryFixture;
+use MultiSafepay\Tests\Fixtures\ValueObject\PhoneNumberFixture;
 use MultiSafepay\Tests\Functional\AbstractTestCase;
 use Psr\Http\Client\ClientExceptionInterface;
 
@@ -35,6 +37,8 @@ class CreateIdealRedirectOrderTest extends AbstractTestCase
     use SecondChanceFixture;
     use PluginDetailsFixture;
     use IdealGatewayInfoFixture;
+    use PhoneNumberFixture;
+    use CountryFixture;
 
     /**
      * @throws ClientExceptionInterface

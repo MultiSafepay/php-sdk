@@ -13,6 +13,7 @@ use MultiSafepay\ValueObject\Customer\PhoneNumber;
 /**
  * Class Customer
  * @package MultiSafepay\ValueObject
+ * phpcs:disable ObjectCalisthenics.Metrics.MethodPerClassLimit
  */
 class Customer
 {

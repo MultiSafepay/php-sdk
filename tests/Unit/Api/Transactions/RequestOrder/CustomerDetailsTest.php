@@ -4,6 +4,7 @@ namespace MultiSafepay\Tests\Unit\Api\Issuers\RequestOrder;
 
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\CustomerDetails;
 use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
+use MultiSafepay\Tests\Fixtures\ValueObject\CountryFixture;
 use MultiSafepay\ValueObject\Customer\EmailAddress;
 use MultiSafepay\ValueObject\Customer\PhoneNumber;
 use MultiSafepay\ValueObject\IpAddress;
@@ -16,6 +17,7 @@ use PHPUnit\Framework\TestCase;
 class CustomerDetailsTest extends TestCase
 {
     use AddressFixture;
+    use CountryFixture;
 
     /**
      * Test case to guarantee that CustomerDetails transfers all details properly

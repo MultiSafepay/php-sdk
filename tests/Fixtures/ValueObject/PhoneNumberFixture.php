@@ -24,7 +24,6 @@ trait PhoneNumberFixture
         $countryCode = $this->createCountryCodeFixture();
         $faker = FakerFactory::create(Locale::getLocaleByCountryCode($countryCode));
         $phoneNumber = $faker->numberBetween(10000000, 99999999);
-        return new PhoneNumber('06'.$phoneNumber);
+        return new PhoneNumber('06' . $phoneNumber);
     }
-
 }

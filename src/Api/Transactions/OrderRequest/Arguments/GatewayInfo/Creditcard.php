@@ -122,6 +122,4 @@ class Creditcard implements GatewayInfoInterface
             'term_url' => $this->termUrl,
         ];
     }
-
-
 }

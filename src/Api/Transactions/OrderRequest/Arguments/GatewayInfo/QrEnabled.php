@@ -25,7 +25,7 @@ class QrEnabled implements GatewayInfoInterface
      * @param bool $qrEnabled
      * @return QrEnabled
      */
-    public function setQrEnabled(bool $qrEnabled): QrEnabled
+    public function addQrEnabled(bool $qrEnabled): QrEnabled
     {
         $this->qrEnabled = $qrEnabled;
         return $this;

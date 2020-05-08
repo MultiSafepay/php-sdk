@@ -24,6 +24,8 @@ use MultiSafepay\Exception\InvalidArgumentException;
 /**
  * Class OrderRequest
  * @package MultiSafepay\Api\Transactions
+ * phpcs:disable ObjectCalisthenics.Metrics.MethodPerClassLimit
+ * phpcs:disable ObjectCalisthenics.Files.ClassTraitAndInterfaceLength
  */
 class OrderRequest implements OrderRequestInterface
 {
@@ -287,6 +289,7 @@ class OrderRequest implements OrderRequestInterface
 
     /**
      * @return array
+     * phpcs:disable ObjectCalisthenics.Files.FunctionLength
      */
     public function getData(): array
     {

@@ -36,5 +36,4 @@ class SecondChance
             'send_email' => $this->sendEmail
         ];
     }
-
 }

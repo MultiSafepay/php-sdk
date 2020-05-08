@@ -3,6 +3,7 @@
 namespace MultiSafepay\Tests\Unit\ValueObject;
 
 use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
+use MultiSafepay\Tests\Fixtures\ValueObject\CountryFixture;
 use MultiSafepay\ValueObject\Customer;
 use MultiSafepay\ValueObject\Customer\EmailAddress;
 use MultiSafepay\ValueObject\IpAddress;
@@ -15,6 +16,7 @@ use PHPUnit\Framework\TestCase;
 class CustomerTest extends TestCase
 {
     use AddressFixture;
+    use CountryFixture;
 
     /**
      * Test whether basic values can be set

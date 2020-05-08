@@ -31,14 +31,12 @@ class CustomerDetails extends Customer
 
     /**
      * @return array
+     * phpcs:disable ObjectCalisthenics.Files.FunctionLength
      */
     public function getData(): array
     {
         $address = $this->getAddress();
         $phoneNumbers = $this->getPhoneNumbers();
-        $phone1 = $phoneNumbers[0] ?? null;
-        $phone2 = $phoneNumbers[1] ?? null;
-
         return [
             'firstname' => $this->getFirstName(),
             'lastname' => $this->getLastName(),
@@ -50,8 +48,8 @@ class CustomerDetails extends Customer
             'state' => $address->getState(),
             'country' => $address->getCountry() ? $address->getCountry()->getCode() : null,
             'country_name' => $address->getCountry() ? $address->getCountry()->getName() : null,
-            'phone1' => $phone1,
-            'phone2' => $phone2,
+            'phone1' => $phoneNumbers[0] ?? null,
+            'phone2' => $phoneNumbers[1] ?? null,
             'email' => $this->getEmailAddress() ? $this->getEmailAddress()->get() : null,
             'ip_address' => $this->getIpAddress() ? $this->getIpAddress()->get() : null,
             'locale' => $this->getLocale(),

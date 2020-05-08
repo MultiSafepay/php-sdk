@@ -12,6 +12,8 @@ use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CustomerDetailsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PaymentOptionsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\DirectFixture as RequestOrderDirectFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\RedirectFixture as RequestOrderRedirectFixture;
+use MultiSafepay\Tests\Fixtures\ValueObject\CountryFixture;
+use MultiSafepay\Tests\Fixtures\ValueObject\PhoneNumberFixture;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -29,6 +31,8 @@ class RequestOrderTest extends TestCase
     use PluginDetailsFixture;
     use SecondChanceFixture;
     use GoogleAnalyticsFixture;
+    use CountryFixture;
+    use PhoneNumberFixture;
 
     /**
      * Test if regular creation of an order works

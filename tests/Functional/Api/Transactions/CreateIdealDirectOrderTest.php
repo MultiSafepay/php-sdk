@@ -3,6 +3,8 @@
 namespace MultiSafepay\Tests\Functional\Api\Transactions;
 
 use Money\Money;
+use MultiSafepay\Tests\Fixtures\ValueObject\CountryFixture;
+use MultiSafepay\Tests\Fixtures\ValueObject\PhoneNumberFixture;
 use Psr\Http\Client\ClientExceptionInterface;
 use MultiSafepay\Exception\ApiException;
 use MultiSafepay\Api\Gateways\Gateway;
@@ -32,6 +34,9 @@ class CreateIdealDirectOrderTest extends AbstractTestCase
     use IdealGatewayInfoFixture;
     use DescriptionFixture;
     use SecondChanceFixture;
+    use PhoneNumberFixture;
+    use CountryFixture;
+
 
     /**
      * @throws ClientExceptionInterface

@@ -13,6 +13,8 @@ use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\DescriptionFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PluginDetailsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\ShoppingCartFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\TaxTableFixture;
+use MultiSafepay\Tests\Fixtures\ValueObject\CountryFixture;
+use MultiSafepay\Tests\Fixtures\ValueObject\PhoneNumberFixture;
 use Psr\Http\Client\ClientExceptionInterface;
 use MultiSafepay\Exception\ApiException;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\MetaGatewayInfoFixture;
@@ -35,6 +37,8 @@ class CreateSimpleRefundTest extends AbstractTestCase
     use MetaGatewayInfoFixture;
     use DescriptionFixture;
     use PluginDetailsFixture;
+    use CountryFixture;
+    use PhoneNumberFixture;
 
     /**
      * @throws ClientExceptionInterface

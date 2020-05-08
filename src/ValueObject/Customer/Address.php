@@ -9,6 +9,7 @@ namespace MultiSafepay\ValueObject\Customer;
 /**
  * Class Address
  * @package MultiSafepay\ValueObject\Customer
+ * phpcs:disable ObjectCalisthenics.Metrics.MethodPerClassLimit
  */
 class Address
 {
