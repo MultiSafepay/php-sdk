@@ -53,8 +53,8 @@ class Direct extends OrderRequest
     {
         $data = parent::getData();
         $data['recurring_id'] = $this->recurringId ?? null;
-        $data['google_analytics'] = $this->googleAnalytics->getData() ?? null;
-        $data['second_chance'] = $this->secondChance->getData() ?? null;
+        //$data['google_analytics'] = $this->googleAnalytics->getData() ?? null;
+        //$data['second_chance'] = $this->secondChance->getData() ?? null;
         $data['customer'] = ($this->customerDetails) ? $this->customerDetails->getData() : null;
 
         return $data;
