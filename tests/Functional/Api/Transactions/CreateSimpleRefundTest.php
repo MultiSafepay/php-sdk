@@ -4,6 +4,7 @@ namespace MultiSafepay\Tests\Functional\Api\Transactions;
 
 use Faker\Factory as FakerFactory;
 use Money\Money;
+use MultiSafepay\Api\Transactions\RefundRequest;
 use Psr\Http\Client\ClientExceptionInterface;
 use MultiSafepay\Exception\ApiException;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\Description;
@@ -15,7 +16,6 @@ use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CustomerDetailsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PaymentOptionsFixture;
 use MultiSafepay\Tests\Functional\AbstractTestCase;
-
 
 /**
  * Class CreateSimpleRefundTest
@@ -46,7 +46,7 @@ class CreateSimpleRefundTest extends AbstractTestCase
             $orderId = $transactionReponse->getOrderId();
             $this->assertNotEmpty($orderId);
         } catch (ApiException $apiException) {
-            $this->assertTrue(false, $apiException->getDetails($orderRequest->getData()));
+            $this->assertTrue(false, $apiException->getDetails(['order_id' => $orderId]));
             return;
         }
 
@@ -69,31 +69,10 @@ class CreateSimpleRefundTest extends AbstractTestCase
     }
 
     /**
-     * @return DirectOrderRequest
+     * @return RefundRequest
      */
-    private function createOrderRequestForSimpleRefund(): DirectOrderRequest
+    private function createRefundRequestForSimpleRefund(): RefundRequest
     {
-        $faker = FakerFactory::create();
-
-        return new DirectOrderRequest(
-            (string)time(),
-            Money::EUR(20),
-            $this->createPaymentOptionsFixture(),
-            $this->createRandomCustomerDetailsFixture(),
-            null,
-            'CREDITCARDS',
-            $this->createMetaGatewayInfoFixture(),
-            new Description($faker->sentence),
-            new SecondChance(true),
-            new GoogleAnalytics($faker->word)
-        );
-    }
-
-    /**
-     * @return RequestRefund
-     */
-    private function createRefundRequestForSimpleRefund(): RequestRefund
-    {
-        return new RequestRefund(Money::EUR(10), new Description('Your refund description'));
+        return new RefundRequest(Money::EUR(10), new Description('Your refund description'));
     }
 }
