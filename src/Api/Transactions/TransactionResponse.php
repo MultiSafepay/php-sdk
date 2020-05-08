@@ -14,13 +14,13 @@ use MultiSafepay\Api\Transactions\TransactionResponse\OrderAdjustment;
 use MultiSafepay\Api\Transactions\TransactionResponse\PaymentDetails;
 use MultiSafepay\Api\Transactions\TransactionResponse\PaymentMethod;
 use MultiSafepay\Api\Transactions\TransactionResponse\RelatedTransaction;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart\Item;
 use MultiSafepay\ValueObject\Customer;
 use MultiSafepay\ValueObject\Customer\Address;
 use MultiSafepay\ValueObject\Customer\Country;
 use MultiSafepay\ValueObject\Customer\EmailAddress;
 use MultiSafepay\ValueObject\Customer\PhoneNumber;
-use MultiSafepay\ValueObject\ShoppingCart;
-use MultiSafepay\ValueObject\ShoppingCart\Item;
 use MultiSafepay\ValueObject\Weight;
 
 /**
@@ -308,8 +308,7 @@ class TransactionResponse extends ResponseBody
             $items[] = $this->getItemFromData($dataItem);
         }
 
-        $shoppingCart = new ShoppingCart($items);
-        return $shoppingCart;
+        return new ShoppingCart($items);
     }
 
     /**

@@ -7,8 +7,9 @@
 namespace MultiSafepay\Api\Transactions;
 
 use Money\Money;
+use MultiSafepay\Api\Transactions\RefundRequest\Arguments\CheckoutData;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\Description; // @todo: Move this to a generic folder?
 use MultiSafepay\Api\Base\RequestBodyInterface;
-use MultiSafepay\Api\Transactions\OrderRequest\Arguments\Description;
 
 /**
  * Class RefundRequest
@@ -16,11 +17,6 @@ use MultiSafepay\Api\Transactions\OrderRequest\Arguments\Description;
  */
 class RefundRequest implements RequestBodyInterface
 {
-    /**
-     * @var string
-     */
-    protected $type = 'direct';
-
     /**
      * @var Money
      */
@@ -32,13 +28,18 @@ class RefundRequest implements RequestBodyInterface
     private $description;
 
     /**
+     * @var CheckoutData
+     */
+    private $checkoutData;
+
+    /**
      * RefundRequest constructor.
      * @param Money $money
      * @param Description $description
      */
     public function __construct(
-        Money $money,
-        Description $description = null
+        ?Money $money = null,
+        ?Description $description = null
     ) {
         $this->money = $money;
         $this->description = $description;
@@ -50,9 +51,34 @@ class RefundRequest implements RequestBodyInterface
     public function getData(): array
     {
         return [
-            'currency' => (string) $this->money->getCurrency(),
-            'amount' => (string) ((float)$this->money->getAmount() * 100),
-            'description' => $this->description->getData() ?? null,
+            'currency' => $this->money ? (string)$this->money->getCurrency() : null,
+            'amount' => $this->money ? (string)((float)$this->money->getAmount() * 100) : null,
+            'description' => $this->description ? $this->description->getData() : null,
+            'checkout_data' => $this->checkoutData ? $this->checkoutData->getData() : null,
         ];
+    }
+
+    /**
+     * @param Money $money
+     */
+    public function addMoney(Money $money)
+    {
+        $this->money = $money;
+    }
+
+    /**
+     * @param Description $description
+     */
+    public function addDescription(Description $description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @param CheckoutData $checkoutData
+     */
+    public function addCheckoutData(CheckoutData $checkoutData)
+    {
+        $this->checkoutData = $checkoutData;
     }
 }
