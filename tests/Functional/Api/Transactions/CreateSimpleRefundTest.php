@@ -4,21 +4,18 @@ namespace MultiSafepay\Tests\Functional\Api\Transactions;
 
 use Faker\Factory as FakerFactory;
 use Money\Money;
-use MultiSafepay\Api\Transactions\RequestOrder\Arguments\Description;
-use MultiSafepay\Api\Transactions\RequestOrder\Arguments\Direct\GatewayInfo\Ideal as IdealGatewayInfo;
-use MultiSafepay\Api\Transactions\RequestOrder\Arguments\Direct\GatewayInfo\Meta;
-use MultiSafepay\Api\Transactions\RequestOrder\Arguments\GoogleAnalytics;
-use MultiSafepay\Api\Transactions\RequestOrder\Arguments\SecondChance;
-use MultiSafepay\Api\Transactions\RequestOrder\Direct as RequestOrderDirect;
-use MultiSafepay\Api\Transactions\RequestRefund;
-use MultiSafepay\Exception\ApiException;
-use MultiSafepay\Tests\Fixtures\RequestOrder\Arguments\MetaGatewayInfoFixture;
-use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
-use MultiSafepay\Tests\Fixtures\RequestOrder\DirectFixture as RequestOrderDirectFixture;
-use MultiSafepay\Tests\Fixtures\RequestOrder\Arguments\CustomerDetailsFixture;
-use MultiSafepay\Tests\Fixtures\RequestOrder\Arguments\PaymentOptionsFixture;
-use MultiSafepay\Tests\Functional\AbstractTestCase;
 use Psr\Http\Client\ClientExceptionInterface;
+use MultiSafepay\Exception\ApiException;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\Description;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\GoogleAnalytics;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\SecondChance;
+use MultiSafepay\Api\Transactions\OrderRequest\Direct as DirectOrderRequest;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\MetaGatewayInfoFixture;
+use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CustomerDetailsFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PaymentOptionsFixture;
+use MultiSafepay\Tests\Functional\AbstractTestCase;
+
 
 /**
  * Class CreateSimpleRefundTest
@@ -34,12 +31,18 @@ class CreateSimpleRefundTest extends AbstractTestCase
     /**
      * @throws ClientExceptionInterface
      */
-    public function testCreateIdealDirectOrder()
+    public function testCreateSimpleRefund()
     {
-        $orderRequest = $this->createOrderRequestForSimpleRefund();
+        // Unfortunately the current API doesn't allow you to retrieve order IDs
+        // Add the ORDER_ID_TO_REFUND to your .env.php file to test refunds
+        $orderId = getenv('ORDER_ID_TO_REFUND');
+        if (empty($orderId)) {
+            $this->markTestSkipped('No order ID given');
+            return;
+        }
 
         try {
-            $transactionReponse = $this->getApi()->getTransactionManager()->create($orderRequest);
+            $transactionReponse = $this->getApi()->getTransactionManager()->get($orderId);
             $orderId = $transactionReponse->getOrderId();
             $this->assertNotEmpty($orderId);
         } catch (ApiException $apiException) {
@@ -47,7 +50,6 @@ class CreateSimpleRefundTest extends AbstractTestCase
             return;
         }
 
-        return;
         $refundRequest = $this->createRefundRequestForSimpleRefund();
 
         try {
@@ -67,13 +69,13 @@ class CreateSimpleRefundTest extends AbstractTestCase
     }
 
     /**
-     * @return RequestOrderDirect
+     * @return DirectOrderRequest
      */
-    private function createOrderRequestForSimpleRefund(): RequestOrderDirect
+    private function createOrderRequestForSimpleRefund(): DirectOrderRequest
     {
         $faker = FakerFactory::create();
 
-        return new RequestOrderDirect(
+        return new DirectOrderRequest(
             (string)time(),
             Money::EUR(20),
             $this->createPaymentOptionsFixture(),

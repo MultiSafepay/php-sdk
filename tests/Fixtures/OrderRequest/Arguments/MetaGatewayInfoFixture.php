@@ -4,7 +4,7 @@
  * See DISCLAIMER.md for disclaimer details.
  */
 
-namespace MultiSafepay\Tests\Fixtures\RequestOrder\Arguments;
+namespace MultiSafepay\Tests\Fixtures\OrderRequest\Arguments;
 
 use Faker\Factory as FakerFactory;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\CustomerDetails;
@@ -17,7 +17,7 @@ use MultiSafepay\ValueObject\Gender;
 
 /**
  * Trait MetaGatewayInfoFixture
- * @package MultiSafepay\Tests\Fixtures\RequestOrder\Arguments
+ * @package MultiSafepay\Tests\Fixtures\OrderRequest\Arguments
  */
 trait MetaGatewayInfoFixture
 {
