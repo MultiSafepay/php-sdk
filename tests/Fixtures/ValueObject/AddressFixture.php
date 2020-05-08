@@ -6,6 +6,7 @@
 
 namespace MultiSafepay\Tests\Fixtures\ValueObject;
 
+use MultiSafepay\Tests\Utils\Locale;
 use MultiSafepay\ValueObject\Customer\Address;
 use MultiSafepay\ValueObject\Customer\Country;
 use Faker\Factory as FakerFactory;
@@ -25,9 +26,9 @@ trait AddressFixture
         return (new Address())
             ->addStreetName('Kraanspoor')
             ->addStreetNameAdditional('(blue door)')
-            ->addHouseNumber('18')
-            ->addHouseNumberSuffix('A')
-            ->addZipCode('1000AA')
+            ->addHouseNumber('39')
+            ->addHouseNumberSuffix('')
+            ->addZipCode('1033SC')
             ->addCity('Amsterdam')
             ->addState('Noord Holland')
             ->addCountry($country);
@@ -38,8 +39,9 @@ trait AddressFixture
      */
     public function createRandomAddressFixture(): Address
     {
-        $faker = FakerFactory::create();
-        $country = new Country($faker->countryCode);
+        $countryCode = $this->createCountryCodeFixture();
+        $faker = FakerFactory::create(Locale::getLocaleByCountryCode($countryCode));
+        $country = new Country($countryCode);
         return (new Address())
             ->addStreetName($faker->streetName)
             ->addStreetNameAdditional($faker->streetSuffix)

@@ -38,14 +38,7 @@ class CreateIdealDirectOrderTest extends AbstractTestCase
      */
     public function testCreateIdealDirectOrder()
     {
-        $orderRequest = (new DirectOrderRequest())
-            ->addOrderId((string)time())
-            ->addMoney(Money::EUR(20))
-            ->addGatewayCode(Gateway::IDEAL)
-            ->addGatewayInfo($this->createRandomIdealGatewayInfoFixture($this->getApi()))
-            ->addPaymentOptions($this->createPaymentOptionsFixture())
-            ->addDescription($this->createRandomDescriptionFixture())
-            ->addPluginDetails($this->createPluginDetailsFixture());
+        $orderRequest = $this->createOrderRequest();
 
         try {
             $response = $this->getClient()->createPostRequest('orders', $orderRequest);
@@ -60,5 +53,20 @@ class CreateIdealDirectOrderTest extends AbstractTestCase
         $this->assertNotEmpty($data['order_id']);
         $this->assertNotEmpty($data['created']);
         $this->assertEquals(0, $data['amount_refunded']);
+    }
+
+    /**
+     * @return OrderRequest
+     */
+    private function createOrderRequest(): OrderRequest
+    {
+        return (new DirectOrderRequest())
+            ->addOrderId((string)time())
+            ->addMoney(Money::EUR(20))
+            ->addGatewayCode(Gateway::IDEAL)
+            ->addGatewayInfo($this->createRandomIdealGatewayInfoFixture($this->getApi()))
+            ->addPaymentOptions($this->createPaymentOptionsFixture())
+            ->addDescription($this->createRandomDescriptionFixture())
+            ->addPluginDetails($this->createPluginDetailsFixture());
     }
 }

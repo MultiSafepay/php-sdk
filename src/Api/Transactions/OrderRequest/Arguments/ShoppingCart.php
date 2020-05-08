@@ -6,8 +6,8 @@
 
 namespace MultiSafepay\Api\Transactions\OrderRequest\Arguments;
 
-use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart\Item;
 use MultiSafepay\Exception\InvalidArgumentException;
+use MultiSafepay\ValueObject\CartItem;
 
 /**
  * Class ShoppingCart
@@ -16,13 +16,13 @@ use MultiSafepay\Exception\InvalidArgumentException;
 class ShoppingCart
 {
     /**
-     * @var Item[]
+     * @var CartItem[]
      */
     private $items = [];
 
     /**
      * ShoppingCart constructor.
-     * @param Item[] $items
+     * @param CartItem[] $items
      */
     public function __construct(array $items)
     {
@@ -30,7 +30,7 @@ class ShoppingCart
     }
 
     /**
-     * @param array $items
+     * @param CartItem[] $items
      */
     public function addItems(array $items)
     {
@@ -40,11 +40,19 @@ class ShoppingCart
     }
 
     /**
-     * @param Item $item
+     * @param CartItem $item
      */
-    public function addItem(Item $item)
+    public function addItem(CartItem $item)
     {
         $this->items[] = $item;
+    }
+
+    /**
+     * @return CartItem[]
+     */
+    public function getItems(): array
+    {
+        return $this->items;
     }
 
     /**

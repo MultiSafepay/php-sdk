@@ -29,7 +29,7 @@ trait CustomerDetailsFixture
             ->addAddress($this->createAddressFixture())
             ->addIpAddress(new IpAddress('10.0.0.1'))
             ->addEmailAddress(new EmailAddress('info@example.org'))
-            ->addPhoneNumber(new PhoneNumber('0123456789'))
+            ->addPhoneNumber(new PhoneNumber('0612345678'))
             ->addLocale('nl')
             ->addReferrer('http://example.org')
             ->addUserAgent('Unknown');
@@ -54,7 +54,8 @@ trait CustomerDetailsFixture
             ->addAddress($address)
             ->addIpAddress($ipAddress)
             ->addEmailAddress($emailAddress)
-            ->addPhoneNumber(new PhoneNumber($faker->phoneNumber))
+            ->addPhoneNumber($this->createPhoneNumberFixture())
+            ->addPhoneNumber($this->createPhoneNumberFixture())
             ->addLocale('nl')
             ->addReferrer($faker->url)
             ->addUserAgent($faker->userAgent);

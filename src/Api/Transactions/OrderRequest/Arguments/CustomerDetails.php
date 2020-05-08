@@ -40,6 +40,8 @@ class CustomerDetails extends Customer
         $phone2 = $phoneNumbers[1] ?? null;
 
         return [
+            'firstname' => $this->getFirstName(),
+            'lastname' => $this->getLastName(),
             'address1' => $address->getStreetName(),
             'address2' => $address->getStreetNameAdditional(),
             'house_number' => $this->getHouseNumber(),

@@ -8,10 +8,17 @@ namespace MultiSafepay\Api\Transactions;
 
 use Money\Money;
 use MultiSafepay\Api\Gateways\Gateway;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\CustomerDetails;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\Description;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfoInterface;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\GoogleAnalytics;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\PaymentOptions;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\PluginDetails;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\SecondChance;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\TaxTable;
+use MultiSafepay\Api\Transactions\OrderRequest\Direct;
+use MultiSafepay\Api\Transactions\OrderRequest\Redirect;
 use MultiSafepay\Exception\InvalidArgumentException;
 
 /**
@@ -54,6 +61,46 @@ class OrderRequest implements OrderRequestInterface
      * @var Description
      */
     protected $description;
+
+    /**
+     * @var CustomerDetails
+     */
+    protected $customerDetails;
+
+    /**
+     * @var string
+     */
+    protected $recurringId;
+
+    /**
+     * @var SecondChance|null
+     */
+    protected $secondChance;
+
+    /**
+     * @var GoogleAnalytics|null
+     */
+    protected $googleAnalytics;
+
+    /**
+     * @var ShoppingCart
+     */
+    protected $shoppingCart;
+
+    /**
+     * @var CustomerDetails
+     */
+    protected $customer;
+
+    /**
+     * @var CustomerDetails
+     */
+    protected $delivery;
+
+    /**
+     * @var TaxTable
+     */
+    protected $taxTable;
 
     /**
      * @var PluginDetails
@@ -157,6 +204,87 @@ class OrderRequest implements OrderRequestInterface
         return $this;
     }
 
+
+    /**
+     * @param CustomerDetails $customerDetails
+     * @return OrderRequest
+     */
+    public function addCustomerDetails(CustomerDetails $customerDetails): OrderRequest
+    {
+        $this->customerDetails = $customerDetails;
+        return $this;
+    }
+
+    /**
+     * @param string $recurringId
+     * @return OrderRequest
+     */
+    public function addRecurringId(string $recurringId): OrderRequest
+    {
+        $this->recurringId = $recurringId;
+        return $this;
+    }
+
+    /**
+     * @param SecondChance $secondChance
+     * @return OrderRequest
+     */
+    public function addSecondChance(SecondChance $secondChance): OrderRequest
+    {
+        $this->secondChance = $secondChance;
+        return $this;
+    }
+
+    /**
+     * @param GoogleAnalytics $googleAnalytics
+     * @return OrderRequest
+     */
+    public function addGoogleAnalytics(GoogleAnalytics $googleAnalytics): OrderRequest
+    {
+        $this->googleAnalytics = $googleAnalytics;
+        return $this;
+    }
+
+    /**
+     * @param ShoppingCart $shoppingCart
+     * @return OrderRequest
+     */
+    public function addShoppingCart(ShoppingCart $shoppingCart): OrderRequest
+    {
+        $this->shoppingCart = $shoppingCart;
+        return $this;
+    }
+
+    /**
+     * @param CustomerDetails $customer
+     * @return OrderRequest
+     */
+    public function addCustomer(CustomerDetails $customer): OrderRequest
+    {
+        $this->customer = $customer;
+        return $this;
+    }
+
+    /**
+     * @param CustomerDetails $delivery
+     * @return OrderRequest
+     */
+    public function addDelivery(CustomerDetails $delivery): OrderRequest
+    {
+        $this->delivery = $delivery;
+        return $this;
+    }
+
+    /**
+     * @param TaxTable $taxTable
+     * @return OrderRequest
+     */
+    public function addTaxTable(TaxTable $taxTable): OrderRequest
+    {
+        $this->taxTable = $taxTable;
+        return $this;
+    }
+
     /**
      * @return array
      */
@@ -173,7 +301,14 @@ class OrderRequest implements OrderRequestInterface
             'gateway_info' => $this->gatewayInfo ? $this->gatewayInfo->getData() : null,
             'payment_options' => $this->paymentOptions ? $this->paymentOptions->getData() : null,
             'description' => ($this->description) ? $this->description->getData() : null,
-            'plugin' => $this->pluginDetails ? $this->pluginDetails->getData() : null,
+            'recurring_id' => $this->recurringId ?? null,
+            'google_analytics' => $this->googleAnalytics ? $this->googleAnalytics->getData() : null,
+            'second_chance' => $this->secondChance ? $this->secondChance->getData() : null,
+            'customer' => ($this->customer) ? $this->customer->getData() : null,
+            'delivery' => $this->delivery ? $this->delivery->getData() : null,
+            'shopping_cart' => $this->shoppingCart ? $this->shoppingCart->getData() : null,
+            'checkout_options' => $this->getCheckoutOptions(),
+            'plugin' => $this->pluginDetails ? $this->pluginDetails->getData() : null
         ];
     }
 
@@ -187,5 +322,19 @@ class OrderRequest implements OrderRequestInterface
         }
 
         return true;
+    }
+
+    /**
+     * @return array
+     */
+    private function getCheckoutOptions(): array
+    {
+        if ($this->taxTable) {
+            return [
+                'tax_tables' => $this->taxTable->getData()
+            ];
+        }
+
+        return [];
     }
 }

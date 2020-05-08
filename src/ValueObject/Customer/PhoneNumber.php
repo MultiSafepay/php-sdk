@@ -23,7 +23,7 @@ class PhoneNumber
      */
     public function __construct(string $phoneNumber)
     {
-        $this->phoneNumber = $phoneNumber;
+        $this->phoneNumber = $this->filter($phoneNumber);
     }
 
     /**
@@ -32,5 +32,14 @@ class PhoneNumber
     public function get(): string
     {
         return $this->phoneNumber;
+    }
+
+    /**
+     * @param string $phoneNumber
+     * @return string
+     */
+    private function filter(string $phoneNumber): string
+    {
+        return preg_replace('/([^0-9]+)/', '', $phoneNumber);
     }
 }

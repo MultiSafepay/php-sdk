@@ -20,7 +20,6 @@ class RequestBody extends DataObject implements RequestBodyInterface
     public function getData(): array
     {
         $this->data['plugin']['plugin_version'] = Version::getInstance()->getVersion();
-
         return $this->data;
     }
 }

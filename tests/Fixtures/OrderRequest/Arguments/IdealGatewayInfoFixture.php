@@ -32,9 +32,10 @@ trait IdealGatewayInfoFixture
     public function createRandomIdealGatewayInfoFixture(Api $api): Ideal
     {
         $issuers = $api->getIssuerManager()->getIssuersByGatewayCode(Gateway::IDEAL);
-        print_r($issuers);exit;
+        $randomIndex = array_rand($issuers);
+        $randomIssuer = $issuers[$randomIndex];
 
         return (new Ideal)
-            ->addIssuerId('0031');
+            ->addIssuerId((string)$randomIssuer->getCode());
     }
 }

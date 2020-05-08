@@ -41,8 +41,8 @@ class CustomerDetailsTest extends TestCase
         $customerData = $customerDetails->getData();
         $this->assertEquals('Kraanspoor', $customerData['address1']);
         $this->assertEquals('(blue door)', $customerData['address2']);
-        $this->assertEquals('18 A', $customerData['house_number']);
-        $this->assertEquals('1000AA', $customerData['zip_code']);
+        $this->assertEquals('39', $customerData['house_number']);
+        $this->assertEquals('1033SC', $customerData['zip_code']);
         $this->assertEquals('Amsterdam', $customerData['city']);
         $this->assertEquals('Noord Holland', $customerData['state']);
         $this->assertEquals('NL', $customerData['country']);

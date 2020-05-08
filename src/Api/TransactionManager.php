@@ -6,7 +6,6 @@
 
 namespace MultiSafepay\Api;
 
-use MultiSafepay\Api\Transactions\OrderRequest\Arguments\Description;
 use MultiSafepay\Api\Transactions\OrderRequestInterface;
 use MultiSafepay\Api\Transactions\RefundRequest;
 use MultiSafepay\Api\Transactions\TransactionResponse;
@@ -21,7 +20,7 @@ class TransactionManager extends AbstractManager
 {
     /**
      * @param OrderRequestInterface $requestOrder
-     * @return Transaction
+     * @return TransactionResponse
      * @throws ClientExceptionInterface
      */
     public function create(OrderRequestInterface $requestOrder): TransactionResponse

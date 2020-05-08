@@ -1,0 +1,137 @@
+{
+  "amount": 10000,
+  "amount_refunded": 0,
+  "checkout_options": {
+    "alternate": [
+      {
+        "name": "BTW21",
+        "rules": [
+          {
+            "country": "",
+            "rate": 0.21
+          }
+        ],
+        "standalone": ""
+      },
+      {
+        "name": "BTW6",
+        "rules": [
+          {
+            "country": "",
+            "rate": 0.06
+          }
+        ],
+        "standalone": ""
+      },
+      {
+        "name": "BTW0",
+        "rules": [
+          {
+            "country": "",
+            "rate": "0.00"
+          }
+        ],
+        "standalone": ""
+      },
+      {
+        "name": "none",
+        "rules": [
+          {
+            "country": "",
+            "rate": "0.00"
+          }
+        ],
+        "standalone": ""
+      }
+    ],
+    "default": {
+      "rate": "0.00",
+      "shipping_taxed": true
+    }
+  },
+  "costs": [],
+  "created": "2020-05-08T16:12:52",
+  "currency": "EUR",
+  "custom_info": {
+    "custom_1": null,
+    "custom_2": null,
+    "custom_3": null
+  },
+  "customer": {
+    "address1": "Kraanspoor",
+    "address2": "(blue door)",
+    "city": "Amsterdam",
+    "country": "NL",
+    "country_name": null,
+    "email": "info@example.org",
+    "first_name": "John",
+    "house_number": 39,
+    "last_name": "Doe",
+    "locale": "nl",
+    "phone1": "0623160207",
+    "phone2": "",
+    "state": null,
+    "zip_code": "1033SC"
+  },
+  "description": "similique",
+  "fastcheckout": "NO",
+  "financial_status": "uncleared",
+  "items": "<table border=\"0\" cellpadding=\"5\" width=\"100%\">\n<tr>\n<th width=\"10%\"><font size=\"2\" face=\"Verdana\">Quantity <\/font><\/th>\n<th align=\"left\"><\/th>\n<th align=\"left\"><font size=\"2\" face=\"Verdana\">Details <\/font><\/th>\n<th width=\"19%\" align=\"right\"><font size=\"2\" face=\"Verdana\">Price <\/font><\/th>\n<\/tr>\n<tr>\n<td align=\"center\"><font size=\"2\" face=\"Verdana\">2<\/font><\/td>\n<td width=\"6%\"><\/td>\n<td width=\"65%\"><font size=\"2\" face=\"Verdana\">Geometric Candle Holders<\/font><\/td>\n<td align=\"right\">&#8364;<font size=\"2\" face=\"Verdana\">50.00<\/font>\n<\/td>\n<\/tr>\n<tr bgcolor=\"#E9F1F7\">\n<td colspan=\"3\" align=\"right\"><font size=\"2\" face=\"Verdana\">VAT:<\/font><\/td>\n<td align=\"right\">&#8364;<font size=\"2\" face=\"Verdana\">0.00<\/font>\n<\/td>\n<\/tr>\n<tr bgcolor=\"#E9F1F7\">\n<td colspan=\"3\" align=\"right\"><font size=\"2\" face=\"Verdana\">Total:<\/font><\/td>\n<td align=\"right\">&#8364;<font size=\"2\" face=\"Verdana\">100.00<\/font>\n<\/td>\n<\/tr>\n<\/table>",
+  "modified": "2020-05-08T16:12:52",
+  "order_adjustment": {
+    "total_adjustment": "0.00",
+    "total_tax": "0.00"
+  },
+  "order_id": 1588947171,
+  "order_total": "100.00",
+  "payment_details": {
+    "account_holder_name": 3862141012,
+    "account_id": "1991-12-03",
+    "external_transaction_id": null,
+    "invoice_url": "https:\/\/testpayv2.multisafepay.com\/orders\/39b30789fa615bcf52b244d8872531bf",
+    "recurring_id": null,
+    "recurring_model": null,
+    "type": "PAYAFTER"
+  },
+  "payment_methods": [
+    {
+      "account_holder_name": 3862141012,
+      "account_id": "1991-12-03",
+      "amount": 10000,
+      "currency": "EUR",
+      "description": "similique",
+      "payment_description": "Pay after delivery",
+      "status": "uncleared",
+      "type": "PAYAFTER"
+    }
+  ],
+  "reason": "",
+  "reason_code": "",
+  "related_transactions": null,
+  "shopping_cart": {
+    "items": [
+      {
+        "cashback": "",
+        "currency": "EUR",
+        "description": 1234,
+        "image": "",
+        "merchant_item_id": "",
+        "name": "Geometric Candle Holders",
+        "options": [],
+        "product_url": "",
+        "quantity": 2,
+        "tax_table_selector": "",
+        "unit_price": "50.00",
+        "weight": {
+          "unit": "KG",
+          "value": 12
+        }
+      }
+    ]
+  },
+  "status": "uncleared",
+  "transaction_id": 4145725,
+  "var1": null,
+  "var2": null,
+  "var3": null
+}

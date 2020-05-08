@@ -8,7 +8,7 @@ namespace MultiSafepay\Tests\Fixtures\OrderRequest;
 
 use Money\Money;
 use MultiSafepay\Api\Gateways\Gateway;
-use MultiSafepay\Api\Transactions\OrderRequest\Arguments\Description;
+use MultiSafepay\Api\Transactions\OrderRequest;
 use MultiSafepay\Api\Transactions\OrderRequest\Redirect as RedirectOrderRequest;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\IdealGatewayInfoFixture;
 
@@ -21,9 +21,9 @@ trait RedirectFixture
     use IdealGatewayInfoFixture;
 
     /**
-     * @return RedirectOrderRequest
+     * @return OrderRequest
      */
-    public function createIdealOrderRedirectRequestFixture(): RedirectOrderRequest
+    public function createIdealOrderRedirectRequestFixture(): OrderRequest
     {
         return (new RedirectOrderRequest())
             ->addOrderId((string)time())

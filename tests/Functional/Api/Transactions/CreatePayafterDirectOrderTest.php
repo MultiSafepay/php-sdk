@@ -2,13 +2,10 @@
 
 namespace MultiSafepay\Tests\Functional\Api\Transactions;
 
-use Faker\Factory as FakerFactory;
-use Http\Client\Common\HttpAsyncClientDecorator;
 use Money\Money;
 use MultiSafepay\Api\Gateways\Gateway;
 use MultiSafepay\Api\Transactions\OrderRequest;
-use MultiSafepay\Api\Transactions\OrderRequest\Arguments\Description;
-use MultiSafepay\Api\Transactions\OrderRequest\Redirect as RedirectOrderRequest;
+use MultiSafepay\Api\Transactions\OrderRequest\Direct as DirectOrderRequest;
 use MultiSafepay\Exception\ApiException;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\DescriptionFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\MetaGatewayInfoFixture;
@@ -24,10 +21,10 @@ use MultiSafepay\Tests\Functional\AbstractTestCase;
 use Psr\Http\Client\ClientExceptionInterface;
 
 /**
- * Class CreatePayafterRedirectOrderTest
+ * Class CreatePayafterDirectOrderTest
  * @package MultiSafepay\Tests\Functional\Api\Transactions
  */
-class CreatePayafterRedirectOrderTest extends AbstractTestCase
+class CreatePayafterDirectOrderTest extends AbstractTestCase
 {
     use CustomerDetailsFixture;
     use PaymentOptionsFixture;
@@ -36,14 +33,14 @@ class CreatePayafterRedirectOrderTest extends AbstractTestCase
     use TaxTableFixture;
     use MetaGatewayInfoFixture;
     use PluginDetailsFixture;
-    use PhoneNumberFixture;
     use DescriptionFixture;
+    use PhoneNumberFixture;
     use CountryFixture;
 
     /**
      * @throws ClientExceptionInterface
      */
-    public function testCreatePayafterRedirectOrder()
+    public function testCreatePayafterDirectOrder()
     {
         $requestOrder = $this->createOrderRequest();
 
@@ -64,14 +61,15 @@ class CreatePayafterRedirectOrderTest extends AbstractTestCase
      */
     public function createOrderRequest(): OrderRequest
     {
-        return (new RedirectOrderRequest())
+        $customerDetails = $this->createCustomerDetailsFixture();
+        return (new DirectOrderRequest())
             ->addMoney(Money::EUR(100))
             ->addOrderId((string)time())
             ->addGatewayCode(Gateway::PAYAFTER)
             ->addGatewayInfo($this->createRandomMetaGatewayInfoFixture())
             ->addPaymentOptions($this->createPaymentOptionsFixture())
-            ->addCustomer($this->createRandomCustomerDetailsFixture())
-            ->addDelivery($this->createRandomCustomerDetailsFixture())
+            ->addCustomer($customerDetails)
+            ->addDelivery($customerDetails)
             ->addTaxTable($this->createTaxTableFixture())
             ->addDescription($this->createRandomDescriptionFixture())
             ->addShoppingCart($this->createShoppingCartFixture())

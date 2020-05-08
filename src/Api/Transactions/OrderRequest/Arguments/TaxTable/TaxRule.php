@@ -38,7 +38,19 @@ class TaxRule
      */
     public function addTaxRates(array $taxRates): TaxRule
     {
-        $this->taxRates = $taxRates;
+        foreach ($taxRates as $taxRate) {
+            $this->addTaxRate($taxRate);
+        }
+        return $this;
+    }
+
+    /**
+     * @param TaxRate $taxRate
+     * @return TaxRule
+     */
+    public function addTaxRate(TaxRate $taxRate): TaxRule
+    {
+        $this->taxRates[] = $taxRate;
         return $this;
     }
 

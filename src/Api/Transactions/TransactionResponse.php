@@ -16,6 +16,7 @@ use MultiSafepay\Api\Transactions\TransactionResponse\PaymentMethod;
 use MultiSafepay\Api\Transactions\TransactionResponse\RelatedTransaction;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart\Item;
+use MultiSafepay\ValueObject\CartItem;
 use MultiSafepay\ValueObject\Customer;
 use MultiSafepay\ValueObject\Customer\Address;
 use MultiSafepay\ValueObject\Customer\Country;
@@ -121,11 +122,11 @@ class TransactionResponse extends ResponseBody
     }
 
     /**
-     * @return array
+     * @return string
      */
-    public function getItems(): array
+    public function getItemsHtml(): string
     {
-        return (array)$this->get('items'); // @todo: What kind of items can we expect?
+        return (string)$this->get('items');
     }
 
     /**
@@ -199,18 +200,17 @@ class TransactionResponse extends ResponseBody
      */
     public function getAddress(): Address
     {
-        $address = new Address(
-            (string)$this->get('address1'),
-            (string)$this->get('address2'),
-            (string)$this->get('house_number'),
-            '', // @todo: What happened to house number prefix?
-            (string)$this->get('zip_code'),
-            (string)$this->get('city'),
-            (string)$this->get('state'),
-            new Country($this->get('country'))
-        );
-
-        return $address;
+        return ((new Address))
+            ->addStreetName((string)$this->get('address1'))
+            ->addStreetNameAdditional((string)$this->get('address2'))
+            ->addHouseNumber((string)$this->get('house_number'))
+            ->addHouseNumberSuffix('') // @todo: What happened to house number prefix?
+            ->addZipCode((string)$this->get('zip_code'))
+            ->addCity((string)$this->get('city'))
+            ->addState((string)$this->get('state'))
+            ->addCountry(
+                new Country($this->get('country'))
+            );
     }
 
     /**
@@ -218,18 +218,13 @@ class TransactionResponse extends ResponseBody
      */
     public function getCustomer(): Customer
     {
-        $customer = new Customer(
-            (string)$this->get('first_name'),
-            (string)$this->get('last_name'),
-            $this->getAddress(),
-            null,
-            new EmailAddress((string)$this->get('email')),
-            [
-                new PhoneNumber((string)$this->get('phone1')),
-                new PhoneNumber((string)$this->get('phone2'))
-            ]
-        );
-        return $customer;
+        return (new Customer)
+            ->addFirstName((string)$this->get('first_name'))
+            ->addLastName((string)$this->get('last_name'))
+            ->addAddress($this->getAddress())
+            ->addEmailAddress(new EmailAddress((string)$this->get('email')))
+            ->addPhoneNumber(new PhoneNumber((string)$this->get('phone1')))
+            ->addPhoneNumber(new PhoneNumber((string)$this->get('phone2')));
     }
 
     /**
@@ -313,21 +308,20 @@ class TransactionResponse extends ResponseBody
 
     /**
      * @param array $data
-     * @return Item
+     * @return CartItem
      */
-    private function getItemFromData(array $data): Item
+    private function getItemFromData(array $data): CartItem
     {
         $currency = $data['currency'];
         $weight = new Weight($data['weight']['unit'], $data['weight']['value']);
-        return new Item(
-            (string)$data['name'],
-            Money::$currency($data['unit_price']),
-            (int)$data['quantity'],
-            (string)$data['merchant_item_id'],
-            (string)$data['tax_table_selector'],
-            $weight,
-            (string)$data['description']
-        );
+        return (new CartItem)
+            ->addName((string)$data['name'])
+            ->addUnitPrice(Money::$currency($data['unit_price']))
+            ->addQuantity((int)$data['quantity'])
+            ->addMerchantItemId((string)$data['merchant_item_id'])
+            ->addTaxTableSelector((string)$data['tax_table_selector'])
+            ->addWeight($weight)
+            ->addDescription((string)$data['description']);
     }
 
     /**

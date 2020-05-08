@@ -20,20 +20,20 @@ class CheckoutOptions extends ResponseBody
 {
     /**
      * @return TaxTable
-     * @todo: Move these constructors to TaxRate, TaxRule classes themselves
      */
     public function getTaxTable(): TaxTable
     {
         $default = $this->get('default');
-        $defaultTaxRate = new TaxRate((float)$default['rate']);
+        $defaultTaxRate = (new TaxRate)->addRate((float)$default['rate']);
 
         $taxRules = [];
         foreach ($this->get('alternate') as $alternateData) {
-            $taxRates = [];
+            $taxRule = (new TaxRule)->addName($alternateData['name']);
             foreach ($alternateData['rules'] as $ruleData) {
-                $taxRates[] = $this->getTaxRateByData($ruleData);
+                $taxRule->addTaxRate($this->getTaxRateByData($ruleData));
             }
-            $taxRules[] = new TaxRule($alternateData['name'], $taxRates);
+
+            $taxRules[] = $taxRule;
         }
 
         $taxTable = new TaxTable($defaultTaxRate, $taxRules, (bool)$default['shipping_taxed']);
@@ -46,11 +46,10 @@ class CheckoutOptions extends ResponseBody
      */
     private function getTaxRateByData($data): TaxRate
     {
-        return new TaxRate(
-            (float)$data['rate'],
-            $data['country'] ? new Country($data['country']) : null,
-            (string)$data['state'],
-            (string)$data['postcode']
-        );
+        return (new TaxRate)
+            ->addRate((float)$data['rate'])
+            ->addCountry($data['country'] ? new Country($data['country']) : null)
+            ->addState((string)$data['state'])
+            ->addPostcode((string)$data['postcode']);
     }
 }
