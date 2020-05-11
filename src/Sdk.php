@@ -16,10 +16,10 @@ use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 
 /**
- * Class Api
+ * Class Sdk
  * @package MultiSafepay
  */
-class Api
+class Sdk
 {
     /** @var Client */
     private $client;

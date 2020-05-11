@@ -6,7 +6,7 @@
 
 namespace MultiSafepay\Tests\Fixtures\OrderRequest\Arguments;
 
-use MultiSafepay\Api;
+use MultiSafepay\Sdk;
 use MultiSafepay\Api\Gateways\Gateway;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo\Ideal;
 
@@ -26,12 +26,12 @@ trait IdealGatewayInfoFixture
     }
 
     /**
-     * @param Api $api
+     * @param Sdk $sdk
      * @return Ideal
      */
-    public function createRandomIdealGatewayInfoFixture(Api $api): Ideal
+    public function createRandomIdealGatewayInfoFixture(Sdk $sdk): Ideal
     {
-        $issuers = $api->getIssuerManager()->getIssuersByGatewayCode(Gateway::IDEAL);
+        $issuers = $sdk->getIssuerManager()->getIssuersByGatewayCode(Gateway::IDEAL);
         $randomIndex = array_rand($issuers);
         $randomIssuer = $issuers[$randomIndex];
 
