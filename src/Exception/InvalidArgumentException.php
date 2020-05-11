@@ -7,6 +7,10 @@ namespace MultiSafepay\Exception;
 
 use LogicException;
 
+/**
+ * Class InvalidArgumentException
+ * @package MultiSafepay\Exception
+ */
 class InvalidArgumentException extends LogicException
 {
 }

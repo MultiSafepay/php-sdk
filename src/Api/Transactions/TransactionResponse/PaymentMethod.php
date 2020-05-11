@@ -7,14 +7,14 @@
 namespace MultiSafepay\Api\Transactions\TransactionResponse;
 
 use Money\Money;
-use MultiSafepay\Api\Base\ResponseBody;
+use MultiSafepay\Api\Base\DataObject;
 
 /**
  * Class PaymentMethod
  * @package MultiSafepay\Api\Transactions\TransactionResponse
  * phpcs:disable ObjectCalisthenics.Metrics.MethodPerClassLimit
  */
-class PaymentMethod extends ResponseBody
+class PaymentMethod extends DataObject
 {
     /**
      * @return float

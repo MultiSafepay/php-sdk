@@ -7,6 +7,10 @@ namespace MultiSafepay\Exception;
 
 use InvalidArgumentException;
 
+/**
+ * Class MissingPluginVersionException
+ * @package MultiSafepay\Exception
+ */
 class MissingPluginVersionException extends InvalidArgumentException
 {
 }

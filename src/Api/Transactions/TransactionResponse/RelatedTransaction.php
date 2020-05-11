@@ -7,13 +7,13 @@
 namespace MultiSafepay\Api\Transactions\TransactionResponse;
 
 use Money\Money;
-use MultiSafepay\Api\Base\ResponseBody;
+use MultiSafepay\Api\Base\DataObject;
 
 /**
  * Class RelatedTransaction
  * @package MultiSafepay\Api\Transactions\TransactionResponse
  */
-class RelatedTransaction extends ResponseBody
+class RelatedTransaction extends DataObject
 {
     /**
      * @return float

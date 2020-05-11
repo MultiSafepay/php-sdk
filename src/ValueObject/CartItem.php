@@ -7,12 +7,13 @@
 namespace MultiSafepay\ValueObject;
 
 use Money\Money;
+use MultiSafepay\Api\Base\DataObject;
 
 /**
  * Class CartItem
  * @package MultiSafepay\ValueObject
  */
-class CartItem
+class CartItem extends DataObject
 {
     /**
      * @var string
@@ -125,18 +126,21 @@ class CartItem
     public function getData(): array
     {
         // @todo: unit_price in Euro, not Euro-cents?
-        return [
-            'name' => $this->name,
-            'description' => $this->description,
-            'unit_price' => $this->unitPrice ? $this->unitPrice->getAmount() : null,
-            'currency' => $this->unitPrice ? $this->unitPrice->getCurrency() : null,
-            'quantity' => $this->quantity,
-            'merchant_item_id' => $this->merchantItemId,
-            'tax_table_select' => $this->taxTableSelector,
-            'weight' => [
-                'unit' => $this->weight ? strtoupper($this->weight->getUnit()) : null,
-                'value' => $this->weight ? $this->weight->getQuantity() : null,
-            ]
-        ];
+        return array_merge(
+            [
+                'name' => $this->name,
+                'description' => $this->description,
+                'unit_price' => $this->unitPrice ? $this->unitPrice->getAmount() : null,
+                'currency' => $this->unitPrice ? $this->unitPrice->getCurrency() : null,
+                'quantity' => $this->quantity,
+                'merchant_item_id' => $this->merchantItemId,
+                'tax_table_select' => $this->taxTableSelector,
+                'weight' => [
+                    'unit' => $this->weight ? strtoupper($this->weight->getUnit()) : null,
+                    'value' => $this->weight ? $this->weight->getQuantity() : null,
+                ]
+            ],
+            $this->data
+        );
     }
 }

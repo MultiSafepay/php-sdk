@@ -6,19 +6,10 @@
 
 namespace MultiSafepay\Api\Base;
 
-use MultiSafepay\Util\Version;
-
 /**
  * Class ResponseBody
  * @package MultiSafepay\Api\Base
  */
 class ResponseBody extends DataObject implements ResponseBodyInterface
 {
-    /**
-     * @return array
-     */
-    public function getData(): array
-    {
-        return $this->data;
-    }
 }

@@ -41,9 +41,19 @@ class Gateway
     const VVVBON = 'VVVBON';
 
     /**
-     * @var array
+     * @var string
      */
-    private $data;
+    private $id = '';
+
+    /**
+     * @var string
+     */
+    private $description = '';
+
+    /**
+     * @var string
+     */
+    private $type = '';
 
     /**
      * Transaction constructor.
@@ -52,7 +62,9 @@ class Gateway
     public function __construct(array $data)
     {
         $this->validate($data);
-        $this->data = $data;
+        $this->id = $data['id'];
+        $this->description = $data['description'];
+        $this->type = $data['type'] ?? '';
     }
 
     /**
@@ -60,7 +72,7 @@ class Gateway
      */
     public function getId(): string
     {
-        return $this->data['id'];
+        return $this->id;
     }
 
     /**
@@ -68,7 +80,7 @@ class Gateway
      */
     public function getDescription(): string
     {
-        return $this->data['description'];
+        return $this->description;
     }
 
     /**
@@ -76,7 +88,7 @@ class Gateway
      */
     public function getType(): string
     {
-        return $this->data['type'] ?? '';
+        return $this->type;
     }
 
     /**
@@ -114,6 +126,7 @@ class Gateway
             self::GIROPAY,
             self::IDEAL,
             self::IDEALQR,
+            self::KLARNA,
             self::MASTERCARD,
             self::MAESTRO,
             self::MISTERCASH,

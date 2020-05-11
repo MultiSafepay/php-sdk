@@ -6,9 +6,7 @@
 
 namespace MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo;
 
-use MultiSafepay\Api\Gateways\Gateway;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfoInterface;
-use MultiSafepay\Api\Transactions\OrderRequest\Direct as OrderRequestDirect;
 
 /**
  * Class QrCode
