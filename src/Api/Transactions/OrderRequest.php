@@ -8,6 +8,7 @@ namespace MultiSafepay\Api\Transactions;
 
 use Money\Money;
 use MultiSafepay\Api\Gateways\Gateway;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\CheckoutOptions;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\CustomerDetails;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\Description;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfoInterface;
@@ -16,9 +17,6 @@ use MultiSafepay\Api\Transactions\OrderRequest\Arguments\PaymentOptions;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\PluginDetails;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\SecondChance;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart;
-use MultiSafepay\Api\Transactions\OrderRequest\Arguments\TaxTable;
-use MultiSafepay\Api\Transactions\OrderRequest\Direct;
-use MultiSafepay\Api\Transactions\OrderRequest\Redirect;
 use MultiSafepay\Exception\InvalidArgumentException;
 
 /**
@@ -100,9 +98,9 @@ class OrderRequest implements OrderRequestInterface
     protected $delivery;
 
     /**
-     * @var TaxTable
+     * @var CheckoutOptions
      */
-    protected $taxTable;
+    protected $checkoutOptions;
 
     /**
      * @var PluginDetails
@@ -278,12 +276,12 @@ class OrderRequest implements OrderRequestInterface
     }
 
     /**
-     * @param TaxTable $taxTable
+     * @param CheckoutOptions $checkoutOptions
      * @return OrderRequest
      */
-    public function addTaxTable(TaxTable $taxTable): OrderRequest
+    public function addCheckoutOptions(CheckoutOptions $checkoutOptions): OrderRequest
     {
-        $this->taxTable = $taxTable;
+        $this->checkoutOptions = $checkoutOptions;
         return $this;
     }
 
@@ -310,7 +308,7 @@ class OrderRequest implements OrderRequestInterface
             'customer' => ($this->customer) ? $this->customer->getData() : null,
             'delivery' => $this->delivery ? $this->delivery->getData() : null,
             'shopping_cart' => $this->shoppingCart ? $this->shoppingCart->getData() : null,
-            'checkout_options' => $this->getCheckoutOptions(),
+            'checkout_options' => $this->checkoutOptions ? $this->checkoutOptions->getData() : null,
             'plugin' => $this->pluginDetails ? $this->pluginDetails->getData() : null
         ];
     }
@@ -327,17 +325,4 @@ class OrderRequest implements OrderRequestInterface
         return true;
     }
 
-    /**
-     * @return array
-     */
-    private function getCheckoutOptions(): array
-    {
-        if ($this->taxTable) {
-            return [
-                'tax_tables' => $this->taxTable->getData()
-            ];
-        }
-
-        return [];
-    }
 }

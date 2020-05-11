@@ -6,13 +6,15 @@
 
 namespace MultiSafepay\Api\Transactions\RefundRequest\Arguments;
 
+use MultiSafepay\Api\Base\DataObject;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\TaxTable;
 use MultiSafepay\ValueObject\CartItem;
 
 /**
  * Class CustomerDetails
  * @package MultiSafepay\Api\Transactions\RefundRequest\Arguments
  */
-class CheckoutData
+class CheckoutData extends DataObject
 {
     /**
      * @var CartItem[]
@@ -20,30 +22,40 @@ class CheckoutData
     private $items;
 
     /**
-     * CheckoutData constructor.
-     * @param CartItem[] $items
+     * @var TaxTable
      */
-    public function __construct(array $items = [])
+    private $taxTable;
+
+    /**
+     * @param TaxTable $taxTable
+     * @return CheckoutData
+     */
+    public function addTaxTable(TaxTable $taxTable): CheckoutData
     {
-        $this->items = $items;
+        $this->taxTable = $taxTable;
+        return $this;
     }
 
     /**
      * @param CartItem[] $items
+     * @return CheckoutData
      */
-    public function addItems(array $items = [])
+    public function addItems(array $items = []): CheckoutData
     {
         foreach ($items as $item) {
             $this->addItem($item);
         }
+        return $this;
     }
 
     /**
      * @param CartItem $item
+     * @return CheckoutData
      */
-    public function addItem(CartItem $item)
+    public function addItem(CartItem $item): CheckoutData
     {
         $this->items[] = $item;
+        return $this;
     }
 
     /**
@@ -56,8 +68,12 @@ class CheckoutData
             $itemsData[] = $item->getData();
         }
 
-        return [
-            'items' => $itemsData
-        ];
+        return array_merge(
+            [
+                'tax_table' => $this->taxTable ? $this->taxTable->getData() : null,
+                'items' => $itemsData
+            ],
+            $this->data
+        );
     }
 }

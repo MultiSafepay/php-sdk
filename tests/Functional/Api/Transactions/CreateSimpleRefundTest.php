@@ -9,6 +9,7 @@ use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart\Item as Sh
 use MultiSafepay\Api\Transactions\OrderRequest\Redirect;
 use MultiSafepay\Api\Transactions\RefundRequest;
 use MultiSafepay\Api\Transactions\RefundRequest\Arguments\CheckoutData;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CheckoutOptionsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\DescriptionFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PluginDetailsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\ShoppingCartFixture;
@@ -37,6 +38,7 @@ class CreateSimpleRefundTest extends AbstractTestCase
     use MetaGatewayInfoFixture;
     use DescriptionFixture;
     use PluginDetailsFixture;
+    use CheckoutOptionsFixture;
     use CountryFixture;
     use PhoneNumberFixture;
 
@@ -54,8 +56,6 @@ class CreateSimpleRefundTest extends AbstractTestCase
         $transactionReponse = $this->getApi()->getTransactionManager()->get($orderId);
         $items = $transactionReponse->getShoppingCart()->getItems();
         $refundRequest = $this->createRefundRequestForSimpleRefund($items);
-
-        $this->markTestSkipped('Not implemented yet');
 
         try {
             $refundResponse = $this->getApi()->getTransactionManager()->refund($transactionReponse, $refundRequest);
@@ -87,7 +87,6 @@ class CreateSimpleRefundTest extends AbstractTestCase
             return (string)$orderId;
         }
 
-        $this->markTestSkipped('Order creation has not been implemented yet');
         $requestOrder = $this->createOrderRequest();
         $transactionReponse = $this->getApi()->getTransactionManager()->create($requestOrder);
         return (string)$transactionReponse->getOrderId();
@@ -98,9 +97,12 @@ class CreateSimpleRefundTest extends AbstractTestCase
      */
     private function createOrderRequest(): OrderRequest
     {
-        return (new Redirect())
+        $customer = $this->createCustomerDetailsFixture();
+        return (new OrderRequest())
+            ->addType('direct')
             ->addShoppingCart($this->createShoppingCartFixture())
-            ->addTaxTable($this->createTaxTableFixture())
+            ->addCheckoutOptions($this->createCheckoutOptionsFixture())
+            ->addCustomer($customer)
             ->addOrderId((string)time())
             ->addMoney(Money::EUR(100))
             ->addGatewayCode(Gateway::PAYAFTER)
@@ -117,7 +119,12 @@ class CreateSimpleRefundTest extends AbstractTestCase
     private function createRefundRequestForSimpleRefund(array $shoppingCartItems = []): RefundRequest
     {
         $checkoutData = new CheckoutData();
-        $checkoutData->addItems($shoppingCartItems);
+        $checkoutData->addTaxTable($this->createTaxTableFixture());
+
+        foreach ($shoppingCartItems as $shoppingCartItem) {
+            $shoppingCartItem->addTaxTableSelector('none');
+            $checkoutData->addItem($shoppingCartItem);
+        }
 
         $refundRequest = (new RefundRequest())
             ->addMoney(Money::EUR(10))
