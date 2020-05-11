@@ -91,11 +91,14 @@ class CreateSimpleRefundTest extends AbstractTestCase
         $refundRequest = $this->createRefundRequestForSimpleRefund($items);
 
         try {
-            return $this->getApi()->getTransactionManager()->refund($transactionReponse, $refundRequest);
+            $response = $this->getApi()->getTransactionManager()->refund($transactionReponse, $refundRequest);
         } catch (ApiException $apiException) {
+            $response = null;
             $apiException->addContext(['order_id' => $transactionReponse->getOrderId()]);
             $this->assertTrue(false, $apiException->getDetails());
         }
+
+        return $response;
     }
 
     /**

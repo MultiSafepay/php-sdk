@@ -363,5 +363,4 @@ class OrderRequest extends DataObject implements OrderRequestInterface
 
         return true;
     }
-
 }
