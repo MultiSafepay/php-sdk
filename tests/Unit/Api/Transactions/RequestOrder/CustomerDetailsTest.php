@@ -4,7 +4,9 @@ namespace MultiSafepay\Tests\Unit\Api\Issuers\RequestOrder;
 
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\CustomerDetails;
 use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
+use MultiSafepay\Tests\Fixtures\ValueObject\CountryFixture;
 use MultiSafepay\ValueObject\Customer\EmailAddress;
+use MultiSafepay\ValueObject\Customer\PhoneNumber;
 use MultiSafepay\ValueObject\IpAddress;
 use PHPUnit\Framework\TestCase;
 
@@ -15,24 +17,23 @@ use PHPUnit\Framework\TestCase;
 class CustomerDetailsTest extends TestCase
 {
     use AddressFixture;
+    use CountryFixture;
 
     /**
      * Test case to guarantee that CustomerDetails transfers all details properly
      */
     public function testWorkingCustomerDetails()
     {
-        $address = $this->createAddressFixture();
-        $customerDetails = new CustomerDetails(
-            'John',
-            'Doe',
-            $address,
-            new IpAddress('127.0.0.1'),
-            new EmailAddress('info@example.org'),
-            ['0123456789']
-        );
-        $customerDetails->addLocale('nl');
-        $customerDetails->addReferrer('http://example.org');
-        $customerDetails->addUserAgent('Unknown');
+        $customerDetails = (new CustomerDetails())
+            ->addFirstName('John')
+            ->addLastName('Doe')
+            ->addAddress($this->createAddressFixture())
+            ->addIpAddress(new IpAddress('127.0.0.1'))
+            ->addEmailAddress(new EmailAddress('info@example.org'))
+            ->addPhoneNumber(new PhoneNumber('0123456789'))
+            ->addLocale('nl')
+            ->addReferrer('http://example.org')
+            ->addUserAgent('Unknown');
 
         $this->assertEquals('John', $customerDetails->getFirstName());
         $this->assertEquals('nl', $customerDetails->getLocale());
@@ -42,8 +43,8 @@ class CustomerDetailsTest extends TestCase
         $customerData = $customerDetails->getData();
         $this->assertEquals('Kraanspoor', $customerData['address1']);
         $this->assertEquals('(blue door)', $customerData['address2']);
-        $this->assertEquals('18 A', $customerData['house_number']);
-        $this->assertEquals('1000AA', $customerData['zip_code']);
+        $this->assertEquals('39', $customerData['house_number']);
+        $this->assertEquals('1033SC', $customerData['zip_code']);
         $this->assertEquals('Amsterdam', $customerData['city']);
         $this->assertEquals('Noord Holland', $customerData['state']);
         $this->assertEquals('NL', $customerData['country']);

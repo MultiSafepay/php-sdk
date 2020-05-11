@@ -9,6 +9,7 @@ namespace MultiSafepay\Tests\Fixtures\ValueObject;
 use Faker\Factory as FakerFactory;
 use MultiSafepay\ValueObject\Customer;
 use MultiSafepay\ValueObject\Customer\EmailAddress;
+use MultiSafepay\ValueObject\Customer\PhoneNumber;
 use MultiSafepay\ValueObject\IpAddress;
 
 /**
@@ -24,10 +25,13 @@ trait CustomerFixture
      */
     public function createCustomerFixture(): Customer
     {
-        $address = $this->createAddressFixture();
-        $ipAddress = new IpAddress('10.0.0.1');
-        $emailAddress = new EmailAddress('info@example.org');
-        $customer = new Customer('John', 'Doe', $address, $ipAddress, $emailAddress, ['0123456789']);
+        $customer = (new Customer())
+            ->addFirstName('John')
+            ->addLastName('Doe')
+            ->addAddress($this->createAddressFixture())
+            ->addIpAddress(new IpAddress('10.0.0.1'))
+            ->addEmailAddress(new EmailAddress('info@example.org'))
+            ->addPhoneNumber(new PhoneNumber('0123456789'));
 
         return $customer;
     }
@@ -38,18 +42,14 @@ trait CustomerFixture
     public function createRandomCustomerFixture(): Customer
     {
         $faker = FakerFactory::create();
-        $address = $this->createRandomAddressFixture();
-        $ipAddress = new IpAddress($faker->ipv4);
-        $emailAddress = new EmailAddress($faker->email);
-
-        $customer = new Customer(
-            $faker->firstName,
-            $faker->lastName,
-            $address,
-            $ipAddress,
-            $emailAddress,
-            [$faker->phoneNumber]
-        );
+        $customer = (new Customer())
+            ->addFirstName($faker->firstName)
+            ->addLastName($faker->lastName)
+            ->addAddress($this->createAddressFixture())
+            ->addIpAddress(new IpAddress($faker->ipv4))
+            ->addEmailAddress(new EmailAddress($faker->email))
+            ->addPhoneNumber(new PhoneNumber($faker->phoneNumber))
+            ->addPhoneNumber(new PhoneNumber($faker->phoneNumber));
 
         return $customer;
     }

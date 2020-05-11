@@ -18,16 +18,15 @@ class AddressTest extends TestCase
     public function testWhetherValueCanBeSetAndUsed()
     {
         $country = new Country('NL');
-        $address = new Address(
-            'Kraanspoor',
-            '',
-            '18',
-            '',
-            '1000AA',
-            'Amsterdam',
-            'Noord Holland',
-            $country
-        );
+        $address = (new Address())
+            ->addStreetName('Kraanspoor')
+            ->addHouseNumber('18')
+            ->addStreetNameAdditional('')
+            ->addZipCode('1000AA')
+            ->addCity('Amsterdam')
+            ->addState('Noord Holland')
+            ->addCountry($country);
+
 
         $this->assertEquals('Kraanspoor', $address->getStreetName());
         $this->assertEquals('18', $address->getHouseNumber());

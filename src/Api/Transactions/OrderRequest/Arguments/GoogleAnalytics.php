@@ -6,6 +6,8 @@
 
 namespace MultiSafepay\Api\Transactions\OrderRequest\Arguments;
 
+use MultiSafepay\Exception\InvalidArgumentException;
+
 /**
  * Class GoogleAnalytics
  * @package MultiSafepay\Api\Transactions\OrderRequest\Arguments
@@ -18,12 +20,13 @@ class GoogleAnalytics
     private $accountId;
 
     /**
-     * GoogleAnalytics constructor.
      * @param string $accountId
+     * @return GoogleAnalytics
      */
-    public function __construct(string $accountId)
+    public function addAccountId(string $accountId): GoogleAnalytics
     {
         $this->accountId = $accountId;
+        return $this;
     }
 
     /**
@@ -31,8 +34,22 @@ class GoogleAnalytics
      */
     public function getData(): array
     {
+        $this->validate();
+
         return [
             'account' => $this->accountId,
         ];
+    }
+
+    /**
+     * @return bool
+     */
+    public function validate(): bool
+    {
+        if (empty($this->accountId)) {
+            throw new InvalidArgumentException('Acount ID can not be empty');
+        }
+
+        return true;
     }
 }

@@ -7,10 +7,17 @@
 namespace MultiSafepay\Tests\Api\Integration\Transactions;
 
 use MultiSafepay\Api\Transactions\TransactionResponse;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\DescriptionFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\GoogleAnalyticsFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\IdealGatewayInfoFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PluginDetailsFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\SecondChanceFixture;
 use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CustomerDetailsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\DirectFixture as DirectOrderRequestFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PaymentOptionsFixture;
+use MultiSafepay\Tests\Fixtures\ValueObject\CountryFixture;
+use MultiSafepay\Tests\Fixtures\ValueObject\PhoneNumberFixture;
 use PHPUnit\Framework\TestCase;
 
 class TransactionTest extends TestCase
@@ -19,6 +26,13 @@ class TransactionTest extends TestCase
     use PaymentOptionsFixture;
     use CustomerDetailsFixture;
     use AddressFixture;
+    use IdealGatewayInfoFixture;
+    use DescriptionFixture;
+    use SecondChanceFixture;
+    use GoogleAnalyticsFixture;
+    use PluginDetailsFixture;
+    use PhoneNumberFixture;
+    use CountryFixture;
 
     /**
      * Test the simple data transfer of a transaction object

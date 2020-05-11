@@ -6,7 +6,7 @@
 
 namespace MultiSafepay\Api\Transactions\RefundRequest\Arguments;
 
-use MultiSafepay\Api\Transactions\RefundRequest\Arguments\CheckoutData\Item;
+use MultiSafepay\ValueObject\CartItem;
 
 /**
  * Class CustomerDetails
@@ -15,13 +15,13 @@ use MultiSafepay\Api\Transactions\RefundRequest\Arguments\CheckoutData\Item;
 class CheckoutData
 {
     /**
-     * @var Item[]
+     * @var CartItem[]
      */
     private $items;
 
     /**
      * CheckoutData constructor.
-     * @param array $items
+     * @param CartItem[] $items
      */
     public function __construct(array $items = [])
     {
@@ -29,7 +29,7 @@ class CheckoutData
     }
 
     /**
-     * @param array $items
+     * @param CartItem[] $items
      */
     public function addItems(array $items = [])
     {
@@ -39,9 +39,9 @@ class CheckoutData
     }
 
     /**
-     * @param Item $item
+     * @param CartItem $item
      */
-    public function addItem(Item $item)
+    public function addItem(CartItem $item)
     {
         $this->items[] = $item;
     }

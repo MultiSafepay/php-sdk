@@ -24,14 +24,15 @@ trait ShoppingCartFixture
     public function createShoppingCartFixture(): ShoppingCart
     {
         $items = [];
-        $items[] = new ShoppingCartItem(
-            'Geometric Candle Holders',
-            Money::EUR(50),
-            2,
-            '1234',
-            'none',
-            new Weight('KG', 12)
-        );
+        $items[] = (new ShoppingCartItem())
+            ->addName('Geometric Candle Holders')
+            ->addUnitPrice(Money::EUR(50))
+            ->addQuantity(2)
+            ->addDescription('1234')
+            ->addTaxTableSelector('none')
+            ->addWeight(
+                new Weight('KG', 12)
+            );
 
         return new ShoppingCart($items);
     }
@@ -45,14 +46,16 @@ trait ShoppingCartFixture
         $faker = FakerFactory::create();
 
         $items = [];
-        $items[] = new ShoppingCartItem(
-            $faker->sentence(3),
-            Money::EUR(50),
-            2,
-            $faker->uuid,
-            'none',
-            new Weight('KG', rand(1, 10))
-        );
+        $items[] = (new ShoppingCartItem())
+            ->addName($faker->sentence(3))
+            ->addUnitPrice(Money::EUR(50))
+            ->addQuantity(2)
+            ->addMerchantItemId($faker->uuid)
+            ->addDescription($faker->sentence(10))
+            ->addTaxTableSelector('none')
+            ->addWeight(
+                new Weight('KG', rand(1, 10))
+            );
 
         return new ShoppingCart($items);
     }

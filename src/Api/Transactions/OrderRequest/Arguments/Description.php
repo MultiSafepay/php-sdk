@@ -17,19 +17,25 @@ class Description
     /**
      * @var string
      */
-    private $description;
+    private $description = '';
 
     /**
-     * GoogleAnalytics constructor.
      * @param string $description
+     * @return Description
      */
-    public function __construct(string $description)
+    public static function fromText(string $description): Description
     {
-        if (strlen($description) > 200) {
-            throw new InvalidArgumentException('Description can not be more than 200 characters');
-        }
+        return (new Description)->addDescription($description);
+    }
 
+    /**
+     * @param string $description
+     * @return Description
+     */
+    public function addDescription(string $description): Description
+    {
         $this->description = $description;
+        return $this;
     }
 
     /**
@@ -38,5 +44,17 @@ class Description
     public function getData(): string
     {
         return $this->description;
+    }
+
+    /**
+     * @return bool
+     */
+    public function validate(): bool
+    {
+        if (strlen($this->description) > 200) {
+            throw new InvalidArgumentException('Description can not be more than 200 characters');
+        }
+
+        return true;
     }
 }

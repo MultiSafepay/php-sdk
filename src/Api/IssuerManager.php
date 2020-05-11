@@ -14,6 +14,7 @@ use Psr\Http\Client\ClientExceptionInterface;
 class IssuerManager extends AbstractManager
 {
     /**
+     * @param string $gatewayCode
      * @return Issuer[]
      * @throws ClientExceptionInterface
      */
@@ -24,7 +25,7 @@ class IssuerManager extends AbstractManager
             throw new InvalidArgumentException('Gateway code is not allowed');
         }
 
-        $response = $this->client->createGetRequest('gateways');
+        $response = $this->client->createGetRequest('issuers/' . $gatewayCode);
         return (new IssuerListing($gatewayCode, $response->getResponseData()))->getIssuers();
     }
 }

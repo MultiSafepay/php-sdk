@@ -5,15 +5,13 @@ namespace MultiSafepay\Tests\Functional\Api\Transactions;
 use Money\Money;
 use MultiSafepay\Api\Gateways\Gateway;
 use MultiSafepay\Api\Transactions\OrderRequest;
-use MultiSafepay\Api\Transactions\OrderRequest\Redirect as RedirectOrderRequest;
+use MultiSafepay\Api\Transactions\OrderRequest\Direct as DirectOrderRequest;
 use MultiSafepay\Exception\ApiException;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\DescriptionFixture;
-use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\IdealGatewayInfoFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\MetaGatewayInfoFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PluginDetailsFixture;
-use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\SecondChanceFixture;
 use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CustomerDetailsFixture;
-use MultiSafepay\Tests\Fixtures\OrderRequest\RedirectFixture as OrderRequestRedirectFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PaymentOptionsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\ShoppingCartFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\TaxTableFixture;
@@ -23,34 +21,33 @@ use MultiSafepay\Tests\Functional\AbstractTestCase;
 use Psr\Http\Client\ClientExceptionInterface;
 
 /**
- * Class CreateIdealRedirectOrderTest
+ * Class CreatePayafterDirectOrderTest
  * @package MultiSafepay\Tests\Functional\Api\Transactions
  */
-class CreateIdealRedirectOrderTest extends AbstractTestCase
+class CreatePayafterDirectOrderTest extends AbstractTestCase
 {
     use CustomerDetailsFixture;
     use PaymentOptionsFixture;
     use AddressFixture;
     use ShoppingCartFixture;
     use TaxTableFixture;
-    use DescriptionFixture;
-    use SecondChanceFixture;
+    use MetaGatewayInfoFixture;
     use PluginDetailsFixture;
-    use IdealGatewayInfoFixture;
+    use DescriptionFixture;
     use PhoneNumberFixture;
     use CountryFixture;
 
     /**
      * @throws ClientExceptionInterface
      */
-    public function testCreateIdealRedirectOrder()
+    public function testCreatePayafterDirectOrder()
     {
-        $orderRequest = $this->createOrderRequest();
+        $requestOrder = $this->createOrderRequest();
 
         try {
-            $response = $this->getClient()->createPostRequest('orders', $orderRequest);
+            $response = $this->getClient()->createPostRequest('orders', $requestOrder);
         } catch (ApiException $apiException) {
-            $this->assertTrue(false, $apiException->getDetails($orderRequest->getData()));
+            $this->assertTrue(false, $apiException->getDetails($requestOrder->getData()));
             return;
         }
 
@@ -62,15 +59,20 @@ class CreateIdealRedirectOrderTest extends AbstractTestCase
     /**
      * @return OrderRequest
      */
-    private function createOrderRequest(): OrderRequest
+    public function createOrderRequest(): OrderRequest
     {
-        return (new RedirectOrderRequest())
+        $customerDetails = $this->createCustomerDetailsFixture();
+        return (new DirectOrderRequest())
+            ->addMoney(Money::EUR(100))
             ->addOrderId((string)time())
-            ->addMoney(Money::EUR(20))
-            ->addGatewayCode(Gateway::IDEAL)
-            ->addGatewayInfo($this->createIdealGatewayInfoFixture())
+            ->addGatewayCode(Gateway::PAYAFTER)
+            ->addGatewayInfo($this->createRandomMetaGatewayInfoFixture())
             ->addPaymentOptions($this->createPaymentOptionsFixture())
-            ->addDescription($this->createDescriptionFixture())
+            ->addCustomer($customerDetails)
+            ->addDelivery($customerDetails)
+            ->addTaxTable($this->createTaxTableFixture())
+            ->addDescription($this->createRandomDescriptionFixture())
+            ->addShoppingCart($this->createShoppingCartFixture())
             ->addPluginDetails($this->createPluginDetailsFixture());
     }
 }

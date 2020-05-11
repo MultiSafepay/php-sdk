@@ -6,7 +6,8 @@
 
 namespace MultiSafepay\Api\Transactions\OrderRequest\Arguments;
 
-use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart\Item;
+use MultiSafepay\Exception\InvalidArgumentException;
+use MultiSafepay\ValueObject\CartItem;
 
 /**
  * Class ShoppingCart
@@ -15,13 +16,13 @@ use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart\Item;
 class ShoppingCart
 {
     /**
-     * @var Item[]
+     * @var CartItem[]
      */
     private $items = [];
 
     /**
      * ShoppingCart constructor.
-     * @param Item[] $items
+     * @param CartItem[] $items
      */
     public function __construct(array $items)
     {
@@ -29,7 +30,7 @@ class ShoppingCart
     }
 
     /**
-     * @param array $items
+     * @param CartItem[] $items
      */
     public function addItems(array $items)
     {
@@ -39,11 +40,19 @@ class ShoppingCart
     }
 
     /**
-     * @param Item $item
+     * @param CartItem $item
      */
-    public function addItem(Item $item)
+    public function addItem(CartItem $item)
     {
         $this->items[] = $item;
+    }
+
+    /**
+     * @return CartItem[]
+     */
+    public function getItems(): array
+    {
+        return $this->items;
     }
 
     /**
@@ -51,6 +60,8 @@ class ShoppingCart
      */
     public function getData(): array
     {
+        $this->validate();
+
         $itemsData = [];
         foreach ($this->items as $item) {
             $itemsData[] = $item->getData();
@@ -59,5 +70,17 @@ class ShoppingCart
         return [
             'items' => $itemsData,
         ];
+    }
+
+    /**
+     * @return bool
+     */
+    public function validate(): bool
+    {
+        if (empty($this->items)) {
+            throw new InvalidArgumentException('No items in cart');
+        }
+
+        return true;
     }
 }

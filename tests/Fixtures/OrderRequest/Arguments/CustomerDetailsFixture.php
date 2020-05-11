@@ -9,6 +9,7 @@ namespace MultiSafepay\Tests\Fixtures\OrderRequest\Arguments;
 use Faker\Factory as FakerFactory;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\CustomerDetails;
 use MultiSafepay\ValueObject\Customer\EmailAddress;
+use MultiSafepay\ValueObject\Customer\PhoneNumber;
 use MultiSafepay\ValueObject\IpAddress;
 
 /**
@@ -22,14 +23,16 @@ trait CustomerDetailsFixture
      */
     public function createCustomerDetailsFixture(): CustomerDetails
     {
-        $address = $this->createAddressFixture();
-        $ipAddress = new IpAddress('10.0.0.1');
-        $emailAddress = new EmailAddress('info@example.org');
-        $customerDetails = new CustomerDetails('John', 'Doe', $address, $ipAddress, $emailAddress, ['0123456789']);
-
-        $customerDetails->addLocale('nl');
-        $customerDetails->addReferrer('http://example.org');
-        $customerDetails->addUserAgent('Unknown');
+        $customerDetails = (new CustomerDetails())
+            ->addFirstName('John')
+            ->addLastName('Doe')
+            ->addAddress($this->createAddressFixture())
+            ->addIpAddress(new IpAddress('10.0.0.1'))
+            ->addEmailAddress(new EmailAddress('info@example.org'))
+            ->addPhoneNumber(new PhoneNumber('0612345678'))
+            ->addLocale('nl')
+            ->addReferrer('http://example.org')
+            ->addUserAgent('Unknown');
 
         return $customerDetails;
     }
@@ -44,18 +47,18 @@ trait CustomerDetailsFixture
         $address = $this->createRandomAddressFixture();
         $ipAddress = new IpAddress($faker->ipv4);
         $emailAddress = new EmailAddress($faker->email);
-        $customerDetails = new CustomerDetails(
-            $faker->firstName,
-            $faker->lastName,
-            $address,
-            $ipAddress,
-            $emailAddress,
-            [$faker->phoneNumber]
-        );
 
-        $customerDetails->addLocale('nl');
-        $customerDetails->addReferrer('http://'.$faker->domainName);
-        $customerDetails->addUserAgent($faker->userAgent);
+        $customerDetails = (new CustomerDetails())
+            ->addFirstName($faker->firstName)
+            ->addLastName($faker->lastName)
+            ->addAddress($address)
+            ->addIpAddress($ipAddress)
+            ->addEmailAddress($emailAddress)
+            ->addPhoneNumber($this->createPhoneNumberFixture())
+            ->addPhoneNumber($this->createPhoneNumberFixture())
+            ->addLocale('nl')
+            ->addReferrer($faker->url)
+            ->addUserAgent($faker->userAgent);
 
         return $customerDetails;
     }

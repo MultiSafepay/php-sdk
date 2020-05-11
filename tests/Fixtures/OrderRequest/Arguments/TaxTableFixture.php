@@ -21,12 +21,14 @@ trait TaxTableFixture
      */
     public function createTaxTableFixture(): TaxTable
     {
-        $defaultRate = new TaxRate(0);
+        $defaultRate = new TaxRate();
+        $defaultRate->addRate(0);
+
         $alternateRates = [];
-        $alternateRates[] = new TaxRule('BTW21', [new TaxRate(21)]);
-        $alternateRates[] = new TaxRule('BTW6', [new TaxRate(6)]);
-        $alternateRates[] = new TaxRule('BTW0', [new TaxRate(0)]);
-        $alternateRates[] = new TaxRule('none', [new TaxRate(0)]);
+        $alternateRates[] = (new TaxRule)->addName('BTW21')->addTaxRates([(new TaxRate())->addRate(21)]);
+        $alternateRates[] = (new TaxRule)->addName('BTW6')->addTaxRates([(new TaxRate())->addRate(6)]);
+        $alternateRates[] = (new TaxRule)->addName('BTW0')->addTaxRates([(new TaxRate())->addRate(0)]);
+        $alternateRates[] = (new TaxRule)->addName('none')->addTaxRates([(new TaxRate())->addRate(0)]);
 
         return new TaxTable($defaultRate, $alternateRates, false);
     }

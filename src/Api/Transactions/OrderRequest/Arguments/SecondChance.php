@@ -15,15 +15,16 @@ class SecondChance
     /**
      * @var bool
      */
-    private $sendEmail;
+    private $sendEmail = false;
 
     /**
-     * SecondChance constructor.
      * @param bool $sendEmail
+     * @return SecondChance
      */
-    public function __construct(bool $sendEmail)
+    public function addSendEmail(bool $sendEmail): SecondChance
     {
         $this->sendEmail = $sendEmail;
+        return $this;
     }
 
     /**

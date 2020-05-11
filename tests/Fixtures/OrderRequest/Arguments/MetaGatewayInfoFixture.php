@@ -7,8 +7,8 @@
 namespace MultiSafepay\Tests\Fixtures\OrderRequest\Arguments;
 
 use Faker\Factory as FakerFactory;
-use MultiSafepay\Api\Transactions\OrderRequest\Arguments\CustomerDetails;
-use MultiSafepay\Api\Transactions\OrderRequest\Arguments\Direct\GatewayInfo\Meta;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo\Meta;
+use MultiSafepay\Tests\Utils\Locale;
 use MultiSafepay\ValueObject\BankAccount;
 use MultiSafepay\ValueObject\Customer\EmailAddress;
 use MultiSafepay\ValueObject\Customer\PhoneNumber;
@@ -22,18 +22,18 @@ use MultiSafepay\ValueObject\Gender;
 trait MetaGatewayInfoFixture
 {
     /**
-     * @return CustomerDetails
+     * @return Meta
      */
-    public function createMetaGatewayInfoFixture(): Meta
+    public function createRandomMetaGatewayInfoFixture(): Meta
     {
-        $faker = FakerFactory::create();
+        $countryCode = $this->createCountryCodeFixture();
+        $faker = FakerFactory::create(Locale::getLocaleByCountryCode($countryCode));
 
-        return new Meta(
-            new Date('1970-01-01'),
-            new BankAccount($faker->iban()),
-            new PhoneNumber($faker->phoneNumber),
-            new EmailAddress($faker->email),
-            new Gender('male')
-        );
+        return (new Meta)
+            ->addBirthday(new Date($faker->date('Y-m-d', '20 years ago')))
+            ->addEmailAddress(new EmailAddress($faker->email))
+            ->addBankAccount(new BankAccount($faker->bankAccountNumber))
+            ->addPhone($this->createPhoneNumberFixture())
+            ->addGender(new Gender('male'));
     }
 }

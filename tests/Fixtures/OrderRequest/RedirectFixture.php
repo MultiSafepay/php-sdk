@@ -8,10 +8,9 @@ namespace MultiSafepay\Tests\Fixtures\OrderRequest;
 
 use Money\Money;
 use MultiSafepay\Api\Gateways\Gateway;
-use MultiSafepay\Api\Transactions\OrderRequest\Arguments\Description;
-use MultiSafepay\Api\Transactions\OrderRequest\Arguments\Direct\GatewayInfo\Ideal as IdealGatewayInfo;
-use MultiSafepay\Api\Transactions\OrderRequest\Arguments\PluginDetails;
-use MultiSafepay\Api\Transactions\OrderRequest\Redirect as OrderRequestRedirect;
+use MultiSafepay\Api\Transactions\OrderRequest;
+use MultiSafepay\Api\Transactions\OrderRequest\Redirect as RedirectOrderRequest;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\IdealGatewayInfoFixture;
 
 /**
  * Trait RedirectFixture
@@ -19,22 +18,20 @@ use MultiSafepay\Api\Transactions\OrderRequest\Redirect as OrderRequestRedirect;
  */
 trait RedirectFixture
 {
+    use IdealGatewayInfoFixture;
+
     /**
-     * @return OrderRequestRedirect
+     * @return OrderRequest
      */
-    public function createIdealOrderRedirectRequestFixture(): OrderRequestRedirect
+    public function createIdealOrderRedirectRequestFixture(): OrderRequest
     {
-        $request = new OrderRequestRedirect(
-            (string)time(),
-            Money::EUR(20),
-            Gateway::IDEAL,
-            new IdealGatewayInfo('0031'),
-            $this->createPaymentOptionsFixture()
-        );
-
-        $request->addPluginDetails(new PluginDetails('Foobar', '0.0.1'));
-        $request->addDescription(new Description('Foobar'));
-
-        return $request;
+        return (new RedirectOrderRequest())
+            ->addOrderId((string)time())
+            ->addMoney(Money::EUR(20))
+            ->addGatewayCode(Gateway::IDEAL)
+            ->addGatewayInfo($this->createIdealGatewayInfoFixture())
+            ->addPaymentOptions($this->createPaymentOptionsFixture())
+            ->addDescription($this->createDescriptionFixture())
+            ->addPluginDetails($this->createPluginDetailsFixture());
     }
 }

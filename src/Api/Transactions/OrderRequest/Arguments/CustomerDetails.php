@@ -11,7 +11,6 @@ use MultiSafepay\ValueObject\Customer;
 /**
  * Class CustomerDetails
  * @package MultiSafepay\Api\Transactions\OrderRequest\Arguments
- * @todo Rename to CustomerWrapper
  */
 class CustomerDetails extends Customer
 {
@@ -32,23 +31,27 @@ class CustomerDetails extends Customer
 
     /**
      * @return array
+     * phpcs:disable ObjectCalisthenics.Files.FunctionLength
      */
     public function getData(): array
     {
         $address = $this->getAddress();
+        $phoneNumbers = $this->getPhoneNumbers();
         return [
+            'firstname' => $this->getFirstName(),
+            'lastname' => $this->getLastName(),
             'address1' => $address->getStreetName(),
             'address2' => $address->getStreetNameAdditional(),
             'house_number' => $this->getHouseNumber(),
             'zip_code' => $address->getZipCode(),
             'city' => $address->getCity(),
             'state' => $address->getState(),
-            'country' => $address->getCountry()->getCode(),
-            'country_name' => $address->getCountry()->getName(),
-            'phone1' => $this->getPhoneNumbers()[0] ?? '',
-            'phone2' => $this->getPhoneNumbers()[1] ?? '',
-            'email' => $this->getEmailAddress()->get(),
-            'ip_address' => $this->getIpAddress()->get(),
+            'country' => $address->getCountry() ? $address->getCountry()->getCode() : null,
+            'country_name' => $address->getCountry() ? $address->getCountry()->getName() : null,
+            'phone1' => $phoneNumbers[0] ?? null,
+            'phone2' => $phoneNumbers[1] ?? null,
+            'email' => $this->getEmailAddress() ? $this->getEmailAddress()->get() : null,
+            'ip_address' => $this->getIpAddress() ? $this->getIpAddress()->get() : null,
             'locale' => $this->getLocale(),
             'referrer' => $this->getReferrer(),
             'user_agent' => $this->getUserAgent(),
@@ -65,10 +68,12 @@ class CustomerDetails extends Customer
 
     /**
      * @param string $locale
+     * @return CustomerDetails
      */
-    public function addLocale(string $locale): void
+    public function addLocale(string $locale): CustomerDetails
     {
         $this->locale = $locale;
+        return $this;
     }
 
     /**
@@ -81,10 +86,12 @@ class CustomerDetails extends Customer
 
     /**
      * @param string $referrer
+     * @return CustomerDetails
      */
-    public function addReferrer(string $referrer): void
+    public function addReferrer(string $referrer): CustomerDetails
     {
         $this->referrer = $referrer;
+        return $this;
     }
 
     /**
@@ -97,10 +104,12 @@ class CustomerDetails extends Customer
 
     /**
      * @param string $userAgent
+     * @return CustomerDetails
      */
-    public function addUserAgent(string $userAgent): void
+    public function addUserAgent(string $userAgent): CustomerDetails
     {
         $this->userAgent = $userAgent;
+        return $this;
     }
 
     /**

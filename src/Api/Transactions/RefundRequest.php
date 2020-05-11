@@ -60,25 +60,31 @@ class RefundRequest implements RequestBodyInterface
 
     /**
      * @param Money $money
+     * @return RefundRequest
      */
-    public function addMoney(Money $money)
+    public function addMoney(Money $money): RefundRequest
     {
         $this->money = $money;
+        return $this;
     }
 
     /**
      * @param Description $description
+     * @return RefundRequest
      */
-    public function addDescription(Description $description)
+    public function addDescription(Description $description): RefundRequest
     {
         $this->description = $description;
+        return $this;
     }
 
     /**
      * @param CheckoutData $checkoutData
+     * @return RefundRequest
      */
-    public function addCheckoutData(CheckoutData $checkoutData)
+    public function addCheckoutData(CheckoutData $checkoutData): RefundRequest
     {
         $this->checkoutData = $checkoutData;
+        return $this;
     }
 }

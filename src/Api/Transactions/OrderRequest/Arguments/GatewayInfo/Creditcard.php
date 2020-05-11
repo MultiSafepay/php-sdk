@@ -1,0 +1,125 @@
+<?php declare(strict_types=1);
+/**
+ * Copyright © 2020 MultiSafepay, Inc. All rights reserved.
+ * See DISCLAIMER.md for disclaimer details.
+ */
+
+namespace MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo;
+
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfoInterface;
+use MultiSafepay\ValueObject\Creditcard\CardNumber;
+use MultiSafepay\ValueObject\Creditcard\Cvc;
+use MultiSafepay\ValueObject\Date;
+
+/**
+ * Class Creditcard
+ * @package MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo
+ */
+class Creditcard implements GatewayInfoInterface
+{
+    /**
+     * @var CardNumber
+     */
+    private $cardNumber;
+
+    /**
+     * @var string
+     */
+    private $cardHolderName;
+
+    /**
+     * @var Date
+     */
+    private $cardExpiryDate;
+
+    /**
+     * @var Cvc
+     */
+    private $cvc;
+
+    /**
+     * @var bool
+     */
+    private $flexible3d;
+
+    /**
+     * @var string
+     */
+    private $termUrl;
+
+    /**
+     * @param CardNumber $cardNumber
+     * @return Creditcard
+     */
+    public function addCardNumber(CardNumber $cardNumber): Creditcard
+    {
+        $this->cardNumber = $cardNumber;
+        return $this;
+    }
+
+    /**
+     * @param string $cardHolderName
+     * @return Creditcard
+     */
+    public function addCardHolderName(string $cardHolderName): Creditcard
+    {
+        $this->cardHolderName = $cardHolderName;
+        return $this;
+    }
+
+    /**
+     * @param Date $cardExpiryDate
+     * @return Creditcard
+     */
+    public function addCardExpiryDate(Date $cardExpiryDate): Creditcard
+    {
+        $this->cardExpiryDate = $cardExpiryDate;
+        return $this;
+    }
+
+    /**
+     * @param Cvc $cvc
+     * @return Creditcard
+     */
+    public function addCvc(Cvc $cvc): Creditcard
+    {
+        $this->cvc = $cvc;
+        return $this;
+    }
+
+    /**
+     * @param bool $flexible3d
+     * @return Creditcard
+     */
+    public function addFlexible3d(bool $flexible3d): Creditcard
+    {
+        $this->flexible3d = $flexible3d;
+        return $this;
+    }
+
+    /**
+     * @param string $termUrl
+     * @return Creditcard
+     */
+    public function addTermUrl(string $termUrl): Creditcard
+    {
+        $this->termUrl = $termUrl;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getData(): array
+    {
+        return [
+            'card_number' => $this->cardNumber ? $this->cardNumber->get() : null,
+            'cart_holder_name' => $this->cardHolderName,
+            'cart_expiry_date' => $this->cardExpiryDate ? $this->cardExpiryDate->get('my') : null,
+            'cvc' => $this->cvc ? $this->cvc->get() : null,
+            'card_cvc' => $this->cvc ? $this->cvc->get() : null,
+            'flexible_3d' => $this->flexible3d,
+            'term_url' => $this->termUrl,
+        ];
+    }
+}

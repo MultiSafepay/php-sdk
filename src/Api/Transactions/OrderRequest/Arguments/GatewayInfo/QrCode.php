@@ -4,7 +4,7 @@
  * See DISCLAIMER.md for disclaimer details.
  */
 
-namespace MultiSafepay\Api\Transactions\OrderRequest\Arguments\Direct\GatewayInfo;
+namespace MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo;
 
 use MultiSafepay\Api\Gateways\Gateway;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfoInterface;
@@ -12,47 +12,68 @@ use MultiSafepay\Api\Transactions\OrderRequest\Direct as OrderRequestDirect;
 
 /**
  * Class QrCode
- * @package MultiSafepay\Api\Transactions\OrderRequest\Arguments\Direct\GatewayInfo
+ * @package MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo
  */
 class QrCode implements GatewayInfoInterface
 {
     /**
      * @var int
      */
-    private $qrSize;
+    private $qrSize = 250;
 
     /**
      * @var bool
      */
-    private $allowMultiple;
+    private $allowMultiple = false;
 
     /**
      * @var bool
      */
-    private $allowChangeAmount;
+    private $allowChangeAmount = false;
 
     /**
      * @var int
      */
-    private $maxAmount;
+    private $maxAmount = 1000;
 
     /**
-     * QrCode constructor.
      * @param int $qrSize
-     * @param bool $allowMultiple
-     * @param bool $allowChangeAmount
-     * @param int $maxAmount
+     * @return QrCode
      */
-    public function __construct(
-        int $qrSize = 250,
-        bool $allowMultiple = false,
-        bool $allowChangeAmount = false,
-        int $maxAmount = 1000
-    ) {
+    public function addQrSize(int $qrSize): QrCode
+    {
         $this->qrSize = $qrSize;
+        return $this;
+    }
+
+    /**
+     * @param bool $allowMultiple
+     * @return QrCode
+     */
+    public function addAllowMultiple(bool $allowMultiple): QrCode
+    {
         $this->allowMultiple = $allowMultiple;
+        return $this;
+    }
+
+    /**
+     * @param bool $allowChangeAmount
+     * @return QrCode
+     */
+    public function addAllowChangeAmount(bool $allowChangeAmount): QrCode
+    {
         $this->allowChangeAmount = $allowChangeAmount;
+        return $this;
+    }
+
+    /**
+     * @param int $maxAmount
+     * @return QrCode
+     */
+    public function addMaxAmount(int $maxAmount): QrCode
+    {
         $this->maxAmount = $maxAmount;
+        return $this;
     }
 
     /**

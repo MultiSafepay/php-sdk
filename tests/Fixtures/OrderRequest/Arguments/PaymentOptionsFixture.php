@@ -19,12 +19,11 @@ trait PaymentOptionsFixture
      */
     public function createPaymentOptionsFixture(): PaymentOptions
     {
-        $paymentOptions = new PaymentOptions(
-            'http://www.example.com/client/notification?type=notification',
-            'http://www.example.com/client/notification?type=redirect',
-            'http://www.example.com/client/notification?type=cancel',
-            true
-        );
+        $paymentOptions = (new PaymentOptions())
+            ->addNotificationUrl('http://www.example.com/client/notification?type=notification')
+            ->addRedirectUrl('http://www.example.com/client/notification?type=redirect')
+            ->addCancelUrl('http://www.example.com/client/notification?type=cancel')
+            ->addCloseWindow(true);
 
         return $paymentOptions;
     }

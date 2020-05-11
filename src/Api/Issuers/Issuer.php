@@ -6,7 +6,7 @@
 
 namespace MultiSafepay\Api\Issuers;
 
-use InvalidArgumentException;
+use MultiSafepay\Exception\InvalidArgumentException;
 
 /**
  * Class Issuer
@@ -42,23 +42,24 @@ class Issuer
      */
     public function __construct(string $gatewayCode, int $code, string $description)
     {
-        $this->initGatewayCode($gatewayCode);
+        $this->validateGatewayCode($gatewayCode);
+        $this->gatewayCode = strtoupper($gatewayCode);
         $this->code = $code;
         $this->description = $description;
     }
 
     /**
      * @param string $gatewayCode
-     * @todo Replace exception with MSP-specific exception
+     * @return bool
      */
-    private function initGatewayCode(string $gatewayCode)
+    private function validateGatewayCode(string $gatewayCode): bool
     {
         $gatewayCode = strtolower($gatewayCode);
         if (!in_array($gatewayCode, self::ALLOWED_GATEWAY_CODES)) {
             throw new InvalidArgumentException('Gateway code is not allowed');
         }
 
-        $this->gatewayCode = $gatewayCode;
+        return true;
     }
 
     /**
