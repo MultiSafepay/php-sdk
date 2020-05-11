@@ -303,7 +303,7 @@ class OrderRequest implements OrderRequestInterface
      */
     public function addSecondsActive(int $seconds): OrderRequest
     {
-        $this->seconds = $seconds;
+        $this->secondsActive = $seconds;
         return $this;
     }
 
@@ -313,7 +313,7 @@ class OrderRequest implements OrderRequestInterface
      */
     public function addDaysActive(int $days): OrderRequest
     {
-        $this->days = $days;
+        $this->daysActive = $days;
         return $this;
     }
 
