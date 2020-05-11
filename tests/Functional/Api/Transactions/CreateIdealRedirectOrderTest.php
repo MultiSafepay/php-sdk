@@ -5,7 +5,6 @@ namespace MultiSafepay\Tests\Functional\Api\Transactions;
 use Money\Money;
 use MultiSafepay\Api\Gateways\Gateway;
 use MultiSafepay\Api\Transactions\OrderRequest;
-use MultiSafepay\Api\Transactions\OrderRequest\Redirect as RedirectOrderRequest;
 use MultiSafepay\Exception\ApiException;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\DescriptionFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\IdealGatewayInfoFixture;
@@ -64,7 +63,8 @@ class CreateIdealRedirectOrderTest extends AbstractTestCase
      */
     private function createOrderRequest(): OrderRequest
     {
-        return (new RedirectOrderRequest())
+        return (new OrderRequest())
+            ->addType('redirect')
             ->addOrderId((string)time())
             ->addMoney(Money::EUR(20))
             ->addGatewayCode(Gateway::IDEAL)

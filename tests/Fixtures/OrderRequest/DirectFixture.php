@@ -9,7 +9,6 @@ namespace MultiSafepay\Tests\Fixtures\OrderRequest;
 use Money\Money;
 use MultiSafepay\Api\Gateways\Gateway;
 use MultiSafepay\Api\Transactions\OrderRequest;
-use MultiSafepay\Api\Transactions\OrderRequest\Direct as DirectOrderRequest;
 
 /**
  * Trait DirectFixture
@@ -22,7 +21,8 @@ trait DirectFixture
      */
     public function createOrderIdealDirectRequestFixture(): OrderRequest
     {
-        return (new DirectOrderRequest())
+        return (new OrderRequest())
+            ->addType('direct')
             ->addOrderId((string)time())
             ->addMoney(Money::EUR(20))
             ->addGatewayCode(Gateway::IDEAL)
@@ -36,11 +36,12 @@ trait DirectFixture
     }
 
     /**
-     * @return DirectOrderRequest
+     * @return OrderRequest
      */
-    public function createRandomOrderIdealDirectRequestFixture(): DirectOrderRequest
+    public function createRandomOrderIdealDirectRequestFixture(): OrderRequest
     {
-        return (new DirectOrderRequest())
+        return (new OrderRequest())
+            ->addType('direct')
             ->addOrderId((string)time())
             ->addMoney(Money::EUR(20))
             ->addGatewayCode(Gateway::IDEAL)

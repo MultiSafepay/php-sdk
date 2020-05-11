@@ -7,6 +7,10 @@ namespace MultiSafepay\Exception;
 
 use LogicException;
 
+/**
+ * Class InvalidOrderDataException
+ * @package MultiSafepay\Exception
+ */
 class InvalidOrderDataException extends LogicException
 {
 }

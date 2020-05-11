@@ -7,6 +7,7 @@
 namespace MultiSafepay\Api\Transactions;
 
 use Money\Money;
+use MultiSafepay\Api\Base\DataObject;
 use MultiSafepay\Api\Gateways\Gateway;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\CustomerDetails;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\Description;
@@ -17,8 +18,6 @@ use MultiSafepay\Api\Transactions\OrderRequest\Arguments\PluginDetails;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\SecondChance;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\TaxTable;
-use MultiSafepay\Api\Transactions\OrderRequest\Direct;
-use MultiSafepay\Api\Transactions\OrderRequest\Redirect;
 use MultiSafepay\Exception\InvalidArgumentException;
 
 /**
@@ -27,8 +26,10 @@ use MultiSafepay\Exception\InvalidArgumentException;
  * phpcs:disable ObjectCalisthenics.Metrics.MethodPerClassLimit
  * phpcs:disable ObjectCalisthenics.Files.ClassTraitAndInterfaceLength
  */
-class OrderRequest implements OrderRequestInterface
+class OrderRequest extends DataObject implements OrderRequestInterface
 {
+    const ALLOWED_TYPES = ['direct', 'redirect'];
+
     /**
      * @var string
      */
@@ -110,20 +111,14 @@ class OrderRequest implements OrderRequestInterface
     protected $pluginDetails;
 
     /**
-     * @var array
-     */
-    protected $data = [];
-
-    /**
      * @param string $type
      * @return OrderRequest
      */
     public function addType(string $type): OrderRequest
     {
-        $allowedTypes = ['direct', 'redirect'];
-        if (!in_array($type, $allowedTypes)) {
+        if (!in_array($type, self::ALLOWED_TYPES)) {
             $msg = 'Type "' . $type . '" is not a known type. ';
-            $msg .= 'Available types: ' . implode(', ', $allowedTypes);
+            $msg .= 'Available types: ' . implode(', ', self::ALLOWED_TYPES);
             throw new InvalidArgumentException($msg);
         }
 
@@ -293,22 +288,11 @@ class OrderRequest implements OrderRequestInterface
     }
 
     /**
-     * @param array $data
-     * @return OrderRequest
-     */
-    public function addData(array $data): OrderRequest
-    {
-        $this->data = array_merge($this->data, $data);
-        return $this;
-    }
-
-    /**
      * @return array
      * phpcs:disable ObjectCalisthenics.Files.FunctionLength
      */
     public function getData(): array
     {
-
         $data = [
             'type' => $this->type,
             'order_id' => $this->orderId,
@@ -335,6 +319,7 @@ class OrderRequest implements OrderRequestInterface
     }
 
     /**
+     * @param array $data
      * @return bool
      */
     protected function validate(array $data): bool
