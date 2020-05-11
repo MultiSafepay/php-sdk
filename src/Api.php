@@ -6,6 +6,7 @@
 
 namespace MultiSafepay;
 
+use MultiSafepay\Api\CategoryManager;
 use MultiSafepay\Api\GatewayManager;
 use MultiSafepay\Api\IssuerManager;
 use MultiSafepay\Api\TransactionManager;
@@ -64,5 +65,13 @@ class Api
     public function getIssuerManager(): IssuerManager
     {
         return new IssuerManager($this->client);
+    }
+
+    /**
+     * @return CategoryManager
+     */
+    public function getCategoryManager(): CategoryManager
+    {
+        return new CategoryManager($this->client);
     }
 }
