@@ -6,7 +6,7 @@
 
 namespace MultiSafepay\Api\Transactions\TransactionResponse;
 
-use MultiSafepay\Api\Base\ResponseBody;
+use MultiSafepay\Api\Base\DataObject;
 use MultiSafepay\ValueObject\Customer\Country;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\TaxTable\TaxRate;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\TaxTable\TaxRule;
@@ -16,7 +16,7 @@ use MultiSafepay\Api\Transactions\OrderRequest\Arguments\TaxTable;
  * Class CheckoutOptions
  * @package MultiSafepay\Api\Transactions\TransactionResponse
  */
-class CheckoutOptions extends ResponseBody
+class CheckoutOptions extends DataObject
 {
     /**
      * @return TaxTable

@@ -6,13 +6,13 @@
 
 namespace MultiSafepay\Api\Transactions\TransactionResponse;
 
-use MultiSafepay\Api\Base\ResponseBody;
+use MultiSafepay\Api\Base\DataObject;
 
 /**
  * Class PaymentDetails
  * @package MultiSafepay\Api\Transactions\TransactionResponse
  */
-class PaymentDetails extends ResponseBody
+class PaymentDetails extends DataObject
 {
     /**
      * @return string

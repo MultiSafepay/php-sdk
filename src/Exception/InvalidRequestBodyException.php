@@ -7,6 +7,10 @@ namespace MultiSafepay\Exception;
 
 use LogicException;
 
+/**
+ * Class InvalidRequestBodyException
+ * @package MultiSafepay\Exception
+ */
 class InvalidRequestBodyException extends LogicException
 {
 }

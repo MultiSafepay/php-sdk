@@ -25,7 +25,8 @@ trait RedirectFixture
      */
     public function createIdealOrderRedirectRequestFixture(): OrderRequest
     {
-        return (new RedirectOrderRequest())
+        return (new OrderRequest())
+            ->addType('redirect')
             ->addOrderId((string)time())
             ->addMoney(Money::EUR(20))
             ->addGatewayCode(Gateway::IDEAL)

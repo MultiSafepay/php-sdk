@@ -39,8 +39,8 @@ class TransactionTest extends TestCase
      */
     public function testGetOrderData(): void
     {
-        $requestDirectOrder = $this->createOrderIdealDirectRequestFixture();
-        $transaction = new TransactionResponse($requestDirectOrder->getData());
+        $orderRequest = $this->createOrderIdealDirectRequestFixture();
+        $transaction = new TransactionResponse($orderRequest->getData());
 
         $data = $transaction->getData();
         $this->assertArrayHasKey('type', $data, var_export($data, true));

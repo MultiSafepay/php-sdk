@@ -9,7 +9,6 @@ use Psr\Http\Client\ClientExceptionInterface;
 use MultiSafepay\Exception\ApiException;
 use MultiSafepay\Api\Gateways\Gateway;
 use MultiSafepay\Api\Transactions\OrderRequest;
-use MultiSafepay\Api\Transactions\OrderRequest\Direct as DirectOrderRequest;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\DescriptionFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\GoogleAnalyticsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\IdealGatewayInfoFixture;
@@ -36,7 +35,6 @@ class CreateIdealDirectOrderTest extends AbstractTestCase
     use SecondChanceFixture;
     use PhoneNumberFixture;
     use CountryFixture;
-
 
     /**
      * @throws ClientExceptionInterface
@@ -65,7 +63,8 @@ class CreateIdealDirectOrderTest extends AbstractTestCase
      */
     private function createOrderRequest(): OrderRequest
     {
-        return (new DirectOrderRequest())
+        return (new OrderRequest())
+            ->addType('direct')
             ->addOrderId((string)time())
             ->addMoney(Money::EUR(20))
             ->addGatewayCode(Gateway::IDEAL)

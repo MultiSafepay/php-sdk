@@ -7,6 +7,7 @@
 namespace MultiSafepay\Api\Transactions;
 
 use Money\Money;
+use MultiSafepay\Api\Base\DataObject;
 use MultiSafepay\Api\Gateways\Gateway;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\CheckoutOptions;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\CustomerDetails;
@@ -17,6 +18,7 @@ use MultiSafepay\Api\Transactions\OrderRequest\Arguments\PaymentOptions;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\PluginDetails;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\SecondChance;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\TaxTable;
 use MultiSafepay\Exception\InvalidArgumentException;
 
 /**
@@ -25,8 +27,10 @@ use MultiSafepay\Exception\InvalidArgumentException;
  * phpcs:disable ObjectCalisthenics.Metrics.MethodPerClassLimit
  * phpcs:disable ObjectCalisthenics.Files.ClassTraitAndInterfaceLength
  */
-class OrderRequest implements OrderRequestInterface
+class OrderRequest extends DataObject implements OrderRequestInterface
 {
+    const ALLOWED_TYPES = ['direct', 'redirect'];
+
     /**
      * @var string
      */
@@ -103,6 +107,16 @@ class OrderRequest implements OrderRequestInterface
     protected $checkoutOptions;
 
     /**
+     * @var int
+     */
+    protected $secondsActive;
+
+    /**
+     * @var int
+     */
+    protected $daysActive;
+
+    /**
      * @var PluginDetails
      */
     protected $pluginDetails;
@@ -113,10 +127,9 @@ class OrderRequest implements OrderRequestInterface
      */
     public function addType(string $type): OrderRequest
     {
-        $allowedTypes = ['direct', 'redirect'];
-        if (!in_array($type, $allowedTypes)) {
+        if (!in_array($type, self::ALLOWED_TYPES)) {
             $msg = 'Type "' . $type . '" is not a known type. ';
-            $msg .= 'Available types: ' . implode(', ', $allowedTypes);
+            $msg .= 'Available types: ' . implode(', ', self::ALLOWED_TYPES);
             throw new InvalidArgumentException($msg);
         }
 
@@ -286,14 +299,32 @@ class OrderRequest implements OrderRequestInterface
     }
 
     /**
+     * @param int $seconds
+     * @return OrderRequest
+     */
+    public function addSecondsActive(int $seconds): OrderRequest
+    {
+        $this->secondsActive = $seconds;
+        return $this;
+    }
+
+    /**
+     * @param int $days
+     * @return OrderRequest
+     */
+    public function addDaysActive(int $days): OrderRequest
+    {
+        $this->daysActive = $days;
+        return $this;
+    }
+
+    /**
      * @return array
      * phpcs:disable ObjectCalisthenics.Files.FunctionLength
      */
     public function getData(): array
     {
-        $this->validate();
-
-        return [
+        $data = [
             'type' => $this->type,
             'order_id' => $this->orderId,
             'currency' => $this->money ? (string)$this->money->getCurrency() : null,
@@ -308,17 +339,29 @@ class OrderRequest implements OrderRequestInterface
             'customer' => ($this->customer) ? $this->customer->getData() : null,
             'delivery' => $this->delivery ? $this->delivery->getData() : null,
             'shopping_cart' => $this->shoppingCart ? $this->shoppingCart->getData() : null,
+<<<<<<< HEAD
             'checkout_options' => $this->checkoutOptions ? $this->checkoutOptions->getData() : null,
+=======
+            'days_active' => $this->daysActive,
+            'seconds_active' => $this->secondsActive,
+            'checkout_options' => $this->getCheckoutOptions(),
+>>>>>>> master
             'plugin' => $this->pluginDetails ? $this->pluginDetails->getData() : null
         ];
+
+        $data = array_merge($data, $this->data);
+        $this->validate($data);
+
+        return $data;
     }
 
     /**
+     * @param array $data
      * @return bool
      */
-    protected function validate(): bool
+    protected function validate(array $data): bool
     {
-        if (!$this->pluginDetails) {
+        if (!$data['plugin']) {
             throw new InvalidArgumentException('Required plugin details are missing');
         }
 

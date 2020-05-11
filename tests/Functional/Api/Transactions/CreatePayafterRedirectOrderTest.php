@@ -64,7 +64,8 @@ class CreatePayafterRedirectOrderTest extends AbstractTestCase
      */
     public function createOrderRequest(): OrderRequest
     {
-        return (new RedirectOrderRequest())
+        return (new OrderRequest())
+            ->addType('redirect')
             ->addMoney(Money::EUR(100))
             ->addOrderId((string)time())
             ->addGatewayCode(Gateway::PAYAFTER)

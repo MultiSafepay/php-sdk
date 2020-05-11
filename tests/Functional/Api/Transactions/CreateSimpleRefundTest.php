@@ -3,10 +3,7 @@
 namespace MultiSafepay\Tests\Functional\Api\Transactions;
 
 use Money\Money;
-use MultiSafepay\Api\Gateways\Gateway;
 use MultiSafepay\Api\Transactions\OrderRequest;
-use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart\Item as ShoppingCartItem;
-use MultiSafepay\Api\Transactions\OrderRequest\Redirect;
 use MultiSafepay\Api\Transactions\RefundRequest;
 use MultiSafepay\Api\Transactions\RefundRequest\Arguments\CheckoutData;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CheckoutOptionsFixture;
@@ -23,6 +20,7 @@ use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CustomerDetailsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PaymentOptionsFixture;
 use MultiSafepay\Tests\Functional\AbstractTestCase;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart\Item as ShoppingCartItem;
 
 /**
  * Class CreateSimpleRefundTest
@@ -98,6 +96,7 @@ class CreateSimpleRefundTest extends AbstractTestCase
     private function createOrderRequest(): OrderRequest
     {
         $customer = $this->createCustomerDetailsFixture();
+
         return (new OrderRequest())
             ->addType('direct')
             ->addShoppingCart($this->createShoppingCartFixture())
