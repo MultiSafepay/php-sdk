@@ -6,7 +6,7 @@
 
 namespace MultiSafepay\Api;
 
-use MultiSafepay\Client;
+use MultiSafepay\Client\Client;
 
 abstract class AbstractManager
 {
