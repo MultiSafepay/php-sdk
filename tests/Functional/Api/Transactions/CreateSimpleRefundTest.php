@@ -98,7 +98,8 @@ class CreateSimpleRefundTest extends AbstractTestCase
      */
     private function createOrderRequest(): OrderRequest
     {
-        return (new Redirect())
+        return (new OrderRequest())
+            ->addType('direct')
             ->addShoppingCart($this->createShoppingCartFixture())
             ->addTaxTable($this->createTaxTableFixture())
             ->addOrderId((string)time())

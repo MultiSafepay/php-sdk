@@ -123,7 +123,9 @@ class TransactionManagerTest extends TestCase
             ]
         );
 
-        $requestRefund = new RefundRequest(Money::EUR(21), Description::fromText('Give me my money back'));
+        $requestRefund = (new RefundRequest())
+            ->addMoney(Money::EUR(21))
+            ->addDescription(Description::fromText('Give me my money back'));
         $refund = $transactionManager->refund($transaction, $requestRefund);
 
         $this->assertArrayHasKey('refund_id', $refund, var_export($refund, true));

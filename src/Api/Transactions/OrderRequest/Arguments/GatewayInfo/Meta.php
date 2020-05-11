@@ -6,6 +6,7 @@
 
 namespace MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo;
 
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\CustomerDetails;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfoInterface;
 use MultiSafepay\ValueObject\BankAccount;
 use MultiSafepay\ValueObject\Customer\EmailAddress;
@@ -43,6 +44,11 @@ class Meta implements GatewayInfoInterface
      * @var Gender|null
      */
     private $gender;
+
+    /**
+     * @var array
+     */
+    private $data = [];
 
     /**
      * @param Date $birthday
@@ -95,16 +101,30 @@ class Meta implements GatewayInfoInterface
     }
 
     /**
+     * @param array $data
+     * @return Meta
+     */
+    public function addData(array $data = []): Meta
+    {
+        $this->data = array_merge($this->data, $data);
+        return $this;
+    }
+
+    /**
      * @return array
      */
     public function getData(): array
     {
-        return [
+        $data = [
             'birthday' => $this->birthday ? $this->birthday->get() : null,
             'bankaccount' => $this->bankAccount ? $this->bankAccount->get() : null,
             'phone' => $this->phone ? $this->phone->get() : null,
             'email' => $this->emailAddress ? $this->emailAddress->get() : null,
             'gender' => $this->gender ? $this->gender->get() : null,
         ];
+
+        $data = array_merge($data, $this->data);
+
+        return $data;
     }
 }

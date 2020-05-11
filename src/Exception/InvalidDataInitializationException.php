@@ -7,6 +7,10 @@ namespace MultiSafepay\Exception;
 
 use LogicException;
 
+/**
+ * Class InvalidDataInitializationException
+ * @package MultiSafepay\Exception
+ */
 class InvalidDataInitializationException extends LogicException
 {
 }

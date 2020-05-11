@@ -10,6 +10,10 @@ use MultiSafepay\Api\Gateways\Gateway;
 use MultiSafepay\Api\Gateways\GatewayListing;
 use Psr\Http\Client\ClientExceptionInterface;
 
+/**
+ * Class GatewayManager
+ * @package MultiSafepay\Api
+ */
 class GatewayManager extends AbstractManager
 {
     const ALLOWED_OPTIONS = [

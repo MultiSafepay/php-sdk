@@ -8,6 +8,10 @@ namespace MultiSafepay\Api;
 
 use MultiSafepay\Client\Client;
 
+/**
+ * Class AbstractManager
+ * @package MultiSafepay\Api
+ */
 abstract class AbstractManager
 {
     /** @var Client */
