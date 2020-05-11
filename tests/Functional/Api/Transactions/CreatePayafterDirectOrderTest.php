@@ -6,6 +6,7 @@ use Money\Money;
 use MultiSafepay\Api\Gateways\Gateway;
 use MultiSafepay\Api\Transactions\OrderRequest;
 use MultiSafepay\Exception\ApiException;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CheckoutOptionsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\DescriptionFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\MetaGatewayInfoFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PluginDetailsFixture;
@@ -33,6 +34,7 @@ class CreatePayafterDirectOrderTest extends AbstractTestCase
     use MetaGatewayInfoFixture;
     use PluginDetailsFixture;
     use DescriptionFixture;
+    use CheckoutOptionsFixture;
     use PhoneNumberFixture;
     use CountryFixture;
 
@@ -70,7 +72,7 @@ class CreatePayafterDirectOrderTest extends AbstractTestCase
             ->addPaymentOptions($this->createPaymentOptionsFixture())
             ->addCustomer($customerDetails)
             ->addDelivery($customerDetails)
-            ->addTaxTable($this->createTaxTableFixture())
+            ->addCheckoutOptions($this->createCheckoutOptionsFixture())
             ->addDescription($this->createRandomDescriptionFixture())
             ->addShoppingCart($this->createShoppingCartFixture())
             ->addPluginDetails($this->createPluginDetailsFixture());

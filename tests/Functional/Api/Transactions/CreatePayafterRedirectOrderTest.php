@@ -10,6 +10,7 @@ use MultiSafepay\Api\Transactions\OrderRequest;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\Description;
 use MultiSafepay\Api\Transactions\OrderRequest\Redirect as RedirectOrderRequest;
 use MultiSafepay\Exception\ApiException;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CheckoutOptionsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\DescriptionFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\MetaGatewayInfoFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PluginDetailsFixture;
@@ -38,6 +39,7 @@ class CreatePayafterRedirectOrderTest extends AbstractTestCase
     use PluginDetailsFixture;
     use PhoneNumberFixture;
     use DescriptionFixture;
+    use CheckoutOptionsFixture;
     use CountryFixture;
 
     /**
@@ -73,7 +75,7 @@ class CreatePayafterRedirectOrderTest extends AbstractTestCase
             ->addPaymentOptions($this->createPaymentOptionsFixture())
             ->addCustomer($this->createRandomCustomerDetailsFixture())
             ->addDelivery($this->createRandomCustomerDetailsFixture())
-            ->addTaxTable($this->createTaxTableFixture())
+            ->addCheckoutOptions($this->createCheckoutOptionsFixture())
             ->addDescription($this->createRandomDescriptionFixture())
             ->addShoppingCart($this->createShoppingCartFixture())
             ->addPluginDetails($this->createPluginDetailsFixture());
