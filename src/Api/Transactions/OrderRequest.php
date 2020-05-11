@@ -106,6 +106,16 @@ class OrderRequest extends DataObject implements OrderRequestInterface
     protected $taxTable;
 
     /**
+     * @var int
+     */
+    protected $secondsActive;
+
+    /**
+     * @var int
+     */
+    protected $daysActive;
+
+    /**
      * @var PluginDetails
      */
     protected $pluginDetails;
@@ -288,6 +298,26 @@ class OrderRequest extends DataObject implements OrderRequestInterface
     }
 
     /**
+     * @param int $seconds
+     * @return OrderRequest
+     */
+    public function addSecondsActive(int $seconds): OrderRequest
+    {
+        $this->secondsActive = $seconds;
+        return $this;
+    }
+
+    /**
+     * @param int $days
+     * @return OrderRequest
+     */
+    public function addDaysActive(int $days): OrderRequest
+    {
+        $this->daysActive = $days;
+        return $this;
+    }
+
+    /**
      * @return array
      * phpcs:disable ObjectCalisthenics.Files.FunctionLength
      */
@@ -308,6 +338,8 @@ class OrderRequest extends DataObject implements OrderRequestInterface
             'customer' => ($this->customer) ? $this->customer->getData() : null,
             'delivery' => $this->delivery ? $this->delivery->getData() : null,
             'shopping_cart' => $this->shoppingCart ? $this->shoppingCart->getData() : null,
+            'days_active' => $this->daysActive,
+            'seconds_active' => $this->secondsActive,
             'checkout_options' => $this->getCheckoutOptions(),
             'plugin' => $this->pluginDetails ? $this->pluginDetails->getData() : null
         ];
