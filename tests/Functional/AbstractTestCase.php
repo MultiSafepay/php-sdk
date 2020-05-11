@@ -5,7 +5,7 @@ namespace MultiSafepay\Tests\Functional;
 use MultiSafepay\Util\Version;
 use PHPUnit\Framework\TestCase;
 use MultiSafepay\Client\Client;
-use MultiSafepay\Api;
+use MultiSafepay\Sdk;
 
 /**
  * Class TestCase
@@ -29,9 +29,9 @@ abstract class AbstractTestCase extends TestCase
     }
 
     /**
-     * @return Api
+     * @return Sdk
      */
-    protected function getApi(): Api
+    protected function getApi(): Sdk
     {
         Version::getInstance()->addPluginVersion('functional-test');
 
@@ -40,6 +40,6 @@ abstract class AbstractTestCase extends TestCase
         $apiKey = getenv('API_KEY');
         $this->assertNotEmpty($apiKey);
 
-        return new Api(getenv('API_KEY'), false);
+        return new Sdk(getenv('API_KEY'), false);
     }
 }

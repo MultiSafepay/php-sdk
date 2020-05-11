@@ -7,7 +7,7 @@
 namespace MultiSafepay\Tests\Integration;
 
 use Http\Mock\Client as MockHttpClient;
-use MultiSafepay\Api;
+use MultiSafepay\Sdk;
 use MultiSafepay\Exception\ApiException;
 use MultiSafepay\Util\Version;
 use PHPUnit\Framework\TestCase;
@@ -24,8 +24,8 @@ class ApiTest extends TestCase
      */
     public function testGetGatewayManager()
     {
-        $api = self::getInstance();
-        $gatewayManager = $api->getGatewayManager();
+        $sdk = self::getInstance();
+        $gatewayManager = $sdk->getGatewayManager();
 
         $this->expectException(ApiException::class);
         $this->expectExceptionMessage('Unknown data');
@@ -37,8 +37,8 @@ class ApiTest extends TestCase
      */
     public function testGetIssuerManager()
     {
-        $api = self::getInstance();
-        $issuerManager = $api->getIssuerManager();
+        $sdk = self::getInstance();
+        $issuerManager = $sdk->getIssuerManager();
 
         $this->expectException(ApiException::class);
         $this->expectExceptionMessage('Unknown data');
@@ -47,12 +47,12 @@ class ApiTest extends TestCase
 
     /**
      * @param string $apiKey
-     * @return Api
+     * @return Sdk
      */
-    public static function getInstance(string $apiKey = '__valid__'): Api
+    public static function getInstance(string $apiKey = '__valid__'): Sdk
     {
         Version::getInstance()->addPluginVersion('integration-test');
         $mockClient = new MockHttpClient();
-        return new Api($apiKey, false, $mockClient);
+        return new Sdk($apiKey, false, $mockClient);
     }
 }

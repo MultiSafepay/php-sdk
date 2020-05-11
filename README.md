@@ -19,7 +19,7 @@ Use Composer autoloader to automatically load your dependencies.
 
 ```php
 require 'vendor/autoload.php';
-use MultiSafepay\Api;
+use MultiSafepay\Sdk;
 ```
 
 Next, instantiate the API with your API key and a flag to identify whether this is the production environment or testing environment.
@@ -27,7 +27,7 @@ Next, instantiate the API with your API key and a flag to identify whether this 
 ```php
 $yourApiKey = 'your-api-key';
 $isProduction = false;
-$multiSafepayApi = new Api($yourApiKey, $isProduction);
+$multiSafepaySdk = new Sdk($yourApiKey, $isProduction);
 ```
 
 
