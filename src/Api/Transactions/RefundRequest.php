@@ -7,15 +7,16 @@
 namespace MultiSafepay\Api\Transactions;
 
 use Money\Money;
+use MultiSafepay\Api\Base\DataObject;
 use MultiSafepay\Api\Transactions\RefundRequest\Arguments\CheckoutData;
-use MultiSafepay\Api\Transactions\OrderRequest\Arguments\Description; // @todo: Move this to a generic folder?
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\Description;
 use MultiSafepay\Api\Base\RequestBodyInterface;
 
 /**
  * Class RefundRequest
  * @package MultiSafepay\Api\Transactions
  */
-class RefundRequest implements RequestBodyInterface
+class RefundRequest extends DataObject implements RequestBodyInterface
 {
     /**
      * @var Money
@@ -33,29 +34,19 @@ class RefundRequest implements RequestBodyInterface
     private $checkoutData;
 
     /**
-     * RefundRequest constructor.
-     * @param Money $money
-     * @param Description $description
-     */
-    public function __construct(
-        ?Money $money = null,
-        ?Description $description = null
-    ) {
-        $this->money = $money;
-        $this->description = $description;
-    }
-
-    /**
      * @return array
      */
     public function getData(): array
     {
-        return [
-            'currency' => $this->money ? (string)$this->money->getCurrency() : null,
-            'amount' => $this->money ? (string)((float)$this->money->getAmount() * 100) : null,
-            'description' => $this->description ? $this->description->getData() : null,
-            'checkout_data' => $this->checkoutData ? $this->checkoutData->getData() : null,
-        ];
+        return array_merge(
+            [
+                'currency' => $this->money ? (string)$this->money->getCurrency() : null,
+                'amount' => $this->money ? (string)((float)$this->money->getAmount() * 100) : null,
+                'description' => $this->description ? $this->description->getData() : null,
+                'checkout_data' => $this->checkoutData ? $this->checkoutData->getData() : null,
+            ],
+            $this->data
+        );
     }
 
     /**

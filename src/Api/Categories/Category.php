@@ -15,9 +15,14 @@ use MultiSafepay\Exception\InvalidDataInitializationException;
 class Category
 {
     /**
-     * @var array
+     * @var string
      */
-    private $data;
+    private $code = '';
+
+    /**
+     * @var string
+     */
+    private $description = '';
 
     /**
      * Transaction constructor.
@@ -26,7 +31,8 @@ class Category
     public function __construct(array $data)
     {
         $this->validate($data);
-        $this->data = $data;
+        $this->code = (string)$data['code'];
+        $this->description = $data['description'];
     }
 
     /**
@@ -34,7 +40,7 @@ class Category
      */
     public function getCode(): string
     {
-        return (string)$this->data['code'];
+        return $this->code;
     }
 
     /**
@@ -42,7 +48,7 @@ class Category
      */
     public function getDescription(): string
     {
-        return (string)$this->data['description'];
+        return $this->description;
     }
 
     /**

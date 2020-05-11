@@ -8,6 +8,10 @@ namespace MultiSafepay\Exception;
 
 use LogicException;
 
+/**
+ * Class ApiException
+ * @package MultiSafepay\Exception
+ */
 class ApiException extends LogicException
 {
     /**

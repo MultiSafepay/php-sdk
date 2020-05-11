@@ -5,7 +5,6 @@ namespace MultiSafepay\Tests\Functional\Api\Transactions;
 use Money\Money;
 use MultiSafepay\Api\Gateways\Gateway;
 use MultiSafepay\Api\Transactions\OrderRequest;
-use MultiSafepay\Api\Transactions\OrderRequest\Direct as DirectOrderRequest;
 use MultiSafepay\Exception\ApiException;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\DescriptionFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\MetaGatewayInfoFixture;
@@ -62,7 +61,8 @@ class CreatePayafterDirectOrderTest extends AbstractTestCase
     public function createOrderRequest(): OrderRequest
     {
         $customerDetails = $this->createCustomerDetailsFixture();
-        return (new DirectOrderRequest())
+        return (new OrderRequest())
+            ->addType('direct')
             ->addMoney(Money::EUR(100))
             ->addOrderId((string)time())
             ->addGatewayCode(Gateway::PAYAFTER)
