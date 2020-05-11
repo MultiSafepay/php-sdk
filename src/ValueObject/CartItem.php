@@ -128,13 +128,13 @@ class CartItem extends DataObject
         // @todo: unit_price in Euro, not Euro-cents?
         return array_merge(
             [
-                'name' => $this->name,
-                'description' => $this->description,
+                'name' => $this->name ?? null,
+                'description' => $this->description ?? null,
                 'unit_price' => $this->unitPrice ? $this->unitPrice->getAmount() : null,
                 'currency' => $this->unitPrice ? $this->unitPrice->getCurrency() : null,
-                'quantity' => $this->quantity,
-                'merchant_item_id' => $this->merchantItemId,
-                'tax_table_select' => $this->taxTableSelector,
+                'quantity' => $this->quantity ?? null,
+                'merchant_item_id' => !empty($this->merchantItemId) ? $this->merchantItemId : null,
+                'tax_table_select' => !empty($this->taxTableSelector) ? $this->taxTableSelector : null,
                 'weight' => [
                     'unit' => $this->weight ? strtoupper($this->weight->getUnit()) : null,
                     'value' => $this->weight ? $this->weight->getQuantity() : null,

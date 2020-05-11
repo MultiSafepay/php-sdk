@@ -38,7 +38,7 @@ class RefundRequest extends DataObject implements RequestBodyInterface
      */
     public function getData(): array
     {
-        return array_merge(
+        return $this->removeNullRecursive(array_merge(
             [
                 'currency' => $this->money ? (string)$this->money->getCurrency() : null,
                 'amount' => $this->money ? (string)((float)$this->money->getAmount() * 100) : null,
@@ -46,7 +46,7 @@ class RefundRequest extends DataObject implements RequestBodyInterface
                 'checkout_data' => $this->checkoutData ? $this->checkoutData->getData() : null,
             ],
             $this->data
-        );
+        ));
     }
 
     /**

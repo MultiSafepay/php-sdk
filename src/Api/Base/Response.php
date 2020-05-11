@@ -24,23 +24,25 @@ class Response
 
     /**
      * @param string $json
+     * @param array $context
      * @return Response
      */
-    public static function withJson(string $json)
+    public static function withJson(string $json, array $context = [])
     {
         $data = json_decode($json, true);
         if (empty($data)) {
             $data = [];
         }
 
-        return new self($data);
+        return new self($data, $context);
     }
 
     /**
      * Response constructor.
      * @param array $data
+     * @param array $context
      */
-    public function __construct(array $data)
+    public function __construct(array $data, array $context = [])
     {
         if (!isset($data['success']) && !empty($data['data'])) {
             $data['success'] = true;
@@ -50,16 +52,16 @@ class Response
             $data['success'] = false;
         }
 
-        $this->validate($data);
+        $this->validate($data, $context);
         $this->data = $data['data'];
     }
 
     /**
      * @param array $data
+     * @param array $context
      * @return bool
-     * @throws ApiException
      */
-    private function validate(array $data): bool
+    private function validate(array $data, array $context = []): bool
     {
         if ((bool)$data['success'] === true) {
             return true;
@@ -73,7 +75,7 @@ class Response
         }
 
         if (!$data['success']) {
-            throw new ApiException($errorInfo, $errorCode);
+            throw (new ApiException($errorInfo, $errorCode))->addContext($context);
         }
 
         return true;

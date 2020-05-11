@@ -15,14 +15,44 @@ use LogicException;
 class ApiException extends LogicException
 {
     /**
+     * @var array
+     */
+    private $context = [];
+
+    /**
+     * @param array $context
+     */
+    public function addContext(array $context = []): ApiException
+    {
+        $this->context = array_merge($this->context, $context);
+        return $this;
+    }
+
+    /**
      * @param array $additionalData
      * @return string
      */
-    public function getDetails(array $additionalData = []): string
+    public function getDetails(): string
     {
         $lines = [];
         $lines[] = ApiException::class . ': ' . $this->getMessage();
-        $lines[] = 'Additional data: ' . json_encode($additionalData, JSON_PRETTY_PRINT);
+        $lines = array_merge($lines, $this->getContextAsArray());
         return implode("\n", $lines);
+    }
+
+    /**
+     * @return array
+     */
+    private function getContextAsArray(): array
+    {
+        $lines = [];
+        foreach ($this->context as $contextName => $contextValue) {
+            $debugValue = $contextValue;
+            if (!is_string($debugValue)) {
+                $debugValue = json_encode($contextValue, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+            }
+            $lines[] = $contextName . ": " . $debugValue;
+        }
+        return $lines;
     }
 }

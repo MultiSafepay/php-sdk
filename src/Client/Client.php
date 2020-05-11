@@ -9,7 +9,7 @@ namespace MultiSafepay\Client;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
 use MultiSafepay\Api\Base\RequestBodyInterface;
-use MultiSafepay\Api\Base\Response;
+use MultiSafepay\Api\Base\Response as ApiResponse;
 use MultiSafepay\Exception\ApiException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\RequestFactoryInterface;
@@ -90,11 +90,11 @@ class Client
     /**
      * @param string $endpoint
      * @param RequestBodyInterface|null $requestBody
-     * @return Response
+     * @return ApiResponse
      * @throws ClientExceptionInterface
      * @throws ApiException
      */
-    public function createPostRequest(string $endpoint, RequestBodyInterface $requestBody = null): Response
+    public function createPostRequest(string $endpoint, RequestBodyInterface $requestBody = null): ApiResponse
     {
         $client = $this->httpClient;
         $requestFactory = $this->getRequestFactory();
@@ -106,9 +106,14 @@ class Client
             ->withHeader('Content-Type', 'application/json')
             ->withHeader('Content-Length', strlen($this->getRequestBody($requestBody)));
 
-        /** @var ResponseInterface $response */
-        $response = $client->sendRequest($request);
-        return Response::withJson($response->getBody()->getContents());
+        /** @var ResponseInterface $httpResponse */
+        $httpResponse = $client->sendRequest($request);
+        $context = [
+            'headers' => $request->getHeaders(),
+            'request_body' => $this->getRequestBody($requestBody)
+        ];
+
+        return ApiResponse::withJson($httpResponse->getBody()->getContents(), $context);
     }
 
     /**
@@ -117,25 +122,17 @@ class Client
      */
     private function getRequestBody(RequestBodyInterface $requestBody): string
     {
-        $data = $requestBody->getData();
-        $data = array_filter(
-            $data,
-            function ($value) {
-                return !is_null($value);
-            }
-        );
-
-        return json_encode($data);
+        return json_encode($requestBody->getData(), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
     }
 
     /**
      * @param string $endpoint
      * @param array $parameters
-     * @return Response
+     * @return ApiResponse
      * @throws ClientExceptionInterface
      * @throws ApiException
      */
-    public function createGetRequest(string $endpoint, array $parameters = []): Response
+    public function createGetRequest(string $endpoint, array $parameters = []): ApiResponse
     {
         $url = $this->getRequestUrl($endpoint, $parameters);
 
@@ -145,9 +142,14 @@ class Client
             ->withHeader('api_key', $this->apiKey)
             ->withHeader('accept-encoding', 'application/json');
 
-        /** @var ResponseInterface $response */
-        $response = $client->sendRequest($request);
-        return Response::withJson($response->getBody()->getContents());
+        /** @var ResponseInterface $httpResponse */
+        $httpResponse = $client->sendRequest($request);
+        $context = [
+            'headers' => $request->getHeaders(),
+            'request_params' => $parameters
+        ];
+
+        return ApiResponse::withJson($httpResponse->getBody()->getContents(), $context);
     }
 
     /**

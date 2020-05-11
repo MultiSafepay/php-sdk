@@ -3,6 +3,8 @@
 namespace MultiSafepay\Tests\Functional\Api\Transactions;
 
 use Money\Money;
+use MultiSafepay\Api\Base\RequestBody;
+use MultiSafepay\Api\Base\Response;
 use MultiSafepay\Api\Gateways\Gateway;
 use MultiSafepay\Api\Transactions\OrderRequest;
 use MultiSafepay\Api\Transactions\RefundRequest;
@@ -14,6 +16,7 @@ use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\ShoppingCartFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\TaxTableFixture;
 use MultiSafepay\Tests\Fixtures\ValueObject\CountryFixture;
 use MultiSafepay\Tests\Fixtures\ValueObject\PhoneNumberFixture;
+use MultiSafepay\Tests\Utils\FixtureLoader;
 use Psr\Http\Client\ClientExceptionInterface;
 use MultiSafepay\Exception\ApiException;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\MetaGatewayInfoFixture;
@@ -52,24 +55,47 @@ class CreateSimpleRefundTest extends AbstractTestCase
             return;
         }
 
+        // @todo: If financial_status is "uncleared", can we refund?
+
+        //$refundResponse = $this->getRefundReponseFromMockFile($orderId);
+        $refundResponse = $this->getRefundReponseFromOrderId($orderId);
+        $data = $refundResponse->getResponseData();
+        $this->assertNotEmpty($data['transaction_id']);
+        $this->assertNotEmpty($data['refund_id']);
+    }
+
+    /**
+     * @param string $orderId
+     * @return Response
+     * @throws ClientExceptionInterface
+     */
+    private function getRefundReponseFromMockFile(string $orderId): Response
+    {
+        //$transactionReponse = $this->getApi()->getTransactionManager()->get($orderId);
+        //echo json_encode($transactionReponse->getData(), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+        //exit;
+
+        $refundRequest = RequestBody::createRequestBodyFromArray(FixtureLoader::loadFixtureDataById('refund'));
+        return $this->getClient()->createPostRequest('orders/' . $orderId . '/refunds', $refundRequest);
+    }
+
+    /**
+     * @param string $orderId
+     * @return Response
+     * @throws ClientExceptionInterface
+     */
+    private function getRefundReponseFromOrderId(string $orderId): Response
+    {
         $transactionReponse = $this->getApi()->getTransactionManager()->get($orderId);
         $items = $transactionReponse->getShoppingCart()->getItems();
         $refundRequest = $this->createRefundRequestForSimpleRefund($items);
 
         try {
-            $refundResponse = $this->getApi()->getTransactionManager()->refund($transactionReponse, $refundRequest);
+            return $this->getApi()->getTransactionManager()->refund($transactionReponse, $refundRequest);
         } catch (ApiException $apiException) {
-            $data = [
-                'order_id' => $transactionReponse->getOrderId(),
-                'request_data' => $refundRequest->getData()
-            ];
-            $this->assertTrue(false, $apiException->getDetails($data));
-            return;
+            $apiException->addContext(['order_id' => $transactionReponse->getOrderId()]);
+            $this->assertTrue(false, $apiException->getDetails());
         }
-
-        $data = $refundResponse;
-        $this->assertNotEmpty($data['transaction_id']);
-        $this->assertNotEmpty($data['refund_id']);
     }
 
     /**
@@ -127,8 +153,6 @@ class CreateSimpleRefundTest extends AbstractTestCase
         }
 
         $refundRequest = (new RefundRequest())
-            ->addMoney(Money::EUR(10))
-            ->addDescription($this->createRandomDescriptionFixture())
             ->addCheckoutData($checkoutData);
 
         return $refundRequest;

@@ -345,7 +345,7 @@ class OrderRequest extends DataObject implements OrderRequestInterface
             'plugin' => $this->pluginDetails ? $this->pluginDetails->getData() : null
         ];
 
-        $data = array_merge($data, $this->data);
+        $data = $this->removeNullRecursive(array_merge($data, $this->data));
         $this->validate($data);
 
         return $data;
