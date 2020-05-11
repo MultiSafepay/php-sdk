@@ -31,7 +31,7 @@ trait MetaGatewayInfoFixture
 
         return (new Meta)
             ->addBirthday(new Date($faker->date('Y-m-d', '20 years ago')))
-            ->addEmailAddress(new EmailAddress($faker->email))
+            ->addEmailAddress(new EmailAddress($faker->freeEmail))
             ->addBankAccount(new BankAccount($faker->bankAccountNumber))
             ->addPhone($this->createPhoneNumberFixture())
             ->addGender(new Gender('male'))

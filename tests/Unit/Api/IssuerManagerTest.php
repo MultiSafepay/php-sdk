@@ -4,7 +4,7 @@ namespace MultiSafepay\Tests\Unit\Api\Issuers;
 
 use InvalidArgumentException;
 use MultiSafepay\Api\IssuerManager;
-use MultiSafepay\Client;
+use MultiSafepay\Client\Client;
 use PHPUnit\Framework\TestCase;
 
 /**

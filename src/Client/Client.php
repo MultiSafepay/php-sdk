@@ -4,7 +4,7 @@
  * See DISCLAIMER.md for disclaimer details.
  */
 
-namespace MultiSafepay;
+namespace MultiSafepay\Client;
 
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;

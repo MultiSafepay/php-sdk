@@ -8,7 +8,7 @@ namespace MultiSafepay\Tests\Integration;
 
 use Exception;
 use GuzzleHttp\Psr7\Response;
-use MultiSafepay\Client;
+use MultiSafepay\Client\Client;
 use Http\Mock\Client as MockHttpClient;
 use MultiSafepay\Util\Version;
 

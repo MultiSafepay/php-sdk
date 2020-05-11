@@ -6,9 +6,11 @@
 
 namespace MultiSafepay;
 
+use MultiSafepay\Api\CategoryManager;
 use MultiSafepay\Api\GatewayManager;
 use MultiSafepay\Api\IssuerManager;
 use MultiSafepay\Api\TransactionManager;
+use MultiSafepay\Client\Client;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
@@ -64,5 +66,13 @@ class Api
     public function getIssuerManager(): IssuerManager
     {
         return new IssuerManager($this->client);
+    }
+
+    /**
+     * @return CategoryManager
+     */
+    public function getCategoryManager(): CategoryManager
+    {
+        return new CategoryManager($this->client);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace MultiSafepay\Tests\Utils;
 
-use MultiSafepay\Client;
+use MultiSafepay\Client\Client;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientExceptionInterface;
 

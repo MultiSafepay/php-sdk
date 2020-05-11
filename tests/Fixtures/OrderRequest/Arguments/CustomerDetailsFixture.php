@@ -47,7 +47,7 @@ trait CustomerDetailsFixture
 
         $address = $this->createRandomAddressFixture();
         $ipAddress = new IpAddress($faker->ipv4);
-        $emailAddress = new EmailAddress($faker->email);
+        $emailAddress = new EmailAddress($faker->freeEmail);
 
         $customerDetails = (new CustomerDetails())
             ->addFirstName($faker->firstName)
