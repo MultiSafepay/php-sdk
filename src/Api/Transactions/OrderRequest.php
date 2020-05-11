@@ -339,13 +339,9 @@ class OrderRequest extends DataObject implements OrderRequestInterface
             'customer' => ($this->customer) ? $this->customer->getData() : null,
             'delivery' => $this->delivery ? $this->delivery->getData() : null,
             'shopping_cart' => $this->shoppingCart ? $this->shoppingCart->getData() : null,
-<<<<<<< HEAD
             'checkout_options' => $this->checkoutOptions ? $this->checkoutOptions->getData() : null,
-=======
             'days_active' => $this->daysActive,
             'seconds_active' => $this->secondsActive,
-            'checkout_options' => $this->getCheckoutOptions(),
->>>>>>> master
             'plugin' => $this->pluginDetails ? $this->pluginDetails->getData() : null
         ];
 

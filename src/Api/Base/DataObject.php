@@ -67,4 +67,20 @@ class DataObject
     {
         return $this->data;
     }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    public function removeNull(array $data): array
+    {
+        $data = array_filter(
+            $data,
+            function ($value) {
+                return !is_null($value);
+            }
+        );
+
+        return $data;
+    }
 }
