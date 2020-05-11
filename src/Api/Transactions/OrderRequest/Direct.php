@@ -20,10 +20,11 @@ class Direct extends OrderRequest
     protected $type = 'direct';
 
     /**
+     * @param array $data
      * @return bool
      */
-    protected function validate(): bool
+    protected function validate(array $data): bool
     {
-        return parent::validate();
+        return parent::validate($data);
     }
 }

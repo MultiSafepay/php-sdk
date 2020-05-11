@@ -32,6 +32,7 @@ trait CustomerDetailsFixture
             ->addPhoneNumber(new PhoneNumber('0612345678'))
             ->addLocale('nl')
             ->addReferrer('http://example.org')
+            ->addData(['something' => 'else'])
             ->addUserAgent('Unknown');
 
         return $customerDetails;

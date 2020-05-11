@@ -34,6 +34,7 @@ trait MetaGatewayInfoFixture
             ->addEmailAddress(new EmailAddress($faker->email))
             ->addBankAccount(new BankAccount($faker->bankAccountNumber))
             ->addPhone($this->createPhoneNumberFixture())
-            ->addGender(new Gender('male'));
+            ->addGender(new Gender('male'))
+            ->addData(['something' => 'else']);
     }
 }

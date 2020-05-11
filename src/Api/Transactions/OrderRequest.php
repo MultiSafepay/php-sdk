@@ -110,6 +110,11 @@ class OrderRequest implements OrderRequestInterface
     protected $pluginDetails;
 
     /**
+     * @var array
+     */
+    protected $data = [];
+
+    /**
      * @param string $type
      * @return OrderRequest
      */
@@ -288,14 +293,23 @@ class OrderRequest implements OrderRequestInterface
     }
 
     /**
+     * @param array $data
+     * @return OrderRequest
+     */
+    public function addData(array $data): OrderRequest
+    {
+        $this->data = array_merge($this->data, $data);
+        return $this;
+    }
+
+    /**
      * @return array
      * phpcs:disable ObjectCalisthenics.Files.FunctionLength
      */
     public function getData(): array
     {
-        $this->validate();
 
-        return [
+        $data = [
             'type' => $this->type,
             'order_id' => $this->orderId,
             'currency' => $this->money ? (string)$this->money->getCurrency() : null,
@@ -313,14 +327,19 @@ class OrderRequest implements OrderRequestInterface
             'checkout_options' => $this->getCheckoutOptions(),
             'plugin' => $this->pluginDetails ? $this->pluginDetails->getData() : null
         ];
+
+        $data = array_merge($data, $this->data);
+        $this->validate($data);
+
+        return $data;
     }
 
     /**
      * @return bool
      */
-    protected function validate(): bool
+    protected function validate(array $data): bool
     {
-        if (!$this->pluginDetails) {
+        if (!$data['plugin']) {
             throw new InvalidArgumentException('Required plugin details are missing');
         }
 

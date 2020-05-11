@@ -29,17 +29,18 @@ class Redirect extends OrderRequest
     protected $type = 'redirect';
 
     /**
+     * @param array $data
      * @return bool
      */
-    protected function validate(): bool
+    protected function validate(array $data): bool
     {
-        parent::validate();
+        parent::validate($data);
 
-        if (!$this->shoppingCart && $this->taxTable) {
+        if (empty($data['shopping_cart']) && !empty($data['checkout_options']['tax_tables'])) {
             throw new InvalidArgumentException('Shopping cart is required when adding a tax table');
         }
 
-        if (!$this->taxTable && $this->shoppingCart) {
+        if (!empty($data['shopping_cart']) && empty($data['checkout_options']['tax_tables'])) {
             throw new InvalidArgumentException('Tax table is required when adding a shopping cart');
         }
 

@@ -30,6 +30,11 @@ class CustomerDetails extends Customer
     private $userAgent = '';
 
     /**
+     * @var array
+     */
+    private $data = [];
+
+    /**
      * @return array
      * phpcs:disable ObjectCalisthenics.Files.FunctionLength
      */
@@ -37,7 +42,7 @@ class CustomerDetails extends Customer
     {
         $address = $this->getAddress();
         $phoneNumbers = $this->getPhoneNumbers();
-        return [
+        $data = [
             'firstname' => $this->getFirstName(),
             'lastname' => $this->getLastName(),
             'address1' => $address->getStreetName(),
@@ -56,6 +61,10 @@ class CustomerDetails extends Customer
             'referrer' => $this->getReferrer(),
             'user_agent' => $this->getUserAgent(),
         ];
+
+        $data = array_merge($data, $this->data);
+
+        return $data;
     }
 
     /**
@@ -109,6 +118,16 @@ class CustomerDetails extends Customer
     public function addUserAgent(string $userAgent): CustomerDetails
     {
         $this->userAgent = $userAgent;
+        return $this;
+    }
+
+    /**
+     * @param array $data
+     * @return CustomerDetails
+     */
+    public function addData(array $data = []): CustomerDetails
+    {
+        $this->data = array_merge($this->data, $data);
         return $this;
     }
 
