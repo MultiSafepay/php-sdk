@@ -47,7 +47,7 @@ trait CustomerFixture
             ->addLastName($faker->lastName)
             ->addAddress($this->createAddressFixture())
             ->addIpAddress(new IpAddress($faker->ipv4))
-            ->addEmailAddress(new EmailAddress($faker->email))
+            ->addEmailAddress(new EmailAddress($faker->freeEmail))
             ->addPhoneNumber(new PhoneNumber($faker->phoneNumber))
             ->addPhoneNumber(new PhoneNumber($faker->phoneNumber));
 
