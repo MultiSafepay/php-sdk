@@ -10,6 +10,7 @@ use Exception;
 use GuzzleHttp\Psr7\Response;
 use MultiSafepay\Client\Client;
 use Http\Mock\Client as MockHttpClient;
+use MultiSafepay\Tests\Utils\FixtureLoader;
 use MultiSafepay\Util\Version;
 
 /**
@@ -83,13 +84,8 @@ class MockClient extends Client
      * @return array
      * @throws Exception
      */
-    private function loadFixtureDataById(string $fixtureId): array
+    public function loadFixtureDataById(string $fixtureId): array
     {
-        $file = __DIR__ . '/../fixture-data/' . $fixtureId . '.json';
-        if (!file_exists($file)) {
-            throw new Exception('Mock data file "' . $file . '" could not be found');
-        }
-
-        return json_decode(file_get_contents($file), true);
+        return FixtureLoader::loadFixtureDataById($fixtureId);
     }
 }

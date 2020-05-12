@@ -1,0 +1,19 @@
+{
+  "checkout_data": {
+    "items": [
+      {
+        "name": "Geometric Candle Holders",
+        "description": "1234",
+        "unit_price": "50",
+        "currency": "EUR",
+        "quantity": 2,
+        "merchant_item_id": "",
+        "tax_table_selector": "",
+        "weight": {
+          "unit": "KG",
+          "value": 12
+        }
+      }
+    ]
+  }
+}

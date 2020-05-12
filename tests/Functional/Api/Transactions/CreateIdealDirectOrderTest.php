@@ -46,7 +46,7 @@ class CreateIdealDirectOrderTest extends AbstractTestCase
         try {
             $response = $this->getClient()->createPostRequest('orders', $orderRequest);
         } catch (ApiException $apiException) {
-            $this->assertTrue(false, $apiException->getDetails($orderRequest->getData()));
+            $this->assertTrue(false, $apiException->getDetails());
             return;
         }
 

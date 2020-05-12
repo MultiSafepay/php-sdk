@@ -6,6 +6,7 @@
 
 namespace MultiSafepay\Api;
 
+use MultiSafepay\Api\Base\Response;
 use MultiSafepay\Api\Transactions\OrderRequestInterface;
 use MultiSafepay\Api\Transactions\RefundRequest;
 use MultiSafepay\Api\Transactions\TransactionResponse;
@@ -49,13 +50,13 @@ class TransactionManager extends AbstractManager
      * @return array
      * @throws ClientExceptionInterface
      */
-    public function refund(TransactionResponse $transaction, RefundRequest $requestRefund): array
+    public function refund(TransactionResponse $transaction, RefundRequest $requestRefund): Response
     {
         $response = $this->client->createPostRequest(
             'orders/' . $transaction->getOrderId() . '/refunds',
             $requestRefund
         );
 
-        return $response->getResponseData();
+        return $response;
     }
 }

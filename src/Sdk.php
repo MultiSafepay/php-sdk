@@ -75,4 +75,12 @@ class Sdk
     {
         return new CategoryManager($this->client);
     }
+
+    /**
+     * @return Client
+     */
+    public function getClient(): Client
+    {
+        return $this->client;
+    }
 }

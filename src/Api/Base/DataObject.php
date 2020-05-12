@@ -67,4 +67,35 @@ class DataObject
     {
         return $this->data;
     }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    public function removeNull(array $data): array
+    {
+        $data = array_filter(
+            $data,
+            function ($value) {
+                return !is_null($value);
+            }
+        );
+
+        return $data;
+    }
+
+    /**
+     * @param $input
+     * @return array
+     */
+    public function removeNullRecursive($input)
+    {
+        foreach ($input as &$value) {
+            if (is_array($value)) {
+                $value = $this->removeNullRecursive($value);
+            }
+        }
+
+        return $this->removeNull($input);
+    }
 }

@@ -123,15 +123,16 @@ class TransactionManagerTest extends TestCase
             ]
         );
 
-        $requestRefund = (new RefundRequest())
+        $refundRequest = (new RefundRequest())
             ->addMoney(Money::EUR(21))
             ->addDescription(Description::fromText('Give me my money back'));
-        $refund = $transactionManager->refund($transaction, $requestRefund);
+        $refundResponse = $transactionManager->refund($transaction, $refundRequest);
+        $refundData = $refundResponse->getResponseData();
 
-        $this->assertArrayHasKey('refund_id', $refund, var_export($refund, true));
-        $this->assertEquals($fakeRefundId, $refund['refund_id'], var_export($refund, true));
+        $this->assertArrayHasKey('refund_id', $refundData, var_export($refundData, true));
+        $this->assertEquals($fakeRefundId, $refundData['refund_id'], var_export($refundData, true));
         $this->assertEquals($fakeTransactionId, $transaction->getData()['transaction_id']);
-        $this->assertEquals($fakeTransactionId, $refund['transaction_id']);
+        $this->assertEquals($fakeTransactionId, $refundData['transaction_id']);
     }
 
     /**

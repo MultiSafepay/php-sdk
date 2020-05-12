@@ -9,6 +9,7 @@ namespace MultiSafepay\Api\Transactions;
 use Money\Money;
 use MultiSafepay\Api\Base\DataObject;
 use MultiSafepay\Api\Gateways\Gateway;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\CheckoutOptions;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\CustomerDetails;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\Description;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfoInterface;
@@ -101,9 +102,9 @@ class OrderRequest extends DataObject implements OrderRequestInterface
     protected $delivery;
 
     /**
-     * @var TaxTable
+     * @var CheckoutOptions
      */
-    protected $taxTable;
+    protected $checkoutOptions;
 
     /**
      * @var int
@@ -288,12 +289,12 @@ class OrderRequest extends DataObject implements OrderRequestInterface
     }
 
     /**
-     * @param TaxTable $taxTable
+     * @param CheckoutOptions $checkoutOptions
      * @return OrderRequest
      */
-    public function addTaxTable(TaxTable $taxTable): OrderRequest
+    public function addCheckoutOptions(CheckoutOptions $checkoutOptions): OrderRequest
     {
-        $this->taxTable = $taxTable;
+        $this->checkoutOptions = $checkoutOptions;
         return $this;
     }
 
@@ -338,13 +339,13 @@ class OrderRequest extends DataObject implements OrderRequestInterface
             'customer' => ($this->customer) ? $this->customer->getData() : null,
             'delivery' => $this->delivery ? $this->delivery->getData() : null,
             'shopping_cart' => $this->shoppingCart ? $this->shoppingCart->getData() : null,
+            'checkout_options' => $this->checkoutOptions ? $this->checkoutOptions->getData() : null,
             'days_active' => $this->daysActive,
             'seconds_active' => $this->secondsActive,
-            'checkout_options' => $this->getCheckoutOptions(),
             'plugin' => $this->pluginDetails ? $this->pluginDetails->getData() : null
         ];
 
-        $data = array_merge($data, $this->data);
+        $data = $this->removeNullRecursive(array_merge($data, $this->data));
         $this->validate($data);
 
         return $data;
@@ -361,19 +362,5 @@ class OrderRequest extends DataObject implements OrderRequestInterface
         }
 
         return true;
-    }
-
-    /**
-     * @return array
-     */
-    private function getCheckoutOptions(): array
-    {
-        if ($this->taxTable) {
-            return [
-                'tax_tables' => $this->taxTable->getData()
-            ];
-        }
-
-        return [];
     }
 }
