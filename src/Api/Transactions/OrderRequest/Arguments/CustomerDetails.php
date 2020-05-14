@@ -7,6 +7,7 @@
 namespace MultiSafepay\Api\Transactions\OrderRequest\Arguments;
 
 use MultiSafepay\ValueObject\Customer;
+use MultiSafepay\ValueObject\IpAddress;
 
 /**
  * Class CustomerDetails
@@ -28,6 +29,11 @@ class CustomerDetails extends Customer
      * @var string
      */
     private $userAgent = '';
+
+    /**
+     * @var IpAddress
+     */
+    private $forwardedIp;
 
     /**
      * @var array
@@ -59,6 +65,7 @@ class CustomerDetails extends Customer
             'ip_address' => $this->getIpAddress() ? $this->getIpAddress()->get() : null,
             'locale' => $this->getLocale(),
             'referrer' => $this->getReferrer(),
+            'forwarded_ip' => $this->getUserAgent(),
             'user_agent' => $this->getUserAgent(),
         ];
 
@@ -100,6 +107,24 @@ class CustomerDetails extends Customer
     public function addReferrer(string $referrer): CustomerDetails
     {
         $this->referrer = $referrer;
+        return $this;
+    }
+
+    /**
+     * @return IpAddress
+     */
+    public function getForwardedIp(): IpAddress
+    {
+        return $this->forwardedIp;
+    }
+
+    /**
+     * @param IpAddress $forwardedIp
+     * @return CustomerDetails
+     */
+    public function addForwardedIp(IpAddress $forwardedIp): CustomerDetails
+    {
+        $this->forwardedIp = $forwardedIp;
         return $this;
     }
 
