@@ -12,6 +12,7 @@ use MultiSafepay\ValueObject\IpAddress;
 /**
  * Class CustomerDetails
  * @package MultiSafepay\Api\Transactions\OrderRequest\Arguments
+ * phpcs:disable ObjectCalisthenics.Metrics.MethodPerClassLimit
  */
 class CustomerDetails extends Customer
 {
