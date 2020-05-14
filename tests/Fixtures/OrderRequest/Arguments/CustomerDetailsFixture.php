@@ -32,6 +32,7 @@ trait CustomerDetailsFixture
             ->addPhoneNumber(new PhoneNumber('0612345678'))
             ->addLocale('nl')
             ->addReferrer('http://example.org')
+            ->addForwardedIp(new IpAddress('192.168.1.1'))
             ->addData(['something' => 'else'])
             ->addUserAgent('Unknown');
 

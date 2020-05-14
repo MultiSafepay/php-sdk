@@ -65,7 +65,7 @@ class CustomerDetails extends Customer
             'ip_address' => $this->getIpAddress() ? $this->getIpAddress()->get() : null,
             'locale' => $this->getLocale(),
             'referrer' => $this->getReferrer(),
-            'forwarded_ip' => $this->getUserAgent(),
+            'forwarded_ip' => $this->getForwardedIp() ? $this->getForwardedIp()->get() : null,
             'user_agent' => $this->getUserAgent(),
         ];
 
@@ -113,7 +113,7 @@ class CustomerDetails extends Customer
     /**
      * @return IpAddress
      */
-    public function getForwardedIp(): IpAddress
+    public function getForwardedIp(): ?IpAddress
     {
         return $this->forwardedIp;
     }
