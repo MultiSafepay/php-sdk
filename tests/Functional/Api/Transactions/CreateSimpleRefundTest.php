@@ -58,7 +58,7 @@ class CreateSimpleRefundTest extends AbstractTestCase
         // @todo: If financial_status is "uncleared", can we refund?
         $this->markTestSkipped('Skipped due to issue 96');
         //$refundResponse = $this->getRefundReponseFromMockFile($orderId);
-        $refundResponse = $this->getRefundReponseFromOrderId($orderId);
+        $refundResponse = $this->getRefundResponseFromOrderId($orderId);
         $data = $refundResponse->getResponseData();
         $this->assertNotEmpty($data['transaction_id']);
         $this->assertNotEmpty($data['refund_id']);
@@ -84,7 +84,7 @@ class CreateSimpleRefundTest extends AbstractTestCase
      * @return Response
      * @throws ClientExceptionInterface
      */
-    private function getRefundReponseFromOrderId(string $orderId): Response
+    private function getRefundResponseFromOrderId(string $orderId): Response
     {
         $transactionReponse = $this->getApi()->getTransactionManager()->get($orderId);
         $items = $transactionReponse->getShoppingCart()->getItems();
