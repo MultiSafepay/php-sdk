@@ -19,7 +19,7 @@ class Costs extends DataObject
      */
     public function getTransactionId(): int
     {
-        return (int)$this->get('transaction_Id');
+        return (int)$this->get('transaction_id');
     }
 
     /**
