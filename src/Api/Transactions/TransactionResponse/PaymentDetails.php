@@ -56,7 +56,6 @@ class PaymentDetails extends DataObject
 
     /**
      * @return string
-     * @todo: Documentation says '"account_iban": "https://betalen.rabobank.nl/...", which is a link not an IBAN number?
      */
     public function getAccountIban(): string
     {
@@ -73,7 +72,6 @@ class PaymentDetails extends DataObject
 
     /**
      * @return string
-     * @todo: Documentation says '"isser_id": "0021"' with missing 'u'?
      */
     public function getIssuerId(): string
     {
