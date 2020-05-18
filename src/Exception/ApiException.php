@@ -21,6 +21,7 @@ class ApiException extends LogicException
 
     /**
      * @param array $context
+     * @return ApiException
      */
     public function addContext(array $context = []): ApiException
     {
@@ -43,7 +44,7 @@ class ApiException extends LogicException
     /**
      * @return array
      */
-    private function getContextAsArray(): array
+    public function getContextAsArray(): array
     {
         $lines = [];
         foreach ($this->context as $contextName => $contextValue) {
@@ -54,5 +55,14 @@ class ApiException extends LogicException
             $lines[] = $contextName . ": " . $debugValue;
         }
         return $lines;
+    }
+
+    /**
+     * @param string $name
+     * @return mixed
+     */
+    public function getContextValue(string $name)
+    {
+        return $this->context[$name] ?? null;
     }
 }
