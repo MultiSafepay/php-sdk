@@ -91,11 +91,11 @@ class Client
     /**
      * @param string $endpoint
      * @param RequestBodyInterface|null $requestBody
+     * @param array $context
      * @return ApiResponse
      * @throws ClientExceptionInterface
-     * @throws ApiException
      */
-    public function createPostRequest(string $endpoint, RequestBodyInterface $requestBody = null): ApiResponse
+    public function createPostRequest(string $endpoint, RequestBodyInterface $requestBody = null, array $context = []): ApiResponse
     {
         $client = $this->httpClient;
         $requestFactory = $this->getRequestFactory();
@@ -109,10 +109,11 @@ class Client
 
         /** @var ResponseInterface $httpResponse */
         $httpResponse = $client->sendRequest($request);
-        $context = [
+
+        $context = array_merge($context, [
             'headers' => $request->getHeaders(),
             'request_body' => $this->getRequestBody($requestBody)
-        ];
+        ]);
 
         return ApiResponse::withJson($httpResponse->getBody()->getContents(), $context);
     }
@@ -129,11 +130,11 @@ class Client
     /**
      * @param string $endpoint
      * @param array $parameters
+     * @param array $context
      * @return ApiResponse
      * @throws ClientExceptionInterface
-     * @throws ApiException
      */
-    public function createGetRequest(string $endpoint, array $parameters = []): ApiResponse
+    public function createGetRequest(string $endpoint, array $parameters = [], array $context = []): ApiResponse
     {
         $url = $this->getRequestUrl($endpoint, $parameters);
 
@@ -145,10 +146,11 @@ class Client
 
         /** @var ResponseInterface $httpResponse */
         $httpResponse = $client->sendRequest($request);
-        $context = [
+
+        $context = array_merge($context, [
             'headers' => $request->getHeaders(),
             'request_params' => $parameters
-        ];
+        ]);
 
         return ApiResponse::withJson($httpResponse->getBody()->getContents(), $context);
     }
