@@ -95,8 +95,11 @@ class Client
      * @return ApiResponse
      * @throws ClientExceptionInterface
      */
-    public function createPostRequest(string $endpoint, RequestBodyInterface $requestBody = null, array $context = []): ApiResponse
-    {
+    public function createPostRequest(
+        string $endpoint,
+        RequestBodyInterface $requestBody = null,
+        array $context = []
+    ): ApiResponse {
         $client = $this->httpClient;
         $requestFactory = $this->getRequestFactory();
         $url = $this->getRequestUrl($endpoint);
@@ -107,14 +110,9 @@ class Client
             ->withHeader('Content-Type', 'application/json')
             ->withHeader('Content-Length', strlen($this->getRequestBody($requestBody)));
 
-        /** @var ResponseInterface $httpResponse */
+        $context['headers'] = $request->getHeaders();
+        $context['request_body'] = $this->getRequestBody($requestBody);
         $httpResponse = $client->sendRequest($request);
-
-        $context = array_merge($context, [
-            'headers' => $request->getHeaders(),
-            'request_body' => $this->getRequestBody($requestBody)
-        ]);
-
         return ApiResponse::withJson($httpResponse->getBody()->getContents(), $context);
     }
 
@@ -144,14 +142,9 @@ class Client
             ->withHeader('api_key', $this->apiKey)
             ->withHeader('accept-encoding', 'application/json');
 
-        /** @var ResponseInterface $httpResponse */
         $httpResponse = $client->sendRequest($request);
-
-        $context = array_merge($context, [
-            'headers' => $request->getHeaders(),
-            'request_params' => $parameters
-        ]);
-
+        $context['headers'] = $request->getHeaders();
+        $context['request_params'] = $parameters;
         return ApiResponse::withJson($httpResponse->getBody()->getContents(), $context);
     }
 
