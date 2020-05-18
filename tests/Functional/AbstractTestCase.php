@@ -40,6 +40,6 @@ abstract class AbstractTestCase extends TestCase
         $apiKey = getenv('API_KEY');
         $this->assertNotEmpty($apiKey);
 
-        return new Sdk(getenv('API_KEY'), false);
+        return new Sdk($apiKey, false);
     }
 }

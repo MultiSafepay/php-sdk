@@ -40,7 +40,8 @@ class TransactionManager extends AbstractManager
     public function get(string $orderId): TransactionResponse
     {
         $endpoint = 'orders/' . $orderId;
-        $response = $this->client->createGetRequest($endpoint);
+        $context = ['order_id' => $orderId];
+        $response = $this->client->createGetRequest($endpoint, [], $context);
         return new TransactionResponse($response->getResponseData());
     }
 
@@ -52,9 +53,13 @@ class TransactionManager extends AbstractManager
      */
     public function refund(TransactionResponse $transaction, RefundRequest $requestRefund): Response
     {
+        $orderId = $transaction->getOrderId();
+        $context = ['transaction' => $transaction->getData()];
+
         $response = $this->client->createPostRequest(
-            'orders/' . $transaction->getOrderId() . '/refunds',
-            $requestRefund
+            'orders/' . $orderId . '/refunds',
+            $requestRefund,
+            $context
         );
 
         return $response;

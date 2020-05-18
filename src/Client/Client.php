@@ -11,6 +11,7 @@ use Http\Discovery\Psr18ClientDiscovery;
 use MultiSafepay\Api\Base\RequestBodyInterface;
 use MultiSafepay\Api\Base\Response as ApiResponse;
 use MultiSafepay\Exception\ApiException;
+use MultiSafepay\Exception\InvalidApiKeyException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -79,7 +80,7 @@ class Client
         ?StreamFactoryInterface $streamFactory = null,
         string $locale = 'en'
     ) {
-        $this->apiKey = $apiKey;
+        $this->initApiKey($apiKey);
         $this->url = $isProduction ? self::LIVE_URL : self::TEST_URL;
         $this->httpClient = $httpClient ?: Psr18ClientDiscovery::find();
         $this->requestFactory = $requestFactory;
@@ -90,12 +91,15 @@ class Client
     /**
      * @param string $endpoint
      * @param RequestBodyInterface|null $requestBody
+     * @param array $context
      * @return ApiResponse
      * @throws ClientExceptionInterface
-     * @throws ApiException
      */
-    public function createPostRequest(string $endpoint, RequestBodyInterface $requestBody = null): ApiResponse
-    {
+    public function createPostRequest(
+        string $endpoint,
+        RequestBodyInterface $requestBody = null,
+        array $context = []
+    ): ApiResponse {
         $client = $this->httpClient;
         $requestFactory = $this->getRequestFactory();
         $url = $this->getRequestUrl($endpoint);
@@ -106,13 +110,9 @@ class Client
             ->withHeader('Content-Type', 'application/json')
             ->withHeader('Content-Length', strlen($this->getRequestBody($requestBody)));
 
-        /** @var ResponseInterface $httpResponse */
+        $context['headers'] = $request->getHeaders();
+        $context['request_body'] = $this->getRequestBody($requestBody);
         $httpResponse = $client->sendRequest($request);
-        $context = [
-            'headers' => $request->getHeaders(),
-            'request_body' => $this->getRequestBody($requestBody)
-        ];
-
         return ApiResponse::withJson($httpResponse->getBody()->getContents(), $context);
     }
 
@@ -128,11 +128,11 @@ class Client
     /**
      * @param string $endpoint
      * @param array $parameters
+     * @param array $context
      * @return ApiResponse
      * @throws ClientExceptionInterface
-     * @throws ApiException
      */
-    public function createGetRequest(string $endpoint, array $parameters = []): ApiResponse
+    public function createGetRequest(string $endpoint, array $parameters = [], array $context = []): ApiResponse
     {
         $url = $this->getRequestUrl($endpoint, $parameters);
 
@@ -142,13 +142,9 @@ class Client
             ->withHeader('api_key', $this->apiKey)
             ->withHeader('accept-encoding', 'application/json');
 
-        /** @var ResponseInterface $httpResponse */
         $httpResponse = $client->sendRequest($request);
-        $context = [
-            'headers' => $request->getHeaders(),
-            'request_params' => $parameters
-        ];
-
+        $context['headers'] = $request->getHeaders();
+        $context['request_params'] = $parameters;
         return ApiResponse::withJson($httpResponse->getBody()->getContents(), $context);
     }
 
@@ -199,5 +195,17 @@ class Client
     public function getHttpClient(): ClientInterface
     {
         return $this->httpClient;
+    }
+
+    /**
+     * @param string $apiKey
+     */
+    private function initApiKey(string $apiKey)
+    {
+        if (strlen($apiKey) < 5) {
+            throw new InvalidApiKeyException('Invalid API key');
+        }
+
+        $this->apiKey = $apiKey;
     }
 }

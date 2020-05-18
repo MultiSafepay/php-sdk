@@ -116,7 +116,14 @@ class CreateSimpleRefundTest extends AbstractTestCase
         }
 
         $requestOrder = $this->createOrderRequest();
-        $transactionReponse = $this->getApi()->getTransactionManager()->create($requestOrder);
+
+        try {
+            $transactionReponse = $this->getApi()->getTransactionManager()->create($requestOrder);
+        } catch (ApiException $apiException) {
+            $this->assertTrue(false, $apiException->getDetails());
+            return '';
+        }
+
         return (string)$transactionReponse->getOrderId();
     }
 
