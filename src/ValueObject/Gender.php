@@ -16,9 +16,8 @@ class Gender
 {
     /**
      * Allowed values
-     * @todo: With AfterPay this should be one of [mr, mrs, miss]
      */
-    const ALLOWED_VALUES = ['male', 'female'];
+    const ALLOWED_VALUES = ['male', 'female', 'mr', 'mrs', 'miss'];
 
     /**
      * @var string
