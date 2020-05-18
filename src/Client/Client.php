@@ -11,6 +11,7 @@ use Http\Discovery\Psr18ClientDiscovery;
 use MultiSafepay\Api\Base\RequestBodyInterface;
 use MultiSafepay\Api\Base\Response as ApiResponse;
 use MultiSafepay\Exception\ApiException;
+use MultiSafepay\Exception\InvalidApiKeyException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -199,5 +200,17 @@ class Client
     public function getHttpClient(): ClientInterface
     {
         return $this->httpClient;
+    }
+
+    /**
+     * @param string $apiKey
+     */
+    private function setApiKey(string $apiKey)
+    {
+        if (strlen($apiKey) < 5) {
+            throw new InvalidApiKeyException('Invalid API key');
+        }
+
+        $this->apiKey = $apiKey;
     }
 }
