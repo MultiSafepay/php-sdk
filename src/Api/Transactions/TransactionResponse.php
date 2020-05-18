@@ -35,9 +35,9 @@ class TransactionResponse extends ResponseBody
     /**
      * @return string
      */
-    public function getPaymentLink(): string
+    public function getTransactionId(): string
     {
-        return (string)$this->get('payment_url');
+        return (string)$this->get('transaction_id');
     }
 
     /**
@@ -46,6 +46,14 @@ class TransactionResponse extends ResponseBody
     public function getOrderId(): string
     {
         return (string)$this->get('order_id');
+    }
+
+    /**
+     * @return string
+     */
+    public function getPaymentLink(): string
+    {
+        return (string)$this->get('payment_url');
     }
 
     /**
@@ -237,7 +245,6 @@ class TransactionResponse extends ResponseBody
 
     /**
      * @return Costs
-     * @todo: Is this always the same thing?
      */
     public function getCosts(): Costs
     {
