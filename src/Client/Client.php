@@ -80,7 +80,7 @@ class Client
         ?StreamFactoryInterface $streamFactory = null,
         string $locale = 'en'
     ) {
-        $this->apiKey = $this->initApiKey($apiKey);
+        $this->initApiKey($apiKey);
         $this->url = $isProduction ? self::LIVE_URL : self::TEST_URL;
         $this->httpClient = $httpClient ?: Psr18ClientDiscovery::find();
         $this->requestFactory = $requestFactory;
