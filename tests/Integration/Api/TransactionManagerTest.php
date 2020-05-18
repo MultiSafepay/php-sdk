@@ -10,6 +10,7 @@ use Money\Money;
 use MultiSafepay\Api\TransactionManager;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\Description;
 use MultiSafepay\Api\Transactions\RefundRequest;
+use MultiSafepay\Api\Transactions\Transaction;
 use MultiSafepay\Exception\ApiException;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\DescriptionFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\GoogleAnalyticsFixture;
@@ -79,7 +80,7 @@ class TransactionManagerTest extends TestCase
         $mockClient->mockResponse(
             [
                 'order_id' => $orderId,
-                'status' => 'completed',
+                'status' => Transaction::COMPLETED,
                 'transaction_id' => 4051823,
                 'refund_id' => 405223823,
                 'amount' => 9743
@@ -106,7 +107,7 @@ class TransactionManagerTest extends TestCase
         $mockClient->mockResponse(
             [
                 'order_id' => $fakeOrderId,
-                'status' => 'completed',
+                'status' => Transaction::COMPLETED,
                 'transaction_id' => $fakeTransactionId,
                 'currency' => 'EUR',
                 'amount' => 10000
