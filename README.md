@@ -1,35 +1,64 @@
 # MultiSafepay PHP SDK
 
 ## Installation
+To install the SDK, use the following composer command:
 
 ```bash
-composer require multisafepay/php-sdk php-http/guzzle6-adapter guzzlehttp/psr7
+composer require multisafepay/php-sdk
 ```
 
-This PHP SDK does not have a dependency on Guzzle or cURL.
-Instead, it uses the [PSR-18](https://www.php-fig.org/psr/psr-18/) client abstraction.
-This will give you the flexibility to choose whatever
-[PSR-7 implementation and HTTP client](https://packagist.org/providers/php-http/client-implementation)
-you want to use.
-All clients can be replaced without any side effects.
+WARNING: This PHP SDK does not have a direct dependency on Guzzle or cURL. Instead, it uses the [PSR-18](https://www.php-fig.org/psr/psr-18/) client abstraction. This will give you the flexibility to choose whatever [PSR-7 implementation and HTTP client](https://packagist.org/providers/php-http/client-implementation) you want to use. All clients can be replaced without any side effects.
+
+If you don't have a client yet, use the following:
+```bash
+composer require php-http/guzzle6-adapter guzzlehttp/psr7
+```
 
 ## Getting started
-
-Use Composer autoloader to automatically load your dependencies. 
+Use Composer autoloader to automatically load class dependencies: 
 
 ```php
 require 'vendor/autoload.php';
-use MultiSafepay\Sdk;
 ```
 
-Next, instantiate the API with your API key and a flag to identify whether this is the production environment or testing environment.
+Next, instantiate the SDK with your API key and a flag to identify whether this is the production environment or testing environment.
 
 ```php
 $yourApiKey = 'your-api-key';
 $isProduction = false;
-$multiSafepaySdk = new Sdk($yourApiKey, $isProduction);
+$multiSafepaySdk = new \MultiSafepay\Sdk($yourApiKey, $isProduction);
 ```
 
+From the SDK, you can get various managers to help you with what you want to accomplish:
+```php
+$multiSafepaySdk->getTransactionManager();
+$multiSafepaySdk->getGatewayManager();
+$multiSafepaySdk->getIssuerManager();
+$multiSafepaySdk->getCategoryManager();
+```
+
+Of these managers, the transaction manager is probably the most important, because it allows you to create orders and refunds. Here's a brief (incomplete) example of creating a new order:
+```php
+$orderRequest = (new \MultiSafepay\Api\Transactions\OrderRequest)
+    ->addType('direct');
+
+$transactionManager = $multiSafepaySdk->getTransactionManager();
+$transactionManager->create($orderRequest);
+```
+
+And here's an incomplete example of a refund:
+```php
+$orderId = 42;
+$transaction = $transactionManager->get($orderId);
+$refundRequest = (new \MultiSafepay\Api\Transactions\RefundRequest())
+    ->addCheckoutData($checkoutData);
+
+$transactionManager->refund($transaction, $requestRefund);
+```
+
+Each request (instance of `\MultiSafepay\Api\Base\RequestBodyInterface`) receives arguments like `$checkoutData`. An argument could be a simple variable or actually an argument object, that helps you fill in the right details.
+ 
+See the functional tests in `tests/Functional/Api/Transactions` for examples on how to build full requests. 
 
 ## Code quality checks
 The following checks are in place to maintain code quality:
