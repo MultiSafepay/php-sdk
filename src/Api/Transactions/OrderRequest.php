@@ -360,6 +360,31 @@ class OrderRequest extends DataObject implements OrderRequestInterface
             throw new InvalidArgumentException('Required plugin details are missing');
         }
 
+        $this->validateShoppingCartTotals($data);
+
+        return true;
+    }
+
+    /**
+     * @param array $data
+     * @return bool
+     */
+    private function validateShoppingCartTotals(array $data): bool
+    {
+        if (isset($data['amount']) && isset($data['shopping_cart']) && isset($data['shopping_cart']['items'])) {
+            $amount = $data['amount'];
+            $totalUnitPrice = 0;
+            foreach ($data['shopping_cart']['items'] as $item) {
+                $totalUnitPrice = +$item['unit_price'] * $item['quantity'];
+            }
+
+            $totalUnitPrice = $totalUnitPrice * 100;
+            if ($totalUnitPrice != $amount) {
+                $msg = sprintf('Total of unit_price (%s) does not match amount (%s)', $amount, $totalUnitPrice);
+                throw new InvalidArgumentException($msg);
+            }
+        }
+
         return true;
     }
 }
