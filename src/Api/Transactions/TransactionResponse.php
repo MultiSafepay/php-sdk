@@ -77,7 +77,7 @@ class TransactionResponse extends ResponseBody
      */
     public function getCurrency(): string
     {
-        return (string)$this->get('currency');
+        return strtoupper((string)$this->get('currency'));
     }
 
     /**
@@ -323,7 +323,7 @@ class TransactionResponse extends ResponseBody
         $weight = new Weight($data['weight']['unit'], $data['weight']['value']);
         return (new CartItem)
             ->addName((string)$data['name'])
-            ->addUnitPrice(Money::$currency($data['unit_price']))
+            ->addUnitPrice(Money::$currency($data['unit_price'] * 100))
             ->addQuantity((int)$data['quantity'])
             ->addMerchantItemId((string)$data['merchant_item_id'])
             ->addTaxTableSelector((string)$data['tax_table_selector'])

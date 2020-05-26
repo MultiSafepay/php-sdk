@@ -68,7 +68,7 @@ class CreatePayafterRedirectOrderTest extends AbstractTestCase
     {
         return (new OrderRequest())
             ->addType('redirect')
-            ->addMoney(Money::EUR(100))
+            ->addMoney(Money::EUR(10000))
             ->addOrderId((string)time())
             ->addGatewayCode(Gateway::PAYAFTER)
             ->addGatewayInfo($this->createRandomMetaGatewayInfoFixture())

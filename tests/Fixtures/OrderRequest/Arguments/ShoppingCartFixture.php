@@ -26,7 +26,7 @@ trait ShoppingCartFixture
         $items = [];
         $items[] = (new ShoppingCartItem())
             ->addName('Geometric Candle Holders')
-            ->addUnitPrice(Money::EUR(50))
+            ->addUnitPrice(Money::EUR(5000))
             ->addQuantity(2)
             ->addDescription('1234')
             ->addTaxTableSelector('none')

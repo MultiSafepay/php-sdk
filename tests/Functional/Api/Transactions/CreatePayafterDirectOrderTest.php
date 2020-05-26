@@ -65,7 +65,7 @@ class CreatePayafterDirectOrderTest extends AbstractTestCase
         $customerDetails = $this->createCustomerDetailsFixture();
         return (new OrderRequest())
             ->addType('direct')
-            ->addMoney(Money::EUR(100))
+            ->addMoney(Money::EUR(10000))
             ->addOrderId((string)time())
             ->addGatewayCode(Gateway::PAYAFTER)
             ->addGatewayInfo($this->createRandomMetaGatewayInfoFixture())

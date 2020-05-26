@@ -28,7 +28,7 @@ class RelatedTransaction extends DataObject
      */
     public function getCurrency(): string
     {
-        return (string)$this->get('currency');
+        return strtoupper((string)$this->get('currency'));
     }
 
     /**

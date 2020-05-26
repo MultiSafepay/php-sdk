@@ -41,7 +41,7 @@ class RefundRequest extends DataObject implements RequestBodyInterface
         return $this->removeNullRecursive(array_merge(
             [
                 'currency' => $this->money ? (string)$this->money->getCurrency() : null,
-                'amount' => $this->money ? (string)((float)$this->money->getAmount() * 100) : null,
+                'amount' => $this->money ? $this->money->getAmount() : null,
                 'description' => $this->description ? $this->description->getData() : null,
                 'checkout_data' => $this->checkoutData ? $this->checkoutData->getData() : null,
             ],

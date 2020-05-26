@@ -6,9 +6,7 @@
 
 namespace MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart;
 
-use Money\Money;
 use MultiSafepay\ValueObject\CartItem;
-use MultiSafepay\ValueObject\Weight;
 
 /**
  * Class Item
