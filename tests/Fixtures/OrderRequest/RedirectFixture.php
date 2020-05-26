@@ -9,7 +9,6 @@ namespace MultiSafepay\Tests\Fixtures\OrderRequest;
 use Money\Money;
 use MultiSafepay\Api\Gateways\Gateway;
 use MultiSafepay\Api\Transactions\OrderRequest;
-use MultiSafepay\Api\Transactions\OrderRequest\Redirect as RedirectOrderRequest;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\IdealGatewayInfoFixture;
 
 /**
@@ -28,7 +27,7 @@ trait RedirectFixture
         return (new OrderRequest())
             ->addType('redirect')
             ->addOrderId((string)time())
-            ->addMoney(Money::EUR(20))
+            ->addMoney(Money::EUR(2000))
             ->addGatewayCode(Gateway::IDEAL)
             ->addGatewayInfo($this->createIdealGatewayInfoFixture())
             ->addPaymentOptions($this->createPaymentOptionsFixture())

@@ -24,7 +24,7 @@ trait DirectFixture
         return (new OrderRequest())
             ->addType('direct')
             ->addOrderId((string)time())
-            ->addMoney(Money::EUR(20))
+            ->addMoney(Money::EUR(2000))
             ->addGatewayCode(Gateway::IDEAL)
             ->addGatewayInfo($this->createIdealGatewayInfoFixture())
             ->addPaymentOptions($this->createPaymentOptionsFixture())

@@ -18,7 +18,6 @@ use MultiSafepay\Api\Transactions\OrderRequest\Arguments\PaymentOptions;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\PluginDetails;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\SecondChance;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart;
-use MultiSafepay\Api\Transactions\OrderRequest\Arguments\TaxTable;
 use MultiSafepay\Exception\InvalidArgumentException;
 
 /**
@@ -328,7 +327,7 @@ class OrderRequest extends DataObject implements OrderRequestInterface
             'type' => $this->type,
             'order_id' => $this->orderId,
             'currency' => $this->money ? (string)$this->money->getCurrency() : null,
-            'amount' => $this->money ? (string)((float)$this->money->getAmount() * 100) : null,
+            'amount' => $this->money ? (int)$this->money->getAmount() : null,
             'gateway' => $this->gatewayCode,
             'gateway_info' => $this->gatewayInfo ? $this->gatewayInfo->getData() : null,
             'payment_options' => $this->paymentOptions ? $this->paymentOptions->getData() : null,

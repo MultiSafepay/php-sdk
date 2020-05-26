@@ -8,6 +8,7 @@ namespace MultiSafepay\ValueObject;
 
 use Money\Money;
 use MultiSafepay\Api\Base\DataObject;
+use MultiSafepay\Util\MoneyFormatter;
 
 /**
  * Class CartItem
@@ -125,12 +126,12 @@ class CartItem extends DataObject
      */
     public function getData(): array
     {
-        // @todo: unit_price in Euro, not Euro-cents?
+        $moneyFormatter = new MoneyFormatter();
         return array_merge(
             [
                 'name' => $this->name ?? null,
                 'description' => $this->description ?? null,
-                'unit_price' => $this->unitPrice ? $this->unitPrice->getAmount() : null,
+                'unit_price' => $moneyFormatter->toDecimalString($this->unitPrice),
                 'currency' => $this->unitPrice ? $this->unitPrice->getCurrency() : null,
                 'quantity' => $this->quantity ?? null,
                 'merchant_item_id' => !empty($this->merchantItemId) ? $this->merchantItemId : null,

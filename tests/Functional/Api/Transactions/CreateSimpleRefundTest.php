@@ -140,7 +140,7 @@ class CreateSimpleRefundTest extends AbstractTestCase
             ->addCheckoutOptions($this->createCheckoutOptionsFixture())
             ->addCustomer($customer)
             ->addOrderId((string)time())
-            ->addMoney(Money::EUR(100))
+            ->addMoney(Money::EUR(10000))
             ->addGatewayCode(Gateway::PAYAFTER)
             ->addGatewayInfo($this->createRandomMetaGatewayInfoFixture())
             ->addPaymentOptions($this->createPaymentOptionsFixture())
