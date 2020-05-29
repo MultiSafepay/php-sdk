@@ -19,7 +19,7 @@ class CustomerDetails extends Customer
     /**
      * @var string
      */
-    private $locale = 'en';
+    private $locale = 'en_US';
 
     /**
      * @var string

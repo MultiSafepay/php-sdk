@@ -39,7 +39,7 @@ class Sdk
         ClientInterface $httpClient = null,
         ?RequestFactoryInterface $requestFactory = null,
         ?StreamFactoryInterface $streamFactory = null,
-        string $locale = 'en'
+        string $locale = 'en_US'
     ) {
         $this->client = new Client($apiKey, $isProduction, $httpClient, $requestFactory, $streamFactory, $locale);
     }

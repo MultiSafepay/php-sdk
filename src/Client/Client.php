@@ -61,7 +61,7 @@ class Client
     /**
      * @var string
      */
-    private $locale = 'en';
+    private $locale = 'en_US';
 
     /**
      * Client constructor.
@@ -78,7 +78,7 @@ class Client
         ?ClientInterface $httpClient = null,
         ?RequestFactoryInterface $requestFactory = null,
         ?StreamFactoryInterface $streamFactory = null,
-        string $locale = 'en'
+        string $locale = 'en_US'
     ) {
         $this->initApiKey($apiKey);
         $this->url = $isProduction ? self::LIVE_URL : self::TEST_URL;

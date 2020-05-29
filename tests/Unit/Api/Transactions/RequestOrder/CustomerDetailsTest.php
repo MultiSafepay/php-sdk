@@ -31,12 +31,12 @@ class CustomerDetailsTest extends TestCase
             ->addIpAddress(new IpAddress('127.0.0.1'))
             ->addEmailAddress(new EmailAddress('info@example.org'))
             ->addPhoneNumber(new PhoneNumber('0123456789'))
-            ->addLocale('nl')
+            ->addLocale('nl_NL')
             ->addReferrer('http://example.org')
             ->addUserAgent('Unknown');
 
         $this->assertEquals('John', $customerDetails->getFirstName());
-        $this->assertEquals('nl', $customerDetails->getLocale());
+        $this->assertEquals('nl_NL', $customerDetails->getLocale());
         $this->assertEquals('http://example.org', $customerDetails->getReferrer());
         $this->assertEquals('Unknown', $customerDetails->getUserAgent());
 
@@ -52,7 +52,7 @@ class CustomerDetailsTest extends TestCase
         $this->assertEmpty($customerData['phone2']);
         $this->assertEquals('info@example.org', $customerData['email']);
         $this->assertEquals('127.0.0.1', $customerData['ip_address']);
-        $this->assertEquals('nl', $customerData['locale']);
+        $this->assertEquals('nl_NL', $customerData['locale']);
         $this->assertEquals('http://example.org', $customerData['referrer']);
         $this->assertEquals('Unknown', $customerData['user_agent']);
     }
