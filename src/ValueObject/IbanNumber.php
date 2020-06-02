@@ -45,11 +45,16 @@ class IbanNumber
     public function validate(string $ibanNumber): bool
     {
         $ibanNumber = strtolower(str_replace(' ', '', $ibanNumber));
+        if (strlen($ibanNumber) < 12) {
+            throw new InvalidArgumentException('Bank account "' . $ibanNumber . '" does not have a valid length');
+        }
+
         $countryMap = $this->getCountryMap();
         $charMap = $this->getCharMap();
 
-        if (strlen($ibanNumber) !== $countryMap[substr($ibanNumber, 0, 2)]) {
-            throw new InvalidArgumentException('Number "' . $ibanNumber . '" does not have a valid IBAN prefix');
+        $countryPrefix = strtoupper(substr($ibanNumber, 0, 2));
+        if (!isset($countryMap[$countryPrefix])) {
+            throw new InvalidArgumentException('Bank account "' . $ibanNumber . '" does not have a valid IBAN prefix');
         }
 
         $movedChar = substr($ibanNumber, 4) . substr($ibanNumber, 0, 4);
