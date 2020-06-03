@@ -13,6 +13,7 @@ use MultiSafepay\Util\MoneyFormatter;
 /**
  * Class CartItem
  * @package MultiSafepay\ValueObject
+ * phpcs:disable ObjectCalisthenics.Metrics.MethodPerClassLimit
  */
 class CartItem extends DataObject
 {
@@ -143,5 +144,61 @@ class CartItem extends DataObject
             ],
             $this->data
         );
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return Money
+     */
+    public function getUnitPrice(): Money
+    {
+        return $this->unitPrice;
+    }
+
+    /**
+     * @return int
+     */
+    public function getQuantity(): int
+    {
+        return $this->quantity;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMerchantItemId(): string
+    {
+        return $this->merchantItemId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTaxTableSelector(): string
+    {
+        return $this->taxTableSelector;
+    }
+
+    /**
+     * @return Weight
+     */
+    public function getWeight(): Weight
+    {
+        return $this->weight;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
     }
 }

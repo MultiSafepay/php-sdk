@@ -6,8 +6,11 @@
 
 namespace MultiSafepay\Api\Transactions\RefundRequest\Arguments;
 
+use InvalidArgumentException;
 use MultiSafepay\Api\Base\DataObject;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\TaxTable;
+use MultiSafepay\Api\Transactions\RefundRequest\Arguments\CheckoutData\Item;
 use MultiSafepay\ValueObject\CartItem;
 
 /**
@@ -25,6 +28,49 @@ class CheckoutData extends DataObject
      * @var TaxTable
      */
     private $taxTable;
+
+    /**
+     * @param ShoppingCart $shoppingCart
+     * @param string $taxTableSelector
+     */
+    public function generateFromShoppingCart(ShoppingCart $shoppingCart, string $taxTableSelector = '')
+    {
+        foreach ($shoppingCart->getItems() as $shoppingCartItem) {
+            if ($taxTableSelector) {
+                $shoppingCartItem->addTaxTableSelector($taxTableSelector);
+            }
+
+            $this->addItem($shoppingCartItem);
+        }
+    }
+
+    /**
+     * @param string $merchantItemId
+     * @param int $quantity Set to 0 to refund all items
+     * @throws InvalidArgumentException
+     */
+    public function refundByMerchantItemId(string $merchantItemId, int $quantity = 0)
+    {
+        $foundItem = null;
+        foreach ($this->items as $item) {
+            if ($item->getMerchantItemId() === $merchantItemId) {
+                $foundItem = $item;
+                break;
+            }
+        }
+
+        if (empty($foundItem)) {
+            throw new InvalidArgumentException('No item found with merchant_item_id "' . $merchantItemId . '"');
+        }
+
+        if ($quantity < 1) {
+            $quantity = $foundItem->getQuantity();
+        }
+
+        $refundItem = clone ($foundItem);
+        $refundItem->addQuantity(0 - $quantity);
+        $this->addItem($refundItem);
+    }
 
     /**
      * @param TaxTable $taxTable

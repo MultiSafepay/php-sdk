@@ -115,7 +115,7 @@
         "currency": "EUR",
         "description": 1234,
         "image": "",
-        "merchant_item_id": "",
+        "merchant_item_id": "111111",
         "name": "Geometric Candle Holders",
         "options": [],
         "product_url": "",
