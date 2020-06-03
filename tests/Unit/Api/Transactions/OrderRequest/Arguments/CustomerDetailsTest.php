@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace MultiSafepay\Tests\Unit\Api\Issuers\RequestOrder;
+namespace MultiSafepay\Tests\Unit\Api\Transactions\OrderRequest\Arguments;
 
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\CustomerDetails;
 use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Class CustomerDetailsTest
- * @package MultiSafepay\Tests\Unit\Api\Transactions\RequestOrder
+ * @package MultiSafepay\Tests\Unit\Api\Transactions\OrderRequest\Arguments
  */
 class CustomerDetailsTest extends TestCase
 {
