@@ -70,6 +70,16 @@ class RefundRequest extends DataObject implements RequestBodyInterface
     }
 
     /**
+     * @param string $description
+     * @return RefundRequest
+     */
+    public function addDescriptionText(string $description): RefundRequest
+    {
+        $this->description = (new Description())->addDescription($description);
+        return $this;
+    }
+
+    /**
      * @param CheckoutData $checkoutData
      * @return RefundRequest
      */
