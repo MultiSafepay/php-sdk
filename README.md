@@ -46,13 +46,14 @@ $transactionManager = $multiSafepaySdk->getTransactionManager();
 $transactionManager->create($orderRequest);
 ```
 
-And here's an incomplete example of a refund:
+And here's an example of a refund:
 ```php
 $orderId = 42;
-$transaction = $transactionManager->get($orderId);
-$refundRequest = (new \MultiSafepay\Api\Transactions\RefundRequest())
-    ->addCheckoutData($checkoutData);
+$merchantItemId = '11111'; // The shopping cart item ID maintained by your e-commerce appplication
 
+$transactionManager = $multiSafepaySdk->getTransactionManager();
+$transaction = $transactionManager->get($orderId);
+$refundRequest = $transactionManager->createRefundRequest($transaction, $merchantItemId, 2);
 $transactionManager->refund($transaction, $requestRefund);
 ```
 

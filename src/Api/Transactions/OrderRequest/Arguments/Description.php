@@ -43,6 +43,8 @@ class Description
      */
     public function getData(): string
     {
+        $this->validate();
+
         return $this->description;
     }
 

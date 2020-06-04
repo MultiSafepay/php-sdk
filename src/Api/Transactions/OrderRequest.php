@@ -209,6 +209,16 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
     }
 
     /**
+     * @param string $description
+     * @return OrderRequest
+     */
+    public function addDescriptionText(string $description): OrderRequest
+    {
+        $this->description = (new Description())->addDescription($description);
+        return $this;
+    }
+
+    /**
      * @param PluginDetails $pluginDetails
      * @return OrderRequest
      */

@@ -9,7 +9,8 @@ namespace MultiSafepay\Api;
 use MultiSafepay\Api\Base\Response;
 use MultiSafepay\Api\Transactions\OrderRequestInterface;
 use MultiSafepay\Api\Transactions\RefundRequest;
-use MultiSafepay\Api\Transactions\TransactionResponse;
+use MultiSafepay\Api\Transactions\TransactionResponse as Transaction;
+use MultiSafepay\Api\Transactions\RefundRequest\Arguments\CheckoutData;
 use MultiSafepay\Exception\ApiException;
 use Psr\Http\Client\ClientExceptionInterface;
 
@@ -21,37 +22,37 @@ class TransactionManager extends AbstractManager
 {
     /**
      * @param OrderRequestInterface $requestOrder
-     * @return TransactionResponse
+     * @return Transaction
      * @throws ClientExceptionInterface
      */
-    public function create(OrderRequestInterface $requestOrder): TransactionResponse
+    public function create(OrderRequestInterface $requestOrder): Transaction
     {
         $response = $this->client->createPostRequest('orders', $requestOrder);
-        return new TransactionResponse($response->getResponseData());
+        return new Transaction($response->getResponseData());
     }
 
     /**
      * Get all data from a transaction.
      * @param string $orderId
-     * @return TransactionResponse
+     * @return Transaction
      * @throws ClientExceptionInterface
      * @throws ApiException
      */
-    public function get(string $orderId): TransactionResponse
+    public function get(string $orderId): Transaction
     {
         $endpoint = 'orders/' . $orderId;
         $context = ['order_id' => $orderId];
         $response = $this->client->createGetRequest($endpoint, [], $context);
-        return new TransactionResponse($response->getResponseData());
+        return new Transaction($response->getResponseData());
     }
 
     /**
-     * @param TransactionResponse $transaction
+     * @param Transaction $transaction
      * @param RefundRequest $requestRefund
      * @return array
      * @throws ClientExceptionInterface
      */
-    public function refund(TransactionResponse $transaction, RefundRequest $requestRefund): Response
+    public function refund(Transaction $transaction, RefundRequest $requestRefund): Response
     {
         $orderId = $transaction->getOrderId();
         $context = ['transaction' => $transaction->getData()];
@@ -63,5 +64,45 @@ class TransactionManager extends AbstractManager
         );
 
         return $response;
+    }
+
+    /**
+     * @param Transaction $transaction
+     * @param string $merchantItemId
+     * @param int $quantity Set to 0 to refund all items
+     * @return Response
+     * @throws ClientExceptionInterface
+     */
+    public function refundByItem(Transaction $transaction, string $merchantItemId, int $quantity = 0): Response
+    {
+        $orderId = $transaction->getOrderId();
+        $context = ['transaction' => $transaction->getData()];
+
+        $requestRefund = $this->createRefundRequest($transaction, $merchantItemId, $quantity);
+        $response = $this->client->createPostRequest(
+            'orders/' . $orderId . '/refunds',
+            $requestRefund,
+            $context
+        );
+
+        return $response;
+    }
+
+    /**
+     * @param Transaction $transaction
+     * @param string $merchantItemId
+     * @param int $quantity Set to 0 to refund all items
+     * @return RefundRequest
+     */
+    public function createRefundRequest(Transaction $transaction, string $merchantItemId, int $quantity): RefundRequest
+    {
+        $checkoutData = new CheckoutData();
+        $checkoutData->generateFromShoppingCart($transaction->getShoppingCart());
+        $checkoutData->refundByMerchantItemId($merchantItemId, $quantity);
+
+        $requestRefund = new RefundRequest();
+        $requestRefund->addCheckoutData($checkoutData);
+
+        return $requestRefund;
     }
 }
