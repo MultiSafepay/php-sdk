@@ -131,12 +131,12 @@ class CartItem extends DataObject
         return array_merge(
             [
                 'name' => $this->name ?? null,
-                'description' => $this->description ?? null,
+                'description' => $this->description ?? '',
                 'unit_price' => $moneyFormatter->toDecimalString($this->unitPrice),
-                'currency' => $this->unitPrice ? $this->unitPrice->getCurrency() : null,
-                'quantity' => $this->quantity ?? null,
-                'merchant_item_id' => !empty($this->merchantItemId) ? $this->merchantItemId : null,
-                'tax_table_selector' => !empty($this->taxTableSelector) ? $this->taxTableSelector : null,
+                'currency' => $this->unitPrice ? $this->unitPrice->getCurrency() : '',
+                'quantity' => $this->quantity ?? 0,
+                'merchant_item_id' => !empty($this->merchantItemId) ? $this->merchantItemId : '',
+                'tax_table_selector' => !empty($this->taxTableSelector) ? $this->taxTableSelector : '',
                 'weight' => [
                     'unit' => $this->weight ? strtoupper($this->weight->getUnit()) : null,
                     'value' => $this->weight ? $this->weight->getQuantity() : null,

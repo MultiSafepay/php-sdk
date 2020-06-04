@@ -67,7 +67,7 @@ class CheckoutData extends DataObject
             $quantity = $foundItem->getQuantity();
         }
 
-        $refundItem = clone ($foundItem);
+        $refundItem = clone($foundItem);
         $refundItem->addQuantity(0 - $quantity);
         $this->addItem($refundItem);
     }
@@ -110,8 +110,11 @@ class CheckoutData extends DataObject
     public function getData(): array
     {
         $itemsData = [];
-        foreach ($this->items as $item) {
-            $itemsData[] = $item->getData();
+
+        if (!empty($this->items)) {
+            foreach ($this->items as $item) {
+                $itemsData[] = $item->getData();
+            }
         }
 
         return array_merge(

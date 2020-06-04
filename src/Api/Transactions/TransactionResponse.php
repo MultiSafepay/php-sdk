@@ -6,6 +6,7 @@
 
 namespace MultiSafepay\Api\Transactions;
 
+use InvalidArgumentException;
 use Money\Money;
 use MultiSafepay\Api\Base\ResponseBody;
 use MultiSafepay\Api\Transactions\TransactionResponse\CheckoutOptions;
@@ -320,6 +321,10 @@ class TransactionResponse extends ResponseBody
     private function getItemFromData(array $data): CartItem
     {
         $currency = $data['currency'];
+        if (!is_string($currency)) {
+            $currency = (string)$currency;
+        }
+
         $weight = new Weight($data['weight']['unit'], $data['weight']['value']);
         return (new CartItem)
             ->addName((string)$data['name'])

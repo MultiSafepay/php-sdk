@@ -30,6 +30,7 @@ trait ShoppingCartFixture
             ->addQuantity(2)
             ->addDescription('1234')
             ->addTaxTableSelector('none')
+            ->addMerchantItemId('1234')
             ->addWeight(
                 new Weight('KG', 12)
             );
