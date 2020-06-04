@@ -14,6 +14,7 @@ use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CheckoutOptionsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\DescriptionFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\MetaGatewayInfoFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PluginDetailsFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\GenericOrderRequestFixture;
 use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CustomerDetailsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PaymentOptionsFixture;
@@ -30,6 +31,7 @@ use Psr\Http\Client\ClientExceptionInterface;
  */
 class CreatePayafterRedirectOrderTest extends AbstractTestCase
 {
+    use GenericOrderRequestFixture;
     use CustomerDetailsFixture;
     use PaymentOptionsFixture;
     use AddressFixture;
@@ -66,18 +68,12 @@ class CreatePayafterRedirectOrderTest extends AbstractTestCase
      */
     public function createOrderRequest(): OrderRequest
     {
-        return (new OrderRequest())
+        return $this->createGenericOrderRequestFixture()
             ->addType('redirect')
             ->addMoney(Money::EUR(10000))
-            ->addOrderId((string)time())
             ->addGatewayCode(Gateway::PAYAFTER)
             ->addGatewayInfo($this->createRandomMetaGatewayInfoFixture())
             ->addPaymentOptions($this->createPaymentOptionsFixture())
-            ->addCustomer($this->createRandomCustomerDetailsFixture())
-            ->addDelivery($this->createRandomCustomerDetailsFixture())
-            ->addCheckoutOptions($this->createCheckoutOptionsFixture())
-            ->addDescription($this->createRandomDescriptionFixture())
-            ->addShoppingCart($this->createShoppingCartFixture())
-            ->addPluginDetails($this->createPluginDetailsFixture());
+            ->addShoppingCart($this->createShoppingCartFixture());
     }
 }

@@ -7,6 +7,8 @@
 namespace MultiSafepay\Api\Transactions\OrderRequest\Arguments;
 
 use MultiSafepay\Api\Base\DataObject;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\TaxTable\TaxRate;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\TaxTable\TaxRule;
 
 /**
  * Class CheckoutOptions
@@ -18,6 +20,41 @@ class CheckoutOptions extends DataObject
      * @var TaxTable
      */
     private $taxTable;
+
+    /**
+     * @param ShoppingCart $shoppingCart
+     * @return CheckoutOptions
+     */
+    public function generateFromShoppingCart(ShoppingCart $shoppingCart): CheckoutOptions
+    {
+        $taxTable = new TaxTable;
+        $taxRules = [];
+
+        foreach ($shoppingCart->getItems() as $shoppingCartItem) {
+            if ($shoppingCartItem->hasTaxRate() === false) {
+                continue;
+            }
+
+            $taxRate = new TaxRate();
+            $taxRate->addRate($shoppingCartItem->getTaxRate());
+
+            $taxRule = new TaxRule();
+            $taxRule->addName($shoppingCartItem->getTaxTableSelector());
+            $taxRule->addTaxRate($taxRate);
+
+            $taxRules[] = $taxRule;
+        }
+
+        if (empty($taxRules)) {
+            return $this;
+        }
+
+        $taxTable->addDefaultRate((new TaxRate)->addRate(0));
+        $taxTable->addTaxRules($taxRules);
+
+        $this->addTaxTable($taxTable);
+        return $this;
+    }
 
     /**
      * @param TaxTable $taxTable

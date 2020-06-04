@@ -15,6 +15,7 @@ use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\DescriptionFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PluginDetailsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\ShoppingCartFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\TaxTableFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\GenericOrderRequestFixture;
 use MultiSafepay\Tests\Fixtures\ValueObject\CountryFixture;
 use MultiSafepay\Tests\Fixtures\ValueObject\PhoneNumberFixture;
 use MultiSafepay\Tests\Utils\FixtureLoader;
@@ -32,6 +33,7 @@ use MultiSafepay\Tests\Functional\AbstractTestCase;
  */
 class CreateSimpleRefundTest extends AbstractTestCase
 {
+    use GenericOrderRequestFixture;
     use CustomerDetailsFixture;
     use PaymentOptionsFixture;
     use ShoppingCartFixture;
@@ -128,20 +130,13 @@ class CreateSimpleRefundTest extends AbstractTestCase
      */
     private function createOrderRequest(): OrderRequest
     {
-        $customer = $this->createCustomerDetailsFixture();
-
-        return (new OrderRequest())
+        return $this->createGenericOrderRequestFixture()
             ->addType('direct')
             ->addShoppingCart($this->createShoppingCartFixture())
-            ->addCheckoutOptions($this->createCheckoutOptionsFixture())
-            ->addCustomer($customer)
-            ->addOrderId((string)time())
             ->addMoney(Money::EUR(10000))
             ->addGatewayCode(Gateway::PAYAFTER)
             ->addGatewayInfo($this->createRandomMetaGatewayInfoFixture())
-            ->addPaymentOptions($this->createPaymentOptionsFixture())
-            ->addDescription($this->createRandomDescriptionFixture())
-            ->addPluginDetails($this->createPluginDetailsFixture());
+            ->addPaymentOptions($this->createPaymentOptionsFixture());
     }
 
     /**
@@ -151,7 +146,7 @@ class CreateSimpleRefundTest extends AbstractTestCase
     private function createRefundRequestForSimpleRefund(ShoppingCart $shoppingCart): RefundRequest
     {
         $checkoutData = new CheckoutData();
-        $checkoutData->addTaxTable($this->createTaxTableFixture()); // @todo: Is this needed for refunds?
+        $checkoutData->addTaxTable($this->createTaxTableFixture());
         $checkoutData->generateFromShoppingCart($shoppingCart);
 
         $refundRequest = (new RefundRequest())

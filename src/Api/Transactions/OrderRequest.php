@@ -66,11 +66,6 @@ class OrderRequest extends DataObject implements OrderRequestInterface
     protected $description;
 
     /**
-     * @var CustomerDetails
-     */
-    protected $customerDetails;
-
-    /**
      * @var string
      */
     protected $recurringId;
@@ -226,17 +221,6 @@ class OrderRequest extends DataObject implements OrderRequestInterface
         return $this;
     }
 
-
-    /**
-     * @param CustomerDetails $customerDetails
-     * @return OrderRequest
-     */
-    public function addCustomerDetails(CustomerDetails $customerDetails): OrderRequest
-    {
-        $this->customerDetails = $customerDetails;
-        return $this;
-    }
-
     /**
      * @param string $recurringId
      * @return OrderRequest
@@ -274,6 +258,11 @@ class OrderRequest extends DataObject implements OrderRequestInterface
     public function addShoppingCart(ShoppingCart $shoppingCart): OrderRequest
     {
         $this->shoppingCart = $shoppingCart;
+        if (!$this->checkoutOptions) {
+            $checkoutOptions = new CheckoutOptions();
+            $checkoutOptions->generateFromShoppingCart($shoppingCart);
+            $this->addCheckoutOptions($checkoutOptions);
+        }
         return $this;
     }
 

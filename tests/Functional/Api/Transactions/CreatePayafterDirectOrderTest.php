@@ -10,6 +10,7 @@ use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CheckoutOptionsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\DescriptionFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\MetaGatewayInfoFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PluginDetailsFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\GenericOrderRequestFixture;
 use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CustomerDetailsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PaymentOptionsFixture;
@@ -26,6 +27,7 @@ use Psr\Http\Client\ClientExceptionInterface;
  */
 class CreatePayafterDirectOrderTest extends AbstractTestCase
 {
+    use GenericOrderRequestFixture;
     use CustomerDetailsFixture;
     use PaymentOptionsFixture;
     use AddressFixture;
@@ -62,19 +64,12 @@ class CreatePayafterDirectOrderTest extends AbstractTestCase
      */
     public function createOrderRequest(): OrderRequest
     {
-        $customerDetails = $this->createCustomerDetailsFixture();
-        return (new OrderRequest())
+        return $this->createGenericOrderRequestFixture()
             ->addType('direct')
             ->addMoney(Money::EUR(10000))
-            ->addOrderId((string)time())
             ->addGatewayCode(Gateway::PAYAFTER)
             ->addGatewayInfo($this->createRandomMetaGatewayInfoFixture())
             ->addPaymentOptions($this->createPaymentOptionsFixture())
-            ->addCustomer($customerDetails)
-            ->addDelivery($customerDetails)
-            ->addCheckoutOptions($this->createCheckoutOptionsFixture())
-            ->addDescription($this->createRandomDescriptionFixture())
-            ->addShoppingCart($this->createShoppingCartFixture())
-            ->addPluginDetails($this->createPluginDetailsFixture());
+            ->addShoppingCart($this->createShoppingCartFixture());
     }
 }
