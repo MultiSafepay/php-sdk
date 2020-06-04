@@ -61,17 +61,15 @@ Each request (instance of `\MultiSafepay\Api\Base\RequestBodyInterface`) receive
  
 See the functional tests in `tests/Functional/Api/Transactions` for examples on how to build full requests. 
 
-<<<<<<< HEAD
 ## Tips
 - If you create an `OrderRequest` and then use the `addShoppingCart()` method to add a `ShoppingCart` object to it, you can let the method automatically generate `CheckoutOptions` as well. In other words, it allows you to skip the `addCheckoutOptions()` method. For this to work, make sure to add a tax rate to each shopping cart item (`CartItem::addTaxRate`).
-=======
+
 ## Advanced usage: The Strict Mode
 The SDK is by default initialize in a non-strict mode (by setting its constructor argument `$strictMode` to `false`). This strict mode adds additional validations on top of various API requests and API responses. In the non-strict mode (the default) some validation errors are skipped. In the strict mode, these validation errors throw an exception, which requires you to handle the exception correspondingly.
 
 For example, take a `ShoppingCart` object that is to be added to an `OrderRequest` object. This `ShoppingCart` might be filled with items and each item might have a specific taxrate (referring to the `TaxTables` object). Summing up the total price of these items might lead to an amount with more than 2 decimals. However, if the e-commerce application requires a payment only of the amount in 2 decimals, this causes a mismatch. In the strict mode, this mismatch causes an `\MultiSafepay\Exception\InvalidTotalAmountException` exception. However, it depends on the e-commerce application and also the payment gateway to determine how this mismatch should be solved. Hence, the exception is only throw when the strict mode is enabled.
 
 In the tests of the SDK, the strict mode is enabled.
->>>>>>> master
 
 ## Code quality checks
 The following checks are in place to maintain code quality:
