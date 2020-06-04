@@ -8,6 +8,7 @@ namespace MultiSafepay\Api\Transactions;
 
 use Money\Money;
 use MultiSafepay\Api\Base\DataObject;
+use MultiSafepay\Api\Base\RequestBody;
 use MultiSafepay\Api\Gateways\Gateway;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\CheckoutOptions;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\CustomerDetails;
@@ -19,6 +20,7 @@ use MultiSafepay\Api\Transactions\OrderRequest\Arguments\PluginDetails;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\SecondChance;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart;
 use MultiSafepay\Exception\InvalidArgumentException;
+use MultiSafepay\Api\Transactions\OrderRequest\Validators\TotalAmountValidator;
 
 /**
  * Class OrderRequest
@@ -26,7 +28,7 @@ use MultiSafepay\Exception\InvalidArgumentException;
  * phpcs:disable ObjectCalisthenics.Metrics.MethodPerClassLimit
  * phpcs:disable ObjectCalisthenics.Files.ClassTraitAndInterfaceLength
  */
-class OrderRequest extends DataObject implements OrderRequestInterface
+class OrderRequest extends RequestBody implements OrderRequestInterface
 {
     const ALLOWED_TYPES = ['direct', 'redirect'];
 
@@ -370,29 +372,8 @@ class OrderRequest extends DataObject implements OrderRequestInterface
             throw new InvalidArgumentException('Required plugin details are missing');
         }
 
-        $this->validateShoppingCartTotals($data);
-
-        return true;
-    }
-
-    /**
-     * @param array $data
-     * @return bool
-     */
-    private function validateShoppingCartTotals(array $data): bool
-    {
-        if (isset($data['amount']) && isset($data['shopping_cart']) && isset($data['shopping_cart']['items'])) {
-            $amount = $data['amount'];
-            $totalUnitPrice = 0;
-            foreach ($data['shopping_cart']['items'] as $item) {
-                $totalUnitPrice = +$item['unit_price'] * $item['quantity'];
-            }
-
-            $totalUnitPrice = $totalUnitPrice * 100;
-            if ($totalUnitPrice != $amount) {
-                $msg = sprintf('Total of unit_price (%s) does not match amount (%s)', $amount, $totalUnitPrice);
-                throw new InvalidArgumentException($msg);
-            }
+        if ($this->strictMode) {
+            (new TotalAmountValidator())->validate($data);
         }
 
         return true;

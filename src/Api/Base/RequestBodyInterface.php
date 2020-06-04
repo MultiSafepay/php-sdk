@@ -16,4 +16,10 @@ interface RequestBodyInterface
      * @return array
      */
     public function getData(): array;
+
+    /**
+     * @param bool $strictMode
+     * @return void
+     */
+    public function useStrictMode(bool $strictMode);
 }
