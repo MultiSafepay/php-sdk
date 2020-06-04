@@ -52,6 +52,25 @@ class CartItem extends DataObject
     protected $description;
 
     /**
+     * @param array $data
+     * @return CartItem
+     * @todo: Implement cashback, image, product_url, options[]
+     */
+    public static function fromData(array $data): CartItem
+    {
+        $currency = $data['currency'];
+        $weight = new Weight($data['weight']['unit'], $data['weight']['value']);
+        return (new CartItem)
+            ->addName((string)$data['name'])
+            ->addUnitPrice(Money::$currency($data['unit_price'] * 100))
+            ->addQuantity((int)$data['quantity'])
+            ->addMerchantItemId((string)$data['merchant_item_id'])
+            ->addTaxTableSelector((string)$data['tax_table_selector'])
+            ->addWeight($weight)
+            ->addDescription((string)$data['description']);
+    }
+
+    /**
      * @param string $name
      * @return CartItem
      */
