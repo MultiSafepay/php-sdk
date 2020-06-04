@@ -15,6 +15,11 @@ use MultiSafepay\Util\Version;
 class RequestBody extends DataObject implements RequestBodyInterface
 {
     /**
+     * @var bool
+     */
+    protected $strictMode = false;
+
+    /**
      * @param string $json
      * @return RequestBody
      */
@@ -39,5 +44,13 @@ class RequestBody extends DataObject implements RequestBodyInterface
     {
         $this->data['plugin']['plugin_version'] = Version::getInstance()->getVersion();
         return $this->data;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setStrictMode(bool $strictMode)
+    {
+        $this->strictMode = $strictMode;
     }
 }

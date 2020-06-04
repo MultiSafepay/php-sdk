@@ -7,7 +7,7 @@
 namespace MultiSafepay\Api\Transactions;
 
 use Money\Money;
-use MultiSafepay\Api\Base\DataObject;
+use MultiSafepay\Api\Base\RequestBody;
 use MultiSafepay\Api\Transactions\RefundRequest\Arguments\CheckoutData;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\Description;
 use MultiSafepay\Api\Base\RequestBodyInterface;
@@ -16,7 +16,7 @@ use MultiSafepay\Api\Base\RequestBodyInterface;
  * Class RefundRequest
  * @package MultiSafepay\Api\Transactions
  */
-class RefundRequest extends DataObject implements RequestBodyInterface
+class RefundRequest extends RequestBody implements RequestBodyInterface
 {
     /**
      * @var Money

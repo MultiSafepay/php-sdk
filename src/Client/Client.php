@@ -12,6 +12,7 @@ use MultiSafepay\Api\Base\RequestBodyInterface;
 use MultiSafepay\Api\Base\Response as ApiResponse;
 use MultiSafepay\Exception\ApiException;
 use MultiSafepay\Exception\InvalidApiKeyException;
+use MultiSafepay\Exception\StrictModeException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -62,6 +63,10 @@ class Client
      * @var string
      */
     private $locale = 'en_US';
+    /**
+     * @var bool
+     */
+    private $strictMode;
 
     /**
      * Client constructor.
@@ -71,6 +76,7 @@ class Client
      * @param RequestFactoryInterface|null $requestFactory
      * @param StreamFactoryInterface|null $streamFactory
      * @param string $locale
+     * @param bool $strictMode
      */
     public function __construct(
         string $apiKey,
@@ -78,7 +84,8 @@ class Client
         ?ClientInterface $httpClient = null,
         ?RequestFactoryInterface $requestFactory = null,
         ?StreamFactoryInterface $streamFactory = null,
-        string $locale = 'en_US'
+        string $locale = 'en_US',
+        bool $strictMode = false
     ) {
         $this->initApiKey($apiKey);
         $this->url = $isProduction ? self::LIVE_URL : self::TEST_URL;
@@ -86,6 +93,7 @@ class Client
         $this->requestFactory = $requestFactory;
         $this->streamFactory = $streamFactory ?: Psr17FactoryDiscovery::findStreamFactory();
         $this->locale = $locale;
+        $this->strictMode = $strictMode;
     }
 
     /**
@@ -119,9 +127,11 @@ class Client
     /**
      * @param RequestBodyInterface $requestBody
      * @return string
+     * @throws StrictModeException
      */
     private function getRequestBody(RequestBodyInterface $requestBody): string
     {
+        $requestBody->setStrictMode($this->strictMode);
         return json_encode($requestBody->getData(), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
     }
 
@@ -195,6 +205,16 @@ class Client
     public function getHttpClient(): ClientInterface
     {
         return $this->httpClient;
+    }
+
+    /**
+     * @param bool $strictMode
+     * @return Client
+     */
+    public function setStrictMode(bool $strictMode): Client
+    {
+        $this->strictMode = $strictMode;
+        return $this;
     }
 
     /**
