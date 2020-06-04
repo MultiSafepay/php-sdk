@@ -32,6 +32,7 @@ class Sdk
      * @param RequestFactoryInterface|null $requestFactory
      * @param StreamFactoryInterface|null $streamFactory
      * @param string $locale
+     * @param bool $strictMode
      */
     public function __construct(
         string $apiKey,
@@ -39,9 +40,18 @@ class Sdk
         ClientInterface $httpClient = null,
         ?RequestFactoryInterface $requestFactory = null,
         ?StreamFactoryInterface $streamFactory = null,
-        string $locale = 'en_US'
+        string $locale = 'en_US',
+        bool $strictMode = false
     ) {
-        $this->client = new Client($apiKey, $isProduction, $httpClient, $requestFactory, $streamFactory, $locale);
+        $this->client = new Client(
+            $apiKey,
+            $isProduction,
+            $httpClient,
+            $requestFactory,
+            $streamFactory,
+            $locale,
+            $strictMode
+        );
     }
 
     /**

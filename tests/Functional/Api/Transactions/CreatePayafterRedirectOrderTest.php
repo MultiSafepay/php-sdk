@@ -66,7 +66,7 @@ class CreatePayafterRedirectOrderTest extends AbstractTestCase
     /**
      * @return OrderRequest
      */
-    public function createOrderRequest(): OrderRequest
+    private function createOrderRequest(): OrderRequest
     {
         return $this->createGenericOrderRequestFixture()
             ->addType('redirect')

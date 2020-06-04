@@ -6,11 +6,13 @@ use Money\Money;
 use MultiSafepay\Api\Gateways\Gateway;
 use MultiSafepay\Api\Transactions\OrderRequest;
 use MultiSafepay\Exception\ApiException;
+use MultiSafepay\Exception\InvalidTotalAmountException;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CheckoutOptionsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\DescriptionFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\MetaGatewayInfoFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PluginDetailsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\GenericOrderRequestFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\ShoppingCartWithTaxFixture;
 use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CustomerDetailsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PaymentOptionsFixture;
@@ -32,6 +34,7 @@ class CreatePayafterDirectOrderTest extends AbstractTestCase
     use PaymentOptionsFixture;
     use AddressFixture;
     use ShoppingCartFixture;
+    use ShoppingCartWithTaxFixture;
     use TaxTableFixture;
     use MetaGatewayInfoFixture;
     use PluginDetailsFixture;
@@ -45,9 +48,8 @@ class CreatePayafterDirectOrderTest extends AbstractTestCase
      */
     public function testCreatePayafterDirectOrder()
     {
-        $requestOrder = $this->createOrderRequest();
-
         try {
+            $requestOrder = $this->createOrderRequest();
             $response = $this->getClient()->createPostRequest('orders', $requestOrder);
         } catch (ApiException $apiException) {
             $this->assertTrue(false, $apiException->getDetails());
@@ -60,9 +62,37 @@ class CreatePayafterDirectOrderTest extends AbstractTestCase
     }
 
     /**
+     * @throws ClientExceptionInterface
+     */
+    public function testCreatePayafterDirectOrderWithAmountMismatchButAccepted()
+    {
+        try {
+            $requestOrder = $this->createOrderRequestWithTax();
+            $response = $this->getClient()->createPostRequest('orders', $requestOrder);
+        } catch (ApiException $apiException) {
+            $this->assertTrue(false, $apiException->getDetails());
+            return;
+        }
+
+        $data = $response->getResponseData();
+        $this->assertIsNumeric($data['order_id']);
+        $this->assertNotEmpty($data['payment_url']);
+    }
+
+    /**
+     * @throws ClientExceptionInterface
+     */
+    public function testCreatePayafterDirectOrderWithAmountMismatch()
+    {
+        $this->expectException(InvalidTotalAmountException::class);
+        $requestOrder = $this->createOrderRequestWithTax();
+        $this->getClient()->useStrictMode(true)->createPostRequest('orders', $requestOrder);
+    }
+
+    /**
      * @return OrderRequest
      */
-    public function createOrderRequest(): OrderRequest
+    private function createOrderRequest(): OrderRequest
     {
         return $this->createGenericOrderRequestFixture()
             ->addType('direct')
@@ -71,5 +101,16 @@ class CreatePayafterDirectOrderTest extends AbstractTestCase
             ->addGatewayInfo($this->createRandomMetaGatewayInfoFixture())
             ->addPaymentOptions($this->createPaymentOptionsFixture())
             ->addShoppingCart($this->createShoppingCartFixture());
+    }
+
+    /**
+     * @return OrderRequest
+     * @note The total amount of items 1887.60 which causes an exception in the strict mode
+     */
+    private function createOrderRequestWithTax(): OrderRequest
+    {
+        return $this->createOrderRequest()
+            ->addMoney(Money::EUR(1887))
+            ->addShoppingCart($this->createRandomShoppingCartWithTaxFixture());
     }
 }
