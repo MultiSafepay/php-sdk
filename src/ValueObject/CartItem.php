@@ -54,7 +54,6 @@ class CartItem extends DataObject
     /**
      * @param array $data
      * @return CartItem
-     * @todo: Implement cashback, image, product_url, options[]
      */
     public static function fromData(array $data): CartItem
     {

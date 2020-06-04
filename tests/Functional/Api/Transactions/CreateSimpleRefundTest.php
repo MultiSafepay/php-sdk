@@ -55,7 +55,6 @@ class CreateSimpleRefundTest extends AbstractTestCase
             return;
         }
 
-        // @todo: If financial_status is "uncleared", can we refund?
         $this->markTestSkipped('Skipped due to issue 96');
         //$refundResponse = $this->getRefundReponseFromMockFile($orderId);
         $refundResponse = $this->getRefundResponseFromOrderId($orderId);
