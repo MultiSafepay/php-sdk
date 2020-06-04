@@ -31,16 +31,14 @@ class CheckoutOptions extends DataObject
         $taxTable = new TaxTable;
         $taxRules = [];
 
-        foreach ($shoppingCart->getItems() as $shoppingCartItem) {
-            if ($shoppingCartItem->hasTaxRate() === false) {
-                continue;
+        foreach ($shoppingCart->getItems() as $cartItem) {
+            if ($cartItem->hasTaxRate()) {
+                $taxRules[] = $this->getTaxRuleFromCartItem($cartItem);
             }
-
-            $taxRules[] = $this->getTaxRuleFromCartItem($shoppingCartItem);
         }
 
         if (!empty($taxRules)) {
-            $taxTable->addDefaultRate((new TaxRate)->addRate(0));
+            //$taxTable->addDefaultRate((new TaxRate)->addRate(0));
             $taxTable->addTaxRules($taxRules);
             $this->addTaxTable($taxTable);
         }

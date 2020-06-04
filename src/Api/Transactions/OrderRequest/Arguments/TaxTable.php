@@ -86,13 +86,15 @@ class TaxTable
             $taxRulesData[] = $taxRule->getData();
         }
 
-        return [
-            'default' => [
+        $data = ['alternate' => $taxRulesData];
+        if ($this->defaultRate) {
+            $data['default'] = [
                 'shipping_taxed' => $this->shippingTaxed,
-                'rate' => $this->defaultRate->getRate() / 100,
-            ],
-            'alternate' => $taxRulesData
-        ];
+                'rate' => ($this->defaultRate->getRate() / 100)
+            ];
+        }
+
+        return $data;
     }
 
     /**
@@ -100,10 +102,6 @@ class TaxTable
      */
     public function validate(): bool
     {
-        if (!$this->defaultRate) {
-            throw new InvalidArgumentException('Default rate is empty');
-        }
-
         if (!$this->taxRules) {
             throw new InvalidArgumentException('No tax rules given');
         }

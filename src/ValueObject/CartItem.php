@@ -94,7 +94,7 @@ class CartItem extends DataObject
     public function addUnitPrice(Money $unitPrice, float $taxRate = null): CartItem
     {
         $this->unitPrice = $unitPrice;
-        if ($taxRate) {
+        if ($taxRate !== null) {
             $this->addTaxRate($taxRate);
         }
         return $this;

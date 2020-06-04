@@ -109,8 +109,12 @@ class CreatePayafterDirectOrderTest extends AbstractTestCase
      */
     private function createOrderRequestWithTax(): OrderRequest
     {
-        return $this->createOrderRequest()
+        return $this->createGenericOrderRequestFixture()
+            ->addType('direct')
             ->addMoney(Money::EUR(1887))
+            ->addGatewayCode(Gateway::PAYAFTER)
+            ->addGatewayInfo($this->createRandomMetaGatewayInfoFixture())
+            ->addPaymentOptions($this->createPaymentOptionsFixture())
             ->addShoppingCart($this->createRandomShoppingCartWithTaxFixture());
     }
 }
