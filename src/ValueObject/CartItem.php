@@ -14,6 +14,7 @@ use MultiSafepay\Util\MoneyFormatter;
  * Class CartItem
  * @package MultiSafepay\ValueObject
  * phpcs:disable ObjectCalisthenics.Metrics.MethodPerClassLimit
+ * phpcs:disable ObjectCalisthenics.Files.ClassTraitAndInterfaceLength
  */
 class CartItem extends DataObject
 {
