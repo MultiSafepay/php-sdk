@@ -41,7 +41,6 @@ trait ShoppingCartFixture
 
     /**
      * @return ShoppingCart
-     * @todo Changing amount and quantiy also requires a different test when sending to testing API
      */
     public function createRandomShoppingCartFixture(): ShoppingCart
     {

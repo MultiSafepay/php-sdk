@@ -30,6 +30,24 @@ class ShoppingCart
     }
 
     /**
+     * @param array $data
+     * @return ShoppingCart
+     */
+    public static function fromData(array $data): ShoppingCart
+    {
+        if (!is_array($data) || empty($data['items'])) {
+            return new ShoppingCart([]);
+        }
+
+        $shoppingCart = new ShoppingCart([]);
+        foreach ((array)$data['items'] as $dataItem) {
+            $shoppingCart->addItem(CartItem::fromData($dataItem));
+        }
+
+        return $shoppingCart;
+    }
+
+    /**
      * @param CartItem[] $items
      */
     public function addItems(array $items)
