@@ -189,7 +189,6 @@ class TransactionResponse extends ResponseBody
 
     /**
      * @return string
-     * @todo: What does a return of "NO" mean? Norway or a false?
      */
     public function getFastCheckout(): string
     {
@@ -213,7 +212,7 @@ class TransactionResponse extends ResponseBody
             ->addStreetName((string)$this->get('address1'))
             ->addStreetNameAdditional((string)$this->get('address2'))
             ->addHouseNumber((string)$this->get('house_number'))
-            ->addHouseNumberSuffix('') // @todo: What happened to house number prefix?
+            ->addHouseNumberSuffix('')
             ->addZipCode((string)$this->get('zip_code'))
             ->addCity((string)$this->get('city'))
             ->addState((string)$this->get('state'))
@@ -296,44 +295,10 @@ class TransactionResponse extends ResponseBody
 
     /**
      * @return ShoppingCart
-     * @todo: Move these constructors to ShoppingCart & Item & Weight class itself
      */
     public function getShoppingCart(): ShoppingCart
     {
-        $items = [];
-        $shoppingCartData = $this->get('shopping_cart');
-        if (!is_array($shoppingCartData) || empty($shoppingCartData['items'])) {
-            return new ShoppingCart([]);
-        }
-
-        foreach ((array)$shoppingCartData['items'] as $dataItem) {
-            // @todo: Implement cashback, image, product_url, options[]
-            $items[] = $this->getItemFromData($dataItem);
-        }
-
-        return new ShoppingCart($items);
-    }
-
-    /**
-     * @param array $data
-     * @return CartItem
-     */
-    private function getItemFromData(array $data): CartItem
-    {
-        $currency = $data['currency'];
-        if (!is_string($currency)) {
-            $currency = (string)$currency;
-        }
-
-        $weight = new Weight($data['weight']['unit'], $data['weight']['value']);
-        return (new CartItem)
-            ->addName((string)$data['name'])
-            ->addUnitPrice(Money::$currency($data['unit_price'] * 100))
-            ->addQuantity((int)$data['quantity'])
-            ->addMerchantItemId((string)$data['merchant_item_id'])
-            ->addTaxTableSelector((string)$data['tax_table_selector'])
-            ->addWeight($weight)
-            ->addDescription((string)$data['description']);
+        return ShoppingCart::fromData($this->get('shopping_cart'));
     }
 
     /**
