@@ -28,16 +28,24 @@ class CheckoutOptions extends DataObject
 
         $taxRules = [];
         foreach ($this->get('alternate') as $alternateData) {
-            $taxRule = (new TaxRule)->addName($alternateData['name']);
-            foreach ($alternateData['rules'] as $ruleData) {
-                $taxRule->addTaxRate($this->getTaxRateByData($ruleData));
-            }
-
-            $taxRules[] = $taxRule;
+            $taxRules[] = $this->getTaxRule($alternateData);
         }
 
         $taxTable = new TaxTable($defaultTaxRate, $taxRules, (bool)$default['shipping_taxed']);
         return $taxTable;
+    }
+
+    /**
+     * @return TaxRule
+     */
+    private function getTaxRule(array $data): TaxRule
+    {
+        $taxRule = (new TaxRule)->addName($data['name']);
+        foreach ($data['rules'] as $ruleData) {
+            $taxRule->addTaxRate($this->getTaxRateByData($ruleData));
+        }
+
+        return $taxRule;
     }
 
     /**
