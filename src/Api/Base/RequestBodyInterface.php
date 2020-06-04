@@ -21,5 +21,5 @@ interface RequestBodyInterface
      * @param bool $strictMode
      * @return void
      */
-    public function setStrictMode(bool $strictMode);
+    public function useStrictMode(bool $strictMode);
 }

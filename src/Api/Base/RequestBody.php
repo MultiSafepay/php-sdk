@@ -49,7 +49,7 @@ class RequestBody extends DataObject implements RequestBodyInterface
     /**
      * @inheritDoc
      */
-    public function setStrictMode(bool $strictMode)
+    public function useStrictMode(bool $strictMode)
     {
         $this->strictMode = $strictMode;
     }

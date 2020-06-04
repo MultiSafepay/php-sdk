@@ -22,11 +22,7 @@ class TotalAmountValidator
             return false;
         }
 
-        if (!isset($data['shopping_cart'])) {
-            return false;
-        }
-
-        if (empty($data['shopping_cart']['items'])) {
+        if (!isset($data['shopping_cart']['items'])) {
             return false;
         }
 
@@ -70,14 +66,12 @@ class TotalAmountValidator
             return 0;
         }
 
-        $taxTableSelector = $item['tax_table_selector'];
-
         if (!isset($data['checkout_options']['tax_tables']['alternate'])) {
             return 0;
         }
 
         foreach ($data['checkout_options']['tax_tables']['alternate'] as $taxTable) {
-            if ($taxTable['name'] !== $taxTableSelector) {
+            if ($taxTable['name'] !== $item['tax_table_selector']) {
                 continue;
             }
 

@@ -84,7 +84,7 @@ class CreatePayafterDirectOrderTest extends AbstractTestCase
     {
         $this->expectException(InvalidTotalAmountException::class);
         $requestOrder = $this->createOrderRequestWithTax();
-        $this->getClient()->setStrictMode(true)->createPostRequest('orders', $requestOrder);
+        $this->getClient()->useStrictMode(true)->createPostRequest('orders', $requestOrder);
     }
 
     /**

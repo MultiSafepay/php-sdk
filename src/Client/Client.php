@@ -10,12 +10,10 @@ use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
 use MultiSafepay\Api\Base\RequestBodyInterface;
 use MultiSafepay\Api\Base\Response as ApiResponse;
-use MultiSafepay\Exception\ApiException;
 use MultiSafepay\Exception\InvalidApiKeyException;
 use MultiSafepay\Exception\StrictModeException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\RequestFactoryInterface;
-use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
@@ -35,7 +33,7 @@ class Client
     const METHOD_GET = 'GET';
 
     /**
-     * @var string
+     * @var ApiKey
      */
     private $apiKey;
 
@@ -87,7 +85,7 @@ class Client
         string $locale = 'en_US',
         bool $strictMode = false
     ) {
-        $this->initApiKey($apiKey);
+        $this->apiKey = new ApiKey($apiKey);
         $this->url = $isProduction ? self::LIVE_URL : self::TEST_URL;
         $this->httpClient = $httpClient ?: Psr18ClientDiscovery::find();
         $this->requestFactory = $requestFactory;
@@ -113,7 +111,7 @@ class Client
         $url = $this->getRequestUrl($endpoint);
         $request = $requestFactory->createRequest(self::METHOD_POST, $url)
             ->withBody($this->createBody($this->getRequestBody($requestBody)))
-            ->withHeader('api_key', $this->apiKey)
+            ->withHeader('api_key', $this->apiKey->get())
             ->withHeader('accept-encoding', 'application/json')
             ->withHeader('Content-Type', 'application/json')
             ->withHeader('Content-Length', strlen($this->getRequestBody($requestBody)));
@@ -131,7 +129,7 @@ class Client
      */
     private function getRequestBody(RequestBodyInterface $requestBody): string
     {
-        $requestBody->setStrictMode($this->strictMode);
+        $requestBody->useStrictMode($this->strictMode);
         return json_encode($requestBody->getData(), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
     }
 
@@ -149,7 +147,7 @@ class Client
         $client = $this->httpClient;
         $requestFactory = $this->getRequestFactory();
         $request = $requestFactory->createRequest(self::METHOD_GET, $url)
-            ->withHeader('api_key', $this->apiKey)
+            ->withHeader('api_key', $this->apiKey->get())
             ->withHeader('accept-encoding', 'application/json');
 
         $httpResponse = $client->sendRequest($request);
@@ -211,21 +209,9 @@ class Client
      * @param bool $strictMode
      * @return Client
      */
-    public function setStrictMode(bool $strictMode): Client
+    public function useStrictMode(bool $strictMode): Client
     {
         $this->strictMode = $strictMode;
         return $this;
-    }
-
-    /**
-     * @param string $apiKey
-     */
-    private function initApiKey(string $apiKey)
-    {
-        if (strlen($apiKey) < 5) {
-            throw new InvalidApiKeyException('Invalid API key');
-        }
-
-        $this->apiKey = $apiKey;
     }
 }
