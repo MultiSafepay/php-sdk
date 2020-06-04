@@ -6,6 +6,7 @@
 
 namespace MultiSafepay\Api\Transactions;
 
+use InvalidArgumentException;
 use Money\Money;
 use MultiSafepay\Api\Base\ResponseBody;
 use MultiSafepay\Api\Transactions\TransactionResponse\CheckoutOptions;

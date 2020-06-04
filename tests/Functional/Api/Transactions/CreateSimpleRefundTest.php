@@ -7,6 +7,7 @@ use MultiSafepay\Api\Base\RequestBody;
 use MultiSafepay\Api\Base\Response;
 use MultiSafepay\Api\Gateways\Gateway;
 use MultiSafepay\Api\Transactions\OrderRequest;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart;
 use MultiSafepay\Api\Transactions\RefundRequest;
 use MultiSafepay\Api\Transactions\RefundRequest\Arguments\CheckoutData;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CheckoutOptionsFixture;
@@ -24,7 +25,6 @@ use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CustomerDetailsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PaymentOptionsFixture;
 use MultiSafepay\Tests\Functional\AbstractTestCase;
-use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart\Item as ShoppingCartItem;
 
 /**
  * Class CreateSimpleRefundTest
@@ -70,10 +70,6 @@ class CreateSimpleRefundTest extends AbstractTestCase
      */
     private function getRefundReponseFromMockFile(string $orderId): Response
     {
-        //$transactionReponse = $this->getApi()->getTransactionManager()->get($orderId);
-        //echo json_encode($transactionReponse->getData(), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
-        //exit;
-
         $refundRequest = RequestBody::createRequestBodyFromArray(FixtureLoader::loadFixtureDataById('refund'));
         return $this->getClient()->createPostRequest('orders/' . $orderId . '/refunds', $refundRequest);
     }
@@ -86,8 +82,8 @@ class CreateSimpleRefundTest extends AbstractTestCase
     private function getRefundResponseFromOrderId(string $orderId): Response
     {
         $transactionReponse = $this->getApi()->getTransactionManager()->get($orderId);
-        $items = $transactionReponse->getShoppingCart()->getItems();
-        $refundRequest = $this->createRefundRequestForSimpleRefund($items);
+        $shoppingCart = $transactionReponse->getShoppingCart();
+        $refundRequest = $this->createRefundRequestForSimpleRefund($shoppingCart);
 
         try {
             $response = $this->getApi()->getTransactionManager()->refund($transactionReponse, $refundRequest);
@@ -148,18 +144,14 @@ class CreateSimpleRefundTest extends AbstractTestCase
     }
 
     /**
-     * @param ShoppingCartItem[] $shoppingCartItems
+     * @param ShoppingCart $shoppingCart
      * @return RefundRequest
      */
-    private function createRefundRequestForSimpleRefund(array $shoppingCartItems = []): RefundRequest
+    private function createRefundRequestForSimpleRefund(ShoppingCart $shoppingCart): RefundRequest
     {
         $checkoutData = new CheckoutData();
-        $checkoutData->addTaxTable($this->createTaxTableFixture());
-
-        foreach ($shoppingCartItems as $shoppingCartItem) {
-            $shoppingCartItem->addTaxTableSelector('none');
-            $checkoutData->addItem($shoppingCartItem);
-        }
+        $checkoutData->addTaxTable($this->createTaxTableFixture()); // @todo: Is this needed for refunds?
+        $checkoutData->generateFromShoppingCart($shoppingCart);
 
         $refundRequest = (new RefundRequest())
             ->addCheckoutData($checkoutData);

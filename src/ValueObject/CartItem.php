@@ -13,6 +13,7 @@ use MultiSafepay\Util\MoneyFormatter;
 /**
  * Class CartItem
  * @package MultiSafepay\ValueObject
+ * phpcs:disable ObjectCalisthenics.Metrics.MethodPerClassLimit
  */
 class CartItem extends DataObject
 {
@@ -57,7 +58,7 @@ class CartItem extends DataObject
      */
     public static function fromData(array $data): CartItem
     {
-        $currency = $data['currency'];
+        $currency = (string)$data['currency'];
         $weight = new Weight($data['weight']['unit'], $data['weight']['value']);
         return (new CartItem)
             ->addName((string)$data['name'])
@@ -148,12 +149,12 @@ class CartItem extends DataObject
         return array_merge(
             [
                 'name' => $this->name ?? null,
-                'description' => $this->description ?? null,
+                'description' => $this->description ?? '',
                 'unit_price' => $moneyFormatter->toDecimalString($this->unitPrice),
-                'currency' => $this->unitPrice ? $this->unitPrice->getCurrency() : null,
-                'quantity' => $this->quantity ?? null,
-                'merchant_item_id' => !empty($this->merchantItemId) ? $this->merchantItemId : null,
-                'tax_table_selector' => !empty($this->taxTableSelector) ? $this->taxTableSelector : null,
+                'currency' => $this->unitPrice ? $this->unitPrice->getCurrency() : '',
+                'quantity' => $this->quantity ?? 0,
+                'merchant_item_id' => !empty($this->merchantItemId) ? $this->merchantItemId : '',
+                'tax_table_selector' => !empty($this->taxTableSelector) ? $this->taxTableSelector : '',
                 'weight' => [
                     'unit' => $this->weight ? strtoupper($this->weight->getUnit()) : null,
                     'value' => $this->weight ? $this->weight->getQuantity() : null,
@@ -161,5 +162,61 @@ class CartItem extends DataObject
             ],
             $this->data
         );
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return Money
+     */
+    public function getUnitPrice(): Money
+    {
+        return $this->unitPrice;
+    }
+
+    /**
+     * @return int
+     */
+    public function getQuantity(): int
+    {
+        return $this->quantity;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMerchantItemId(): string
+    {
+        return $this->merchantItemId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTaxTableSelector(): string
+    {
+        return $this->taxTableSelector;
+    }
+
+    /**
+     * @return Weight
+     */
+    public function getWeight(): Weight
+    {
+        return $this->weight;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
     }
 }
