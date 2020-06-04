@@ -61,6 +61,9 @@ Each request (instance of `\MultiSafepay\Api\Base\RequestBodyInterface`) receive
  
 See the functional tests in `tests/Functional/Api/Transactions` for examples on how to build full requests. 
 
+## Tips
+- If you create an `OrderRequest` and then use the `addShoppingCart()` method to add a `ShoppingCart` object to it, you can let the method automatically generate `CheckoutOptions` as well. In other words, it allows you to skip the `addCheckoutOptions()` method. For this to work, make sure to add a tax rate to each shopping cart item (`CartItem::addTaxRate`).
+
 ## Advanced usage: The Strict Mode
 The SDK is by default initialize in a non-strict mode (by setting its constructor argument `$strictMode` to `false`). This strict mode adds additional validations on top of various API requests and API responses. In the non-strict mode (the default) some validation errors are skipped. In the strict mode, these validation errors throw an exception, which requires you to handle the exception correspondingly.
 

@@ -7,6 +7,9 @@
 namespace MultiSafepay\Api\Transactions\OrderRequest\Arguments;
 
 use MultiSafepay\Api\Base\DataObject;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\TaxTable\TaxRate;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\TaxTable\TaxRule;
+use MultiSafepay\ValueObject\CartItem;
 
 /**
  * Class CheckoutOptions
@@ -18,6 +21,30 @@ class CheckoutOptions extends DataObject
      * @var TaxTable
      */
     private $taxTable;
+
+    /**
+     * @param ShoppingCart $shoppingCart
+     * @return CheckoutOptions
+     */
+    public function generateFromShoppingCart(ShoppingCart $shoppingCart): CheckoutOptions
+    {
+        $taxTable = new TaxTable;
+        $taxRules = [];
+
+        foreach ($shoppingCart->getItems() as $cartItem) {
+            if ($cartItem->hasTaxRate()) {
+                $taxRules[] = $this->getTaxRuleFromCartItem($cartItem);
+            }
+        }
+
+        if (!empty($taxRules)) {
+            //$taxTable->addDefaultRate((new TaxRate)->addRate(0));
+            $taxTable->addTaxRules($taxRules);
+            $this->addTaxTable($taxTable);
+        }
+
+        return $this;
+    }
 
     /**
      * @param TaxTable $taxTable
@@ -40,5 +67,21 @@ class CheckoutOptions extends DataObject
             ],
             $this->data
         );
+    }
+
+    /**
+     * @param CartItem $cartItem
+     * @return TaxRule
+     */
+    private function getTaxRuleFromCartItem(CartItem $cartItem): TaxRule
+    {
+        $taxRate = new TaxRate();
+        $taxRate->addRate($cartItem->getTaxRate());
+
+        $taxRule = new TaxRule();
+        $taxRule->addName($cartItem->getTaxTableSelector());
+        $taxRule->addTaxRate($taxRate);
+
+        return $taxRule;
     }
 }

@@ -21,18 +21,14 @@ trait DirectFixture
      */
     public function createOrderIdealDirectRequestFixture(): OrderRequest
     {
-        return (new OrderRequest())
+        return $this->createGenericOrderRequestFixture()
             ->addType('direct')
-            ->addOrderId((string)time())
             ->addMoney(Money::EUR(2000))
             ->addGatewayCode(Gateway::IDEAL)
             ->addGatewayInfo($this->createIdealGatewayInfoFixture())
             ->addPaymentOptions($this->createPaymentOptionsFixture())
-            ->addDescription($this->createDescriptionFixture())
-            ->addCustomerDetails($this->createCustomerDetailsFixture())
             ->addSecondChance($this->createSecondChanceFixture())
-            ->addGoogleAnalytics($this->createRandomGoogleAnalyticsFixture())
-            ->addPluginDetails($this->createPluginDetailsFixture());
+            ->addGoogleAnalytics($this->createRandomGoogleAnalyticsFixture());
     }
 
     /**
@@ -40,17 +36,13 @@ trait DirectFixture
      */
     public function createRandomOrderIdealDirectRequestFixture(): OrderRequest
     {
-        return (new OrderRequest())
+        return $this->createGenericRandomOrderRequestFixture()
             ->addType('direct')
-            ->addOrderId((string)time())
             ->addMoney(Money::EUR(20))
             ->addGatewayCode(Gateway::IDEAL)
             ->addGatewayInfo($this->createIdealGatewayInfoFixture())
             ->addPaymentOptions($this->createPaymentOptionsFixture())
-            ->addDescription($this->createRandomDescriptionFixture())
-            ->addCustomerDetails($this->createCustomerDetailsFixture())
             ->addSecondChance($this->createSecondChanceFixture())
-            ->addGoogleAnalytics($this->createRandomGoogleAnalyticsFixture())
-            ->addPluginDetails($this->createPluginDetailsFixture());
+            ->addGoogleAnalytics($this->createRandomGoogleAnalyticsFixture());
     }
 }

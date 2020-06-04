@@ -29,6 +29,7 @@ trait ShoppingCartFixture
             ->addUnitPrice(Money::EUR(5000))
             ->addQuantity(2)
             ->addDescription('1234')
+            ->addTaxRate(0)
             ->addTaxTableSelector('none')
             ->addMerchantItemId('1234')
             ->addWeight(
@@ -47,11 +48,12 @@ trait ShoppingCartFixture
 
         $items = [];
         $items[] = (new ShoppingCartItem())
-            ->addName($faker->sentence(3))
+            ->addName($faker->sentence(3) . ' with VAT')
             ->addUnitPrice(Money::EUR(50))
             ->addQuantity(2)
             ->addMerchantItemId($faker->uuid)
             ->addDescription($faker->sentence(10))
+            ->addTaxRate(0)
             ->addTaxTableSelector('none')
             ->addWeight(
                 new Weight('KG', rand(1, 10))

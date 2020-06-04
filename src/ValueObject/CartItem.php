@@ -29,6 +29,11 @@ class CartItem extends DataObject
     protected $unitPrice;
 
     /**
+     * @var float
+     */
+    protected $taxRate;
+
+    /**
      * @var int
      */
     protected $quantity;
@@ -83,11 +88,28 @@ class CartItem extends DataObject
 
     /**
      * @param Money $unitPrice
+     * @param float|null $taxRate
      * @return CartItem
      */
-    public function addUnitPrice(Money $unitPrice): CartItem
+    public function addUnitPrice(Money $unitPrice, float $taxRate = null): CartItem
     {
         $this->unitPrice = $unitPrice;
+        if ($taxRate !== null) {
+            $this->addTaxRate($taxRate);
+        }
+        return $this;
+    }
+
+    /**
+     * @param float $taxRate
+     * @return CartItem
+     */
+    public function addTaxRate(float $taxRate): CartItem
+    {
+        $this->taxRate = $taxRate;
+        if (!$this->taxTableSelector) {
+            $this->taxTableSelector = $taxRate;
+        }
         return $this;
     }
 
@@ -179,6 +201,22 @@ class CartItem extends DataObject
     public function getUnitPrice(): Money
     {
         return $this->unitPrice;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasTaxRate(): bool
+    {
+        return is_float($this->taxRate);
+    }
+
+    /**
+     * @return float
+     */
+    public function getTaxRate(): float
+    {
+        return $this->taxRate;
     }
 
     /**

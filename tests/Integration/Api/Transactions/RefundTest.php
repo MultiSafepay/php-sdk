@@ -16,6 +16,7 @@ use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\IdealGatewayInfoFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PluginDetailsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\SecondChanceFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\ShoppingCartFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\GenericOrderRequestFixture;
 use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CustomerDetailsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\DirectFixture as DirectOrderRequestFixture;
@@ -26,6 +27,7 @@ use PHPUnit\Framework\TestCase;
 
 class RefundTest extends TestCase
 {
+    use GenericOrderRequestFixture;
     use DirectOrderRequestFixture;
     use PaymentOptionsFixture;
     use CustomerDetailsFixture;

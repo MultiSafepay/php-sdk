@@ -16,6 +16,7 @@ use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\DescriptionFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\GoogleAnalyticsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PluginDetailsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\SecondChanceFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\GenericOrderRequestFixture;
 use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CustomerDetailsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\DirectFixture as RequestOrderDirectFixture;
@@ -29,6 +30,7 @@ use Psr\Http\Client\ClientExceptionInterface;
 
 class TransactionManagerTest extends TestCase
 {
+    use GenericOrderRequestFixture;
     use RequestOrderDirectFixture;
     use RequestOrderRedirectFixture;
     use PaymentOptionsFixture;

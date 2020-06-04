@@ -10,9 +10,9 @@ use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\DescriptionFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\IdealGatewayInfoFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PluginDetailsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\SecondChanceFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\GenericOrderRequestFixture;
 use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CustomerDetailsFixture;
-use MultiSafepay\Tests\Fixtures\OrderRequest\RedirectFixture as OrderRequestRedirectFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PaymentOptionsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\ShoppingCartFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\TaxTableFixture;
@@ -27,6 +27,7 @@ use Psr\Http\Client\ClientExceptionInterface;
  */
 class CreateIdealRedirectOrderTest extends AbstractTestCase
 {
+    use GenericOrderRequestFixture;
     use CustomerDetailsFixture;
     use PaymentOptionsFixture;
     use AddressFixture;
@@ -63,14 +64,11 @@ class CreateIdealRedirectOrderTest extends AbstractTestCase
      */
     private function createOrderRequest(): OrderRequest
     {
-        return (new OrderRequest())
+        return $this->createGenericOrderRequestFixture()
             ->addType('redirect')
-            ->addOrderId((string)time())
             ->addMoney(Money::EUR(20))
             ->addGatewayCode(Gateway::IDEAL)
             ->addGatewayInfo($this->createIdealGatewayInfoFixture())
-            ->addPaymentOptions($this->createPaymentOptionsFixture())
-            ->addDescription($this->createDescriptionFixture())
-            ->addPluginDetails($this->createPluginDetailsFixture());
+            ->addPaymentOptions($this->createPaymentOptionsFixture());
     }
 }
