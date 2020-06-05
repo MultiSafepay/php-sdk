@@ -113,7 +113,7 @@ class CartItem extends DataObject
 
         $this->taxRate = $taxRate;
         if (!$this->taxTableSelector) {
-            $this->taxTableSelector = $taxRate;
+            $this->taxTableSelector = (string)$taxRate;
         }
         return $this;
     }

@@ -21,6 +21,8 @@ class CartItemTest extends TestCase
         $cartItem = new CartItem();
         $cartItem->addTaxRate($taxRate);
         $this->assertEquals($taxRate, $cartItem->getTaxRate());
+        $this->assertEquals($taxRate, $cartItem->getTaxTableSelector());
+        $this->assertNotSame($taxRate, $cartItem->getTaxTableSelector());
     }
 
     /**
