@@ -59,7 +59,7 @@ $transactionManager->refund($transaction, $requestRefund);
 
 Each request (instance of `\MultiSafepay\Api\Base\RequestBodyInterface`) receives arguments like `$checkoutData`. An argument could be a simple variable or actually an argument object, that helps you fill in the right details.
  
-See the functional tests in `tests/Functional/Api/Transactions` for examples on how to build full requests. 
+See [USAGE.md](USAGE.md) and the functional tests in `tests/Functional/Api/Transactions` for examples on how to build full requests. 
 
 ## Tips
 - If you create an `OrderRequest` and then use the `addShoppingCart()` method to add a `ShoppingCart` object to it, you can let the method automatically generate `CheckoutOptions` as well. In other words, it allows you to skip the `addCheckoutOptions()` method. For this to work, make sure to add a tax rate to each shopping cart item (`CartItem::addTaxRate`).
