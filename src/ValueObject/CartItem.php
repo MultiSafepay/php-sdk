@@ -8,6 +8,7 @@ namespace MultiSafepay\ValueObject;
 
 use Money\Money;
 use MultiSafepay\Api\Base\DataObject;
+use MultiSafepay\Exception\InvalidArgumentException;
 use MultiSafepay\Util\MoneyFormatter;
 
 /**
@@ -106,6 +107,10 @@ class CartItem extends DataObject
      */
     public function addTaxRate(float $taxRate): CartItem
     {
+        if ($taxRate > 100 || $taxRate < 0) {
+            throw new InvalidArgumentException('Tax rate should be between 0 and 100');
+        }
+
         $this->taxRate = $taxRate;
         if (!$this->taxTableSelector) {
             $this->taxTableSelector = $taxRate;
