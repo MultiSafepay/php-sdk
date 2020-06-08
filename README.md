@@ -1,4 +1,13 @@
+<p align="center">
+  <img src="https://www.multisafepay.com/img/multisafepaylogo.svg" width="400px" position="center">
+</p>
+
 # MultiSafepay PHP SDK
+
+[![Latest Stable Version](https://img.shields.io/packagist/v/multisafepay/php-sdk)](https://packagist.org/packages/multisafepay/php-sdk)
+
+## About MultiSafepay ##
+MultiSafepay is a collecting payment service provider which means we take care of the agreements, technical details and payment collection required for each payment method. You can start selling online today and manage all your transactions from one place.
 
 ## Installation
 To install the SDK, use the following composer command:
@@ -118,3 +127,12 @@ Unit and integration tests run without the actual API, which means that the clie
     php tests/generateApiMocks.php
 
 It is the intention to commit all generated JSON files into git, so that they serve as fixtures. Files that are not used in tests, are not needed to be generated.
+
+## Support
+You can create issues on our repository. If you need any additional help or support, please contact <a href="mailto:integration@multisafepay.com">integration@multisafepay.com</a>
+
+## License
+[Open Software License (OSL 3.0)](https://github.com/MultiSafepay/php-sdk/blob/master/LICENSE.md)
+
+## Want to be part of the team?
+Are you a developer interested in working at MultiSafepay? [View](https://www.multisafepay.com/careers/#jobopenings) our job openings and feel free to get in touch with us.
