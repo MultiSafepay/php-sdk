@@ -51,19 +51,12 @@ class CheckoutData extends DataObject
      */
     public function refundByMerchantItemId(string $merchantItemId, int $quantity = 0)
     {
-        $foundItem = null;
-        foreach ($this->items as $item) {
-            if ($item->getMerchantItemId() === $merchantItemId) {
-                $foundItem = $item;
-                break;
-            }
+        if (count($this->items) < 1) {
+            throw new InvalidArgumentException('No items provided in checkout data');
         }
 
-        if (empty($foundItem)) {
-            throw new InvalidArgumentException('No item found with merchant_item_id "' . $merchantItemId . '"');
-        }
-
-        if ($quantity < 1) {
+        $foundItem = $this->getItemByMerchantItemId($merchantItemId);
+        if ($quantity < 1 || $quantity > $foundItem->getQuantity()) {
             $quantity = $foundItem->getQuantity();
         }
 
@@ -124,5 +117,20 @@ class CheckoutData extends DataObject
             ],
             $this->data
         );
+    }
+
+    /**
+     * @param string $merchantItemId
+     * @return CartItem
+     */
+    private function getItemByMerchantItemId(string $merchantItemId): CartItem
+    {
+        foreach ($this->items as $item) {
+            if ($item->getMerchantItemId() === $merchantItemId) {
+                return $item;
+            }
+        }
+
+        throw new InvalidArgumentException('No item found with merchant_item_id "' . $merchantItemId . '"');
     }
 }

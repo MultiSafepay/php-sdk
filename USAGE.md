@@ -80,5 +80,37 @@ $orderRequest = (new OrderRequest())
 $transaction = $multiSafepaySdk->getTransactionManager()->create($orderRequest);
 ```
 
+### Adding a shopping cart to an order
+Most orders also require a shopping cart to be added. This can be created by adding items to a cart:
+```php
+use Money\Money;
+use MultiSafepay\ValueObject\Weight;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart\Item;
+
+$items = [(new Item())
+    ->addName('Geometric Candle Holders')
+    ->addUnitPrice(Money::EUR(5000))
+    ->addQuantity(2)
+    ->addDescription('1234')
+    ->addTaxRate(21)
+    ->addTaxTableSelector('none')
+    ->addMerchantItemId('1234')
+    ->addWeight(new Weight('KG', 12));
+
+$shoppingCart = new ShoppingCart($items);
+$orderRequest->addShoppingCart($shoppingCart);
+```
+
+Each item has an `addTaxRate` method that does not actually add an entry to the JSON data of the item itself. Instead, this tax rate is used to automatically construct table rates, that are added to the checkout options of the same order request. These checkout options can be manually added to the order request via a method `addCheckoutOptions`. But in practice, it is often enough to simply have these checkout options automatically be generated via the shopping cart instead.
+
+### Creating a refund
+Creating a refund is easiest by using the shortcut methods in the TransactionManager:
+```php
+$transaction = $multiSafepaySdk->getTransactionManager()->get($orderId);
+$multiSafepaySdk->getTransactionManager()->refundByItem($transaction, $merchantItemId, $quantity = 0);
+```
+The `$merchantItemId` is some kind of unique value that was initially added while creating the shopping cart. If the `$quantity` is set to zero (`0`) all items identified by `$merchantItemId` are refunded.
+
 ### Additional examples
 Additional real-life examples can be found in the `tests/Functional` folder, even though they might be a bit more complex because of their usage of fixtures.
