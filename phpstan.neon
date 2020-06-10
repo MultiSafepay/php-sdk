@@ -1,4 +1,4 @@
 parameters:
-	autoload_directories:
+	scanDirectories:
 		- src
 		- tests

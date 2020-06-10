@@ -33,7 +33,7 @@ class CheckoutOptions extends DataObject
 
         foreach ($shoppingCart->getItems() as $cartItem) {
             if ($cartItem->hasTaxRate()) {
-                $taxRules[] = $this->getTaxRuleFromCartItem($cartItem);
+                $taxRules[$cartItem->getTaxRate()] = $this->getTaxRuleFromCartItem($cartItem);
             }
         }
 
