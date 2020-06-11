@@ -10,17 +10,19 @@ use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
 use MultiSafepay\Api\Base\RequestBodyInterface;
 use MultiSafepay\Api\Base\Response as ApiResponse;
-use MultiSafepay\Exception\InvalidApiKeyException;
 use MultiSafepay\Exception\StrictModeException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
 
 /**
  * Class Client
  * @package MultiSafepay
+ * phpcs:disable ObjectCalisthenics.Metrics.MethodPerClassLimit
+ * phpcs:disable ObjectCalisthenics.Files.ClassTraitAndInterfaceLength
  */
 class Client
 {
@@ -31,6 +33,8 @@ class Client
     const METHOD_POST = 'POST';
 
     const METHOD_GET = 'GET';
+
+    const METHOD_PATCH = 'PATCH';
 
     /**
      * @var ApiKey
@@ -61,6 +65,7 @@ class Client
      * @var string
      */
     private $locale = 'en_US';
+
     /**
      * @var bool
      */
@@ -106,32 +111,39 @@ class Client
         RequestBodyInterface $requestBody = null,
         array $context = []
     ): ApiResponse {
-        $client = $this->httpClient;
-        $requestFactory = $this->getRequestFactory();
-        $url = $this->getRequestUrl($endpoint);
-        $request = $requestFactory->createRequest(self::METHOD_POST, $url)
+        $request = $this->createRequest($endpoint, self::METHOD_POST)
             ->withBody($this->createBody($this->getRequestBody($requestBody)))
-            ->withHeader('api_key', $this->apiKey->get())
-            ->withHeader('accept-encoding', 'application/json')
-            ->withHeader('Content-Type', 'application/json')
             ->withHeader('Content-Length', strlen($this->getRequestBody($requestBody)));
 
         $context['headers'] = $request->getHeaders();
         $context['request_body'] = $this->getRequestBody($requestBody);
-        $httpResponse = $client->sendRequest($request);
+        $httpResponse = $this->httpClient->sendRequest($request);
         return ApiResponse::withJson($httpResponse->getBody()->getContents(), $context);
     }
 
+
     /**
-     * @param RequestBodyInterface $requestBody
-     * @return string
-     * @throws StrictModeException
+     * @param string $endpoint
+     * @param RequestBodyInterface|null $requestBody
+     * @param array $context
+     * @return ApiResponse
+     * @throws ClientExceptionInterface
      */
-    private function getRequestBody(RequestBodyInterface $requestBody): string
-    {
-        $requestBody->useStrictMode($this->strictMode);
-        return json_encode($requestBody->getData(), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+    public function createPatchRequest(
+        string $endpoint,
+        RequestBodyInterface $requestBody = null,
+        array $context = []
+    ): ApiResponse {
+        $request = $this->createRequest($endpoint, self::METHOD_PATCH)
+            ->withBody($this->createBody($this->getRequestBody($requestBody)))
+            ->withHeader('Content-Length', strlen($this->getRequestBody($requestBody)));
+
+        $context['headers'] = $request->getHeaders();
+        $context['request_body'] = $this->getRequestBody($requestBody);
+        $httpResponse = $this->httpClient->sendRequest($request);
+        return ApiResponse::withJson($httpResponse->getBody()->getContents(), $context);
     }
+
 
     /**
      * @param string $endpoint
@@ -142,15 +154,8 @@ class Client
      */
     public function createGetRequest(string $endpoint, array $parameters = [], array $context = []): ApiResponse
     {
-        $url = $this->getRequestUrl($endpoint, $parameters);
-
-        $client = $this->httpClient;
-        $requestFactory = $this->getRequestFactory();
-        $request = $requestFactory->createRequest(self::METHOD_GET, $url)
-            ->withHeader('api_key', $this->apiKey->get())
-            ->withHeader('accept-encoding', 'application/json');
-
-        $httpResponse = $client->sendRequest($request);
+        $request = $this->createRequest($endpoint, self::METHOD_GET, $parameters);
+        $httpResponse = $this->httpClient->sendRequest($request);
         $context['headers'] = $request->getHeaders();
         $context['request_params'] = $parameters;
         return ApiResponse::withJson($httpResponse->getBody()->getContents(), $context);
@@ -213,5 +218,32 @@ class Client
     {
         $this->strictMode = $strictMode;
         return $this;
+    }
+
+    /**
+     * @param string $endpoint
+     * @param string $method
+     * @param array $parameters
+     * @return RequestInterface
+     */
+    private function createRequest(string $endpoint, string $method, array $parameters = []): RequestInterface
+    {
+        $url = $this->getRequestUrl($endpoint, $parameters);
+        $requestFactory = $this->getRequestFactory();
+        return $requestFactory->createRequest($method, $url)
+            ->withHeader('api_key', $this->apiKey->get())
+            ->withHeader('accept-encoding', 'application/json')
+            ->withHeader('Content-Type', 'application/json');
+    }
+
+    /**
+     * @param RequestBodyInterface $requestBody
+     * @return string
+     * @throws StrictModeException
+     */
+    private function getRequestBody(RequestBodyInterface $requestBody): string
+    {
+        $requestBody->useStrictMode($this->strictMode);
+        return json_encode($requestBody->getData(), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
     }
 }

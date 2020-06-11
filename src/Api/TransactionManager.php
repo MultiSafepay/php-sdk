@@ -6,11 +6,13 @@
 
 namespace MultiSafepay\Api;
 
+use MultiSafepay\Api\Base\RequestBody;
 use MultiSafepay\Api\Base\Response;
 use MultiSafepay\Api\Transactions\OrderRequestInterface;
 use MultiSafepay\Api\Transactions\RefundRequest;
 use MultiSafepay\Api\Transactions\TransactionResponse as Transaction;
 use MultiSafepay\Api\Transactions\RefundRequest\Arguments\CheckoutData;
+use MultiSafepay\Api\Transactions\UpdateRequest;
 use MultiSafepay\Exception\ApiException;
 use Psr\Http\Client\ClientExceptionInterface;
 
@@ -47,9 +49,27 @@ class TransactionManager extends AbstractManager
     }
 
     /**
+     * @param string $orderId
+     * @param UpdateRequest $updateRequest
+     * @return Response
+     * @throws ClientExceptionInterface
+     */
+    public function update(string $orderId, UpdateRequest $updateRequest): Response
+    {
+        $context = ['request_body' => $updateRequest->getData()];
+        $response = $this->client->createPatchRequest(
+            'orders/' . $orderId,
+            $updateRequest,
+            $context
+        );
+
+        return $response;
+    }
+
+    /**
      * @param Transaction $transaction
      * @param RefundRequest $requestRefund
-     * @return array
+     * @return Response
      * @throws ClientExceptionInterface
      */
     public function refund(Transaction $transaction, RefundRequest $requestRefund): Response
