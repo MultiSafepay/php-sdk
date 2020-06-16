@@ -66,15 +66,20 @@ class CartItem extends DataObject
     public static function fromData(array $data): CartItem
     {
         $currency = (string)$data['currency'];
-        $weight = new Weight($data['weight']['unit'], $data['weight']['value']);
-        return (new CartItem)
+
+        $item = (new self())
             ->addName((string)$data['name'])
             ->addUnitPrice(Money::$currency($data['unit_price'] * 100))
             ->addQuantity((int)$data['quantity'])
             ->addMerchantItemId((string)$data['merchant_item_id'])
             ->addTaxTableSelector((string)$data['tax_table_selector'])
-            ->addWeight($weight)
             ->addDescription((string)$data['description']);
+
+        if ($data['weight']['unit'] !== null) {
+            $weight = new Weight($data['weight']['unit'], $data['weight']['value']);
+            $item->addWeight($weight);
+        }
+        return $item;
     }
 
     /**
