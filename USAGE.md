@@ -10,7 +10,7 @@ $gateways = $multiSafepaySdk->getGatewayManager()->getGateways();
 ### Get a specific gateway
 ```php
 /** @var \MultiSafepay\Api\Gateways\Gateway $gateway **/
-$gateway = $multiSafepaySdk->getGatewayManager()->getGateway('VISA');
+$gateway = $multiSafepaySdk->getGatewayManager()->getByCode('VISA');
 ```
 
 ### Get a list of categories
