@@ -188,11 +188,19 @@ class TransactionResponse extends ResponseBody
     }
 
     /**
-     * @return string
+     * @return string YES|NO
      */
     public function getFastCheckout(): string
     {
         return (string)$this->get('fastcheckout');
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFastCheckout(): bool
+    {
+        return $this->getFastCheckout() === 'YES';
     }
 
     /**
