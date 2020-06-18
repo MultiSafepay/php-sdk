@@ -28,17 +28,6 @@ class CartItemTest extends TestCase
     /**
      * Test for addTaxRate method
      */
-    public function testAddTaxRateHigherThan100()
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $taxRate = 121;
-        $cartItem = new CartItem();
-        $cartItem->addTaxRate($taxRate);
-    }
-
-    /**
-     * Test for addTaxRate method
-     */
     public function testAddTaxRateLowerThan0()
     {
         $this->expectException(InvalidArgumentException::class);
