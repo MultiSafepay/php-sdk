@@ -55,7 +55,7 @@ class Version
             throw new MissingPluginVersionException('Plugin version is missing');
         }
 
-        return 'Plugin: ' . $this->getPluginVersion() . '; PHP-SDK ' . $this->getSdkVersion();
+        return 'Plugin ' . $this->getPluginVersion() . '; PHP-SDK ' . $this->getSdkVersion();
     }
 
     /**
@@ -63,10 +63,7 @@ class Version
      */
     public function getSdkVersion(): string
     {
-        if (empty($this->sdkVersion)) {
-            $this->sdkVersion = $this->detectSdkVersion();
-        }
-
+        $this->sdkVersion = $this->detectSdkVersion();
         return $this->sdkVersion;
     }
 
@@ -101,7 +98,7 @@ class Version
             throw new RuntimeException('Could not read file "' . $composerFile . '"');
         }
 
-        $composerData = json_decode($composerFile, true);
+        $composerData = json_decode($composerContents, true);
         if (isset($composerData['version'])) {
             $this->sdkVersion = $composerData['version'];
         }
