@@ -6,9 +6,9 @@
 
 namespace MultiSafepay\ValueObject;
 
-use MultiSafepay\Exception\InvalidArgumentException;
-use Iban\Validation\Validator;
 use Iban\Validation\Iban;
+use Iban\Validation\Validator;
+use MultiSafepay\Exception\InvalidArgumentException;
 
 /**
  * Class IbanNumber
@@ -55,7 +55,7 @@ class IbanNumber
                 $messages[] = $violation;
             }
 
-            $msg = 'Bank account "' . $ibanNumber . '" is invalid: '.implode('; ', $messages);
+            $msg = 'Bank account "' . $ibanNumber . '" is invalid: ' . implode('; ', $messages);
             throw new InvalidArgumentException($msg);
         }
 

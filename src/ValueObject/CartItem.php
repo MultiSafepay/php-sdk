@@ -112,8 +112,8 @@ class CartItem extends DataObject
      */
     public function addTaxRate(float $taxRate): CartItem
     {
-        if ($taxRate > 100 || $taxRate < 0) {
-            throw new InvalidArgumentException('Tax rate should be between 0 and 100');
+        if ($taxRate < 0) {
+            throw new InvalidArgumentException('Tax rate can not be less then 0');
         }
 
         $this->taxRate = $taxRate;
@@ -187,7 +187,7 @@ class CartItem extends DataObject
                 'currency' => $this->unitPrice ? $this->unitPrice->getCurrency() : '',
                 'quantity' => $this->quantity ?? 0,
                 'merchant_item_id' => !empty($this->merchantItemId) ? $this->merchantItemId : '',
-                'tax_table_selector' => !empty($this->taxTableSelector) ? $this->taxTableSelector : '',
+                'tax_table_selector' => $this->taxTableSelector ?? '',
                 'weight' => [
                     'unit' => $this->weight ? strtoupper($this->weight->getUnit()) : null,
                     'value' => $this->weight ? $this->weight->getQuantity() : null,
