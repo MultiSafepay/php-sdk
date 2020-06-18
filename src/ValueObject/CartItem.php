@@ -187,8 +187,7 @@ class CartItem extends DataObject
                 'currency' => $this->unitPrice ? $this->unitPrice->getCurrency() : '',
                 'quantity' => $this->quantity ?? 0,
                 'merchant_item_id' => !empty($this->merchantItemId) ? $this->merchantItemId : '',
-                'tax_table_selector' => (!empty($this->taxTableSelector) ||
-                    $this->taxTableSelector === '0') ? $this->taxTableSelector : null,
+                'tax_table_selector' => $this->taxTableSelector ?? '',
                 'weight' => [
                     'unit' => $this->weight ? strtoupper($this->weight->getUnit()) : null,
                     'value' => $this->weight ? $this->weight->getQuantity() : null,
