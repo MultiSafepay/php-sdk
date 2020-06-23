@@ -16,7 +16,7 @@ use MultiSafepay\Exception\InvalidDataInitializationException;
 class Gateway
 {
     /**
-     * Available gateway codes
+     * Known gateway codes
      */
     const AFTERPAY = 'AFTERPAY';
     const BANKTRANS = 'BANKTRANS';
@@ -101,17 +101,13 @@ class Gateway
             throw new InvalidDataInitializationException('No ID or description');
         }
 
-        if (!in_array($data['id'], self::getAvailableGateways())) {
-            throw new InvalidDataInitializationException('ID "' . $data['id'] . '" is not a known gateway code');
-        }
-
         return true;
     }
 
     /**
      * @return array
      */
-    public static function getAvailableGateways(): array
+    public static function getKnownGateways(): array
     {
         return [
             self::AFTERPAY,

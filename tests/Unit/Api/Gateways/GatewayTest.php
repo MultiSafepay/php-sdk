@@ -23,6 +23,16 @@ class GatewayTest extends TestCase
     }
 
     /**
+     * Test normal initialization
+     */
+    public function testUnknownInitialization()
+    {
+        $gateway = new Gateway(['id' => 'foobar', 'description' => 'foobar']);
+        $this->assertEquals('foobar', $gateway->getId());
+        $this->assertEquals('foobar', $gateway->getDescription());
+    }
+
+    /**
      * Test improper initialization
      *
      * @dataProvider getWrongData
