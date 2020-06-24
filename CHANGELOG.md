@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Fixed
 - Allow for unknown gateway codes to be used as well
+- Removed postcode and state from tax rates, because they are not implemented in API
+- Additional unit tests
 
 ## [1.0.0] - 2020-06-05
 ### Added
