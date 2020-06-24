@@ -45,7 +45,7 @@ class PluginDetails
      */
     public function __construct()
     {
-        $this->pluginVersion = new Version();
+        $this->pluginVersion = Version::getInstance();
     }
 
     /**
@@ -65,6 +65,15 @@ class PluginDetails
     public function addApplicationName(string $applicationName): PluginDetails
     {
         $this->applicationName = $applicationName;
+        return $this;
+    }
+
+    /**
+     * @param string $pluginVersion
+     */
+    public function addPluginVersion(string $pluginVersion): PluginDetails
+    {
+        $this->pluginVersion->addPluginVersion($pluginVersion);
         return $this;
     }
 
@@ -112,6 +121,10 @@ class PluginDetails
     {
         if (empty($this->applicationVersion) || empty($this->applicationName)) {
             throw new InvalidArgumentException('Application name and version can not be empty');
+        }
+
+        if (!$this->pluginVersion instanceof Version) {
+            throw new InvalidArgumentException('Plugin version can not be empty');
         }
 
         return true;

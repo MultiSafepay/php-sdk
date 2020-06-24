@@ -14,12 +14,19 @@ use MultiSafepay\Sdk;
 abstract class AbstractTestCase extends TestCase
 {
     /**
+     * Setup resources for all tests
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+        Version::getInstance()->addPluginVersion('functional-test');
+    }
+
+    /**
      * @return Client
      */
     protected function getClient(): Client
     {
-        Version::getInstance()->addPluginVersion('functional-test');
-
         require_once __DIR__ . '/../bootstrap.php';
 
         $apiKey = getenv('API_KEY');
@@ -33,8 +40,6 @@ abstract class AbstractTestCase extends TestCase
      */
     protected function getApi(): Sdk
     {
-        Version::getInstance()->addPluginVersion('functional-test');
-
         require_once __DIR__ . '/../bootstrap.php';
 
         $apiKey = getenv('API_KEY');
