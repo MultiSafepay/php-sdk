@@ -26,21 +26,15 @@ class TaxRate
     private $country;
 
     /**
-     * @var string
-     */
-    private $state = '';
-
-    /**
-     * @var string
-     */
-    private $postcode = '';
-
-    /**
      * @param float $rate
      * @return TaxRate
      */
     public function addRate(float $rate): TaxRate
     {
+        if (($rate > 0 && $rate < 1) || $rate > 100) {
+            throw new InvalidArgumentException('Rate is supposed to be a number between 1 and 100 (or just 0)');
+        }
+
         $this->rate = $rate;
         return $this;
     }
@@ -52,26 +46,6 @@ class TaxRate
     public function addCountry(Country $country): TaxRate
     {
         $this->country = $country;
-        return $this;
-    }
-
-    /**
-     * @param string $state
-     * @return TaxRate
-     */
-    public function addState(string $state): TaxRate
-    {
-        $this->state = $state;
-        return $this;
-    }
-
-    /**
-     * @param string $postcode
-     * @return TaxRate
-     */
-    public function addPostcode(string $postcode): TaxRate
-    {
-        $this->postcode = $postcode;
         return $this;
     }
 
@@ -92,30 +66,11 @@ class TaxRate
     }
 
     /**
-     * @return string
-     */
-    public function getState(): string
-    {
-        return $this->state;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPostcode(): string
-    {
-        return $this->postcode;
-    }
-
-    /**
      * @return bool
+     * @deprecated Validation is taken care off by
      */
     public function validate(): bool
     {
-        if (($this->rate > 0 && $this->rate < 1) || $this->rate > 100) {
-            throw new InvalidArgumentException('Rate is supposed to be a number between 1 and 100 (or just 0)');
-        }
-
         return true;
     }
 }

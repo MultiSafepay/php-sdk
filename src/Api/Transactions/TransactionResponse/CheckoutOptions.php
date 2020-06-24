@@ -56,8 +56,6 @@ class CheckoutOptions extends DataObject
     {
         return (new TaxRate)
             ->addRate((float)$data['rate'])
-            ->addCountry($data['country'] ? new Country($data['country']) : null)
-            ->addState((string)$data['state'])
-            ->addPostcode((string)$data['postcode']);
+            ->addCountry($data['country'] ? new Country($data['country']) : null);
     }
 }
