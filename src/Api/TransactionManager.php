@@ -6,7 +6,6 @@
 
 namespace MultiSafepay\Api;
 
-use MultiSafepay\Api\Base\RequestBody;
 use MultiSafepay\Api\Base\Response;
 use MultiSafepay\Api\Transactions\OrderRequestInterface;
 use MultiSafepay\Api\Transactions\RefundRequest;
@@ -95,30 +94,19 @@ class TransactionManager extends AbstractManager
      */
     public function refundByItem(Transaction $transaction, string $merchantItemId, int $quantity = 0): Response
     {
-        $orderId = $transaction->getOrderId();
-        $context = ['transaction' => $transaction->getData()];
-
-        $requestRefund = $this->createRefundRequest($transaction, $merchantItemId, $quantity);
-        $response = $this->client->createPostRequest(
-            'orders/' . $orderId . '/refunds',
-            $requestRefund,
-            $context
-        );
-
-        return $response;
+        $requestRefund = $this->createRefundRequest($transaction);
+        $requestRefund->getCheckoutData()->refundByMerchantItemId($merchantItemId, $quantity);
+        return $this->refund($transaction, $requestRefund);
     }
 
     /**
      * @param Transaction $transaction
-     * @param string $merchantItemId
-     * @param int $quantity Set to 0 to refund all items
      * @return RefundRequest
      */
-    public function createRefundRequest(Transaction $transaction, string $merchantItemId, int $quantity): RefundRequest
+    public function createRefundRequest(Transaction $transaction): RefundRequest
     {
         $checkoutData = new CheckoutData();
         $checkoutData->generateFromShoppingCart($transaction->getShoppingCart());
-        $checkoutData->refundByMerchantItemId($merchantItemId, $quantity);
 
         $requestRefund = new RefundRequest();
         $requestRefund->addCheckoutData($checkoutData);

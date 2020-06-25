@@ -112,5 +112,14 @@ $multiSafepaySdk->getTransactionManager()->refundByItem($transaction, $merchantI
 ```
 The `$merchantItemId` is some kind of unique value that was initially added while creating the shopping cart. If the `$quantity` is set to zero (`0`) all items identified by `$merchantItemId` are refunded.
 
+To refund multiple items, you can do the following:
+```php
+$transaction = $multiSafepaySdk->getTransactionManager()->get($orderId);
+$refundRequest = $multiSafepaySdk->getTransactionManager()->createRefundRequest($transaction);
+$refundRequest->getCheckoutData()->refundByMerchantItemId('example1', 1);
+$refundRequest->getCheckoutData()->refundByMerchantItemId('example2', 2);
+$refundRequest->getCheckoutData()->refundByMerchantItemId('example3', 1);
+```
+
 ### Additional examples
 Additional real-life examples can be found in the `tests/Functional` folder, even though they might be a bit more complex because of their usage of fixtures.

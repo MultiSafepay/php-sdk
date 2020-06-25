@@ -88,4 +88,12 @@ class RefundRequest extends RequestBody implements RequestBodyInterface
         $this->checkoutData = $checkoutData;
         return $this;
     }
+
+    /**
+     * @return CheckoutData
+     */
+    public function getCheckoutData(): CheckoutData
+    {
+        return $this->checkoutData;
+    }
 }
