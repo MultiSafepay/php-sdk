@@ -5,11 +5,11 @@ namespace MultiSafepay\Tests\Functional\Api\Transactions;
 use Money\Money;
 use MultiSafepay\Api\Base\RequestBody;
 use MultiSafepay\Api\Base\Response;
-use MultiSafepay\Api\Gateways\Gateway;
 use MultiSafepay\Api\Transactions\OrderRequest;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart;
 use MultiSafepay\Api\Transactions\RefundRequest;
 use MultiSafepay\Api\Transactions\RefundRequest\Arguments\CheckoutData;
+use MultiSafepay\Tests\Fixtures\Api\Gateways\GatewayFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CheckoutOptionsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\DescriptionFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PluginDetailsFixture;
@@ -133,7 +133,7 @@ class CreateSimpleRefundTest extends AbstractTestCase
             ->addType('direct')
             ->addShoppingCart($this->createShoppingCartFixture())
             ->addMoney(Money::EUR(10000))
-            ->addGatewayCode(Gateway::PAYAFTER)
+            ->addGatewayCode(GatewayFixture::PAYAFTER)
             ->addGatewayInfo($this->createRandomMetaGatewayInfoFixture())
             ->addPaymentOptions($this->createPaymentOptionsFixture());
     }

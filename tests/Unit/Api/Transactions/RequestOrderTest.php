@@ -2,7 +2,7 @@
 
 namespace MultiSafepay\Tests\Unit\Api\Issuers;
 
-use MultiSafepay\Api\Gateways\Gateway;
+use MultiSafepay\Tests\Fixtures\Api\Gateways\GatewayFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\DescriptionFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\GoogleAnalyticsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PluginDetailsFixture;
@@ -45,7 +45,7 @@ class RequestOrderTest extends TestCase
 
         $data = $requestOrder->getData();
         $this->assertEquals('redirect', $data['type']);
-        $this->assertEquals(Gateway::IDEAL, $data['gateway']);
+        $this->assertEquals(GatewayFixture::IDEAL, $data['gateway']);
         $this->assertIsNumeric($data['order_id']);
         $this->assertEquals('EUR', $data['currency']);
         $this->assertEquals('2000', $data['amount']);
@@ -61,7 +61,7 @@ class RequestOrderTest extends TestCase
 
         $data = $requestOrder->getData();
         $this->assertEquals('direct', $data['type']);
-        $this->assertEquals(Gateway::IDEAL, $data['gateway']);
+        $this->assertEquals(GatewayFixture::IDEAL, $data['gateway']);
         $this->assertIsNumeric($data['order_id']);
         $this->assertEquals('EUR', $data['currency']);
         $this->assertEquals('2000', $data['amount']);

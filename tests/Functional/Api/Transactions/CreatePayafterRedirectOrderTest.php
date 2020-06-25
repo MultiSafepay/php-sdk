@@ -2,14 +2,10 @@
 
 namespace MultiSafepay\Tests\Functional\Api\Transactions;
 
-use Faker\Factory as FakerFactory;
-use Http\Client\Common\HttpAsyncClientDecorator;
 use Money\Money;
-use MultiSafepay\Api\Gateways\Gateway;
 use MultiSafepay\Api\Transactions\OrderRequest;
-use MultiSafepay\Api\Transactions\OrderRequest\Arguments\Description;
-use MultiSafepay\Api\Transactions\OrderRequest\Redirect as RedirectOrderRequest;
 use MultiSafepay\Exception\ApiException;
+use MultiSafepay\Tests\Fixtures\Api\Gateways\GatewayFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CheckoutOptionsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\DescriptionFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\MetaGatewayInfoFixture;
@@ -71,7 +67,7 @@ class CreatePayafterRedirectOrderTest extends AbstractTestCase
         return $this->createGenericOrderRequestFixture()
             ->addType('redirect')
             ->addMoney(Money::EUR(10000))
-            ->addGatewayCode(Gateway::PAYAFTER)
+            ->addGatewayCode(GatewayFixture::PAYAFTER)
             ->addGatewayInfo($this->createRandomMetaGatewayInfoFixture())
             ->addPaymentOptions($this->createPaymentOptionsFixture())
             ->addShoppingCart($this->createShoppingCartFixture());

@@ -3,12 +3,12 @@
 namespace MultiSafepay\Tests\Functional\Api\Transactions;
 
 use Money\Money;
+use MultiSafepay\Tests\Fixtures\Api\Gateways\GatewayFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\GenericOrderRequestFixture;
 use MultiSafepay\Tests\Fixtures\ValueObject\CountryFixture;
 use MultiSafepay\Tests\Fixtures\ValueObject\PhoneNumberFixture;
 use Psr\Http\Client\ClientExceptionInterface;
 use MultiSafepay\Exception\ApiException;
-use MultiSafepay\Api\Gateways\Gateway;
 use MultiSafepay\Api\Transactions\OrderRequest;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\DescriptionFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\GoogleAnalyticsFixture;
@@ -68,7 +68,7 @@ class CreateIdealDirectOrderTest extends AbstractTestCase
         return $this->createGenericOrderRequestFixture()
             ->addType('direct')
             ->addMoney(Money::EUR(20))
-            ->addGatewayCode(Gateway::IDEAL)
+            ->addGatewayCode(GatewayFixture::IDEAL)
             ->addGatewayInfo($this->createRandomIdealGatewayInfoFixture($this->getApi()))
             ->addPaymentOptions($this->createPaymentOptionsFixture());
     }

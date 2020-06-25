@@ -16,31 +16,6 @@ use MultiSafepay\Exception\InvalidDataInitializationException;
 class Gateway
 {
     /**
-     * Known gateway codes
-     */
-    const AFTERPAY = 'AFTERPAY';
-    const BANKTRANS = 'BANKTRANS';
-    const CREDITCARD = 'CREDITCARD';
-    const DIRECTBANK = 'DIRECTBANK';
-    const DIRDEB = 'DIRDEB';
-    const EINVOICE = 'EINVOICE';
-    const EPS = 'EPS';
-    const FASHIONCHQ = 'FASHIONCHQ';
-    const FASHIONGFT = 'FASHIONGFT';
-    const GIROPAY = 'GIROPAY';
-    const IDEAL = 'IDEAL';
-    const IDEALQR = 'IDEALQR';
-    const KLARNA = 'KLARNA';
-    const MAESTRO = 'MAESTRO';
-    const MASTERCARD = 'MASTERCARD';
-    const MISTERCASH = 'MISTERCASH';
-    const PAYAFTER = 'PAYAFTER';
-    const SANTANDER = 'SANTANDER';
-    const TRUSTLY = 'TRUSTLY';
-    const VISA = 'VISA';
-    const VVVBON = 'VVVBON';
-
-    /**
      * @var string
      */
     private $id = '';
@@ -102,35 +77,5 @@ class Gateway
         }
 
         return true;
-    }
-
-    /**
-     * @return array
-     */
-    public static function getKnownGateways(): array
-    {
-        return [
-            self::AFTERPAY,
-            self::BANKTRANS,
-            self::CREDITCARD,
-            self::DIRDEB,
-            self::DIRECTBANK,
-            self::EINVOICE,
-            self::EPS,
-            self::FASHIONCHQ,
-            self::FASHIONGFT,
-            self::GIROPAY,
-            self::IDEAL,
-            self::IDEALQR,
-            self::KLARNA,
-            self::MASTERCARD,
-            self::MAESTRO,
-            self::MISTERCASH,
-            self::PAYAFTER,
-            self::SANTANDER,
-            self::TRUSTLY,
-            self::VISA,
-            self::VVVBON,
-        ];
     }
 }
