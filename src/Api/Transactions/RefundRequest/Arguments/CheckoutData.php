@@ -61,7 +61,9 @@ class CheckoutData extends DataObject
         }
 
         $refundItem = clone($foundItem);
-        $refundItem->addQuantity(0 - $quantity);
+        $refundItem->addQuantity($quantity);
+        $refundItem->addUnitPrice($foundItem->getUnitPrice()->negative());
+
         $this->addItem($refundItem);
     }
 
