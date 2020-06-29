@@ -30,7 +30,7 @@ use MultiSafepay\Api\Transactions\OrderRequest\Validators\TotalAmountValidator;
  */
 class OrderRequest extends RequestBody implements OrderRequestInterface
 {
-    const ALLOWED_TYPES = ['direct', 'redirect'];
+    const ALLOWED_TYPES = ['direct', 'redirect', 'paymentlink'];
 
     /**
      * @var string
