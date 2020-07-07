@@ -2,7 +2,7 @@
 
 namespace MultiSafepay\Tests\Functional\Api\Transactions;
 
-use Money\Money;
+use MultiSafepay\ValueObject\Money;
 use MultiSafepay\Api\Transactions\OrderRequest;
 use MultiSafepay\Exception\ApiException;
 use MultiSafepay\Exception\InvalidTotalAmountException;
@@ -96,7 +96,7 @@ class CreatePayafterDirectOrderTest extends AbstractTestCase
     {
         return $this->createGenericOrderRequestFixture()
             ->addType('direct')
-            ->addMoney(Money::EUR(10000))
+            ->addMoney(new Money(10000, 'EUR'))
             ->addGatewayCode(GatewayFixture::PAYAFTER)
             ->addGatewayInfo($this->createRandomMetaGatewayInfoFixture())
             ->addPaymentOptions($this->createPaymentOptionsFixture())
@@ -111,7 +111,7 @@ class CreatePayafterDirectOrderTest extends AbstractTestCase
     {
         return $this->createGenericOrderRequestFixture()
             ->addType('direct')
-            ->addMoney(Money::EUR(1887))
+            ->addMoney(new Money(1887, 'EUR'))
             ->addGatewayCode(GatewayFixture::PAYAFTER)
             ->addGatewayInfo($this->createRandomMetaGatewayInfoFixture())
             ->addPaymentOptions($this->createPaymentOptionsFixture())

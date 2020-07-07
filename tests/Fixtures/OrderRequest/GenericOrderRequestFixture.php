@@ -6,8 +6,6 @@
 
 namespace MultiSafepay\Tests\Fixtures\OrderRequest;
 
-use Money\Money;
-use MultiSafepay\Api\Gateways\Gateway;
 use MultiSafepay\Api\Transactions\OrderRequest;
 
 /**

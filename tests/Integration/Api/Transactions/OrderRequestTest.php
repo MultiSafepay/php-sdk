@@ -7,10 +7,9 @@
 namespace MultiSafepay\Tests\Api\Integration\Transactions;
 
 use Faker\Factory as FakerFactory;
-use Money\Money;
+use MultiSafepay\ValueObject\Money;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart\Item as ShoppingCartItem;
-use MultiSafepay\Api\Transactions\TransactionResponse;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\DescriptionFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\GoogleAnalyticsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\IdealGatewayInfoFixture;
@@ -92,7 +91,7 @@ class OrderRequestTest extends TestCase
         $faker = FakerFactory::create();
         return (new ShoppingCartItem())
             ->addName($faker->word)
-            ->addUnitPrice(Money::EUR($amount))
+            ->addUnitPrice(new Money($amount, 'EUR'))
             ->addQuantity($quantity)
             ->addDescription($faker->word)
             ->addTaxRate($taxRate)

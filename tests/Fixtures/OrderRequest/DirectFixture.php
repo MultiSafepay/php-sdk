@@ -6,8 +6,7 @@
 
 namespace MultiSafepay\Tests\Fixtures\OrderRequest;
 
-use Money\Money;
-use MultiSafepay\Api\Gateways\Gateway;
+use MultiSafepay\ValueObject\Money;
 use MultiSafepay\Api\Transactions\OrderRequest;
 use MultiSafepay\Tests\Fixtures\Api\Gateways\GatewayFixture;
 
@@ -24,7 +23,7 @@ trait DirectFixture
     {
         return $this->createGenericOrderRequestFixture()
             ->addType('direct')
-            ->addMoney(Money::EUR(2000))
+            ->addMoney(new Money(20, 'EUR'))
             ->addGatewayCode(GatewayFixture::IDEAL)
             ->addGatewayInfo($this->createIdealGatewayInfoFixture())
             ->addPaymentOptions($this->createPaymentOptionsFixture())
@@ -39,7 +38,7 @@ trait DirectFixture
     {
         return $this->createGenericRandomOrderRequestFixture()
             ->addType('direct')
-            ->addMoney(Money::EUR(20))
+            ->addMoney(new Money(20, 'EUR'))
             ->addGatewayCode(GatewayFixture::IDEAL)
             ->addGatewayInfo($this->createIdealGatewayInfoFixture())
             ->addPaymentOptions($this->createPaymentOptionsFixture())

@@ -6,7 +6,7 @@
 
 namespace MultiSafepay\Util;
 
-use Money\Money;
+use MultiSafepay\ValueObject\Money;
 
 /**
  * Class MoneyFormatter
