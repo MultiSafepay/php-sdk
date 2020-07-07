@@ -49,7 +49,7 @@ trait ShoppingCartFixture
         $items = [];
         $items[] = (new ShoppingCartItem())
             ->addName($faker->sentence(3) . ' with VAT')
-            ->addUnitPrice(Money::EUR(50))
+            ->addUnitPrice(new Money(20, 'EUR'))
             ->addQuantity(2)
             ->addMerchantItemId($faker->uuid)
             ->addDescription($faker->sentence(10))
