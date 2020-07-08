@@ -6,8 +6,6 @@
 
 namespace MultiSafepay\Api\Transactions;
 
-use InvalidArgumentException;
-use Money\Money;
 use MultiSafepay\Api\Base\ResponseBody;
 use MultiSafepay\Api\Transactions\TransactionResponse\CheckoutOptions;
 use MultiSafepay\Api\Transactions\TransactionResponse\Costs;
@@ -16,14 +14,12 @@ use MultiSafepay\Api\Transactions\TransactionResponse\PaymentDetails;
 use MultiSafepay\Api\Transactions\TransactionResponse\PaymentMethod;
 use MultiSafepay\Api\Transactions\TransactionResponse\RelatedTransaction;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart;
-use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart\Item;
-use MultiSafepay\ValueObject\CartItem;
+use MultiSafepay\ValueObject\Money;
 use MultiSafepay\ValueObject\Customer;
 use MultiSafepay\ValueObject\Customer\Address;
 use MultiSafepay\ValueObject\Customer\Country;
 use MultiSafepay\ValueObject\Customer\EmailAddress;
 use MultiSafepay\ValueObject\Customer\PhoneNumber;
-use MultiSafepay\ValueObject\Weight;
 
 /**
  * Model TransactionResponse for containing transaction data received from the API
@@ -94,8 +90,7 @@ class TransactionResponse extends ResponseBody
      */
     public function getMoney(): Money
     {
-        $currency = $this->getCurrency();
-        return Money::$currency($this->get('amount'));
+        return new Money($this->getAmount(), $this->getCurrency());
     }
 
     /**
@@ -151,8 +146,7 @@ class TransactionResponse extends ResponseBody
      */
     public function getMoneyRefunded(): Money
     {
-        $currency = $this->getCurrency();
-        return Money::$currency($this->get('amount_refunded'));
+        return new Money($this->getAmountRefunded(), $this->getCurrency());
     }
 
     /**

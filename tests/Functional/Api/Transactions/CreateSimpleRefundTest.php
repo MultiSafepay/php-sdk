@@ -2,7 +2,6 @@
 
 namespace MultiSafepay\Tests\Functional\Api\Transactions;
 
-use Money\Money;
 use MultiSafepay\Api\Base\RequestBody;
 use MultiSafepay\Api\Base\Response;
 use MultiSafepay\Api\Transactions\OrderRequest;
@@ -19,6 +18,7 @@ use MultiSafepay\Tests\Fixtures\OrderRequest\GenericOrderRequestFixture;
 use MultiSafepay\Tests\Fixtures\ValueObject\CountryFixture;
 use MultiSafepay\Tests\Fixtures\ValueObject\PhoneNumberFixture;
 use MultiSafepay\Tests\Utils\FixtureLoader;
+use MultiSafepay\ValueObject\Money;
 use Psr\Http\Client\ClientExceptionInterface;
 use MultiSafepay\Exception\ApiException;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\MetaGatewayInfoFixture;
@@ -132,7 +132,7 @@ class CreateSimpleRefundTest extends AbstractTestCase
         return $this->createGenericOrderRequestFixture()
             ->addType('direct')
             ->addShoppingCart($this->createShoppingCartFixture())
-            ->addMoney(Money::EUR(10000))
+            ->addMoney(new Money(10000, 'EUR'))
             ->addGatewayCode(GatewayFixture::PAYAFTER)
             ->addGatewayInfo($this->createRandomMetaGatewayInfoFixture())
             ->addPaymentOptions($this->createPaymentOptionsFixture());

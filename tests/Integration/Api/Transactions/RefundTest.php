@@ -6,7 +6,7 @@
 
 namespace MultiSafepay\Tests\Api\Integration\Transactions;
 
-use Money\Money;
+use MultiSafepay\ValueObject\Money;
 use MultiSafepay\Api\Transactions\RefundRequest;
 use MultiSafepay\Api\Transactions\RefundRequest\Arguments\CheckoutData;
 use MultiSafepay\Api\Transactions\TransactionResponse;
@@ -47,7 +47,7 @@ class RefundTest extends TestCase
     public function testGetOrderData(): void
     {
         $orderRequest = $this->createOrderIdealDirectRequestFixture();
-        $orderRequest->addMoney(Money::EUR(10000));
+        $orderRequest->addMoney(new Money(10000, 'EUR'));
         $orderRequest->addShoppingCart($this->createShoppingCartFixture());
 
         $transaction = new TransactionResponse($orderRequest->getData());
