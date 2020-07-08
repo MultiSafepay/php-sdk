@@ -7,7 +7,7 @@
 namespace MultiSafepay\Tests\Fixtures\OrderRequest\Arguments;
 
 use Faker\Factory as FakerFactory;
-use Money\Money;
+use MultiSafepay\ValueObject\Money;
 use MultiSafepay\ValueObject\Weight;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart\Item as ShoppingCartItem;
@@ -26,7 +26,7 @@ trait ShoppingCartFixture
         $items = [];
         $items[] = (new ShoppingCartItem())
             ->addName('Geometric Candle Holders')
-            ->addUnitPrice(Money::EUR(5000))
+            ->addUnitPrice(new Money(5000, 'EUR'))
             ->addQuantity(2)
             ->addDescription('1234')
             ->addTaxRate(0)
@@ -49,7 +49,7 @@ trait ShoppingCartFixture
         $items = [];
         $items[] = (new ShoppingCartItem())
             ->addName($faker->sentence(3) . ' with VAT')
-            ->addUnitPrice(Money::EUR(50))
+            ->addUnitPrice(new Money(20, 'EUR'))
             ->addQuantity(2)
             ->addMerchantItemId($faker->uuid)
             ->addDescription($faker->sentence(10))

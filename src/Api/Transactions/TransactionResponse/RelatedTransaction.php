@@ -6,7 +6,7 @@
 
 namespace MultiSafepay\Api\Transactions\TransactionResponse;
 
-use Money\Money;
+use MultiSafepay\ValueObject\Money;
 use MultiSafepay\Api\Base\DataObject;
 
 /**
@@ -36,8 +36,7 @@ class RelatedTransaction extends DataObject
      */
     public function getMoney(): Money
     {
-        $currency = $this->getCurrency();
-        return Money::$currency($this->get('amount'));
+        return new Money($this->getAmount(), $this->getCurrency());
     }
 
     /**

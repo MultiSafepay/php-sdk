@@ -6,7 +6,6 @@
 
 namespace MultiSafepay\ValueObject;
 
-use Money\Money;
 use MultiSafepay\Api\Base\DataObject;
 use MultiSafepay\Exception\InvalidArgumentException;
 use MultiSafepay\Util\MoneyFormatter;
@@ -65,11 +64,9 @@ class CartItem extends DataObject
      */
     public static function fromData(array $data): CartItem
     {
-        $currency = (string)$data['currency'];
-
         $item = (new self())
             ->addName((string)$data['name'])
-            ->addUnitPrice(Money::$currency($data['unit_price'] * 100))
+            ->addUnitPrice(new Money($data['unit_price'] * 100, (string)$data['currency']))
             ->addQuantity((int)$data['quantity'])
             ->addMerchantItemId((string)$data['merchant_item_id'])
             ->addTaxTableSelector((string)$data['tax_table_selector'])
@@ -103,6 +100,7 @@ class CartItem extends DataObject
         if ($taxRate !== null) {
             $this->addTaxRate($taxRate);
         }
+
         return $this;
     }
 

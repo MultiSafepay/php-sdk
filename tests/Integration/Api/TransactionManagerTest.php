@@ -6,7 +6,7 @@
 
 namespace MultiSafepay\Tests\Integration\Api;
 
-use Money\Money;
+use MultiSafepay\ValueObject\Money;
 use MultiSafepay\Api\TransactionManager;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\Description;
 use MultiSafepay\Api\Transactions\RefundRequest;
@@ -127,7 +127,7 @@ class TransactionManagerTest extends TestCase
         );
 
         $refundRequest = (new RefundRequest())
-            ->addMoney(Money::EUR(21))
+            ->addMoney(new Money(21, 'EUR'))
             ->addDescription(Description::fromText('Give me my money back'));
         $refundResponse = $transactionManager->refund($transaction, $refundRequest);
         $refundData = $refundResponse->getResponseData();

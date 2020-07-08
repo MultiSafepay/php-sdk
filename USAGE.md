@@ -83,14 +83,14 @@ $transaction = $multiSafepaySdk->getTransactionManager()->create($orderRequest);
 ### Adding a shopping cart to an order
 Most orders also require a shopping cart to be added. This can be created by adding items to a cart:
 ```php
-use Money\Money;
+use MultiSafepay\ValueObject\Money;
 use MultiSafepay\ValueObject\Weight;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart\Item;
 
 $items = [(new Item())
     ->addName('Geometric Candle Holders')
-    ->addUnitPrice(Money::EUR(5000))
+    ->addUnitPrice(new Money(5000, 'EUR'))
     ->addQuantity(2)
     ->addDescription('1234')
     ->addTaxRate(21)

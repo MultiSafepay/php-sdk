@@ -64,7 +64,7 @@ class RequestOrderTest extends TestCase
         $this->assertEquals(GatewayFixture::IDEAL, $data['gateway']);
         $this->assertIsNumeric($data['order_id']);
         $this->assertEquals('EUR', $data['currency']);
-        $this->assertEquals('2000', $data['amount']);
+        $this->assertEquals('20', $data['amount']);
         $this->assertEquals('foobar', $data['description']);
     }
 }

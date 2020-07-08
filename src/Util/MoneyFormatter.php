@@ -6,7 +6,7 @@
 
 namespace MultiSafepay\Util;
 
-use Money\Money;
+use MultiSafepay\ValueObject\Money;
 
 /**
  * Class MoneyFormatter
@@ -29,6 +29,6 @@ class MoneyFormatter
         }
 
         $float = (float)$amount / 100;
-        return number_format($float, 2, '.', ',');
+        return number_format($float, 10, '.', ',');
     }
 }

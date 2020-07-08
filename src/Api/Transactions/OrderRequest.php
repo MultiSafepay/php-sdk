@@ -6,8 +6,7 @@
 
 namespace MultiSafepay\Api\Transactions;
 
-use Money\Money;
-use MultiSafepay\Api\Base\DataObject;
+use MultiSafepay\ValueObject\Money;
 use MultiSafepay\Api\Base\RequestBody;
 use MultiSafepay\Api\Gateways\Gateway;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\CheckoutOptions;
