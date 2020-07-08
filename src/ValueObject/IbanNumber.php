@@ -6,8 +6,6 @@
 
 namespace MultiSafepay\ValueObject;
 
-use Iban\Validation\Iban;
-use Iban\Validation\Validator;
 use MultiSafepay\Exception\InvalidArgumentException;
 
 /**
@@ -42,12 +40,41 @@ class IbanNumber
 
     /**
      * @param string $ibanNumber
+     * @throws InvalidArgumentException
      * @return bool
      */
     public function validate(string $ibanNumber): bool
     {
-        $iban = new Iban($ibanNumber);
-        $validator = new Validator();
+        if (strlen($ibanNumber) < 8) {
+            throw new InvalidArgumentException('Bank account "' . $ibanNumber . '" is invalid');
+        }
+
+        if (!preg_match('/^([a-z]{2})([0-9]{2})/', strtolower($ibanNumber))) {
+            throw new InvalidArgumentException('Bank account "' . $ibanNumber . '" is invalid');
+        }
+
+        $this->validateWithIbanLibrary($ibanNumber);
+
+        return true;
+    }
+
+    /**
+     * @param string $ibanNumber
+     * @throws InvalidArgumentException
+     * @return bool
+     */
+    private function validateWithIbanLibrary(string $ibanNumber): bool
+    {
+        if (!class_exists(\Iban\Validation\Iban::class)) {
+            return false;
+        }
+
+        if (!class_exists(\Iban\Validation\Validator::class)) {
+            return false;
+        }
+
+        $iban = new \Iban\Validation\Iban($ibanNumber);
+        $validator = new \Iban\Validation\Validator();
 
         if (!$validator->validate($iban)) {
             $messages = [];
