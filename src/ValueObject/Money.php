@@ -6,6 +6,8 @@
 
 namespace MultiSafepay\ValueObject;
 
+use MultiSafepay\Util\MoneyFormatter;
+
 /**
  * Class Money
  * @package MultiSafepay\ValueObject
@@ -62,6 +64,6 @@ class Money
      */
     public function __toString(): string
     {
-        return number_format($this->amount, 4, '.', '');
+        return (new MoneyFormatter)->toDecimalString($this);
     }
 }

@@ -29,6 +29,6 @@ class MoneyFormatter
         }
 
         $float = (float)$amount / 100;
-        return number_format($float, 2, '.', ',');
+        return number_format($float, 10, '.', ',');
     }
 }
