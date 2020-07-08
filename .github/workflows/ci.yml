@@ -42,4 +42,4 @@ jobs:
       - name: Run PHPUnit tests
         run:  vendor/bin/phpunit --coverage-clover=coverage.xml
       - name: Send clover to codecov
-        run: bash <(curl -s https://codecov.io/bash) -t ${{ secrets.CODECOV_TOKEN }} -Z -R .
+        run: test -z "${{ secrets.CODECOV_TOKEN }}" || (bash <(curl -s https://codecov.io/bash) -t ${{ secrets.CODECOV_TOKEN }} -f "*.php" -Z -R .)
