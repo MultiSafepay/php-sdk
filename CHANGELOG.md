@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.0.0] - 2020-07-07
 ### Removed
-- Changed Money into custom ValueObject
+- Changed `Money\Money` into custom ValueObject `MultiSafepay\ValueObject\Money`. Make sure to update all code.
 
 ### Fixed
 - Allow for unknown gateway codes to be used as well
