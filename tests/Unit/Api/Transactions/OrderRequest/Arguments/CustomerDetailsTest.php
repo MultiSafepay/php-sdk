@@ -48,8 +48,7 @@ class CustomerDetailsTest extends TestCase
         $this->assertEquals('Amsterdam', $customerData['city']);
         $this->assertEquals('Noord Holland', $customerData['state']);
         $this->assertEquals('NL', $customerData['country']);
-        $this->assertEquals('0123456789', $customerData['phone1']);
-        $this->assertEmpty($customerData['phone2']);
+        $this->assertEquals('0123456789', $customerData['phone']);
         $this->assertEquals('info@example.org', $customerData['email']);
         $this->assertEquals('127.0.0.1', $customerData['ip_address']);
         $this->assertEquals('nl_NL', $customerData['locale']);

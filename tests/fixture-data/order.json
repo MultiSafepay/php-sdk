@@ -68,8 +68,7 @@
     "house_number": 39,
     "last_name": "Doe",
     "locale": "nl",
-    "phone1": "0623160207",
-    "phone2": "",
+    "phone": "0623160207",
     "state": null,
     "zip_code": "1033SC"
   },

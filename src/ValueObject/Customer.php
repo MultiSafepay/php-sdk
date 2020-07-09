@@ -43,9 +43,9 @@ class Customer
     private $lastName = '';
 
     /**
-     * @var PhoneNumber[]
+     * @var PhoneNumber
      */
-    private $phoneNumbers = [];
+    private $phoneNumber;
 
     /**
      * @param IpAddress $ipAddress
@@ -98,25 +98,12 @@ class Customer
     }
 
     /**
-     * @param PhoneNumber[] $phoneNumbers
-     * @return Customer
-     */
-    public function addPhoneNumbers(array $phoneNumbers): Customer
-    {
-        foreach ($phoneNumbers as $phoneNumber) {
-            $this->addPhoneNumber($phoneNumber);
-        }
-
-        return $this;
-    }
-
-    /**
      * @param PhoneNumber $phoneNumber
      * @return Customer
      */
     public function addPhoneNumber(PhoneNumber $phoneNumber): Customer
     {
-        $this->phoneNumbers[] = $phoneNumber->get();
+        $this->phoneNumber = $phoneNumber;
         return $this;
     }
 
@@ -161,10 +148,10 @@ class Customer
     }
 
     /**
-     * @return PhoneNumber[]
+     * @return PhoneNumber
      */
-    public function getPhoneNumbers(): array
+    public function getPhoneNumber(): ?PhoneNumber
     {
-        return $this->phoneNumbers;
+        return $this->phoneNumber;
     }
 }

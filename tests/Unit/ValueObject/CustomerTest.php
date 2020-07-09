@@ -36,8 +36,6 @@ class CustomerTest extends TestCase
 
         $this->assertEquals('10.0.0.1', $customer->getIpAddress()->get());
         $this->assertEquals('info@example.org', $customer->getEmailAddress()->get());
-
-        $phoneNumbers = $customer->getPhoneNumbers();
-        $this->assertContains('0123456789', $phoneNumbers);
+        $this->assertEquals('0123456789', $customer->getPhoneNumber()->get());
     }
 }

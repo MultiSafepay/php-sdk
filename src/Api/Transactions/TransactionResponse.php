@@ -233,8 +233,7 @@ class TransactionResponse extends ResponseBody
             ->addLastName((string)$this->get('last_name'))
             ->addAddress($this->getAddress())
             ->addEmailAddress(new EmailAddress((string)$this->get('email')))
-            ->addPhoneNumber(new PhoneNumber((string)$this->get('phone1')))
-            ->addPhoneNumber(new PhoneNumber((string)$this->get('phone2')));
+            ->addPhoneNumber(new PhoneNumber((string)$this->get('phone')));
     }
 
     /**

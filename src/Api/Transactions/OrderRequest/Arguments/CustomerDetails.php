@@ -48,7 +48,6 @@ class CustomerDetails extends Customer
     public function getData(): array
     {
         $address = $this->getAddress();
-        $phoneNumbers = $this->getPhoneNumbers();
         $data = [
             'firstname' => $this->getFirstName(),
             'lastname' => $this->getLastName(),
@@ -60,8 +59,7 @@ class CustomerDetails extends Customer
             'state' => $address->getState(),
             'country' => $address->getCountry() ? $address->getCountry()->getCode() : null,
             'country_name' => $address->getCountry() ? $address->getCountry()->getName() : null,
-            'phone1' => $phoneNumbers[0] ?? null,
-            'phone2' => $phoneNumbers[1] ?? null,
+            'phone' => $this->getPhoneNumber() ? $this->getPhoneNumber()->get() : null,
             'email' => $this->getEmailAddress() ? $this->getEmailAddress()->get() : null,
             'ip_address' => $this->getIpAddress() ? $this->getIpAddress()->get() : null,
             'locale' => $this->getLocale(),
