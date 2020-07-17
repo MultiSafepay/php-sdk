@@ -70,7 +70,7 @@ class QrCode implements GatewayInfoInterface
     }
 
     /**
-     * @param int $maxAmount
+     * @param int $minAmount
      * @return QrCode
      */
     public function addMinAmount(int $minAmount): QrCode
