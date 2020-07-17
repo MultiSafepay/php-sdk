@@ -32,7 +32,12 @@ class QrCode implements GatewayInfoInterface
     /**
      * @var int
      */
-    private $maxAmount = 1000;
+    private $minAmount;
+
+    /**
+     * @var int
+     */
+    private $maxAmount;
 
     /**
      * @param int $qrSize
@@ -65,6 +70,16 @@ class QrCode implements GatewayInfoInterface
     }
 
     /**
+     * @param int $minAmount
+     * @return QrCode
+     */
+    public function addMinAmount(int $minAmount): QrCode
+    {
+        $this->minAmount = $minAmount;
+        return $this;
+    }
+
+    /**
      * @param int $maxAmount
      * @return QrCode
      */
@@ -83,7 +98,8 @@ class QrCode implements GatewayInfoInterface
             'qr_size' => $this->qrSize,
             'allow_multiple' => $this->allowMultiple,
             'allow_change_amount' => $this->allowChangeAmount,
-            'max_amount' => $this->maxAmount,
+            'min_amount' => $this->minAmount ?? null,
+            'max_amount' => $this->maxAmount ?? null,
         ];
     }
 }
