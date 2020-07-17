@@ -11,6 +11,9 @@ use PHPUnit\Framework\TestCase;
  */
 class QrCodeTest extends TestCase
 {
+    /**
+     * Test to see if adding stuff results in the proper output array
+     */
     public function testGetData()
     {
         $qrCode = new QrCode();
