@@ -11,6 +11,7 @@ use MultiSafepay\Exception\InvalidArgumentException;
 /**
  * Class PaymentOptions
  * @package MultiSafepay\Api\Transactions\OrderRequest\Arguments
+ * phpcs:disable ObjectCalisthenics.Metrics.MethodPerClassLimit
  */
 class PaymentOptions
 {
