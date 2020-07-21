@@ -6,6 +6,8 @@
 
 namespace MultiSafepay\Api\Transactions\OrderRequest\Arguments;
 
+use MultiSafepay\Exception\InvalidArgumentException;
+
 /**
  * Class PaymentOptions
  * @package MultiSafepay\Api\Transactions\OrderRequest\Arguments
@@ -16,6 +18,11 @@ class PaymentOptions
      * @var string
      */
     private $notificationUrl = '';
+
+    /**
+     * @var string
+     */
+    private $notificationMethod = 'POST';
 
     /**
      * @var string
@@ -39,6 +46,20 @@ class PaymentOptions
     public function addNotificationUrl(string $notificationUrl): PaymentOptions
     {
         $this->notificationUrl = $notificationUrl;
+        return $this;
+    }
+
+    /**
+     * @param string $notificationMethod
+     * @return PaymentOptions
+     */
+    public function addNotificationMethod(string $notificationMethod = 'POST'): PaymentOptions
+    {
+        if (!in_array($notificationMethod, ['GET', 'POST'])) {
+            throw new InvalidArgumentException('Notification method can only be "GET" or "POST"');
+        }
+
+        $this->notificationMethod = $notificationMethod;
         return $this;
     }
 
@@ -71,13 +92,21 @@ class PaymentOptions
         $this->closeWindow = $closeWindow;
         return $this;
     }
-    
+
     /**
      * @return string
      */
     public function getNotificationUrl(): string
     {
         return $this->notificationUrl;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNotificationMethod(): string
+    {
+        return $this->notificationMethod;
     }
 
     /**
@@ -111,6 +140,7 @@ class PaymentOptions
     {
         return [
             'notification_url' => $this->getNotificationUrl(),
+            'notification_method' => $this->getNotificationMethod(),
             'redirect_url' => $this->getRedirectUrl(),
             'cancel_url' => $this->getCancelUrl(),
             'close_window' => $this->isCloseWindow()
