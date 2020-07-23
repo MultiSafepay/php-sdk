@@ -64,8 +64,8 @@ class Money
      */
     public function negative(): Money
     {
-        $this->amount = 0 - $this->amount;
-        return $this;
+        $amount = 0 - $this->amount;
+        return new Money($amount, $this->currency);
     }
 
     /**
