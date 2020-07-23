@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Fixed
 - Make sure QrCode `min_amount` and `max_amount` make sense
+- Fix call to undefined method negative when using refundByMerchantItemId 
 
 ### Removed
 - Removed `phone2` and `addPhoneNumbers()` from `Customer` class
