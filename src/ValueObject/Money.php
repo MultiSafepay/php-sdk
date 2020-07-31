@@ -60,6 +60,15 @@ class Money
     }
 
     /**
+     * @return Money
+     */
+    public function negative(): Money
+    {
+        $amount = 0 - $this->amount;
+        return new Money($amount, $this->currency);
+    }
+
+    /**
      * @return string
      */
     public function __toString(): string
