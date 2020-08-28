@@ -1,0 +1,31 @@
+name: Code sniffer
+on:
+  pull_request:
+    branches:
+      - master
+jobs:
+  object_calisthenics_rules:
+    runs-on: ubuntu-latest
+    name: Check coding conventions
+    steps:
+      - name: Install php
+        uses: shivammathur/setup-php@master
+        with:
+          php-version: '7.3'
+      - name: Checkout SDK
+        uses: actions/checkout@v1
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - name: Cache Composer Downloads
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+      - name: Install dependencies
+        run:  composer install
+      - name: Run MultiSafepay Coding Standards
+        run:  vendor/bin/phpcs --standard=phpcs.ruleset.xml .
