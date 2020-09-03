@@ -20,7 +20,7 @@ class Issuer
     private $gatewayCode;
 
     /**
-     * @var int
+     * @var string
      */
     private $code;
 
@@ -37,10 +37,10 @@ class Issuer
     /**
      * Issuer constructor.
      * @param string $gatewayCode
-     * @param int $code
+     * @param string $code
      * @param string $description
      */
-    public function __construct(string $gatewayCode, int $code, string $description)
+    public function __construct(string $gatewayCode, string $code, string $description)
     {
         $this->validateGatewayCode($gatewayCode);
         $this->gatewayCode = strtoupper($gatewayCode);
@@ -71,9 +71,9 @@ class Issuer
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getCode(): int
+    public function getCode(): string
     {
         return $this->code;
     }

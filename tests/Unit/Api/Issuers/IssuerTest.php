@@ -17,21 +17,21 @@ class IssuerTest extends TestCase
      */
     public function testNormalInitialization()
     {
-        $issuer = new Issuer('ideal', 1234, 'bar');
+        $issuer = new Issuer('ideal', '0021', 'bar');
         $this->assertEquals('IDEAL', $issuer->getGatewayCode());
-        $this->assertEquals(1234, $issuer->getCode());
+        $this->assertEquals('0021', $issuer->getCode());
         $this->assertEquals('bar', $issuer->getDescription());
 
-        $issuer = new Issuer('IDEAL', 1234, 'bar');
+        $issuer = new Issuer('IDEAL', '0021', 'bar');
         $this->assertEquals('IDEAL', $issuer->getGatewayCode());
     }
 
     /**
      * Test if initialization fails if invalid gateway code is used
      */
-    public function testInitializationWithWrongGatewayCode()
+    public function testInitializationWithInvalidGatewayCode()
     {
         $this->expectException(InvalidArgumentException::class);
-        new Issuer('wrong', 1234, 'foobar');
+        new Issuer('wrong', '0021', 'foobar');
     }
 }

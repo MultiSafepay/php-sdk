@@ -16,12 +16,12 @@ class IssuerListingTest extends TestCase
      */
     public function testGetIssuers()
     {
-        $issuerListing = new IssuerListing('ideal', [['code' => 1234, 'description' => 'bar']]);
+        $issuerListing = new IssuerListing('ideal', [['code' => '0021', 'description' => 'bar']]);
         $issuers = $issuerListing->getIssuers();
-        $this->assertEquals(1, count($issuers));
+        $this->assertCount(1, $issuers);
 
         $issuer = array_shift($issuers);
-        $this->assertEquals(1234, $issuer->getCode());
+        $this->assertEquals('0021', $issuer->getCode());
         $this->assertEquals('bar', $issuer->getDescription());
     }
 }
