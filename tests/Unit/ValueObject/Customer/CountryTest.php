@@ -18,6 +18,5 @@ class CountryTest extends TestCase
     {
         $country = new Country('nl');
         $this->assertEquals('NL', $country->getCode());
-        $this->assertEquals('Netherlands', $country->getName());
     }
 }

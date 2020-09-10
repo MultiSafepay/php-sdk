@@ -39,6 +39,5 @@ class AddressTest extends TestCase
 
         $country = $address->getCountry();
         $this->assertEquals('NL', $country->getCode());
-        $this->assertEquals('Netherlands', $country->getName());
     }
 }

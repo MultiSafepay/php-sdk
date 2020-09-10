@@ -6,7 +6,6 @@
 
 namespace MultiSafepay\ValueObject\Customer;
 
-use League\ISO3166\ISO3166;
 use MultiSafepay\Exception\InvalidArgumentException;
 
 /**
@@ -21,16 +20,6 @@ class Country
     private $code = '';
 
     /**
-     * @var string
-     */
-    private $name = '';
-
-    /**
-     * @var ISO3166
-     */
-    private $iso3166;
-
-    /**
      * Country constructor.
      * @param string $code
      */
@@ -40,15 +29,7 @@ class Country
             throw new InvalidArgumentException('Country code should be 2 characters (ISO3166 alpha 2)');
         }
 
-        $code = strtoupper($code);
-        $this->iso3166 = new ISO3166;
-        $data = $this->iso3166->alpha2($code);
-        if (empty($data) || empty($data['name'])) {
-            throw new InvalidArgumentException('Unknown country code');
-        }
-
-        $this->name = $data['name'];
-        $this->code = $code;
+        $this->code = strtoupper($code);
     }
 
     /**
@@ -57,13 +38,5 @@ class Country
     public function getCode(): string
     {
         return $this->code;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
     }
 }

@@ -58,7 +58,6 @@ class CustomerDetails extends Customer
             'city' => $address->getCity(),
             'state' => $address->getState(),
             'country' => $address->getCountry() ? $address->getCountry()->getCode() : null,
-            'country_name' => $address->getCountry() ? $address->getCountry()->getName() : null,
             'phone' => $this->getPhoneNumber() ? $this->getPhoneNumber()->get() : null,
             'email' => $this->getEmailAddress() ? $this->getEmailAddress()->get() : null,
             'ip_address' => $this->getIpAddress() ? $this->getIpAddress()->get() : null,
