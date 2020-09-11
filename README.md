@@ -16,12 +16,25 @@ To install the SDK, use the following composer command:
 composer require multisafepay/php-sdk
 ```
 
-WARNING: This PHP SDK does not have a direct dependency on Guzzle or cURL. Instead, it uses the [PSR-18](https://www.php-fig.org/psr/psr-18/) client abstraction. This will give you the flexibility to choose whatever [PSR-7 implementation and HTTP client](https://packagist.org/providers/php-http/client-implementation) you want to use. All clients can be replaced without any side effects.
+WARNING: This PHP SDK does not have a direct dependency on Guzzle or cURL. 
+Instead, it uses the [PSR-18](https://www.php-fig.org/psr/psr-18/) client abstraction and [PSR-17](https://www.php-fig.org/psr/psr-18/) factory abstraction.
+This will give you the flexibility to choose whatever [PSR-7 implementation and HTTP client](https://packagist.org/providers/psr/http-client-implementation) you want to use. 
+All clients can be replaced without any side effects.
 
-If you don't have a client yet, use the following:
+If you don't have any client implementation installed, use the following:
 ```bash
 composer require php-http/guzzle6-adapter guzzlehttp/psr7
 ```
+
+If you don't have any factory implementation installed, use the following:
+```bash
+composer require http-interop/http-factory-guzzle
+```
+
+In short, you need to have installed:
+- [PSR-18 client implementation](https://packagist.org/providers/psr/http-client-implementation)
+- [PSR-17 factory implementation](https://packagist.org/providers/psr/http-factory-implementation)
+- [PSR-7 message implementation](https://packagist.org/providers/psr/http-message-implementation)
 
 ## Getting started
 Use Composer autoloader to automatically load class dependencies: 

@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed dependency on `league/iso3166`
 - Removed dependency on `ext-bcmath`
 
+### Changed
+- Added dependency on `psr/http-client-implementation`
+- Added dependency on `psr/http-message-implementation`
+- Added dependency on `psr/http-factory-implementation` 
+
 ## [3.0.2] - 2020-09-03
 ### Fixed
 - Fix bug where issuers wouldn't be able to load because of wrong issuer code type (int instead of string)
