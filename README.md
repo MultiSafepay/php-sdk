@@ -144,6 +144,12 @@ It is the intention to commit all generated JSON files into git, so that they se
 ## Support
 You can create issues on our repository. If you need any additional help or support, please contact <a href="mailto:integration@multisafepay.com">integration@multisafepay.com</a>
 
+## A gift for your contribution
+We look forward to receiving your input. Have you seen an opportunity to change things for better? We would like to invite you to create a pull request on GitHub.
+Are you missing something and would like us to fix it? Suggest an improvement by sending us an [email](mailto:integration@multisafepay.com) or by creating an issue.
+
+What will you get in return? A brand new designed MultiSafepay t-shirt which will make you part of the team!
+
 ## License
 [Open Software License (OSL 3.0)](https://github.com/MultiSafepay/php-sdk/blob/master/LICENSE.md)
 
