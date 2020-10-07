@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace MultiSafepay\Tests\Unit\Api\Transactions\OrderRequest\Arguments;
+namespace MultiSafepay\Tests\Unit\Api\Transactions\OrderRequest\Arguments\TaxTable;
 
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\TaxTable\TaxRate;
 use MultiSafepay\Exception\InvalidArgumentException;
