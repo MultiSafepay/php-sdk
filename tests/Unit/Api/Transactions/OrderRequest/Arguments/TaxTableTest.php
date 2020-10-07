@@ -19,7 +19,11 @@ class TaxTableTest extends TestCase
         $taxTable->validate();
     }
 
-    public function test()
+    /**
+     * @covers \MultiSafepay\Api\Transactions\OrderRequest\Arguments\TaxTable::getData
+     * @covers \MultiSafepay\Api\Transactions\OrderRequest\Arguments\TaxTable::addTaxRules
+     */
+    public function testGetData()
     {
         $taxRate = new TaxTable\TaxRate();
         $taxRate->addRate(42);

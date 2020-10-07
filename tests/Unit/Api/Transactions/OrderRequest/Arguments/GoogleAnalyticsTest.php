@@ -24,6 +24,9 @@ class GoogleAnalyticsTest extends TestCase
         $this->assertSame('test', $data['account']);
     }
 
+    /**
+     * @covers \MultiSafepay\Api\Transactions\OrderRequest\Arguments\GoogleAnalytics::getData
+     */
     public function testInvalidData()
     {
         $this->expectException(InvalidArgumentException::class);
