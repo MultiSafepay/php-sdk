@@ -47,7 +47,7 @@ class GoogleAnalytics
     public function validate(): bool
     {
         if (empty($this->accountId)) {
-            throw new InvalidArgumentException('Acount ID can not be empty');
+            throw new InvalidArgumentException('Account ID can not be empty');
         }
 
         return true;

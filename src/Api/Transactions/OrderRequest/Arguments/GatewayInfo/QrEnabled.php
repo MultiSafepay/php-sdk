@@ -4,7 +4,7 @@
  * See DISCLAIMER.md for disclaimer details.
  */
 
-namespace MultiSafepay\Api\Transactions\OrderRequest\GatewayInfo;
+namespace MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo;
 
 use MultiSafepay\Api\Gateways\Gateway;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfoInterface;
