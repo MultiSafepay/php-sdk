@@ -52,15 +52,6 @@ class DataObject
     }
 
     /**
-     * @param string $name
-     * @param mixed $value
-     */
-    private function set(string $name, $value)
-    {
-        $this->data['name'] = $value;
-    }
-
-    /**
      * @return array
      */
     public function getData(): array
@@ -97,5 +88,14 @@ class DataObject
         }
 
         return $this->removeNull($input);
+    }
+
+    /**
+     * @param string $name
+     * @param mixed $value
+     */
+    private function set(string $name, $value)
+    {
+        $this->data['name'] = $value;
     }
 }
