@@ -85,7 +85,7 @@ class CartItem extends DataObject
      */
     public function addName(string $name): CartItem
     {
-        $this->name = $name;
+        $this->name = strip_tags($name);
         return $this;
     }
 
@@ -167,7 +167,7 @@ class CartItem extends DataObject
      */
     public function addDescription(string $description): CartItem
     {
-        $this->description = $description;
+        $this->description = strip_tags($description);
         return $this;
     }
 

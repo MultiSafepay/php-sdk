@@ -198,7 +198,7 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
      */
     public function addDescription(Description $description): OrderRequest
     {
-        $this->description = $description;
+        $this->description = strip_tags($description);
         return $this;
     }
 
