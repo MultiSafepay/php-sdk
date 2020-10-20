@@ -45,7 +45,7 @@ class Description
     {
         $this->validate();
 
-        return $this->description;
+        return strip_tags($this->description);
     }
 
     /**
