@@ -133,6 +133,14 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
     }
 
     /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    /**
      * @param string $orderId
      * @return OrderRequest
      */
@@ -140,6 +148,14 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
     {
         $this->orderId = $orderId;
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrderId(): string
+    {
+        return $this->orderId;
     }
 
     /**
@@ -153,6 +169,22 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
     }
 
     /**
+     * @return string
+     */
+    public function getCurrency(): string
+    {
+        return $this->money->getCurrency();
+    }
+
+    /**
+     * @return float
+     */
+    public function getAmount(): float
+    {
+        return $this->money->getAmount();
+    }
+
+    /**
      * @param Gateway $gateway
      * @return OrderRequest
      */
@@ -160,6 +192,14 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
     {
         $this->gatewayCode = $gateway->getId();
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGatewayCode(): string
+    {
+        return $this->gatewayCode;
     }
 
     /**
@@ -210,6 +250,14 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
     {
         $this->description = (new Description())->addDescription($description);
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescriptionText(): string
+    {
+        return $this->description->getData();
     }
 
     /**
@@ -265,6 +313,14 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
             $this->addCheckoutOptions($checkoutOptions);
         }
         return $this;
+    }
+
+    /**
+     * @return ShoppingCart
+     */
+    public function getShoppingCart(): ShoppingCart
+    {
+        return $this->shoppingCart;
     }
 
     /**

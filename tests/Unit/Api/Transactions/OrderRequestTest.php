@@ -2,11 +2,13 @@
 
 namespace MultiSafepay\Tests\Unit\Api\Transactions;
 
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart\Item as ShoppingCartItem;
 use MultiSafepay\Tests\Fixtures\Api\Gateways\GatewayFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\DescriptionFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\GoogleAnalyticsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PluginDetailsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\SecondChanceFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\ShoppingCartFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\GenericOrderRequestFixture;
 use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CustomerDetailsFixture;
@@ -15,6 +17,8 @@ use MultiSafepay\Tests\Fixtures\OrderRequest\DirectFixture as DirectOrderRequest
 use MultiSafepay\Tests\Fixtures\OrderRequest\RedirectFixture as RedirectOrderRequestFixture;
 use MultiSafepay\Tests\Fixtures\ValueObject\CountryFixture;
 use MultiSafepay\Tests\Fixtures\ValueObject\PhoneNumberFixture;
+use MultiSafepay\ValueObject\Money;
+use MultiSafepay\ValueObject\Weight;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -35,6 +39,7 @@ class OrderRequestTest extends TestCase
     use GoogleAnalyticsFixture;
     use CountryFixture;
     use PhoneNumberFixture;
+    use ShoppingCartFixture;
 
     /**
      * Test if regular creation of an order works
@@ -45,11 +50,17 @@ class OrderRequestTest extends TestCase
 
         $data = $orderRequest->getData();
         $this->assertEquals('redirect', $data['type']);
+        $this->assertEquals('redirect', $orderRequest->getType());
         $this->assertEquals(GatewayFixture::IDEAL, $data['gateway']);
+        $this->assertEquals(GatewayFixture::IDEAL, $orderRequest->getGatewayCode());
         $this->assertIsNumeric($data['order_id']);
+        $this->assertTrue((int)$orderRequest->getOrderId() > 0);
         $this->assertEquals('EUR', $data['currency']);
+        $this->assertEquals('EUR', $orderRequest->getCurrency());
         $this->assertEquals('2000', $data['amount']);
+        $this->assertEquals(2000, $orderRequest->getAmount());
         $this->assertEquals('foobar', $data['description']);
+        $this->assertEquals('foobar', $orderRequest->getDescriptionText());
     }
 
     /**
@@ -61,10 +72,48 @@ class OrderRequestTest extends TestCase
 
         $data = $orderRequest->getData();
         $this->assertEquals('direct', $data['type']);
+        $this->assertEquals('direct', $orderRequest->getType());
         $this->assertEquals(GatewayFixture::IDEAL, $data['gateway']);
+        $this->assertEquals(GatewayFixture::IDEAL, $orderRequest->getGatewayCode());
         $this->assertIsNumeric($data['order_id']);
+        $this->assertTrue((int)$orderRequest->getOrderId() > 0);
         $this->assertEquals('EUR', $data['currency']);
+        $this->assertEquals('EUR', $orderRequest->getCurrency());
         $this->assertEquals('20', $data['amount']);
+        $this->assertEquals(20.00, $orderRequest->getAmount());
         $this->assertEquals('foobar', $data['description']);
+        $this->assertEquals('foobar', $orderRequest->getDescriptionText());
+    }
+
+    /**
+     * Test if we can modify the shopping cart after having created the order request
+     */
+    public function testCreateAndAddNewItem()
+    {
+        $orderRequest = $this->createIdealOrderRedirectRequestFixture();
+        $orderRequest->addShoppingCart($this->createShoppingCartFixture());
+        $shoppingCart = $orderRequest->getShoppingCart();
+        $items = $shoppingCart->getItems();
+        $this->assertEquals(1, count($items));
+
+        $item = (new ShoppingCartItem())
+            ->addName('Foobar')
+            ->addUnitPrice(new Money(10000, 'EUR'))
+            ->addQuantity(1)
+            ->addDescription('4321')
+            ->addTaxRate(0)
+            ->addTaxTableSelector('none')
+            ->addMerchantItemId('4321')
+            ->addWeight(
+                new Weight('KG', 42)
+            );
+        $shoppingCart->addItem($item);
+
+        $shoppingCart2 = $orderRequest->getShoppingCart();
+        $items = $shoppingCart2->getItems();
+        $this->assertEquals(2, count($items));
+
+        $data = $orderRequest->getData();
+        $this->assertEquals(2, count($data['shopping_cart']['items']));
     }
 }
