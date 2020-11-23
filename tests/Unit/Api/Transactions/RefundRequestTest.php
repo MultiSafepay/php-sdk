@@ -43,6 +43,6 @@ class RefundRequestTest extends TestCase
         $refundRequest = new RefundRequest();
         $refundRequest->addMoney(new Money(42, 'EUR'));
         $data = $refundRequest->getData();
-        $this->assertSame(42.0, $data['amount']);
+        $this->assertSame(42, $data['amount']);
     }
 }
