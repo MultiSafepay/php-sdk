@@ -383,7 +383,7 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
             'type' => $this->type,
             'order_id' => $this->orderId,
             'currency' => $this->money ? (string)$this->money->getCurrency() : null,
-            'amount' => $this->money ? (int)$this->money->getAmount() : null,
+            'amount' => $this->money ? (int)round($this->money->getAmount()) : null,
             'gateway' => $this->gatewayCode,
             'gateway_info' => $this->gatewayInfo ? $this->gatewayInfo->getData() : null,
             'payment_options' => $this->paymentOptions ? $this->paymentOptions->getData() : null,
