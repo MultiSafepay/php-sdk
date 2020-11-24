@@ -45,4 +45,15 @@ class RefundRequestTest extends TestCase
         $data = $refundRequest->getData();
         $this->assertSame(42, $data['amount']);
     }
+
+    /**
+     * @covers RefundRequest::addMoney
+     */
+    public function testAddMoneyFloat()
+    {
+        $refundRequest = new RefundRequest();
+        $refundRequest->addMoney(new Money(151.70 * 100, 'EUR'));
+        $data = $refundRequest->getData();
+        $this->assertSame(15170, $data['amount']);
+    }
 }
