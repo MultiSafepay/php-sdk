@@ -43,4 +43,17 @@ class CheckoutOptionsTest extends TestCase
         $data = $checkoutOptions->getData();
         $this->assertNotEmpty($data['tax_tables']);
     }
+
+    /**
+     * @covers \MultiSafepay\Api\Transactions\OrderRequest\Arguments\CheckoutOptions::generateFromShoppingCart
+     */
+    public function testGenerateFromShoppingCartWithSimilarTaxRates()
+    {
+        $shoppingCart = $this->createShoppingCartFixtureWithSimilarTaxRates();
+
+        $checkoutOptions = new CheckoutOptions();
+        $checkoutOptions->generateFromShoppingCart($shoppingCart);
+        $data = $checkoutOptions->getData();
+        $this->assertCount(2, $data['tax_tables']['alternate']);
+    }
 }

@@ -61,4 +61,36 @@ trait ShoppingCartFixture
 
         return new ShoppingCart($items);
     }
+
+    /**
+     * @return ShoppingCart
+     */
+    public function createShoppingCartFixtureWithSimilarTaxRates(): ShoppingCart
+    {
+        $items = [];
+        $items[] = (new ShoppingCartItem())
+            ->addName('Geometric Candle Holders 1')
+            ->addUnitPrice(new Money(5000, 'EUR'))
+            ->addQuantity(2)
+            ->addDescription('1234')
+            ->addTaxRate(21.20)
+            ->addTaxTableSelector('21.20')
+            ->addMerchantItemId('1234')
+            ->addWeight(
+                new Weight('KG', 12)
+            );
+        $items[] = (new ShoppingCartItem())
+            ->addName('Geometric Candle Holders 2')
+            ->addUnitPrice(new Money(5000, 'EUR'))
+            ->addQuantity(2)
+            ->addDescription('1234')
+            ->addTaxRate(21.30)
+            ->addTaxTableSelector('21.30')
+            ->addMerchantItemId('12345')
+            ->addWeight(
+                new Weight('KG', 12)
+            );
+
+        return new ShoppingCart($items);
+    }
 }
