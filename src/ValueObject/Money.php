@@ -26,7 +26,11 @@ class Money
 
     /**
      * Money constructor.
-     * @param float $amount Amount in full units like Euros
+     *
+     * @param float $amount
+     * Amount in full units like Euros for CartItem $unitPrice
+     * Amount in cents for OrderRequest $money
+     *
      * @param string $currency Currency code, like EUR
      */
     public function __construct(float $amount, string $currency = 'EUR')
@@ -73,6 +77,6 @@ class Money
      */
     public function __toString(): string
     {
-        return (new MoneyFormatter)->toDecimalString($this);
+        return (new MoneyFormatter())->toDecimalString($this);
     }
 }
