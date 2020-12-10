@@ -72,7 +72,10 @@ class CartItem extends DataObject
             ->addTaxTableSelector((string)$data['tax_table_selector'])
             ->addDescription((string)$data['description']);
 
-        if (!empty($data['weight']['unit']) && !empty($data['weight']['value'])) {
+        if (!empty($data['weight']['unit'])
+            && !empty($data['weight']['value'])
+            && is_numeric($data['weight']['value'])
+        ) {
             $weight = new Weight($data['weight']['unit'], $data['weight']['value']);
             $item->addWeight($weight);
         }
