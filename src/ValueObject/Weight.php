@@ -18,7 +18,7 @@ class Weight
     private $unit;
 
     /**
-     * @var float
+     * @var float|int|string
      */
     private $quantity;
 
@@ -27,7 +27,7 @@ class Weight
      * @param string $unit
      * @param float $quantity
      */
-    public function __construct(string $unit, float $quantity)
+    public function __construct(string $unit, $quantity)
     {
         $this->unit = $unit;
         $this->quantity = $quantity;
@@ -42,9 +42,9 @@ class Weight
     }
 
     /**
-     * @return float
+     * @return float|int|string
      */
-    public function getQuantity(): float
+    public function getQuantity()
     {
         return $this->quantity;
     }
