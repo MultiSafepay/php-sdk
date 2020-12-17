@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.0.3] - 2020-12-17
+### Fixed
+- Fixed overwriting tax rules in shopping cart when tax rates are too close in range
+- Fixed TypeError when quantity in Weight is not a float
+
 ## [4.0.2] - 2020-11-24
 ### Fixed
 - Fixed PHP rounding issues when casting amount to int
