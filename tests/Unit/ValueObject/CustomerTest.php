@@ -29,11 +29,13 @@ class CustomerTest extends TestCase
         $customer = (new Customer())
             ->addFirstName('John')
             ->addLastName('Doe')
+            ->addCompanyName('MultiSafepay')
             ->addAddress($address)
             ->addIpAddress($ipAddress)
             ->addEmailAddress($emailAddress)
             ->addPhoneNumber(new Customer\PhoneNumber('0123456789'));
-
+        
+        $this->assertEquals('MultiSafepay', $customer->getCompanyName());
         $this->assertEquals('10.0.0.1', $customer->getIpAddress()->get());
         $this->assertEquals('info@example.org', $customer->getEmailAddress()->get());
         $this->assertEquals('0123456789', $customer->getPhoneNumber()->get());

@@ -51,6 +51,7 @@ class CustomerDetails extends Customer
         $data = [
             'firstname' => $this->getFirstName(),
             'lastname' => $this->getLastName(),
+            'company_name' => $this->getCompanyName(),
             'address1' => $address->getStreetName(),
             'address2' => $address->getStreetNameAdditional(),
             'house_number' => $this->getHouseNumber(),

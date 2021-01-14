@@ -43,6 +43,11 @@ class Customer
     private $lastName = '';
 
     /**
+     * @var string
+     */
+    private $companyName = '';
+
+    /**
      * @var PhoneNumber
      */
     private $phoneNumber;
@@ -98,6 +103,16 @@ class Customer
     }
 
     /**
+     * @param string $companyName
+     * @return Customer
+     */
+    public function addCompanyName(string $companyName): Customer
+    {
+        $this->companyName = $companyName;
+        return $this;
+    }
+
+    /**
      * @param PhoneNumber $phoneNumber
      * @return Customer
      */
@@ -145,6 +160,14 @@ class Customer
     public function getLastName(): string
     {
         return $this->lastName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCompanyName(): string
+    {
+        return $this->companyName;
     }
 
     /**
