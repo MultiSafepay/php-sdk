@@ -123,3 +123,45 @@ $refundRequest->getCheckoutData()->refundByMerchantItemId('example3', 1);
 
 ### Additional examples
 Additional real-life examples can be found in the `tests/Functional` folder, even though they might be a bit more complex because of their usage of fixtures.
+
+## Tokenization
+Before working on Tokenization be sure to check out our [Documentation Center](https://docs.multisafepay.com/tools/tokenization/tokenization-api-level/) and that Tokenization is activated on your MultiSafepay account.
+
+### Creating a token
+A token can be created by adding a unique 'customer reference' to the customer object, and a 'recurring model' to the orderRequest.
+````php
+/** \MultiSafepay\Api\Transactions\OrderRequest\Arguments\CustomerDetails $customer */
+$customer->addReference('Abc123');
+
+/** \MultiSafepay\Api\Transactions\OrderRequest $orderRequest */
+$orderRequest->addRecurringModel('cardOnFile');
+````
+
+### Get the tokens
+To get the tokens from a reference. You have to use the `\MultiSafepay\Api\TokenManager` Object to receive them.
+```php
+/** \MultiSafepay\Api\TokenManager $tokenManager */
+/** \MultiSafepay\Api\Tokens\Token[] $tokens */
+$tokens = $tokenManager->getList('Abc123');
+```
+
+### Use a token
+To use a token received from the `\MultiSafepay\Api\Tokens\Token`, Use the following request:
+```php
+/** \MultiSafepay\Api\Transactions\OrderRequest\Arguments\CustomerDetails $customer */
+$customer->addReference('Abc123');
+
+/** \MultiSafepay\Api\Transactions\OrderRequest $orderRequest */
+$orderRequest->addRecurringModel('cardOnFile');
+$orderRequest->addType('direct');
+/** \MultiSafepay\Api\Tokens\Token $token */
+$orderRequest->addRecurringId($token->getToken());
+$orderRequest->addGatewayCode($token->getGatewayCode());
+```
+
+### Delete a token
+```php
+/** \MultiSafepay\Api\TokenManager $tokenManager */
+/** \MultiSafepay\Api\Tokens\Token $token */
+$tokenManager->delete($token->getToken(),'Abc123');
+```

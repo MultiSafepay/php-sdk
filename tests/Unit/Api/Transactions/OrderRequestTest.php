@@ -2,7 +2,9 @@
 
 namespace MultiSafepay\Tests\Unit\Api\Transactions;
 
+use MultiSafepay\Api\Transactions\OrderRequest;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart\Item as ShoppingCartItem;
+use MultiSafepay\Exception\InvalidArgumentException;
 use MultiSafepay\Tests\Fixtures\Api\Gateways\GatewayFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\DescriptionFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\GoogleAnalyticsFixture;
@@ -115,5 +117,17 @@ class OrderRequestTest extends TestCase
 
         $data = $orderRequest->getData();
         $this->assertEquals(2, count($data['shopping_cart']['items']));
+    }
+
+    /**
+     * Check if the correct exception and message is given when an invalid model is used.
+     */
+    public function testCorrectErrorWhenUsingIncorrectModel()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'Type "non-existing-model" is not a known type. Available types: cardOnFile, subscription, unscheduled'
+        );
+        (new OrderRequest())->addRecurringModel('non-existing-model');
     }
 }

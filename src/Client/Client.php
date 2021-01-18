@@ -35,6 +35,7 @@ class Client
     const METHOD_GET = 'GET';
 
     const METHOD_PATCH = 'PATCH';
+    const METHOD_DELETE = 'DELETE';
 
     /**
      * @var ApiKey
@@ -144,7 +145,6 @@ class Client
         return ApiResponse::withJson($httpResponse->getBody()->getContents(), $context);
     }
 
-
     /**
      * @param string $endpoint
      * @param array $parameters
@@ -155,6 +155,22 @@ class Client
     public function createGetRequest(string $endpoint, array $parameters = [], array $context = []): ApiResponse
     {
         $request = $this->createRequest($endpoint, self::METHOD_GET, $parameters);
+        $httpResponse = $this->httpClient->sendRequest($request);
+        $context['headers'] = $request->getHeaders();
+        $context['request_params'] = $parameters;
+        return ApiResponse::withJson($httpResponse->getBody()->getContents(), $context);
+    }
+
+    /**
+     * @param string $endpoint
+     * @param array $parameters
+     * @param array $context
+     * @return ApiResponse
+     * @throws ClientExceptionInterface
+     */
+    public function createDeleteRequest(string $endpoint, array $parameters = [], array $context = []): ApiResponse
+    {
+        $request = $this->createRequest($endpoint, self::METHOD_DELETE, $parameters);
         $httpResponse = $this->httpClient->sendRequest($request);
         $context['headers'] = $request->getHeaders();
         $context['request_params'] = $parameters;

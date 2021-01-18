@@ -9,6 +9,7 @@ namespace MultiSafepay;
 use MultiSafepay\Api\CategoryManager;
 use MultiSafepay\Api\GatewayManager;
 use MultiSafepay\Api\IssuerManager;
+use MultiSafepay\Api\TokenManager;
 use MultiSafepay\Api\TransactionManager;
 use MultiSafepay\Client\Client;
 use Psr\Http\Client\ClientInterface;
@@ -76,6 +77,14 @@ class Sdk
     public function getIssuerManager(): IssuerManager
     {
         return new IssuerManager($this->client);
+    }
+
+    /**
+     * @return TokenManager
+     */
+    public function getTokenManager(): TokenManager
+    {
+        return new TokenManager($this->client);
     }
 
     /**

@@ -42,6 +42,11 @@ class CustomerDetails extends Customer
     private $data = [];
 
     /**
+     * @var string|null
+     */
+    private $reference = null;
+
+    /**
      * @return array
      * phpcs:disable ObjectCalisthenics.Files.FunctionLength
      */
@@ -66,6 +71,7 @@ class CustomerDetails extends Customer
             'referrer' => $this->getReferrer(),
             'forwarded_ip' => $this->getForwardedIp() ? $this->getForwardedIp()->get() : null,
             'user_agent' => $this->getUserAgent(),
+            'reference' => $this->reference
         ];
 
         $data = array_merge($data, $this->data);
@@ -169,5 +175,15 @@ class CustomerDetails extends Customer
         }
 
         return $houseNumber;
+    }
+
+    /**
+     * @param string $reference
+     * @return $this
+     */
+    public function addReference(string $reference): CustomerDetails
+    {
+        $this->reference = $reference;
+        return $this;
     }
 }

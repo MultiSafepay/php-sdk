@@ -1,0 +1,14 @@
+{
+    "success": true,
+    "data": {
+        "token": "RdLbznU5a_s",
+        "code": "VISA",
+        "display": "Card xxxx xxxx xxxx 1111",
+        "bin": 411111,
+        "name_holder": "John Doe",
+        "expiry_date": 4512,
+        "expired": 0,
+        "last4": 1111,
+        "model": "cardOnFile"
+    }
+}

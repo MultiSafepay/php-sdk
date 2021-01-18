@@ -31,6 +31,9 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
 {
     const ALLOWED_TYPES = ['direct', 'redirect', 'paymentlink'];
 
+    /** The allowed values for the recurring models. */
+    public const ALLOWED_RECURRING_MODELS = ['cardOnFile', 'subscription', 'unscheduled'];
+
     /**
      * @var string
      */
@@ -117,6 +120,11 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
     protected $pluginDetails;
 
     /**
+     * @var string
+     */
+    private $recurringModel;
+
+    /**
      * @param string $type
      * @return OrderRequest
      */
@@ -129,6 +137,22 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
         }
 
         $this->type = $type;
+        return $this;
+    }
+
+    /**
+     * @param string $type
+     * @return OrderRequest
+     */
+    public function addRecurringModel(string $type): OrderRequest
+    {
+        if (!in_array($type, self::ALLOWED_RECURRING_MODELS)) {
+            $msg = 'Type "' . $type . '" is not a known type. ';
+            $msg .= 'Available types: ' . implode(', ', self::ALLOWED_RECURRING_MODELS);
+            throw new InvalidArgumentException($msg);
+        }
+
+        $this->recurringModel = $type;
         return $this;
     }
 
@@ -389,6 +413,7 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
             'payment_options' => $this->paymentOptions ? $this->paymentOptions->getData() : null,
             'description' => ($this->description) ? $this->description->getData() : null,
             'recurring_id' => $this->recurringId ?? null,
+            'recurring_model' => $this->recurringModel ?? null,
             'google_analytics' => $this->googleAnalytics ? $this->googleAnalytics->getData() : null,
             'second_chance' => $this->secondChance ? $this->secondChance->getData() : null,
             'customer' => ($this->customer) ? $this->customer->getData() : null,
