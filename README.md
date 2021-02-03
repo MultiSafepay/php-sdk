@@ -16,9 +16,9 @@ To install the SDK, use the following composer command:
 composer require multisafepay/php-sdk
 ```
 
-WARNING: This PHP SDK does not have a direct dependency on Guzzle or cURL. 
+WARNING: This PHP SDK does not have a direct dependency on Guzzle or cURL.
 Instead, it uses the [PSR-18](https://www.php-fig.org/psr/psr-18/) client abstraction and [PSR-17](https://www.php-fig.org/psr/psr-18/) factory abstraction.
-This will give you the flexibility to choose whatever [PSR-7 implementation and HTTP client](https://packagist.org/providers/psr/http-client-implementation) you want to use. 
+This will give you the flexibility to choose whatever [PSR-7 implementation and HTTP client](https://packagist.org/providers/psr/http-client-implementation) you want to use.
 All clients can be replaced without any side effects.
 
 If you don't have any client implementation installed, use the following:
@@ -37,7 +37,7 @@ In short, you need to have installed:
 - [PSR-7 message implementation](https://packagist.org/providers/psr/http-message-implementation)
 
 ## Getting started
-Use Composer autoloader to automatically load class dependencies: 
+Use Composer autoloader to automatically load class dependencies:
 
 ```php
 require 'vendor/autoload.php';
@@ -59,32 +59,88 @@ $multiSafepaySdk->getIssuerManager();
 $multiSafepaySdk->getCategoryManager();
 ```
 
-Of these managers, the transaction manager is probably the most important, because it allows you to create orders and refunds. Here's a brief (incomplete) example of creating a new order:
-```php
-$orderRequest = (new \MultiSafepay\Api\Transactions\OrderRequest)
-    ->addType('direct');
+Of these managers, the transaction manager is probably the most important, because it allows you to create orders and refunds.
 
-$transactionManager = $multiSafepaySdk->getTransactionManager();
-$transactionManager->create($orderRequest);
+```php
+use MultiSafepay\ValueObject\Customer\Country;
+use MultiSafepay\ValueObject\Customer\Address;
+use MultiSafepay\ValueObject\Customer\PhoneNumber;
+use MultiSafepay\ValueObject\Customer\EmailAddress;
+use MultiSafepay\ValueObject\Money;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\CustomerDetails;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\PluginDetails;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\PaymentOptions;
+use MultiSafepay\Api\Transactions\OrderRequest;
+
+$yourApiKey = 'your-api-key';
+$isProduction = false;
+$multiSafepaySdk = new \MultiSafepay\Sdk($yourApiKey, $isProduction);
+
+$orderId = (string) time();
+$description = 'Order #' . $orderId;
+$amount = new Money(2000, 'EUR'); // Amount must be in cents!!
+
+$address = (new Address())
+    ->addStreetName('Kraanspoor')
+    ->addStreetNameAdditional('(blue door)')
+    ->addHouseNumber('39')
+    ->addZipCode('1033SC')
+    ->addCity('Amsterdam')
+    ->addState('Noord Holland')
+    ->addCountry(new Country('NL'));
+
+$customer = (new CustomerDetails())
+    ->addFirstName('John')
+    ->addLastName('Doe')
+    ->addAddress($address)
+    ->addEmailAddress(new EmailAddress('noreply@example.org'))
+    ->addPhoneNumber(new PhoneNumber('0208500500'))
+    ->addLocale('nl_NL');
+
+$pluginDetails = (new PluginDetails)
+    ->addApplicationName('My e-commerce application')
+    ->addApplicationVersion('0.0.1')
+    ->addPluginVersion('1.1.0');
+
+$paymentOptions = (new PaymentOptions())
+    ->addNotificationUrl('http://www.example.com/client/notification?type=notification')
+    ->addRedirectUrl('http://www.example.com/client/notification?type=redirect')
+    ->addCancelUrl('http://www.example.com/client/notification?type=cancel')
+    ->addCloseWindow(true);
+
+$orderRequest = (new OrderRequest())
+    ->addType('redirect')
+    ->addOrderId($orderId)
+    ->addDescriptionText($description)
+    ->addMoney($amount)
+    ->addGatewayCode('IDEAL')
+    ->addCustomer($customer)
+    ->addDelivery($customer)
+    ->addPluginDetails($pluginDetails)
+    ->addPaymentOptions( $paymentOptions);
+
+$transactionManager = $multiSafepaySdk->getTransactionManager()->create($orderRequest);
+$transactionManager->getPaymentUrl();
 ```
 
 And here's an example of a refund:
 ```php
-$orderId = 42;
-$merchantItemId = '11111'; // The shopping cart item ID maintained by your e-commerce appplication
+// Refund example.
+use MultiSafepay\Api\Transactions\RefundRequest;
+use MultiSafepay\ValueObject\Money;
 
+$yourApiKey = 'your-api-key';
+$isProduction = false;
+$multiSafepaySdk = new \MultiSafepay\Sdk($yourApiKey, $isProduction);
+
+$orderId = XXXXX;  // An order ID created and completed previously
+$refundAmount = new Money(2000, 'EUR');
 $transactionManager = $multiSafepaySdk->getTransactionManager();
 $transaction = $transactionManager->get($orderId);
-$refundRequest = $transactionManager->createRefundRequest($transaction, $merchantItemId, 2);
-$transactionManager->refund($transaction, $requestRefund);
+$transactionManager->refund($transaction, (new RefundRequest())->addMoney( $refundAmount ) );
 ```
 
-Each request (instance of `\MultiSafepay\Api\Base\RequestBodyInterface`) receives arguments like `$checkoutData`. An argument could be a simple variable or actually an argument object, that helps you fill in the right details.
- 
-See [USAGE.md](USAGE.md) and the functional tests in `tests/Functional/Api/Transactions` for examples on how to build full requests. 
-
-## Tips
-- If you create an `OrderRequest` and then use the `addShoppingCart()` method to add a `ShoppingCart` object to it, you can let the method automatically generate `CheckoutOptions` as well. In other words, it allows you to skip the `addCheckoutOptions()` method. For this to work, make sure to add a tax rate to each shopping cart item (`CartItem::addTaxRate`).
+See [USAGE.md](USAGE.md) and the functional tests in `tests/Functional/Api/Transactions` for examples on how to build full requests.
 
 ## Advanced usage: The Strict Mode
 The SDK is by default initialize in a non-strict mode (by setting its constructor argument `$strictMode` to `false`). This strict mode adds additional validations on top of various API requests and API responses. In the non-strict mode (the default) some validation errors are skipped. In the strict mode, these validation errors throw an exception, which requires you to handle the exception correspondingly.
@@ -97,12 +153,12 @@ In the tests of the SDK, the strict mode is enabled.
 The following checks are in place to maintain code quality:
 
 - PHP CodeSniffer (via `./vendor/bin/phpcs --standard=phpcs.ruleset.xml .`)
-    - PSR-2
-    - Object Calisthenics
+  - PSR-2
+  - Object Calisthenics
 - PHPUnit tests (via `./vendor/bin/phpunit`)
-    - Unit tests
-    - Integration tests
-    - Functional tests
+  - Unit tests
+  - Integration tests
+  - Functional tests
 
 ## Testing
 
@@ -121,7 +177,7 @@ To run either unit tests of this package, use the following steps:
 - Clone this repository somewhere.
 - Run `composer install` to install all dependencies
 - Run PHPUnit with one of the following commands:
-    - `./vendor/bin/phpunit tests/Unit`
+  - `./vendor/bin/phpunit tests/Unit`
 
 #### Running functional tests
 
@@ -131,7 +187,7 @@ To run functional tests of this package, use the following steps:
 - Run `composer install` to install all dependencies
 - Copy `.env.php.example` to `.env.php` and add your own MultiSafepay API key
 - Run PHPUnit with one of the following commands:
-    - `./vendor/bin/phpunit tests/Functional`
+  - `./vendor/bin/phpunit tests/Functional`
 
 #### Mocking the API for unit and integration tests
 
