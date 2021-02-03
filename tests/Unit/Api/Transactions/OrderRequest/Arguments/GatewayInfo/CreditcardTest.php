@@ -39,4 +39,26 @@ class CreditcardTest extends TestCase
         $this->assertSame(true, $data['flexible_3d']);
         $this->assertSame('http://example.org/', $data['term_url']);
     }
+
+    /**
+     * Test if value object variables that belong to the Creditcard class can be set using their to AsString functions
+     *
+     * @covers \MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo\Creditcard::addCardExpiryDateAsString
+     * @covers \MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo\Creditcard::addCardNumberAsString
+     * @covers \MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo\Creditcard::addCvcAsString
+     */
+    public function testSettingValueObjectsUsingAsStringMethods()
+    {
+        $creditcardNumber = Payment::creditCardNumber('MasterCard');
+
+        $creditcard = new Creditcard();
+        $creditcard->addCardExpiryDateAsString('2001-01-01');
+        $creditcard->addCardNumberAsString($creditcardNumber);
+        $creditcard->addCvcAsString('111');
+
+        $data = $creditcard->getData();
+        $this->assertSame('0101', $data['cart_expiry_date']);
+        $this->assertSame($creditcardNumber, $data['card_number']);
+        $this->assertSame('111', $data['cvc']);
+    }
 }

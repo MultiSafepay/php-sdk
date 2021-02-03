@@ -63,12 +63,32 @@ class Customer
     }
 
     /**
+     * @param string $ipAddress
+     * @return Customer
+     */
+    public function addIpAddressAsString(string $ipAddress): Customer
+    {
+        $this->ipAddress = new IpAddress($ipAddress);
+        return $this;
+    }
+
+    /**
      * @param EmailAddress $emailAddress
      * @return Customer
      */
     public function addEmailAddress(EmailAddress $emailAddress): Customer
     {
         $this->emailAddress = $emailAddress;
+        return $this;
+    }
+
+    /**
+     * @param string $emailAddress
+     * @return Customer
+     */
+    public function addEmailAddressAsString(string $emailAddress): Customer
+    {
+        $this->emailAddress = new EmailAddress($emailAddress);
         return $this;
     }
 
@@ -119,6 +139,16 @@ class Customer
     public function addPhoneNumber(PhoneNumber $phoneNumber): Customer
     {
         $this->phoneNumber = $phoneNumber;
+        return $this;
+    }
+
+    /**
+     * @param string $phoneNumber
+     * @return Customer
+     */
+    public function addPhoneNumberAsString(string $phoneNumber): Customer
+    {
+        $this->phoneNumber = new PhoneNumber($phoneNumber);
         return $this;
     }
 

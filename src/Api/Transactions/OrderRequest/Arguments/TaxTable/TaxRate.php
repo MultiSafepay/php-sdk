@@ -50,6 +50,16 @@ class TaxRate
     }
 
     /**
+     * @param string $countryCode
+     * @return TaxRate
+     */
+    public function addCountryCode(string $countryCode): TaxRate
+    {
+        $this->country = new Country($countryCode);
+        return $this;
+    }
+
+    /**
      * @return float
      */
     public function getRate(): float

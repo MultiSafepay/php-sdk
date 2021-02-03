@@ -52,4 +52,16 @@ class TaxRateTest extends TestCase
         $taxRate->addCountry(new Country('NL'));
         $this->assertEquals('NL', $taxRate->getCountry()->getCode());
     }
+
+    /**
+     * Test adding a country using the country code
+     *
+     * @covers \MultiSafepay\Api\Transactions\OrderRequest\Arguments\TaxTable\TaxRate::addCountryCode
+     */
+    public function testAddCountryCode()
+    {
+        $taxRate = new TaxRate();
+        $taxRate->addCountryCode('NL');
+        $this->assertEquals('NL', $taxRate->getCountry()->getCode());
+    }
 }

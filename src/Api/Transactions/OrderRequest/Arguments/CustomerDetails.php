@@ -134,6 +134,16 @@ class CustomerDetails extends Customer
     }
 
     /**
+     * @param string $forwardedIp
+     * @return CustomerDetails
+     */
+    public function addForwardedIpAsString(string $forwardedIp): CustomerDetails
+    {
+        $this->forwardedIp = new IpAddress($forwardedIp);
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getUserAgent(): string

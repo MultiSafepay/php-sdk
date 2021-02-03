@@ -40,4 +40,16 @@ class AddressTest extends TestCase
         $country = $address->getCountry();
         $this->assertEquals('NL', $country->getCode());
     }
+
+    /**
+     * Test whether a country can be set using a country code
+     */
+    public function testSetCountryCode()
+    {
+        $address = (new Address())
+            ->addCountryCode('NL');
+
+        $country = $address->getCountry();
+        $this->assertEquals('NL', $country->getCode());
+    }
 }

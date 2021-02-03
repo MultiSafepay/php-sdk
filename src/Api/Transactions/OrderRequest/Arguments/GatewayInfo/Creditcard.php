@@ -58,6 +58,16 @@ class Creditcard implements GatewayInfoInterface
     }
 
     /**
+     * @param string $cardNumber
+     * @return Creditcard
+     */
+    public function addCardNumberAsString(string $cardNumber): Creditcard
+    {
+        $this->cardNumber = new CardNumber($cardNumber);
+        return $this;
+    }
+
+    /**
      * @param string $cardHolderName
      * @return Creditcard
      */
@@ -78,12 +88,32 @@ class Creditcard implements GatewayInfoInterface
     }
 
     /**
+     * @param string $cardExpiryDate
+     * @return Creditcard
+     */
+    public function addCardExpiryDateAsString(string $cardExpiryDate): Creditcard
+    {
+        $this->cardExpiryDate = new Date($cardExpiryDate);
+        return $this;
+    }
+
+    /**
      * @param Cvc $cvc
      * @return Creditcard
      */
     public function addCvc(Cvc $cvc): Creditcard
     {
         $this->cvc = $cvc;
+        return $this;
+    }
+
+    /**
+     * @param string $cvc
+     * @return Creditcard
+     */
+    public function addCvcAsString(string $cvc): Creditcard
+    {
+        $this->cvc = new Cvc($cvc);
         return $this;
     }
 

@@ -46,6 +46,16 @@ class Account implements GatewayInfoInterface
     }
 
     /**
+     * @param string $accountId
+     * @return Account
+     */
+    public function addAccountIdAsString(string $accountId): Account
+    {
+        $this->accountId = new IbanNumber($accountId);
+        return $this;
+    }
+
+    /**
      * @param string $accountHolderName
      * @return Account
      */
@@ -62,6 +72,16 @@ class Account implements GatewayInfoInterface
     public function addAccountHolderIban(IbanNumber $accountHolderIban): Account
     {
         $this->accountHolderIban = $accountHolderIban;
+        return $this;
+    }
+
+    /**
+     * @param string $accountHolderIban
+     * @return Account
+     */
+    public function addAccountHolderIbanAsString(string $accountHolderIban): Account
+    {
+        $this->accountHolderIban = new IbanNumber($accountHolderIban);
         return $this;
     }
 

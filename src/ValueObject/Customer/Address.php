@@ -134,6 +134,16 @@ class Address
     }
 
     /**
+     * @param string $countryCode
+     * @return Address
+     */
+    public function addCountryCode(string $countryCode): Address
+    {
+        $this->country = new Country($countryCode);
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getStreetName(): string

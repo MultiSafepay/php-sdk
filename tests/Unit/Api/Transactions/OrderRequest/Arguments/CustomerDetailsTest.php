@@ -55,4 +55,17 @@ class CustomerDetailsTest extends TestCase
         $this->assertEquals('http://example.org', $customerData['referrer']);
         $this->assertEquals('Unknown', $customerData['user_agent']);
     }
+
+    /**
+     * Test if forwardedIp can be set using the AsString function
+     *
+     * @covers \MultiSafepay\Api\Transactions\OrderRequest\Arguments\CustomerDetails::addForwardedIpAsString
+     */
+    public function testForwardedIpBeingSetWithAsStringFunction()
+    {
+        $customerDetails = (new CustomerDetails())
+            ->addForwardedIpAsString('10.0.0.1');
+
+        $this->assertEquals('10.0.0.1', $customerDetails->getForwardedIp()->get());
+    }
 }

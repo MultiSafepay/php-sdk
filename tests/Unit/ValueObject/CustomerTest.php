@@ -40,4 +40,20 @@ class CustomerTest extends TestCase
         $this->assertEquals('info@example.org', $customer->getEmailAddress()->get());
         $this->assertEquals('0123456789', $customer->getPhoneNumber()->get());
     }
+
+    /**
+     * Test whether value objects can be set using their AsString functions
+     */
+    public function testAddValueObjectsAsString()
+    {
+
+        $customer = (new Customer())
+            ->addIpAddressAsString('10.0.0.1')
+            ->addEmailAddressAsString('info@example.org')
+            ->addPhoneNumberAsString('0123456789');
+
+        $this->assertEquals('10.0.0.1', $customer->getIpAddress()->get());
+        $this->assertEquals('info@example.org', $customer->getEmailAddress()->get());
+        $this->assertEquals('0123456789', $customer->getPhoneNumber()->get());
+    }
 }
