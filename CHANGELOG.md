@@ -6,10 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [4.1.0] - 2021-02-02
+## [4.1.0] - 2021-02-03
 ### Added
 - Add support for company_name in Customer object
 - Add support for tokenization
+- Add new method in TransactionResponse object to check if requires shopping cart to process refunds.
+- Add new methods to simplify how to set properties in multiple objects
 
 ## [4.0.3] - 2020-12-17
 ### Fixed
