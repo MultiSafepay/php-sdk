@@ -32,4 +32,23 @@ class AccountTest extends TestCase
         $this->assertSame('John Doe', $data['account_holder_name']);
         $this->assertSame('1 januari 1970', $data['emandate']);
     }
+
+    /**
+     * Test if value object variables that belong to the Account class can be set using their to AsString functions
+     *
+     * @covers \MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo\Account::addAccountIdAsString
+     * @covers \MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo\Account::addAccountHolderIbanAsString
+     * @covers \MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo\Account::addEmanDate
+     */
+    public function testSettingValueObjectsUsingAsStringMethods()
+    {
+        $ibanNumber = Payment::iban('NL');
+
+        $account = new Account();
+        $account->addAccountIdAsString($ibanNumber);
+        $account->addAccountHolderIbanAsString($ibanNumber);
+        $data = $account->getData();
+        $this->assertSame($ibanNumber, $data['account_id']);
+        $this->assertSame($ibanNumber, $data['account_holder_iban']);
+    }
 }

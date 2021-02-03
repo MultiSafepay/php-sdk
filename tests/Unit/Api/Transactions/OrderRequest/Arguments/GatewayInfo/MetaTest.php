@@ -32,4 +32,30 @@ class MetaTest extends TestCase
         $this->assertSame('0123456789', $data['phone']);
         $this->assertSame('bar', $data['foo']);
     }
+
+    /**
+     * Test if value object variables that belong to the Meta class can be set using their to AsString functions
+     *
+     * @covers \MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo\Meta::addBankAccountAsString
+     * @covers \MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo\Meta::addBirthdayAsString
+     * @covers \MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo\Meta::addEmailAddressAsString
+     * @covers \MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo\Meta::addGenderAsString
+     * @covers \MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo\Meta::addPhoneAsString
+     */
+    public function testSettingValueObjectsUsingAsStringMethods()
+    {
+        $meta = new Meta();
+        $meta->addBankAccountAsString('test');
+        $meta->addBirthdayAsString('1970-01-01');
+        $meta->addEmailAddressAsString('info@example.org');
+        $meta->addGenderAsString('male');
+        $meta->addPhoneAsString('0123456789');
+
+        $data = $meta->getData();
+        $this->assertSame('test', $data['bankaccount']);
+        $this->assertSame('1970-01-01', $data['birthday']);
+        $this->assertSame('info@example.org', $data['email']);
+        $this->assertSame('male', $data['gender']);
+        $this->assertSame('0123456789', $data['phone']);
+    }
 }

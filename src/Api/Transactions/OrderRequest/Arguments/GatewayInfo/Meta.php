@@ -17,6 +17,8 @@ use MultiSafepay\ValueObject\Gender;
 /**
  * Class Meta
  * @package MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo
+ *
+ * phpcs:disable ObjectCalisthenics.Metrics.MethodPerClassLimit
  */
 class Meta implements GatewayInfoInterface
 {
@@ -61,12 +63,32 @@ class Meta implements GatewayInfoInterface
     }
 
     /**
+     * @param string $birthday
+     * @return Meta
+     */
+    public function addBirthdayAsString(string $birthday): Meta
+    {
+        $this->birthday = new Date($birthday);
+        return $this;
+    }
+
+    /**
      * @param BankAccount $bankAccount
      * @return Meta
      */
     public function addBankAccount(BankAccount $bankAccount): Meta
     {
         $this->bankAccount = $bankAccount;
+        return $this;
+    }
+
+    /**
+     * @param string $bankAccount
+     * @return Meta
+     */
+    public function addBankAccountAsString(string $bankAccount): Meta
+    {
+        $this->bankAccount = new BankAccount($bankAccount);
         return $this;
     }
 
@@ -81,6 +103,16 @@ class Meta implements GatewayInfoInterface
     }
 
     /**
+     * @param string $phone
+     * @return Meta
+     */
+    public function addPhoneAsString(string $phone): Meta
+    {
+        $this->phone = new PhoneNumber($phone);
+        return $this;
+    }
+
+    /**
      * @param EmailAddress $emailAddress
      * @return Meta
      */
@@ -91,12 +123,32 @@ class Meta implements GatewayInfoInterface
     }
 
     /**
+     * @param string $emailAddress
+     * @return Meta
+     */
+    public function addEmailAddressAsString(string $emailAddress): Meta
+    {
+        $this->emailAddress = new EmailAddress($emailAddress);
+        return $this;
+    }
+
+    /**
      * @param Gender $gender
      * @return Meta
      */
     public function addGender(Gender $gender): Meta
     {
         $this->gender = $gender;
+        return $this;
+    }
+
+    /**
+     * @param string $gender
+     * @return Meta
+     */
+    public function addGenderAsString(string $gender): Meta
+    {
+        $this->gender = new Gender($gender);
         return $this;
     }
 

@@ -325,4 +325,12 @@ class TransactionResponse extends ResponseBody
     {
         return (string)$this->get('order_total');
     }
+
+    /**
+     * @return bool
+     */
+    public function requiresShoppingCart(): bool
+    {
+        return in_array($this->getPaymentDetails()->getType(), Gateways::SHOPPING_CART_REQUIRED_GATEWAYS, true);
+    }
 }
