@@ -6,7 +6,9 @@
 
 namespace MultiSafepay\Tests\Api\Integration\Transactions;
 
+use MultiSafepay\Api\Transactions\OrderRequest;
 use MultiSafepay\Api\Transactions\TransactionResponse;
+use MultiSafepay\Tests\Fixtures\Api\Gateways\GatewayFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\DescriptionFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\GoogleAnalyticsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\IdealGatewayInfoFixture;
@@ -42,9 +44,50 @@ class TransactionTest extends TestCase
     public function testGetOrderData(): void
     {
         $orderRequest = $this->createOrderIdealDirectRequestFixture();
-        $transaction = new TransactionResponse($orderRequest->getData());
+        $transaction  = new TransactionResponse($orderRequest->getData());
 
         $data = $transaction->getData();
         $this->assertArrayHasKey('type', $data, var_export($data, true));
+    }
+
+    /**
+     * Test if IDEAL doesn't require a shopping cart
+     */
+    public function testNotRequiresShoppingCart(): void
+    {
+        $orderRequest = $this->createOrderIdealDirectRequestFixture();
+        $this->addPaymentDetails($orderRequest);
+        $transaction = new TransactionResponse($orderRequest->getData());
+
+        $this->assertFalse($transaction->requiresShoppingCart());
+    }
+
+    /**
+     * Test if PAYAFTER does require a shopping cart
+     */
+    public function testRequiresShoppingCart(): void
+    {
+        $orderRequest = $this->createGenericOrderRequestFixture();
+        $orderRequest->addGatewayCode(GatewayFixture::PAYAFTER);
+        $this->addPaymentDetails($orderRequest);
+        $transaction = new TransactionResponse($orderRequest->getData());
+
+        $this->assertTrue($transaction->requiresShoppingCart());
+    }
+
+    /**
+     * Add PaymentDetails to OrderRequest
+     *
+     * @param OrderRequest $orderRequest
+     */
+    private function addPaymentDetails(OrderRequest $orderRequest)
+    {
+        $orderRequest->addData(
+            [
+                'payment_details' => [
+                    "type" => $orderRequest->getGatewayCode()
+                ]
+            ]
+        );
     }
 }
