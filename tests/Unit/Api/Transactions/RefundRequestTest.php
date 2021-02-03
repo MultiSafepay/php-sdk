@@ -26,7 +26,7 @@ use PHPUnit\Framework\TestCase;
 class RefundRequestTest extends TestCase
 {
     /**
-     * @covers RefundRequest::getData
+     * @covers \MultiSafepay\Api\Transactions\RefundRequest::getData
      */
     public function testGetData()
     {
@@ -36,7 +36,7 @@ class RefundRequestTest extends TestCase
     }
 
     /**
-     * @covers RefundRequest::addMoney
+     * @covers \MultiSafepay\Api\Transactions\RefundRequest::addMoney
      */
     public function testAddMoney()
     {
@@ -47,7 +47,7 @@ class RefundRequestTest extends TestCase
     }
 
     /**
-     * @covers RefundRequest::addMoney
+     * @covers \MultiSafepay\Api\Transactions\RefundRequest::addMoney
      */
     public function testAddMoneyFloat()
     {
