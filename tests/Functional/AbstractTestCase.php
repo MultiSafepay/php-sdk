@@ -16,7 +16,7 @@ abstract class AbstractTestCase extends TestCase
     /**
      * Setup resources for all tests
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         Version::getInstance()->addPluginVersion('functional-test');

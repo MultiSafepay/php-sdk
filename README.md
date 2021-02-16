@@ -23,7 +23,7 @@ All clients can be replaced without any side effects.
 
 If you don't have any client implementation installed, use the following:
 ```bash
-composer require php-http/guzzle6-adapter guzzlehttp/psr7
+composer require guzzlehttp/guzzle
 ```
 
 If you don't have any factory implementation installed, use the following:

@@ -23,8 +23,8 @@ class VersionTest extends TestCase
     public function testGetVersion()
     {
         $instance = Version::getInstance();
-        $this->assertContains('Plugin ', $instance->getVersion());
-        $this->assertContains('PHP-SDK ', $instance->getVersion());
+        $this->assertStringContainsString('Plugin ', $instance->getVersion());
+        $this->assertStringContainsString('PHP-SDK ', $instance->getVersion());
     }
 
     /**
@@ -43,6 +43,6 @@ class VersionTest extends TestCase
     {
         $instance = Version::getInstance();
         $instance->addPluginVersion('foobar');
-        $this->assertContains('foobar', $instance->getPluginVersion());
+        $this->assertStringContainsString('foobar', $instance->getPluginVersion());
     }
 }
