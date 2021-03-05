@@ -111,7 +111,7 @@ class CartItem extends DataObject
     public function addTaxRate(float $taxRate): CartItem
     {
         if ($taxRate < 0) {
-            throw new InvalidArgumentException('Tax rate can not be less then 0');
+            throw new InvalidArgumentException('Tax rate can not be less than 0');
         }
 
         $this->taxRate = $taxRate;
