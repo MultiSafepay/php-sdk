@@ -122,10 +122,10 @@ class CartItem extends DataObject
     }
 
     /**
-     * @param int $quantity
+     * @param $quantity
      * @return CartItem
      */
-    public function addQuantity(int $quantity): CartItem
+    public function addQuantity($quantity): CartItem
     {
         $this->quantity = $quantity;
         return $this;
