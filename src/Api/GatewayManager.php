@@ -28,7 +28,7 @@ class GatewayManager extends AbstractManager
      * @return Gateway[]
      * @throws ClientExceptionInterface
      */
-    public function getGateways(bool $includeCoupons = false): array
+    public function getGateways(bool $includeCoupons = true): array
     {
         $options = [];
         if ($includeCoupons) {
