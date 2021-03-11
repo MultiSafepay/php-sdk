@@ -29,4 +29,14 @@ class IpAddressTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         new IpAddress('foobar');
     }
+
+    /**
+     * Test whether comma-separated values could be set and used
+     * @link https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For#examples
+     */
+    public function testWhetherCommaSeparatedValuesCanBeSetAndUsed()
+    {
+        $ipAddress = new IpAddress('203.0.113.195, 70.41.3.18, 150.172.238.178');
+        $this->assertEquals('203.0.113.195', $ipAddress->get());
+    }
 }

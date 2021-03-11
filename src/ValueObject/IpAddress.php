@@ -17,7 +17,7 @@ class IpAddress
     /**
      * @var string
      */
-    private $ipAddress = '';
+    private $ipAddress;
 
     /**
      * Country constructor.
@@ -25,6 +25,10 @@ class IpAddress
      */
     public function __construct(string $ipAddress)
     {
+        // Clean up in case of comma-separated IPs
+        $ipAddressList = explode(',', $ipAddress);
+        $ipAddress = trim(reset($ipAddressList));
+
         if (filter_var($ipAddress, FILTER_VALIDATE_IP) === false) {
             throw new InvalidArgumentException('Value "' . $ipAddress . '" is not a valid IP address');
         }
