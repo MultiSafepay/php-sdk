@@ -26,9 +26,9 @@ use Psr\Http\Message\StreamInterface;
  */
 class Client
 {
-    const LIVE_URL = 'https://api.multisafepay.com/v1/json/';
+    const LIVE_URL = 'https://api.multisafepay.com/v1/';
 
-    const TEST_URL = 'https://testapi.multisafepay.com/v1/json/';
+    const TEST_URL = 'https://testapi.multisafepay.com/v1/';
 
     const METHOD_POST = 'POST';
 

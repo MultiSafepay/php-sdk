@@ -47,7 +47,7 @@ class CreateDirectOrderWithWrongCurrencyTest extends AbstractTestCase
     {
         $this->expectException(ApiException::class);
         $orderRequest = $this->createOrderRequest($currencyCode);
-        $this->getClient()->createPostRequest('orders', $orderRequest);
+        $this->getClient()->createPostRequest('json/orders', $orderRequest);
     }
 
     /**

@@ -12,7 +12,7 @@ class GetGatewaysTest extends AbstractTestCase
      */
     public function testGetGateways()
     {
-        $response = $this->getClient()->createGetRequest('gateways');
+        $response = $this->getClient()->createGetRequest('json/gateways');
         $data = $response->getResponseData();
 
         foreach ($data as $gateway) {
@@ -28,6 +28,6 @@ class GetGatewaysTest extends AbstractTestCase
     public function testGetGatewaysWithWrongPath()
     {
         $this->expectException(ApiException::class);
-        $this->getClient()->createGetRequest('gateways-wrong');
+        $this->getClient()->createGetRequest('json/gateways-wrong');
     }
 }

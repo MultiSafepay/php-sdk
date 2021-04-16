@@ -73,7 +73,7 @@ class CreateSimpleRefundTest extends AbstractTestCase
     private function getRefundReponseFromMockFile(string $orderId): Response
     {
         $refundRequest = RequestBody::createRequestBodyFromArray(FixtureLoader::loadFixtureDataById('refund'));
-        return $this->getClient()->createPostRequest('orders/' . $orderId . '/refunds', $refundRequest);
+        return $this->getClient()->createPostRequest('json/orders/' . $orderId . '/refunds', $refundRequest);
     }
 
     /**

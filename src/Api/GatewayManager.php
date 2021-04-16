@@ -35,7 +35,7 @@ class GatewayManager extends AbstractManager
             $options['include'] = 'coupons';
         }
 
-        $response = $this->client->createGetRequest('gateways', $options);
+        $response = $this->client->createGetRequest('json/gateways', $options);
         return (new GatewayListing($response->getResponseData()))->getGateways();
     }
 
@@ -50,7 +50,7 @@ class GatewayManager extends AbstractManager
     {
         $options = array_intersect_key(self::ALLOWED_OPTIONS, $options);
 
-        $endpoint = 'gateways/' . $gatewayCode;
+        $endpoint = 'json/gateways/' . $gatewayCode;
         $response = $this->client->createGetRequest($endpoint, $options);
 
         return new Gateway($response->getResponseData());

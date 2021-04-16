@@ -28,7 +28,7 @@ class TransactionManager extends AbstractManager
      */
     public function create(OrderRequestInterface $requestOrder): Transaction
     {
-        $response = $this->client->createPostRequest('orders', $requestOrder);
+        $response = $this->client->createPostRequest('json/orders', $requestOrder);
         return new Transaction($response->getResponseData());
     }
 
@@ -41,7 +41,7 @@ class TransactionManager extends AbstractManager
      */
     public function get(string $orderId): Transaction
     {
-        $endpoint = 'orders/' . $orderId;
+        $endpoint = 'json/orders/' . $orderId;
         $context = ['order_id' => $orderId];
         $response = $this->client->createGetRequest($endpoint, [], $context);
         return new Transaction($response->getResponseData());
@@ -57,7 +57,7 @@ class TransactionManager extends AbstractManager
     {
         $context = ['request_body' => $updateRequest->getData()];
         $response = $this->client->createPatchRequest(
-            'orders/' . $orderId,
+            'json/orders/' . $orderId,
             $updateRequest,
             $context
         );
@@ -77,7 +77,7 @@ class TransactionManager extends AbstractManager
         $context = ['transaction' => $transaction->getData()];
 
         $response = $this->client->createPostRequest(
-            'orders/' . $orderId . '/refunds',
+            'json/orders/' . $orderId . '/refunds',
             $requestRefund,
             $context
         );

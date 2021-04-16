@@ -22,7 +22,7 @@ class TokenManager extends AbstractManager
      */
     public function getList(string $reference): array
     {
-        $response = $this->client->createGetRequest('recurring/' . $reference);
+        $response = $this->client->createGetRequest('json/recurring/' . $reference);
         return (new TokenListing($response->getResponseData()['tokens']))->getTokens();
     }
 
@@ -34,7 +34,7 @@ class TokenManager extends AbstractManager
      */
     public function get(string $token, string $reference): Token
     {
-        $response = $this->client->createGetRequest('recurring/' . $reference . '/token/' . $token);
+        $response = $this->client->createGetRequest('json/recurring/' . $reference . '/token/' . $token);
         return new Token($response->getResponseData());
     }
 
@@ -46,7 +46,7 @@ class TokenManager extends AbstractManager
      */
     public function delete(string $token, string $reference): bool
     {
-        $this->client->createDeleteRequest('recurring/' . $reference . '/remove/' . $token);
+        $this->client->createDeleteRequest('json/recurring/' . $reference . '/remove/' . $token);
         return true;
     }
 

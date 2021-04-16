@@ -6,6 +6,7 @@
 
 namespace MultiSafepay;
 
+use MultiSafepay\Api\ApiTokenManager;
 use MultiSafepay\Api\CategoryManager;
 use MultiSafepay\Api\GatewayManager;
 use MultiSafepay\Api\IssuerManager;
@@ -85,6 +86,14 @@ class Sdk
     public function getTokenManager(): TokenManager
     {
         return new TokenManager($this->client);
+    }
+
+    /**
+     * @return ApiTokenManager
+     */
+    public function getApiTokenManager(): ApiTokenManager
+    {
+        return new ApiTokenManager($this->client);
     }
 
     /**

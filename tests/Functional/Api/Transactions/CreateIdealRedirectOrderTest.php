@@ -48,7 +48,7 @@ class CreateIdealRedirectOrderTest extends AbstractTestCase
         $orderRequest = $this->createOrderRequest();
 
         try {
-            $response = $this->getClient()->createPostRequest('orders', $orderRequest);
+            $response = $this->getClient()->createPostRequest('json/orders', $orderRequest);
         } catch (ApiException $apiException) {
             $this->assertTrue(false, $apiException->getDetails());
             return;

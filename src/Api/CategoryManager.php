@@ -22,7 +22,7 @@ class CategoryManager extends AbstractManager
      */
     public function getCategories(): array
     {
-        $response = $this->client->createGetRequest('categories');
+        $response = $this->client->createGetRequest('json/categories');
         return (new CategoryListing($response->getResponseData()))->getCategories();
     }
 }

@@ -24,6 +24,6 @@ class ClientTest extends TestCase
 
         $mockClient = MockClient::getInstance();
         $mockClient->mockResponseFromFixtureFile('generic-fail');
-        $mockClient->createGetRequest('gateways');
+        $mockClient->createGetRequest('json/gateways');
     }
 }

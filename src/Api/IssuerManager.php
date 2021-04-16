@@ -29,7 +29,7 @@ class IssuerManager extends AbstractManager
             throw new InvalidArgumentException('Gateway code is not allowed');
         }
 
-        $response = $this->client->createGetRequest('issuers/' . $gatewayCode);
+        $response = $this->client->createGetRequest('json/issuers/' . $gatewayCode);
         return (new IssuerListing($gatewayCode, $response->getResponseData()))->getIssuers();
     }
 }

@@ -5,6 +5,6 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 $mockGenerator = new MockGenerator();
 $mockGenerator->generateGetRequests([
-    'gateways',
-    'categories',
+    'json/gateways',
+    'json/categories',
 ]);

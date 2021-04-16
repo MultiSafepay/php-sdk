@@ -50,7 +50,7 @@ class CreatePayafterDirectOrderTest extends AbstractTestCase
     {
         try {
             $requestOrder = $this->createOrderRequest();
-            $response = $this->getClient()->createPostRequest('orders', $requestOrder);
+            $response = $this->getClient()->createPostRequest('json/orders', $requestOrder);
         } catch (ApiException $apiException) {
             $this->assertTrue(false, $apiException->getDetails());
             return;
@@ -68,7 +68,7 @@ class CreatePayafterDirectOrderTest extends AbstractTestCase
     {
         try {
             $requestOrder = $this->createOrderRequestWithTax();
-            $response = $this->getClient()->createPostRequest('orders', $requestOrder);
+            $response = $this->getClient()->createPostRequest('json/orders', $requestOrder);
         } catch (ApiException $apiException) {
             $this->assertTrue(false, $apiException->getDetails());
             return;
@@ -86,7 +86,7 @@ class CreatePayafterDirectOrderTest extends AbstractTestCase
     {
         $this->expectException(InvalidTotalAmountException::class);
         $requestOrder = $this->createOrderRequestWithTax();
-        $this->getClient()->useStrictMode(true)->createPostRequest('orders', $requestOrder);
+        $this->getClient()->useStrictMode(true)->createPostRequest('json/orders', $requestOrder);
     }
 
     /**
