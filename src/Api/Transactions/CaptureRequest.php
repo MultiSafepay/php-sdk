@@ -15,15 +15,7 @@ use MultiSafepay\Api\Base\RequestBodyInterface;
  */
 class CaptureRequest extends RequestBody implements RequestBodyInterface
 {
-    /**
-     * @var string
-     */
-    private $id;
-
-    /**
-     * @var string
-     */
-    private $status;
+    public const CAPTURE_MANUAL_TYPE = 'manual';
 
     /**
      * @return array
