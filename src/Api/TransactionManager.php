@@ -86,6 +86,25 @@ class TransactionManager extends AbstractManager
     }
 
     /**
+     * @param string $orderId
+     * @param CaptureRequest $captureRequest
+     * @return Response
+     * @throws ClientExceptionInterface
+     */
+    public function captureReservationCancel(string $orderId, CaptureRequest $captureRequest): Response
+    {
+        $context = ['request_body' => $captureRequest->getData()];
+
+        $response = $this->client->createPatchRequest(
+            'json/capture/' . $orderId,
+            $captureRequest,
+            $context
+        );
+
+        return $response;
+    }
+
+    /**
      * @param Transaction $transaction
      * @param RefundRequest $requestRefund
      * @return Response
