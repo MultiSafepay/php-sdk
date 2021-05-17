@@ -165,3 +165,16 @@ $orderRequest->addGatewayCode($token->getGatewayCode());
 /** \MultiSafepay\Api\Tokens\Token $token */
 $tokenManager->delete($token->getToken(),'Abc123');
 ```
+
+## Verify POST notification request
+When receiving the POST notification request, You can verify that the data you received is from MultiSafepay
+This can be done by the following
+```php
+/**
+ * @param string|\MultiSafepay\Api\Transactions\TransactionResponse $request the original json data received from MultiSafepay
+ * @param string $auth The header named auth in the POST request
+ * @param string $apiKey Your API key
+ * @param int $validationTimeInSeconds How long the timestamp should be valid from the POST request 
+ */
+\MultiSafepay\Util\Notification::verifyNotification($request, $auth, $apiKey,$validationTimeInSeconds);
+```

@@ -21,6 +21,11 @@ class Response
      * @var array
      */
     private $data = [];
+    
+    /**
+     * @var string
+     */
+    private $raw;
 
     /**
      * @param string $json
@@ -34,15 +39,16 @@ class Response
             $data = [];
         }
 
-        return new self($data, $context);
+        return new self($data, $context, $json);
     }
 
     /**
      * Response constructor.
      * @param array $data
      * @param array $context
+     * @param string $raw
      */
-    public function __construct(array $data, array $context = [])
+    public function __construct(array $data, array $context = [], string $raw = '')
     {
         if (!isset($data['success']) && !empty($data['data'])) {
             $data['success'] = true;
@@ -54,6 +60,7 @@ class Response
 
         $this->validate($data, $context);
         $this->data = $data['data'];
+        $this->raw = $raw;
     }
 
     /**
@@ -87,5 +94,13 @@ class Response
     public function getResponseData(): array
     {
         return $this->data;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRawData(): string
+    {
+        return $this->raw;
     }
 }
