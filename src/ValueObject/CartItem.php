@@ -184,7 +184,7 @@ class CartItem extends DataObject
                 'unit_price' => $moneyFormatter->toDecimalString($this->unitPrice),
                 'currency' => $this->unitPrice ? $this->unitPrice->getCurrency() : '',
                 'quantity' => $this->quantity ?? 0,
-                'merchant_item_id' => !empty($this->merchantItemId) ? $this->merchantItemId : '',
+                'merchant_item_id' => !empty($this->getMerchantItemId()) ? $this->getMerchantItemId() : '',
                 'tax_table_selector' => $this->taxTableSelector ?? '',
                 'weight' => [
                     'unit' => $this->weight ? strtoupper($this->weight->getUnit()) : null,

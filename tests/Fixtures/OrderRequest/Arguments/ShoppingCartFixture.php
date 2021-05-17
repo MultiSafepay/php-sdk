@@ -11,6 +11,7 @@ use MultiSafepay\ValueObject\Money;
 use MultiSafepay\ValueObject\Weight;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart\Item as ShoppingCartItem;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart\ShippingItem;
 
 /**
  * Trait ShoppingCartFixture
@@ -90,6 +91,23 @@ trait ShoppingCartFixture
             ->addWeight(
                 new Weight('KG', 12)
             );
+
+        return new ShoppingCart($items);
+    }
+
+    /**
+     * @return ShoppingCart
+     */
+    public function createShippingCartFixture(): ShoppingCart
+    {
+        $items = [];
+        $items[] = (new ShippingItem())
+            ->addName('Shipping item')
+            ->addUnitPrice(new Money(5, 'EUR'))
+            ->addQuantity(1)
+            ->addDescription('1234')
+            ->addTaxRate(0)
+            ->addTaxTableSelector('none');
 
         return new ShoppingCart($items);
     }

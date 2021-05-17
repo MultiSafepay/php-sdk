@@ -49,7 +49,7 @@ class ShoppingCartTest extends TestCase
         $shoppingCart->validate();
     }
 
-        /**
+    /**
      * @covers \MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart::fromData
      */
     public function testFromData()
@@ -57,5 +57,16 @@ class ShoppingCartTest extends TestCase
         $data = $this->createShoppingCartFixture()->getData();
         $shoppingCart = ShoppingCart::fromData($data);
         $this->assertSame(1, count($shoppingCart->getItems()));
+    }
+
+    /**
+     * @covers \MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart\ShippingItem::getMerchantItemId
+     */
+    public function testMerchantItemIdFromShippingItemData()
+    {
+        $data = $this->createShippingCartFixture()->getData();
+        $shoppingCart = ShoppingCart::fromData($data);
+        $items = $shoppingCart->getItems();
+        $this->assertSame('msp-shipping', $items[0]->getMerchantItemId());
     }
 }
