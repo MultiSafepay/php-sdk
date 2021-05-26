@@ -58,6 +58,16 @@ class ShoppingCartTest extends TestCase
         $shoppingCart = ShoppingCart::fromData($data);
         $this->assertSame(1, count($shoppingCart->getItems()));
     }
+    
+    /**
+     * @covers \MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart::fromData
+     */
+    public function testShoppingCartFromDataWithNull()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $shoppingCart = (new ShoppingCart([]))::fromData(null);
+        $shoppingCart->getData();
+    }
 
     /**
      * @covers \MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart\ShippingItem::getMerchantItemId

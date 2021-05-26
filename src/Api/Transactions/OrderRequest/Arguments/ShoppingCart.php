@@ -30,10 +30,10 @@ class ShoppingCart
     }
 
     /**
-     * @param array $data
+     * @param mixed array|null $data
      * @return ShoppingCart
      */
-    public static function fromData(array $data): ShoppingCart
+    public static function fromData(?array $data): ShoppingCart
     {
         if (!is_array($data) || empty($data['items'])) {
             return new ShoppingCart([]);
