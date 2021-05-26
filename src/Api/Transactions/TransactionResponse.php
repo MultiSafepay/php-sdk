@@ -73,11 +73,13 @@ class TransactionResponse extends ResponseBody
     }
 
     /**
+     * @deprecated deprecated since version 5.1.0
      * @return string
      */
     public function getPaymentLink(): string
     {
-        return (string)$this->get('payment_url');
+        trigger_error('getPaymentLink will be deprecated, should be replaced by getPaymentUrl', E_USER_DEPRECATED);
+        return $this->getPaymentUrl();
     }
 
     /**

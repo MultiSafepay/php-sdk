@@ -43,7 +43,6 @@ class TransactionManagerTest extends TestCase
     use SecondChanceFixture;
     use GoogleAnalyticsFixture;
 
-
     /**
      * Test the creation of a transaction
      * @throws ClientExceptionInterface
@@ -66,7 +65,7 @@ class TransactionManagerTest extends TestCase
 
         $this->assertEquals($orderData['order_id'], $transaction->getOrderId());
 
-        $paymentLink = $transaction->getPaymentLink();
+        $paymentLink = $transaction->getPaymentUrl();
         $this->assertStringStartsWith('https://testpayv2.multisafepay.com/', $paymentLink);
     }
 
@@ -92,7 +91,7 @@ class TransactionManagerTest extends TestCase
         $transactionManager = new TransactionManager($mockClient);
         $transaction = $transactionManager->get($orderId);
 
-        $this->assertEmpty($transaction->getPaymentLink());
+        $this->assertEmpty($transaction->getPaymentUrl());
         $this->assertSame('completed', $transaction->getData()['status']);
     }
 
