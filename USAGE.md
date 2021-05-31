@@ -1,94 +1,238 @@
-# Example usage of the SDK
-To use the SDK, the SDK first needs to be instantiated. See the **Getting Started** section in [README.md](README.md). All examples below assume an instantiated SDK object named `$multiSafepaySdk`.
+# Examples usage of the SDK
 
 ### Getting a list of gateways
 ```php
+$yourApiKey = 'your-api-key';
+$isProduction = false;
+$multiSafepaySdk = new \MultiSafepay\Sdk($yourApiKey, $isProduction);
 /** @var \MultiSafepay\Api\Gateways\Gateway[] $gateways **/
 $gateways = $multiSafepaySdk->getGatewayManager()->getGateways();
 ```
 
 ### Get a specific gateway
 ```php
+$yourApiKey = 'your-api-key';
+$isProduction = false;
+$multiSafepaySdk = new \MultiSafepay\Sdk($yourApiKey, $isProduction);
 /** @var \MultiSafepay\Api\Gateways\Gateway $gateway **/
 $gateway = $multiSafepaySdk->getGatewayManager()->getByCode('VISA');
 ```
 
 ### Get a list of categories
 ```php
+$yourApiKey = 'your-api-key';
+$isProduction = false;
+$multiSafepaySdk = new \MultiSafepay\Sdk($yourApiKey, $isProduction);
 /** @var \MultiSafepay\Api\Categories\Category[] $categories **/
 $categories = $multiSafepaySdk->getCategoryManager()->getCategories();
 ```
 
 ### Get a list of iDEAL issuers
 ```php
+$yourApiKey = 'your-api-key';
+$isProduction = false;
+$multiSafepaySdk = new \MultiSafepay\Sdk($yourApiKey, $isProduction);
 /** @var \MultiSafepay\Api\Issuers\Issuer[] $issuers **/
 $issuers = $multiSafepaySdk->getIssuerManager()->getIssuersByGatewayCode('IDEAL');
 ```
 
-### Create an order
+### Create an order without shopping cart
 ```php
 use MultiSafepay\ValueObject\Customer\Country;
 use MultiSafepay\ValueObject\Customer\Address;
 use MultiSafepay\ValueObject\Customer\PhoneNumber;
 use MultiSafepay\ValueObject\Customer\EmailAddress;
-use MultiSafepay\ValueObject\IpAddress;
+use MultiSafepay\ValueObject\Money;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\CustomerDetails;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\PluginDetails;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\PaymentOptions;
 use MultiSafepay\Api\Transactions\OrderRequest;
-use MultiSafepay\Api\Transactions\TransactionResponse;
- 
-$orderId = 42;
-$description = 'foobar';
 
-$country = new Country('NL');
+$yourApiKey = 'your-api-key';
+$isProduction = false;
+$multiSafepaySdk = new \MultiSafepay\Sdk($yourApiKey, $isProduction);
+
+$orderId = (string) time();
+$description = 'Order #' . $orderId;
+$amount = new Money(2000, 'EUR'); // Amount must be in cents
 
 $address = (new Address())
     ->addStreetName('Kraanspoor')
     ->addStreetNameAdditional('(blue door)')
     ->addHouseNumber('39')
-    ->addHouseNumberSuffix('')
     ->addZipCode('1033SC')
     ->addCity('Amsterdam')
     ->addState('Noord Holland')
-    ->addCountry($country);
+    ->addCountry(new Country('NL'));
 
 $customer = (new CustomerDetails())
     ->addFirstName('John')
     ->addLastName('Doe')
     ->addAddress($address)
-    ->addIpAddress(new IpAddress('10.0.0.1'))
-    ->addEmailAddress(new EmailAddress('info@example.org'))
-    ->addPhoneNumber(new PhoneNumber('0612345678'))
-    ->addLocale('nl_NL')
-    ->addReferrer('http://example.org')
-    ->addForwardedIp(new IpAddress('192.168.1.1'))
-    ->addData(['something' => 'else'])
-    ->addUserAgent('Unknown');
+    ->addEmailAddress(new EmailAddress('noreply@example.org'))
+    ->addPhoneNumber(new PhoneNumber('0208500500'))
+    ->addLocale('nl_NL');
 
 $pluginDetails = (new PluginDetails)
     ->addApplicationName('My e-commerce application')
-    ->addApplicationVersion('0.0.1');
+    ->addApplicationVersion('0.0.1')
+    ->addPluginVersion('1.1.0');
+
+$paymentOptions = (new PaymentOptions())
+    ->addNotificationUrl('http://www.example.com/client/notification?type=notification')
+    ->addRedirectUrl('http://www.example.com/client/notification?type=redirect')
+    ->addCancelUrl('http://www.example.com/client/notification?type=cancel')
+    ->addCloseWindow(true);
 
 $orderRequest = (new OrderRequest())
+    ->addType('redirect')
     ->addOrderId($orderId)
     ->addDescriptionText($description)
+    ->addMoney($amount)
+    ->addGatewayCode('IDEAL')
     ->addCustomer($customer)
     ->addDelivery($customer)
-    ->addPluginDetails($pluginDetails);
+    ->addPluginDetails($pluginDetails)
+    ->addPaymentOptions( $paymentOptions);
 
 /** @var TransactionResponse $transaction */
-$transaction = $multiSafepaySdk->getTransactionManager()->create($orderRequest);
+$transactionManager = $multiSafepaySdk->getTransactionManager()->create($orderRequest);
+$transactionManager->getPaymentUrl();
 ```
 
-### Adding a shopping cart to an order
-Most orders also require a shopping cart to be added. This can be created by adding items to a cart:
+### Create an order with shopping cart
 ```php
+use MultiSafepay\ValueObject\Customer\Country;
+use MultiSafepay\ValueObject\Customer\Address;
+use MultiSafepay\ValueObject\Customer\PhoneNumber;
+use MultiSafepay\ValueObject\Customer\EmailAddress;
 use MultiSafepay\ValueObject\Money;
 use MultiSafepay\ValueObject\Weight;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\CustomerDetails;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\PluginDetails;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\PaymentOptions;
+use MultiSafepay\Api\Transactions\OrderRequest;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart\Item;
 
-$items = [(new Item())
+$yourApiKey = 'your-api-key';
+$isProduction = false;
+$multiSafepaySdk = new \MultiSafepay\Sdk($yourApiKey, $isProduction);
+
+$orderId = (string) time();
+$description = 'Order #' . $orderId;
+$amount = new Money(12100, 'EUR'); // Amount must be in cents
+
+$address = (new Address())
+    ->addStreetName('Kraanspoor')
+    ->addStreetNameAdditional('(blue door)')
+    ->addHouseNumber('39')
+    ->addZipCode('1033SC')
+    ->addCity('Amsterdam')
+    ->addState('Noord Holland')
+    ->addCountry(new Country('NL'));
+
+$customer = (new CustomerDetails())
+    ->addFirstName('John')
+    ->addLastName('Doe')
+    ->addAddress($address)
+    ->addEmailAddress(new EmailAddress('noreply@example.org'))
+    ->addPhoneNumber(new PhoneNumber('0208500500'))
+    ->addLocale('en_US');
+
+$pluginDetails = (new PluginDetails)
+    ->addApplicationName('My e-commerce application')
+    ->addApplicationVersion('0.0.1')
+    ->addPluginVersion('1.1.0');
+
+$paymentOptions = (new PaymentOptions())
+    ->addNotificationUrl('http://www.example.com/client/notification?type=notification')
+    ->addRedirectUrl('http://www.example.com/client/notification?type=redirect')
+    ->addCancelUrl('http://www.example.com/client/notification?type=cancel')
+    ->addCloseWindow(true);
+
+$items[] = (new Item())
+    ->addName('Geometric Candle Holders')
+    ->addUnitPrice(new Money(5000, 'EUR')) // Amount must be in cents
+    ->addQuantity(2)
+    ->addDescription('1234')
+    ->addTaxRate(21)
+    ->addTaxTableSelector('none')
+    ->addMerchantItemId('1234')
+    ->addWeight(new Weight('KG', 12));
+
+$orderRequest = (new OrderRequest())
+    ->addType('redirect')
+    ->addOrderId($orderId)
+    ->addDescriptionText($description)
+    ->addMoney($amount)
+    ->addGatewayCode('IDEAL')
+    ->addCustomer($customer)
+    ->addDelivery($customer)
+    ->addPluginDetails($pluginDetails)
+    ->addPaymentOptions( $paymentOptions)
+    ->addShoppingCart(new ShoppingCart($items));
+
+/** @var TransactionResponse $transaction */
+$transactionManager = $multiSafepaySdk->getTransactionManager()->create($orderRequest);
+$transactionManager->getPaymentUrl();
+```
+
+### Create a direct order with shopping cart and gateway info
+Some gateways requires additional information to process a direct transaction; and in this case the information is builded and sended in the gatewayInfo object.
+
+```php
+use MultiSafepay\ValueObject\Customer\Country;
+use MultiSafepay\ValueObject\Customer\Address;
+use MultiSafepay\ValueObject\Customer\PhoneNumber;
+use MultiSafepay\ValueObject\Customer\EmailAddress;
+use MultiSafepay\ValueObject\Money;
+use MultiSafepay\ValueObject\Weight;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\CustomerDetails;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\PluginDetails;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\PaymentOptions;
+use MultiSafepay\Api\Transactions\OrderRequest;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart\Item;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo\Ideal;
+
+$yourApiKey = 'your-api-key';
+$isProduction = false;
+$multiSafepaySdk = new \MultiSafepay\Sdk($yourApiKey, $isProduction);
+
+$orderId = (string) time();
+$description = 'Order #' . $orderId;
+$amount = new Money(12100, 'EUR'); // Amount must be in cents!!
+
+$address = (new Address())
+    ->addStreetName('Kraanspoor')
+    ->addStreetNameAdditional('(blue door)')
+    ->addHouseNumber('39')
+    ->addZipCode('1033SC')
+    ->addCity('Amsterdam')
+    ->addState('Noord Holland')
+    ->addCountry(new Country('NL'));
+
+$customer = (new CustomerDetails())
+    ->addFirstName('John')
+    ->addLastName('Doe')
+    ->addAddress($address)
+    ->addEmailAddress(new EmailAddress('noreply@example.org'))
+    ->addPhoneNumber(new PhoneNumber('0208500500'))
+    ->addLocale('nl_NL');
+
+$pluginDetails = (new PluginDetails)
+    ->addApplicationName('My e-commerce application')
+    ->addApplicationVersion('0.0.1')
+    ->addPluginVersion('1.1.0');
+
+$paymentOptions = (new PaymentOptions())
+    ->addNotificationUrl('http://www.example.com/client/notification?type=notification')
+    ->addRedirectUrl('http://www.example.com/client/notification?type=redirect')
+    ->addCancelUrl('http://www.example.com/client/notification?type=cancel')
+    ->addCloseWindow(true);
+
+$items[] = (new Item())
     ->addName('Geometric Candle Holders')
     ->addUnitPrice(new Money(5000, 'EUR'))
     ->addQuantity(2)
@@ -98,31 +242,91 @@ $items = [(new Item())
     ->addMerchantItemId('1234')
     ->addWeight(new Weight('KG', 12));
 
-$shoppingCart = new ShoppingCart($items);
-$orderRequest->addShoppingCart($shoppingCart);
+$gatewayInfo = (new Ideal())
+    ->addIssuerId('3151');
+    
+$orderRequest = (new OrderRequest())
+    ->addType('direct')
+    ->addOrderId($orderId)
+    ->addDescriptionText($description)
+    ->addMoney($amount)
+    ->addGatewayCode('IDEAL')
+    ->addCustomer($customer)
+    ->addDelivery($customer)
+    ->addPluginDetails($pluginDetails)
+    ->addPaymentOptions( $paymentOptions)
+    ->addShoppingCart(new ShoppingCart($items))
+    ->addGatewayInfo($gatewayInfo);
+
+/** @var TransactionResponse $transaction */
+$transactionManager = $multiSafepaySdk->getTransactionManager()->create($orderRequest);
 ```
 
-Each item has an `addTaxRate` method that does not actually add an entry to the JSON data of the item itself. Instead, this tax rate is used to automatically construct table rates, that are added to the checkout options of the same order request. These checkout options can be manually added to the order request via a method `addCheckoutOptions`. But in practice, it is often enough to simply have these checkout options automatically be generated via the shopping cart instead.
-
-### Creating a refund
-Creating a refund is easiest by using the shortcut methods in the TransactionManager:
+### Creating a full refund without shopping cart
 ```php
-$transaction = $multiSafepaySdk->getTransactionManager()->get($orderId);
-$multiSafepaySdk->getTransactionManager()->refundByItem($transaction, $merchantItemId, $quantity = 0);
+use MultiSafepay\Api\Transactions\RefundRequest;
+use MultiSafepay\ValueObject\Money;
+
+$yourApiKey = 'your-api-key';
+$isProduction = false;
+$multiSafepaySdk = new \MultiSafepay\Sdk($yourApiKey, $isProduction);
+
+$orderId = XXXXX;  // An order ID created and completed previously
+$refundAmount = new Money(0, 'EUR'); // Using zero you will trigger a full refund
+$transactionManager = $multiSafepaySdk->getTransactionManager();
+$transaction = $transactionManager->get($orderId);
+$transactionManager->refund($transaction, (new RefundRequest())->addMoney( $refundAmount ) );
 ```
+
+### Creating a partial refund without shopping cart
+```php
+use MultiSafepay\Api\Transactions\RefundRequest;
+use MultiSafepay\ValueObject\Money;
+
+$yourApiKey = 'your-api-key';
+$isProduction = false;
+$multiSafepaySdk = new \MultiSafepay\Sdk($yourApiKey, $isProduction);
+
+$orderId = XXXXX;  // An order ID created and completed previously
+$refundAmount = new Money(2000, 'EUR'); // Set the amount that should be refunded in cents
+$transactionManager = $multiSafepaySdk->getTransactionManager();
+$transaction = $transactionManager->get($orderId);
+$transactionManager->refund($transaction, (new RefundRequest())->addMoney( $refundAmount ) );
+```
+
+### Creating a full refund with shopping cart
+```php
+$yourApiKey = 'your-api-key';
+$isProduction = false;
+$multiSafepaySdk = new \MultiSafepay\Sdk($yourApiKey, $isProduction);
+
+$orderId = XXXXX;  // An order ID created and completed previously
+$transaction = $multiSafepaySdk->getTransactionManager()->get($orderId);
+$refundRequest = $multiSafepaySdk->getTransactionManager()->createRefundRequest($transaction);
+$shoppingCart = $transaction->getShoppingCart()->getItems();
+foreach ($shoppingCart as $item) {
+    $refundRequest->getCheckoutData()->refundByMerchantItemId( (string) $item->getMerchantItemId(), (int) -$item->getQuantity());
+}
+$multiSafepaySdk->getTransactionManager()->refund( $transaction, $refundRequest );
+```
+
+### Creating a partial refund with shopping cart
+This request is used for creating a partial refund in orders paid with billing suite payment methods like Pay After Delivery, E-Invoicing, Klarna and AfterPay.
+
 The `$merchantItemId` is some kind of unique value that was initially added while creating the shopping cart. If the `$quantity` is set to zero (`0`) all items identified by `$merchantItemId` are refunded.
 
 To refund multiple items, you can do the following:
 ```php
+$yourApiKey = 'your-api-key';
+$isProduction = false;
+$multiSafepaySdk = new \MultiSafepay\Sdk($yourApiKey, $isProduction);
+
 $transaction = $multiSafepaySdk->getTransactionManager()->get($orderId);
 $refundRequest = $multiSafepaySdk->getTransactionManager()->createRefundRequest($transaction);
-$refundRequest->getCheckoutData()->refundByMerchantItemId('example1', 1);
-$refundRequest->getCheckoutData()->refundByMerchantItemId('example2', 2);
-$refundRequest->getCheckoutData()->refundByMerchantItemId('example3', 1);
+$refundRequest->getCheckoutData()->refundByMerchantItemId($merchantItemId, -1);
+$refundRequest->getCheckoutData()->refundByMerchantItemId($merchantItemId , -2);
+$refundRequest->getCheckoutData()->refundByMerchantItemId($merchantItemId, -1);
 ```
-
-### Additional examples
-Additional real-life examples can be found in the `tests/Functional` folder, even though they might be a bit more complex because of their usage of fixtures.
 
 ## Tokenization
 Before working on Tokenization be sure to check out our [Documentation Center](https://docs.multisafepay.com/tools/tokenization/tokenization-api-level/) and that Tokenization is activated on your MultiSafepay account.
@@ -178,3 +382,6 @@ This can be done by the following
  */
 \MultiSafepay\Util\Notification::verifyNotification($request, $auth, $apiKey,$validationTimeInSeconds);
 ```
+
+## Additional examples
+Additional use case examples can be found in the `tests/Functional` folder, even though they might be a bit more complex because of their usage of fixtures.

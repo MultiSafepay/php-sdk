@@ -57,6 +57,7 @@ $multiSafepaySdk->getTransactionManager();
 $multiSafepaySdk->getGatewayManager();
 $multiSafepaySdk->getIssuerManager();
 $multiSafepaySdk->getCategoryManager();
+$multiSafepaySdk->getTokenManager();
 ```
 
 Of these managers, the transaction manager is probably the most important, because it allows you to create orders and refunds.
