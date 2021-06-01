@@ -6,6 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [5.1.0] - 2021-06-01
+### Changed
+- Deprecation of duplicate method TransactionResponse->getPaymentLink().
+
+### Added
+- Add support for [API token endpoint](https://docs.multisafepay.com/api/#generate-an-api-token)
+- Add class ShippingItem in OrderRequest which can be used for simpler way to specify a shipping item in the [shopping cart](https://docs.multisafepay.com/api/#shopping-cart-items)
+- Add [POST notification validation](https://docs.multisafepay.com/faq/api/notification-url/#validating-post-notifications)
+
+### Fixed
+- Fix bug when requesting transaction details for an order registered without a ShoppingCart returning InvalidArgumentException with clear error message
+
 ## [5.0.1] - 2021-03-11
 ### Changed
 - getGateways will now include all merchant enabled gift cards by default
