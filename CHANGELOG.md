@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [5.1.1] - 2021-07-13
+### Changed
+- Removal of phone number filtering in PhoneNumber value object.
+
 ## [5.1.0] - 2021-06-01
 ### Changed
 - Deprecation of duplicate method TransactionResponse->getPaymentLink().
