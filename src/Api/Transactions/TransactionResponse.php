@@ -29,6 +29,33 @@ use MultiSafepay\ValueObject\Customer\PhoneNumber;
  */
 class TransactionResponse extends ResponseBody
 {
+
+    /**
+     * @var string
+     */
+    private $raw;
+
+    /**
+     * TransactionResponse constructor.
+     * @param array $data
+     * @param string $raw
+     */
+    public function __construct(array $data = [], string $raw = '')
+    {
+        $this->raw = $raw;
+        parent::__construct($data);
+    }
+
+    /**
+     * Get the JSON data if available
+     *
+     * @return string
+     */
+    public function getRawData(): string
+    {
+        return $this->raw;
+    }
+
     /**
      * @return string
      */
@@ -46,11 +73,13 @@ class TransactionResponse extends ResponseBody
     }
 
     /**
+     * @deprecated deprecated since version 5.1.0
      * @return string
      */
     public function getPaymentLink(): string
     {
-        return (string)$this->get('payment_url');
+        trigger_error('getPaymentLink will be deprecated, should be replaced by getPaymentUrl', E_USER_DEPRECATED);
+        return $this->getPaymentUrl();
     }
 
     /**
