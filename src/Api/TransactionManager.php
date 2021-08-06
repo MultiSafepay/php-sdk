@@ -107,12 +107,13 @@ class TransactionManager extends AbstractManager
     /**
      * @param Transaction $transaction
      * @param RefundRequest $requestRefund
+     * @param string|null $orderId
      * @return Response
      * @throws ClientExceptionInterface
      */
-    public function refund(Transaction $transaction, RefundRequest $requestRefund): Response
+    public function refund(Transaction $transaction, RefundRequest $requestRefund, string $orderId = null): Response
     {
-        $orderId = $transaction->getOrderId();
+        $orderId = $orderId ?: $transaction->getOrderId();
         $context = ['transaction' => $transaction->getData()];
 
         $response = $this->client->createPostRequest(
