@@ -11,6 +11,8 @@ use MultiSafepay\Api\Base\DataObject;
 /**
  * Class PaymentDetails
  * @package MultiSafepay\Api\Transactions\TransactionResponse
+ *
+ * @SuppressWarnings(PHPMD.TooManyMethods)
  */
 class PaymentDetails extends DataObject
 {
