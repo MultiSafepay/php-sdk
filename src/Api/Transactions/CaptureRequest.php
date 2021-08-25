@@ -13,7 +13,7 @@ use MultiSafepay\Api\Base\RequestBodyInterface;
  * Class UpdateRequest
  * @package MultiSafepay\Api\Transactions
  */
-class CaptureRequest extends RequestBody implements RequestBodyInterface
+class CaptureRequest extends RequestBody
 {
     public const CAPTURE_MANUAL_TYPE = 'manual';
 

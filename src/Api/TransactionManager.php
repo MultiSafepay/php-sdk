@@ -56,14 +56,11 @@ class TransactionManager extends AbstractManager
      */
     public function update(string $orderId, UpdateRequest $updateRequest): Response
     {
-        $context = ['request_body' => $updateRequest->getData()];
-        $response = $this->client->createPatchRequest(
+        return $this->client->createPatchRequest(
             'json/orders/' . $orderId,
             $updateRequest,
-            $context
+            ['request_body' => $updateRequest->getData()]
         );
-
-        return $response;
     }
 
     /**
@@ -74,15 +71,11 @@ class TransactionManager extends AbstractManager
      */
     public function capture(string $orderId, CaptureRequest $captureRequest): Response
     {
-        $context = ['request_body' => $captureRequest->getData()];
-
-        $response = $this->client->createPostRequest(
+        return $this->client->createPostRequest(
             'json/orders/' . $orderId . '/capture',
             $captureRequest,
-            $context
+            ['request_body' => $captureRequest->getData()]
         );
-
-        return $response;
     }
 
     /**
@@ -93,15 +86,11 @@ class TransactionManager extends AbstractManager
      */
     public function captureReservationCancel(string $orderId, CaptureRequest $captureRequest): Response
     {
-        $context = ['request_body' => $captureRequest->getData()];
-
-        $response = $this->client->createPatchRequest(
+        return $this->client->createPatchRequest(
             'json/capture/' . $orderId,
             $captureRequest,
-            $context
+            ['request_body' => $captureRequest->getData()]
         );
-
-        return $response;
     }
 
     /**
@@ -113,16 +102,11 @@ class TransactionManager extends AbstractManager
      */
     public function refund(Transaction $transaction, RefundRequest $requestRefund, string $orderId = null): Response
     {
-        $orderId = $orderId ?: $transaction->getOrderId();
-        $context = ['transaction' => $transaction->getData()];
-
-        $response = $this->client->createPostRequest(
-            'json/orders/' . $orderId . '/refunds',
+        return $this->client->createPostRequest(
+            'json/orders/' . $orderId ?: $transaction->getOrderId() . '/refunds',
             $requestRefund,
-            $context
+            ['transaction' => $transaction->getData()]
         );
-
-        return $response;
     }
 
     /**
