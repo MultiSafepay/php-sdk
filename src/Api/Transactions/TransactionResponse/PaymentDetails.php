@@ -11,6 +11,7 @@ use MultiSafepay\Api\Base\DataObject;
 /**
  * Class PaymentDetails
  * @package MultiSafepay\Api\Transactions\TransactionResponse
+ * phpcs:disable ObjectCalisthenics.Metrics.MethodPerClassLimit
  */
 class PaymentDetails extends DataObject
 {
@@ -92,5 +93,29 @@ class PaymentDetails extends DataObject
     public function getCardExpiryDate(): string
     {
         return (string)$this->get('card_expiry_date');
+    }
+
+    /**
+     * @return string
+     */
+    public function getCapture(): string
+    {
+        return (string)$this->get('capture');
+    }
+
+    /**
+     * @return string
+     */
+    public function getCaptureExpiry(): string
+    {
+        return (string)$this->get('capture_expiry');
+    }
+
+    /**
+     * @return int
+     */
+    public function getCaptureRemain(): int
+    {
+        return (int)$this->get('capture_remain');
     }
 }

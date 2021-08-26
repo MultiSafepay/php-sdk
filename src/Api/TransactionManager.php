@@ -12,6 +12,7 @@ use MultiSafepay\Api\Transactions\RefundRequest;
 use MultiSafepay\Api\Transactions\TransactionResponse as Transaction;
 use MultiSafepay\Api\Transactions\RefundRequest\Arguments\CheckoutData;
 use MultiSafepay\Api\Transactions\UpdateRequest;
+use MultiSafepay\Api\Transactions\CaptureRequest;
 use MultiSafepay\Exception\ApiException;
 use Psr\Http\Client\ClientExceptionInterface;
 
@@ -55,34 +56,57 @@ class TransactionManager extends AbstractManager
      */
     public function update(string $orderId, UpdateRequest $updateRequest): Response
     {
-        $context = ['request_body' => $updateRequest->getData()];
-        $response = $this->client->createPatchRequest(
+        return $this->client->createPatchRequest(
             'json/orders/' . $orderId,
             $updateRequest,
-            $context
+            ['request_body' => $updateRequest->getData()]
         );
+    }
 
-        return $response;
+    /**
+     * @param string $orderId
+     * @param CaptureRequest $captureRequest
+     * @return Response
+     * @throws ClientExceptionInterface
+     */
+    public function capture(string $orderId, CaptureRequest $captureRequest): Response
+    {
+        return $this->client->createPostRequest(
+            'json/orders/' . $orderId . '/capture',
+            $captureRequest,
+            ['request_body' => $captureRequest->getData()]
+        );
+    }
+
+    /**
+     * @param string $orderId
+     * @param CaptureRequest $captureRequest
+     * @return Response
+     * @throws ClientExceptionInterface
+     */
+    public function captureReservationCancel(string $orderId, CaptureRequest $captureRequest): Response
+    {
+        return $this->client->createPatchRequest(
+            'json/capture/' . $orderId,
+            $captureRequest,
+            ['request_body' => $captureRequest->getData()]
+        );
     }
 
     /**
      * @param Transaction $transaction
      * @param RefundRequest $requestRefund
+     * @param string|null $orderId
      * @return Response
      * @throws ClientExceptionInterface
      */
-    public function refund(Transaction $transaction, RefundRequest $requestRefund): Response
+    public function refund(Transaction $transaction, RefundRequest $requestRefund, string $orderId = null): Response
     {
-        $orderId = $transaction->getOrderId();
-        $context = ['transaction' => $transaction->getData()];
-
-        $response = $this->client->createPostRequest(
-            'json/orders/' . $orderId . '/refunds',
+        return $this->client->createPostRequest(
+            'json/orders/' . $orderId ?: $transaction->getOrderId() . '/refunds',
             $requestRefund,
-            $context
+            ['transaction' => $transaction->getData()]
         );
-
-        return $response;
     }
 
     /**
