@@ -108,7 +108,7 @@ class TransactionManager extends AbstractManager
     public function refund(Transaction $transaction, RefundRequest $requestRefund, string $orderId = null): Response
     {
         return $this->client->createPostRequest(
-            'json/orders/' . ($orderId ? : $transaction->getOrderId()) . '/refunds',
+            'json/orders/' . ($orderId ?: $transaction->getOrderId()) . '/refunds',
             $requestRefund,
             ['transaction' => $transaction->getData()]
         );
