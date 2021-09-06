@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Fixed
-- Fixed bug where refund process was broken if order id parameter doesn't provide.
+- Fixed a bug where a refund could not be created if the orderId parameter wasn't provided.
 
 ## [5.2.0] - 2021-08-27
 ### Added
