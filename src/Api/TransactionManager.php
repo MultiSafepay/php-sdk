@@ -18,6 +18,7 @@ use Psr\Http\Client\ClientExceptionInterface;
 
 /**
  * Class TransactionManager
+ *
  * @package MultiSafepay\Api
  */
 class TransactionManager extends AbstractManager
@@ -30,11 +31,13 @@ class TransactionManager extends AbstractManager
     public function create(OrderRequestInterface $requestOrder): Transaction
     {
         $response = $this->client->createPostRequest('json/orders', $requestOrder);
+
         return new Transaction($response->getResponseData());
     }
 
     /**
      * Get all data from a transaction.
+     *
      * @param string $orderId
      * @return Transaction
      * @throws ClientExceptionInterface
@@ -45,6 +48,7 @@ class TransactionManager extends AbstractManager
         $endpoint = 'json/orders/' . $orderId;
         $context = ['order_id' => $orderId];
         $response = $this->client->createGetRequest($endpoint, [], $context);
+
         return new Transaction($response->getResponseData());
     }
 
@@ -96,14 +100,15 @@ class TransactionManager extends AbstractManager
     /**
      * @param Transaction $transaction
      * @param RefundRequest $requestRefund
-     * @param string|null $orderId
+     * @param string|null $orderId Use this parameter for refunding any child invoices, for example: manual capture
+     *                             child invoices
      * @return Response
      * @throws ClientExceptionInterface
      */
     public function refund(Transaction $transaction, RefundRequest $requestRefund, string $orderId = null): Response
     {
         return $this->client->createPostRequest(
-            'json/orders/' . $orderId ?: $transaction->getOrderId() . '/refunds',
+            'json/orders/' . ($orderId ?: $transaction->getOrderId()) . '/refunds',
             $requestRefund,
             ['transaction' => $transaction->getData()]
         );
@@ -120,6 +125,7 @@ class TransactionManager extends AbstractManager
     {
         $requestRefund = $this->createRefundRequest($transaction);
         $requestRefund->getCheckoutData()->refundByMerchantItemId($merchantItemId, $quantity);
+
         return $this->refund($transaction, $requestRefund);
     }
 
