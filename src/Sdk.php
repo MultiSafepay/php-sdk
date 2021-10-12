@@ -12,6 +12,7 @@ use MultiSafepay\Api\GatewayManager;
 use MultiSafepay\Api\IssuerManager;
 use MultiSafepay\Api\TokenManager;
 use MultiSafepay\Api\TransactionManager;
+use MultiSafepay\Api\WalletManager;
 use MultiSafepay\Client\Client;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
@@ -94,6 +95,14 @@ class Sdk
     public function getApiTokenManager(): ApiTokenManager
     {
         return new ApiTokenManager($this->client);
+    }
+
+    /**
+     * @return WalletManager
+     */
+    public function getWalletManager(): WalletManager
+    {
+        return new WalletManager($this->client);
     }
 
     /**
