@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [5.3.0] - 2021-10-15
+### Added
+- Added support for [Apple Pay direct payment method](https://docs.multisafepay.com/payment-methods/apple-pay/direct/)
+- Add class WalletManager which can be used for getting specific data needed for wallets payment methods
+
 ## [5.2.2] - 2021-09-30
 ### Fixed
 - Fixed a bug where some addresses that start with a number would return null.
