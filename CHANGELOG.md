@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [5.3.1] - 2021-10-29
+### Added
+- Added possibility to add settings along with payment options in the transaction request
+
+
 ## [5.3.0] - 2021-10-15
 ### Added
 - Added support for [Apple Pay direct payment method](https://docs.multisafepay.com/payment-methods/apple-pay/direct/)
