@@ -21,6 +21,11 @@ class PaymentOptions
     private $notificationUrl = '';
 
     /**
+     * @var array
+     */
+    private $settings = [];
+
+    /**
      * @var string
      */
     private $notificationMethod = 'POST';
@@ -47,6 +52,16 @@ class PaymentOptions
     public function addNotificationUrl(string $notificationUrl): PaymentOptions
     {
         $this->notificationUrl = $notificationUrl;
+        return $this;
+    }
+
+    /**
+     * @param string $notificationUrl
+     * @return PaymentOptions
+     */
+    public function addSettings(array $settings): PaymentOptions
+    {
+        $this->settings = $settings;
         return $this;
     }
 
@@ -127,6 +142,14 @@ class PaymentOptions
     }
 
     /**
+     * @return array
+     */
+    public function getSettings(): array
+    {
+        return $this->settings;
+    }
+
+    /**
      * @return bool
      */
     public function isCloseWindow(): bool
@@ -144,7 +167,8 @@ class PaymentOptions
             'notification_method' => $this->getNotificationMethod(),
             'redirect_url' => $this->getRedirectUrl(),
             'cancel_url' => $this->getCancelUrl(),
-            'close_window' => $this->isCloseWindow()
+            'close_window' => $this->isCloseWindow(),
+            'settings' => $this->getSettings()
         ];
     }
 }
