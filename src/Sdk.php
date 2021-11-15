@@ -6,6 +6,7 @@
 
 namespace MultiSafepay;
 
+use MultiSafepay\Api\AccountManager;
 use MultiSafepay\Api\ApiTokenManager;
 use MultiSafepay\Api\CategoryManager;
 use MultiSafepay\Api\GatewayManager;
@@ -103,6 +104,14 @@ class Sdk
     public function getWalletManager(): WalletManager
     {
         return new WalletManager($this->client);
+    }
+
+    /**
+     * @return AccountManager
+     */
+    public function getAccountManager(): AccountManager
+    {
+        return new AccountManager($this->client);
     }
 
     /**
