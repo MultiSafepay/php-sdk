@@ -22,7 +22,7 @@ class ApiTokenManager extends AbstractManager
     public function get(): ApiToken
     {
         $response = $this->client->createGetRequest(
-            'connect/auth/api_token'
+            'json/auth/api_token'
         );
 
         return new ApiToken($response->getResponseData());
