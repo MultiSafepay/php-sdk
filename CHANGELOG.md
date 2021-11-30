@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [5.4.0] - 2021-11-30
+### Added
+- Added the AccountManager class which can be used for retrieving MultiSafepay account data
+
+### Changed
+- Updated the API token endpoint url to use 'json' instead of 'connect', since 'connect' will be deprecated
+
 ## [5.3.1] - 2021-10-29
 ### Added
 - Added possibility to add settings along with payment options in the transaction request
