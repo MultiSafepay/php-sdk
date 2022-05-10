@@ -15,6 +15,8 @@ use MultiSafepay\Api\Tokens\TokenListing;
  */
 class TokenManager extends AbstractManager
 {
+    public const CREDITCARD_GATEWAYS = ['VISA', 'MASTERCARD', 'AMEX', 'MAESTRO'];
+
     /**
      * @param string $reference
      * @return Token[]
@@ -64,7 +66,7 @@ class TokenManager extends AbstractManager
                 continue;
             }
 
-            if ('CREDITCARD' === $code && in_array($token->getGatewayCode(), array('VISA', 'MASTERCARD', 'AMEX'))) {
+            if ('CREDITCARD' === $code && in_array($token->getGatewayCode(), self::CREDITCARD_GATEWAYS)) {
                 continue;
             }
 
