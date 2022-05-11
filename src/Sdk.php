@@ -48,7 +48,7 @@ class Sdk
         bool $strictMode = false
     ) {
         $this->client = new Client(
-            $apiKey,
+            trim($apiKey),
             $isProduction,
             $httpClient,
             $requestFactory,
