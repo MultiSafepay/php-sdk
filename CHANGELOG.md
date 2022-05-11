@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [5.5.0] - 2022-05-11
+### Added
++ PHPSDK-90: Add MAESTRO tokens within the results of the CREDITCARD tokens request
+
+### Changed
++ PHPSDK-91: Add trim on API key when initializing the SDK
+
 ## [5.4.0] - 2021-11-30
 ### Added
 - Added the AccountManager class which can be used for retrieving MultiSafepay account data
