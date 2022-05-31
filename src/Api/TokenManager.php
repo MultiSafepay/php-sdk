@@ -15,17 +15,27 @@ use MultiSafepay\Api\Tokens\TokenListing;
  */
 class TokenManager extends AbstractManager
 {
-    public const CREDITCARD_GATEWAYS = ['VISA', 'MASTERCARD', 'AMEX', 'MAESTRO'];
+    public const CREDIT_CARD_GATEWAYS = ['VISA', 'MASTERCARD', 'AMEX', 'MAESTRO'];
+    public const CREDIT_CARD_GATEWAY_CODE = 'CREDITCARD';
+
+    /**
+     * @var array
+     */
+    private $tokens = [];
 
     /**
      * @param string $reference
-     * @return Token[]
+     * @param bool $forceApiCall
+     * @return array
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function getList(string $reference): array
+    public function getList(string $reference, bool $forceApiCall = false): array
     {
         $response = $this->client->createGetRequest('json/recurring/' . $reference);
-        return (new TokenListing($response->getResponseData()['tokens']))->getTokens();
+        if (!isset($this->tokens[$reference]) || $forceApiCall) {
+            $this->tokens[$reference] = (new TokenListing($response->getResponseData()['tokens']))->getTokens();
+        }
+        return $this->tokens[$reference];
     }
 
     /**
@@ -55,22 +65,22 @@ class TokenManager extends AbstractManager
     /**
      * @param string $reference
      * @param string $code
-     * @return Token[]
+     * @param bool $forceApiCall
+     * @return array
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function getListByGatewayCode(string $reference, string $code): array
+    public function getListByGatewayCode(string $reference, string $code, bool $forceApiCall = false): array
     {
-        $tokens = $this->getList($reference);
-        foreach ($tokens as $key => $token) {
+        $tokens = [];
+        foreach ($this->getList($reference, $forceApiCall) as $token) {
             if ($token->getGatewayCode() === $code) {
+                $tokens[] = $token;
                 continue;
             }
-
-            if ('CREDITCARD' === $code && in_array($token->getGatewayCode(), self::CREDITCARD_GATEWAYS)) {
-                continue;
+            if ($code === self::CREDIT_CARD_GATEWAY_CODE
+                && in_array($token->getGatewayCode(), self::CREDIT_CARD_GATEWAYS, true)) {
+                $tokens[] = $token;
             }
-
-            unset($tokens[$key]);
         }
 
         return $tokens;

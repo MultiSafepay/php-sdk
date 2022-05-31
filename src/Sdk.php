@@ -28,6 +28,9 @@ class Sdk
     /** @var Client */
     private $client;
 
+    /** @var TokenManager */
+    private $tokenManager;
+
     /**
      * Api constructor.
      * @param string $apiKey
@@ -56,6 +59,8 @@ class Sdk
             $locale,
             $strictMode
         );
+
+        $this->tokenManager = new TokenManager($this->client);
     }
 
     /**
@@ -87,7 +92,7 @@ class Sdk
      */
     public function getTokenManager(): TokenManager
     {
-        return new TokenManager($this->client);
+        return $this->tokenManager;
     }
 
     /**

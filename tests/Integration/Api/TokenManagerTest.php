@@ -2,6 +2,7 @@
 
 namespace MultiSafepay\Tests\Integration\Api;
 
+use MultiSafepay\Api\AbstractManager;
 use MultiSafepay\Api\TokenManager;
 use MultiSafepay\Exception\ApiException;
 use MultiSafepay\Tests\Integration\MockClient;
@@ -131,6 +132,21 @@ class TokenManagerTest extends TestCase
         $mockClient->mockResponseFromFixtureFile('tokens');
 
         $tokens = (new TokenManager($mockClient))->getListByGatewayCode('1', 'CREDITCARD');
+
+        $this->assertCount(3, $tokens);
+    }
+
+    /**
+     * Check if we get all the tokens if they are VISA, MASTERCARD or AMEX.
+     *
+     * @throws \Psr\Http\Client\ClientExceptionInterface
+     */
+    public function testGetListWithCreditCardGatewayForceApiCall()
+    {
+        $mockClient = MockClient::getInstance();
+        $mockClient->mockResponseFromFixtureFile('tokens');
+
+        $tokens = (new TokenManager($mockClient))->getListByGatewayCode('1', 'CREDITCARD', true);
 
         $this->assertCount(3, $tokens);
     }
