@@ -33,5 +33,10 @@
     "psr-4": {
       "MultiSafepay\\Tests\\": "tests/"
     }
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
   }
 }
