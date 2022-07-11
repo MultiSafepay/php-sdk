@@ -32,7 +32,7 @@ class Issuer
     /**
      * @const string[]
      */
-    const ALLOWED_GATEWAY_CODES = ['ideal'];
+    const ALLOWED_GATEWAY_CODES = ['ideal', 'mybank'];
 
     /**
      * Issuer constructor.
