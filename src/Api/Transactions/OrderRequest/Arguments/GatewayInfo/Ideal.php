@@ -1,33 +1,20 @@
 <?php declare(strict_types=1);
 /**
- * Copyright © 2020 MultiSafepay, Inc. All rights reserved.
+ * Copyright © 2022 MultiSafepay, Inc. All rights reserved.
  * See DISCLAIMER.md for disclaimer details.
  */
 
 namespace MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo;
 
-use MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfoInterface;
-
 /**
  * Class Ideal
+ *
  * @package MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo
+ * @deprecated since version 5.6.0. Will be removed in version 7.0.0.
+ * @see Issuer for it's replacement
  */
-class Ideal implements GatewayInfoInterface
+class Ideal extends Issuer
 {
-    /**
-     * @var string
-     */
-    private $issuerId;
-
-    /**
-     * @return array
-     */
-    public function getData(): array
-    {
-        return [
-            'issuer_id' => $this->issuerId,
-        ];
-    }
 
     /**
      * @param string $issuerId
