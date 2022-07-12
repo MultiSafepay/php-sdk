@@ -4,10 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [5.6.0] - 2022-07-12
+### Added
+- PHPSDK-94: Support for listing transactions 
+- DAVAMS-491: Add GatewayInfo object for MyBank issuers
+
 ### Changed
 - Sdk class: save the tokenManager as a class variable to avoid creating new instances
 - TokenManager: Reduce the amount of API calls when getting tokens by gateway
+
+### Fixed
+- PHPSDK-98: Fix the filter for allowed options in the GatewayManager
 
 ## [5.5.0] - 2022-05-11
 ### Added
