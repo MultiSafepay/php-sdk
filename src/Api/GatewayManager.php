@@ -48,7 +48,7 @@ class GatewayManager extends AbstractManager
      */
     public function getByCode(string $gatewayCode, array $options = []): Gateway
     {
-        $options = array_intersect_key(self::ALLOWED_OPTIONS, $options);
+        $options = array_intersect_key($options, self::ALLOWED_OPTIONS);
 
         $endpoint = 'json/gateways/' . $gatewayCode;
         $response = $this->client->createGetRequest($endpoint, $options);
