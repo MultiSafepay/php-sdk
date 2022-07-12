@@ -328,6 +328,22 @@ $refundRequest->getCheckoutData()->refundByMerchantItemId($merchantItemId , -2);
 $refundRequest->getCheckoutData()->refundByMerchantItemId($merchantItemId, -1);
 ```
 
+### List transactions
+Get a list of all transactions for your API Key. 
+It is possible to paginate this request using the 'limit' option and the Pager object.
+Find all allowed options and more information at our [Documentation Center](https://docs.multisafepay.com/reference/listtransactions/).
+```php
+$yourApiKey = 'your-api-key';
+$isProduction = false;
+$multiSafepaySdk = new \MultiSafepay\Sdk($yourApiKey, $isProduction);
+
+$options = []; // For all allowed options please check the link to our Documentation Center above.
+$transactionListing = $multiSafepaySdk->getTransactionManager()->getTransactions($options);
+$transactions = $transactionListing->getTransactions();
+
+$pager = $transactionListing->getPager(); // If pagination is needed, this Pager object can be used 
+```
+
 ## Tokenization
 Before working on Tokenization be sure to check out our [Documentation Center](https://docs.multisafepay.com/tools/tokenization/tokenization-api-level/) and that Tokenization is activated on your MultiSafepay account.
 

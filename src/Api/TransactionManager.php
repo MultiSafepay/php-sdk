@@ -7,8 +7,10 @@
 namespace MultiSafepay\Api;
 
 use MultiSafepay\Api\Base\Response;
+use MultiSafepay\Api\Pager\Pager;
 use MultiSafepay\Api\Transactions\OrderRequestInterface;
 use MultiSafepay\Api\Transactions\RefundRequest;
+use MultiSafepay\Api\Transactions\TransactionListing;
 use MultiSafepay\Api\Transactions\TransactionResponse as Transaction;
 use MultiSafepay\Api\Transactions\RefundRequest\Arguments\CheckoutData;
 use MultiSafepay\Api\Transactions\UpdateRequest;
@@ -23,6 +25,22 @@ use Psr\Http\Client\ClientExceptionInterface;
  */
 class TransactionManager extends AbstractManager
 {
+    private const ALLOWED_OPTIONS = [
+        'site_id' => '',
+        'financial_status' => '',
+        'status' => '',
+        'payment_method' => '',
+        'type' => '',
+        'created_until' => '',
+        'created_from' => '',
+        'completed_until' => '',
+        'completed_from' => '',
+        'debit_credit' => '',
+        'after' => '',
+        'before' => '',
+        'limit' => ''
+    ];
+
     /**
      * @param OrderRequestInterface $requestOrder
      * @return Transaction
@@ -50,6 +68,18 @@ class TransactionManager extends AbstractManager
         $response = $this->client->createGetRequest($endpoint, [], $context);
 
         return new Transaction($response->getResponseData());
+    }
+
+    /**
+     * @return TransactionListing
+     * @throws ClientExceptionInterface
+     */
+    public function getTransactions(array $options = []): TransactionListing
+    {
+        $options = array_intersect_key($options, self::ALLOWED_OPTIONS);
+
+        $response = $this->client->createGetRequest('json/transactions', $options);
+        return new TransactionListing($response->getResponseData(), $response->getPager());
     }
 
     /**

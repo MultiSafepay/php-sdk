@@ -6,6 +6,7 @@
 
 namespace MultiSafepay\Api\Base;
 
+use MultiSafepay\Api\Pager\Pager;
 use MultiSafepay\Exception\ApiException;
 
 /**
@@ -26,6 +27,11 @@ class Response
      * @var string
      */
     private $raw;
+
+    /**
+     * @var Pager
+     */
+    private $pager;
 
     /**
      * @param string $json
@@ -61,6 +67,10 @@ class Response
         $this->validate($data, $context);
         $this->data = $data['data'];
         $this->raw = $raw;
+
+        if (isset($data['pager'])) {
+            $this->pager = new Pager($data['pager']);
+        }
     }
 
     /**
@@ -102,5 +112,13 @@ class Response
     public function getRawData(): string
     {
         return $this->raw;
+    }
+
+    /**
+     * @return Pager
+     */
+    public function getPager(): Pager
+    {
+        return $this->pager;
     }
 }
