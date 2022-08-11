@@ -348,6 +348,14 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
     }
 
     /**
+     * @return GatewayInfoInterface
+     */
+    public function getGatewayInfo(): GatewayInfoInterface
+    {
+        return $this->gatewayInfo;
+    }
+
+    /**
      * @param CustomerDetails $customer
      * @return OrderRequest
      */
