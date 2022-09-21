@@ -84,4 +84,13 @@ class NotificationTest extends TestCase
         $class = new TransactionResponse(json_decode($this->json, true), $this->json);
         $this->assertTrue(Notification::verifyNotification($class, $this->auth, $this->apiKey, 0));
     }
+
+    /**
+     * Check if the the signature is being validated even when contains empty spaces at the front or back
+     */
+    public function testVerifyWithEmptySpacesInApiKey()
+    {
+        $class = new TransactionResponse(json_decode($this->json, true), $this->json);
+        $this->assertTrue(Notification::verifyNotification($class, $this->auth, ' ' . $this->apiKey, 0));
+    }
 }
