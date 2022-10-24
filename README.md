@@ -1,37 +1,37 @@
 <p align="center">
-  <img src="https://www.multisafepay.com/img/multisafepaylogo.svg" width="400px" position="center">
+    <img src="https://camo.githubusercontent.com/517483ae0eaba9884f397e9af1c4adc7bbc231575ac66cc54292e00400edcd10/68747470733a2f2f7777772e6d756c7469736166657061792e636f6d2f66696c6561646d696e2f74656d706c6174652f696d672f6d756c7469736166657061792d6c6f676f2d69636f6e2e737667" width="400px" position="center">
 </p>
 
 # MultiSafepay PHP SDK
 
-[![Latest Stable Version](https://img.shields.io/packagist/v/multisafepay/php-sdk)](https://packagist.org/packages/multisafepay/php-sdk)
+[![Latest stable version](https://img.shields.io/packagist/v/multisafepay/php-sdk)](https://packagist.org/packages/multisafepay/php-sdk)
 
-## About MultiSafepay ##
-MultiSafepay is a collecting payment service provider which means we take care of the agreements, technical details and payment collection required for each payment method. You can start selling online today and manage all your transactions from one place.
+## About MultiSafepay
+MultiSafepay is a Dutch payment services provider, which takes care of contracts, processing transactions, and collecting payment for a range of local and international payment methods. Start selling online today and manage all your transactions in one place!
 
 ## Installation
-To install the SDK, use the following composer command:
+Run the following composer command:
 
 ```bash
 composer require multisafepay/php-sdk
 ```
 
-WARNING: This PHP SDK does not have a direct dependency on Guzzle or cURL.
+**WARNING!** This SDK does **not** have a direct dependency on Guzzle or cURL.
 Instead, it uses the [PSR-18](https://www.php-fig.org/psr/psr-18/) client abstraction and [PSR-17](https://www.php-fig.org/psr/psr-18/) factory abstraction.
-This will give you the flexibility to choose whatever [PSR-7 implementation and HTTP client](https://packagist.org/providers/psr/http-client-implementation) you want to use.
-All clients can be replaced without any side effects.
+This lets you choose which [PSR-7 implementation and HTTP client](https://packagist.org/providers/psr/http-client-implementation) to use.
+You can replace all clients without any side effects.
 
-If you don't have any client implementation installed, use the following:
+If you don't have a client implementation installed, run:
 ```bash
 composer require guzzlehttp/guzzle
 ```
 
-If you don't have any factory implementation installed, use the following:
+If you don't have a factory implementation installed, run:
 ```bash
 composer require http-interop/http-factory-guzzle
 ```
 
-In short, you need to have installed:
+You should now have installed:
 - [PSR-18 client implementation](https://packagist.org/providers/psr/http-client-implementation)
 - [PSR-17 factory implementation](https://packagist.org/providers/psr/http-factory-implementation)
 - [PSR-7 message implementation](https://packagist.org/providers/psr/http-message-implementation)
@@ -43,7 +43,7 @@ Use Composer autoloader to automatically load class dependencies:
 require 'vendor/autoload.php';
 ```
 
-Next, instantiate the SDK with your API key and a flag to identify whether this is the production environment or testing environment.
+Next, instantiate the SDK with your [site API key](https://docs.multisafepay.com/docs/sites#site-id-api-key-and-security-code) and a flag to identify whether this is the live environment or testing environment.
 
 ```php
 $yourApiKey = 'your-api-key';
@@ -51,7 +51,7 @@ $isProduction = false;
 $multiSafepaySdk = new \MultiSafepay\Sdk($yourApiKey, $isProduction);
 ```
 
-From the SDK, you can get various managers to help you with what you want to accomplish:
+From the SDK, you can get various managers:
 ```php
 $multiSafepaySdk->getTransactionManager();
 $multiSafepaySdk->getGatewayManager();
@@ -60,7 +60,7 @@ $multiSafepaySdk->getCategoryManager();
 $multiSafepaySdk->getTokenManager();
 ```
 
-Of these managers, the transaction manager is probably the most important, because it allows you to create orders and refunds.
+The transaction manager is the most important, because it lets you create orders and refunds.
 
 ```php
 use MultiSafepay\ValueObject\Customer\Country;
@@ -124,7 +124,7 @@ $transactionManager = $multiSafepaySdk->getTransactionManager()->create($orderRe
 $transactionManager->getPaymentUrl();
 ```
 
-And here's an example of a refund:
+Example refund:
 ```php
 // Refund example.
 use MultiSafepay\Api\Transactions\RefundRequest;
@@ -134,21 +134,25 @@ $yourApiKey = 'your-api-key';
 $isProduction = false;
 $multiSafepaySdk = new \MultiSafepay\Sdk($yourApiKey, $isProduction);
 
-$orderId = XXXXX;  // An order ID created and completed previously
+$orderId = XXXXX;  // The order ID of a previously completed transaction
 $refundAmount = new Money(2000, 'EUR');
 $transactionManager = $multiSafepaySdk->getTransactionManager();
 $transaction = $transactionManager->get($orderId);
 $transactionManager->refund($transaction, (new RefundRequest())->addMoney( $refundAmount ) );
 ```
 
-See [USAGE.md](USAGE.md) and the functional tests in `tests/Functional/Api/Transactions` for examples on how to build full requests.
+For examples of building full requests, see [USAGE.md](USAGE.md) and the functional tests in `tests/Functional/Api/Transactions`.
 
-## Advanced usage: The Strict Mode
-The SDK is by default initialize in a non-strict mode (by setting its constructor argument `$strictMode` to `false`). This strict mode adds additional validations on top of various API requests and API responses. In the non-strict mode (the default) some validation errors are skipped. In the strict mode, these validation errors throw an exception, which requires you to handle the exception correspondingly.
+## Advanced usage: Strict mode
+Strict mode:
+- Adds additional validations on top of various API requests and responses.
+- Validation errors throw an exception, which you need to handle.
+- It is enabled in tests.
 
-For example, take a `ShoppingCart` object that is to be added to an `OrderRequest` object. This `ShoppingCart` might be filled with items and each item might have a specific taxrate (referring to the `TaxTables` object). Summing up the total price of these items might lead to an amount with more than 2 decimals. However, if the e-commerce application requires a payment only of the amount in 2 decimals, this causes a mismatch. In the strict mode, this mismatch causes an `\MultiSafepay\Exception\InvalidTotalAmountException` exception. However, it depends on the e-commerce application and also the payment gateway to determine how this mismatch should be solved. Hence, the exception is only throw when the strict mode is enabled.
+Non-strict mode (default) skips some validation errors.
 
-In the tests of the SDK, the strict mode is enabled.
+**Example:**
+If there is a mismatch between the number of decimal places of the total amount of the items in the `ShoppingCart` object and your ecommerce platform, strict mode throws an `\MultiSafepay\Exception\InvalidTotalAmountException` exception.
 
 ## Code quality checks
 The following checks are in place to maintain code quality:
@@ -163,52 +167,44 @@ The following checks are in place to maintain code quality:
 
 ## Testing
 
-The following definitions have been made regarding tests:
+- Unit tests work without the API or any dependencies (`tests/Unit`)
+- Integration tests work without the API but have dependencies (`tests/Integration`)
+- Functional tests work with the live API (`tests/Functional`) – API key required
 
-- Unit tests: Tests that work without the actual API and without any dependencies (`tests/Unit`)
-- Integration tests: Tests that work without the actual API but with dependencies (`tests/Integration`)
-- Functional tests: Tests that work with a live API (`tests/Functional`)
+#### Unit tests
 
-Only for running functional tests, a API key is required.
+To run unit tests from this package:
 
-#### Running unit tests
+1. Clone this repository.
+2. To install all dependencies, run `composer install`
+3. Run PHPUnit with the following command: `./vendor/bin/phpunit tests/Unit`
 
-To run either unit tests of this package, use the following steps:
+#### Functional tests
 
-- Clone this repository somewhere.
-- Run `composer install` to install all dependencies
-- Run PHPUnit with one of the following commands:
-  - `./vendor/bin/phpunit tests/Unit`
+To run functional tests from this package:
 
-#### Running functional tests
-
-To run functional tests of this package, use the following steps:
-
-- Clone this repository somewhere.
-- Run `composer install` to install all dependencies
-- Copy `.env.php.example` to `.env.php` and add your own MultiSafepay API key
-- Run PHPUnit with one of the following commands:
-  - `./vendor/bin/phpunit tests/Functional`
+1. Clone this repository.
+2. To install all dependencies, run `composer install`.
+3. Copy `.env.php.example` to `.env.php` and add your site API key.
+4. Run PHPUnit with the following command: `./vendor/bin/phpunit tests/Functional`
 
 #### Mocking the API for unit and integration tests
 
-Unit and integration tests run without the actual API, which means that the client is mocking all actual data calls. To do so, the folder `tests/fixture-data` contains JSON files to help spoofing calls. To fill this folder with actual real-life data, make sure you have a valid `.env.php` file and use the following command:
+Unit and integration tests run without the API, which means that the client is mocking all data calls.
+To do this, the `tests/fixture-data` folder contains JSON files to spoof calls. To fill this folder with real data, make sure you have a valid `.env.php` file, and then use the following command:
 
     php tests/generateApiMocks.php
 
-It is the intention to commit all generated JSON files into git, so that they serve as fixtures. Files that are not used in tests, are not needed to be generated.
+This commits all generated JSON files into git, so that they serve as fixtures. Files that are not used in tests don't need to be generated.
 
 ## Support
-You can create issues on our repository. If you need any additional help or support, please contact <a href="mailto:integration@multisafepay.com">integration@multisafepay.com</a>
+Create an issue on this repository or email <a href="mailto:integration@multisafepay.com">integration@multisafepay.com</a>
 
-## A gift for your contribution
-We look forward to receiving your input. Have you seen an opportunity to change things for better? We would like to invite you to create a pull request on GitHub.
-Are you missing something and would like us to fix it? Suggest an improvement by sending us an [email](mailto:integration@multisafepay.com) or by creating an issue.
-
-What will you get in return? A brand new designed MultiSafepay t-shirt which will make you part of the team!
+## Contributors
+If you create a pull request to suggest an improvement, we'll send you some MultiSafepay swag as a thank you!
 
 ## License
 [Open Software License (OSL 3.0)](https://github.com/MultiSafepay/php-sdk/blob/master/LICENSE.md)
 
 ## Want to be part of the team?
-Are you a developer interested in working at MultiSafepay? [View](https://www.multisafepay.com/careers/#jobopenings) our job openings and feel free to get in touch with us.
+Are you a developer interested in working at MultiSafepay? Check out our [job openings](https://www.multisafepay.com/careers/#jobopenings) and feel free to get in touch!
