@@ -24,4 +24,15 @@ class IssuerListingTest extends TestCase
         $this->assertEquals('0021', $issuer->getCode());
         $this->assertEquals('bar', $issuer->getDescription());
     }
+
+
+    /**
+     * Test normal initialization
+     */
+    public function testListIssuersWhenResponseIsEmpty()
+    {
+        $issuerListing = new IssuerListing('ideal', []);
+        $issuers = $issuerListing->getIssuers();
+        $this->assertCount(0, $issuers);
+    }
 }

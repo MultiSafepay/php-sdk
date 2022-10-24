@@ -12,7 +12,7 @@ namespace MultiSafepay\Api\Issuers;
  */
 class IssuerListing
 {
-    private $issuers;
+    private $issuers = [];
 
     /**
      * Issuers constructor.
