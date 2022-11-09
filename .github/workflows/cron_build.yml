@@ -1,11 +1,7 @@
 name: Build
 on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
+  schedule:
+    - cron: '0 2 * * 0' # Weekly on Sundays at 02:00
 jobs:
   php_unit_test:
     runs-on: ubuntu-latest
@@ -45,4 +41,7 @@ jobs:
           cp .env.php.example .env.php
           sed -i "s/'API_KEY' => ''/'API_KEY' => '${{ secrets.API_KEY }}'/g" .env.php
       - name: Run PHPUnit tests
-        run:  vendor/bin/phpunit
+        run:  vendor/bin/phpunit --coverage-clover=coverage.xml
+      - if: matrix.php-version == '7.4'
+        name: Send clover to codecov
+        run: test -z "${{ secrets.CODECOV_TOKEN }}" || (bash <(curl -s https://codecov.io/bash) -t ${{ secrets.CODECOV_TOKEN }} -f "*.php" -Z -R .)
