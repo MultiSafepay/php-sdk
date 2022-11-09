@@ -6,8 +6,8 @@
 
 namespace MultiSafepay\Tests\Fixtures\OrderRequest\Arguments;
 
-use MultiSafepay\Sdk;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo\Ideal;
+use MultiSafepay\Sdk;
 use MultiSafepay\Tests\Fixtures\Api\Gateways\GatewayFixture;
 
 /**

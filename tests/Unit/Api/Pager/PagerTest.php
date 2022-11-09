@@ -12,7 +12,9 @@ use PHPUnit\Framework\TestCase;
 
 class PagerTest extends TestCase
 {
-    /** @var Pager */
+    /**
+     * @var Pager
+     */
     private $testData = [
         'after' => 'https://example.com/12345',
         'before' => 'https://example.com/54321',

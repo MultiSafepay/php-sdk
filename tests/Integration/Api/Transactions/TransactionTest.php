@@ -9,16 +9,16 @@ namespace MultiSafepay\Tests\Api\Integration\Transactions;
 use MultiSafepay\Api\Transactions\OrderRequest;
 use MultiSafepay\Api\Transactions\TransactionResponse;
 use MultiSafepay\Tests\Fixtures\Api\Gateways\GatewayFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CustomerDetailsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\DescriptionFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\GoogleAnalyticsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\IdealGatewayInfoFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PaymentOptionsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PluginDetailsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\SecondChanceFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\DirectFixture as DirectOrderRequestFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\GenericOrderRequestFixture;
 use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
-use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CustomerDetailsFixture;
-use MultiSafepay\Tests\Fixtures\OrderRequest\DirectFixture as DirectOrderRequestFixture;
-use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PaymentOptionsFixture;
 use MultiSafepay\Tests\Fixtures\ValueObject\CountryFixture;
 use MultiSafepay\Tests\Fixtures\ValueObject\PhoneNumberFixture;
 use PHPUnit\Framework\TestCase;
@@ -85,8 +85,8 @@ class TransactionTest extends TestCase
         $orderRequest->addData(
             [
                 'payment_details' => [
-                    "type" => $orderRequest->getGatewayCode()
-                ]
+                    "type" => $orderRequest->getGatewayCode(),
+                ],
             ]
         );
     }

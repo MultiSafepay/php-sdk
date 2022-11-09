@@ -8,13 +8,13 @@ namespace MultiSafepay\Api;
 
 use MultiSafepay\Api\Base\Response;
 use MultiSafepay\Api\Pager\Pager;
+use MultiSafepay\Api\Transactions\CaptureRequest;
 use MultiSafepay\Api\Transactions\OrderRequestInterface;
 use MultiSafepay\Api\Transactions\RefundRequest;
+use MultiSafepay\Api\Transactions\RefundRequest\Arguments\CheckoutData;
 use MultiSafepay\Api\Transactions\TransactionListing;
 use MultiSafepay\Api\Transactions\TransactionResponse as Transaction;
-use MultiSafepay\Api\Transactions\RefundRequest\Arguments\CheckoutData;
 use MultiSafepay\Api\Transactions\UpdateRequest;
-use MultiSafepay\Api\Transactions\CaptureRequest;
 use MultiSafepay\Exception\ApiException;
 use Psr\Http\Client\ClientExceptionInterface;
 
@@ -38,7 +38,7 @@ class TransactionManager extends AbstractManager
         'debit_credit' => '',
         'after' => '',
         'before' => '',
-        'limit' => ''
+        'limit' => '',
     ];
 
     /**

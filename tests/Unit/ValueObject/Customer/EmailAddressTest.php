@@ -1,5 +1,4 @@
 <?php declare(strict_types=1);
-
 namespace MultiSafepay\Tests\Unit\ValueObject\Customer;
 
 use MultiSafepay\Exception\InvalidArgumentException;

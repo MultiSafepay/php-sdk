@@ -25,10 +25,14 @@ use Psr\Http\Message\StreamFactoryInterface;
  */
 class Sdk
 {
-    /** @var Client */
+    /**
+     * @var Client
+     */
     private $client;
 
-    /** @var TokenManager */
+    /**
+     * @var TokenManager
+     */
     private $tokenManager;
 
     /**

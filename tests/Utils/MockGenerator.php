@@ -1,5 +1,4 @@
 <?php declare(strict_types=1);
-
 namespace MultiSafepay\Tests\Utils;
 
 use MultiSafepay\Client\Client;
@@ -12,7 +11,7 @@ use Psr\Http\Client\ClientExceptionInterface;
  */
 class MockGenerator extends TestCase
 {
-    const TARGET_FOLDER = __DIR__ . '/../fixture-data/';
+    public const TARGET_FOLDER = __DIR__ . '/../fixture-data/';
 
     /**
      * @param array $getRequests

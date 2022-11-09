@@ -6,10 +6,10 @@
 
 namespace MultiSafepay\Tests\Fixtures\ValueObject;
 
+use Faker\Factory as FakerFactory;
 use MultiSafepay\Tests\Utils\Locale;
 use MultiSafepay\ValueObject\Customer\Address;
 use MultiSafepay\ValueObject\Customer\Country;
-use Faker\Factory as FakerFactory;
 
 /**
  * Trait AddressFixture

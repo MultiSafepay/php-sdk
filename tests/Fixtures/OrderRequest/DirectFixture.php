@@ -6,9 +6,9 @@
 
 namespace MultiSafepay\Tests\Fixtures\OrderRequest;
 
-use MultiSafepay\ValueObject\Money;
 use MultiSafepay\Api\Transactions\OrderRequest;
 use MultiSafepay\Tests\Fixtures\Api\Gateways\GatewayFixture;
+use MultiSafepay\ValueObject\Money;
 
 /**
  * Trait DirectFixture

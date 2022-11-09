@@ -63,7 +63,7 @@ class CheckoutOptions extends DataObject
     {
         return array_merge(
             [
-                'tax_tables' => $this->taxTable ? $this->taxTable->getData() : null
+                'tax_tables' => $this->taxTable ? $this->taxTable->getData() : null,
             ],
             $this->data
         );

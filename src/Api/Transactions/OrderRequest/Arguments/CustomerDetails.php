@@ -71,7 +71,7 @@ class CustomerDetails extends Customer
             'referrer' => $this->getReferrer(),
             'forwarded_ip' => $this->getForwardedIp() ? $this->getForwardedIp()->get() : null,
             'user_agent' => $this->getUserAgent(),
-            'reference' => $this->reference
+            'reference' => $this->reference,
         ];
 
         $data = array_merge($data, $this->data);

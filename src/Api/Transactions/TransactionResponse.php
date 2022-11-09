@@ -7,19 +7,19 @@
 namespace MultiSafepay\Api\Transactions;
 
 use MultiSafepay\Api\Base\ResponseBody;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart;
 use MultiSafepay\Api\Transactions\TransactionResponse\CheckoutOptions;
 use MultiSafepay\Api\Transactions\TransactionResponse\Costs;
 use MultiSafepay\Api\Transactions\TransactionResponse\OrderAdjustment;
 use MultiSafepay\Api\Transactions\TransactionResponse\PaymentDetails;
 use MultiSafepay\Api\Transactions\TransactionResponse\PaymentMethod;
 use MultiSafepay\Api\Transactions\TransactionResponse\RelatedTransaction;
-use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart;
-use MultiSafepay\ValueObject\Money;
 use MultiSafepay\ValueObject\Customer;
 use MultiSafepay\ValueObject\Customer\Address;
 use MultiSafepay\ValueObject\Customer\Country;
 use MultiSafepay\ValueObject\Customer\EmailAddress;
 use MultiSafepay\ValueObject\Customer\PhoneNumber;
+use MultiSafepay\ValueObject\Money;
 
 /**
  * Model TransactionResponse for containing transaction data received from the API

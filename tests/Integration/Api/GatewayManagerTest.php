@@ -1,5 +1,4 @@
 <?php declare(strict_types=1);
-
 namespace MultiSafepay\Tests\Integration\Api;
 
 use Exception;
@@ -82,7 +81,7 @@ class GatewayManagerTest extends TestCase
         $mockClient = MockClient::getInstance();
         $mockClient->mockResponse([
             'id' => 'IDEAL',
-            'description' => 'iDEAL'
+            'description' => 'iDEAL',
         ]);
 
         $gateways = new GatewayManager($mockClient);
@@ -117,7 +116,7 @@ class GatewayManagerTest extends TestCase
         $mockClient = MockClient::getInstance();
         $mockClient->mockResponse([
             'id' => 'MISTERCASH',
-            'description' => 'Bancontact'
+            'description' => 'Bancontact',
         ]);
 
         $gateways = new GatewayManager($mockClient);

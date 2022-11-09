@@ -1,22 +1,21 @@
 <?php declare(strict_types=1);
-
 namespace MultiSafepay\Tests\Unit\Api\Transactions;
 
 use MultiSafepay\Api\Transactions\OrderRequest;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart\Item as ShoppingCartItem;
 use MultiSafepay\Exception\InvalidArgumentException;
 use MultiSafepay\Tests\Fixtures\Api\Gateways\GatewayFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CustomerDetailsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\DescriptionFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\GoogleAnalyticsFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PaymentOptionsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PluginDetailsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\SecondChanceFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\ShoppingCartFixture;
-use MultiSafepay\Tests\Fixtures\OrderRequest\GenericOrderRequestFixture;
-use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
-use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CustomerDetailsFixture;
-use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PaymentOptionsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\DirectFixture as DirectOrderRequestFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\GenericOrderRequestFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\RedirectFixture as RedirectOrderRequestFixture;
+use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
 use MultiSafepay\Tests\Fixtures\ValueObject\CountryFixture;
 use MultiSafepay\Tests\Fixtures\ValueObject\PhoneNumberFixture;
 use MultiSafepay\ValueObject\Money;

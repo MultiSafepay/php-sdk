@@ -7,8 +7,8 @@
 namespace MultiSafepay\Tests\Integration;
 
 use Http\Mock\Client as MockHttpClient;
-use MultiSafepay\Sdk;
 use MultiSafepay\Exception\ApiException;
+use MultiSafepay\Sdk;
 use MultiSafepay\Util\Version;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientExceptionInterface;

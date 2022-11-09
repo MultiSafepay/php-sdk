@@ -1,11 +1,10 @@
 <?php declare(strict_types=1);
-
 namespace MultiSafepay\Tests\Functional;
 
-use MultiSafepay\Util\Version;
-use PHPUnit\Framework\TestCase;
 use MultiSafepay\Client\Client;
 use MultiSafepay\Sdk;
+use MultiSafepay\Util\Version;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class TestCase

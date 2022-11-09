@@ -6,11 +6,11 @@
 
 namespace MultiSafepay\Api\Transactions;
 
-use MultiSafepay\ValueObject\Money;
 use MultiSafepay\Api\Base\RequestBody;
-use MultiSafepay\Api\Transactions\RefundRequest\Arguments\CheckoutData;
-use MultiSafepay\Api\Transactions\OrderRequest\Arguments\Description;
 use MultiSafepay\Api\Base\RequestBodyInterface;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\Description;
+use MultiSafepay\Api\Transactions\RefundRequest\Arguments\CheckoutData;
+use MultiSafepay\ValueObject\Money;
 
 /**
  * Class RefundRequest

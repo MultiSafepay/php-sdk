@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Copyright © 2021 MultiSafepay, Inc. All rights reserved.
  * See DISCLAIMER.md for disclaimer details.
@@ -108,7 +108,7 @@ class Token
     /**
      * @return bool
      */
-    public function isExpired():bool
+    public function isExpired(): bool
     {
         return $this->isExpired;
     }

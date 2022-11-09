@@ -3,20 +3,8 @@
     <description>MultiSafepay coding styles rules</description>
     <exclude-pattern>*/vendor/*</exclude-pattern>
     <exclude-pattern>*/tests/bootstrap.php</exclude-pattern>
-    <rule ref="PSR2"/>
-    <rule ref="./vendor/object-calisthenics/phpcs-calisthenics-rules/src/ObjectCalisthenics/ruleset.xml">
-        <exclude name="ObjectCalisthenics.CodeAnalysis.OneObjectOperatorPerLine"/>
-        <properties>
-            <property name="maxLength" value="25"/>
-        </properties>
-    </rule>
+    <rule ref="./vendor/multisafepay/coding-standards/php72.phpcs.xml"/>
+    <rule ref="SlevomatCodingStandard.Commenting.DisallowOneLinePropertyDocComment"/>
+    <rule ref="SlevomatCodingStandard.Arrays.TrailingArrayComma"/>
     <rule ref="PEAR.Commenting.FunctionComment.Missing"/>
-    <rule ref="ObjectCalisthenics">
-        <exclude-pattern>*/tests/*</exclude-pattern>
-    </rule>
-    <rule ref="ObjectCalisthenics.Metrics.PropertyPerClassLimit">
-        <properties>
-            <property name="maxCount" value="20"/>
-        </properties>
-    </rule>
 </ruleset>

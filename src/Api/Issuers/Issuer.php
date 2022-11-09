@@ -15,6 +15,11 @@ use MultiSafepay\Exception\InvalidArgumentException;
 class Issuer
 {
     /**
+     * @const string[]
+     */
+    public const ALLOWED_GATEWAY_CODES = ['ideal', 'mybank'];
+
+    /**
      * @var string
      */
     private $gatewayCode;
@@ -28,11 +33,6 @@ class Issuer
      * @var string
      */
     private $description;
-
-    /**
-     * @const string[]
-     */
-    const ALLOWED_GATEWAY_CODES = ['ideal', 'mybank'];
 
     /**
      * Issuer constructor.

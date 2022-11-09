@@ -8,8 +8,8 @@ namespace MultiSafepay\Tests\Integration;
 
 use Exception;
 use GuzzleHttp\Psr7\Response;
-use MultiSafepay\Client\Client;
 use Http\Mock\Client as MockHttpClient;
+use MultiSafepay\Client\Client;
 use MultiSafepay\Tests\Utils\FixtureLoader;
 use MultiSafepay\Util\Version;
 
@@ -40,7 +40,7 @@ class MockClient extends Client
     {
         $responseData = [
             'success' => $success,
-            'data' => $data
+            'data' => $data,
         ];
 
         if (!empty($errorCode)) {

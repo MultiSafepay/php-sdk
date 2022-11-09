@@ -15,7 +15,7 @@ use MultiSafepay\ValueObject\CartItem;
 class ShippingItem extends CartItem
 {
 
-    const MULTISAFEPAY_SHIPPING_ITEM_CODE = 'msp-shipping';
+    public const MULTISAFEPAY_SHIPPING_ITEM_CODE = 'msp-shipping';
 
     /**
      * @return string

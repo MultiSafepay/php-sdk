@@ -1,5 +1,4 @@
 <?php declare(strict_types=1);
-
 namespace MultiSafepay\Tests\Functional\Api\Transactions;
 
 use MultiSafepay\Api\Transactions\OrderRequest;

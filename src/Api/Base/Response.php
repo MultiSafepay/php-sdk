@@ -15,8 +15,8 @@ use MultiSafepay\Exception\ApiException;
  */
 class Response
 {
-    const ERROR_UNKNOWN_DATA = [412, 'Unknown data'];
-    const ERROR_INVALID_DATA_TYPE = [412, 'Invalid data type'];
+    public const ERROR_UNKNOWN_DATA = [412, 'Unknown data'];
+    public const ERROR_INVALID_DATA_TYPE = [412, 'Invalid data type'];
 
     /**
      * @var array

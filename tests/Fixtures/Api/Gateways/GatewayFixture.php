@@ -12,25 +12,25 @@ namespace MultiSafepay\Tests\Fixtures\Api\Gateways;
  */
 class GatewayFixture
 {
-    const AFTERPAY = 'AFTERPAY';
-    const BANKTRANS = 'BANKTRANS';
-    const CREDITCARD = 'CREDITCARD';
-    const DIRECTBANK = 'DIRECTBANK';
-    const DIRDEB = 'DIRDEB';
-    const EINVOICE = 'EINVOICE';
-    const EPS = 'EPS';
-    const FASHIONCHQ = 'FASHIONCHQ';
-    const FASHIONGFT = 'FASHIONGFT';
-    const GIROPAY = 'GIROPAY';
-    const IDEAL = 'IDEAL';
-    const IDEALQR = 'IDEALQR';
-    const KLARNA = 'KLARNA';
-    const MAESTRO = 'MAESTRO';
-    const MASTERCARD = 'MASTERCARD';
-    const MISTERCASH = 'MISTERCASH';
-    const PAYAFTER = 'PAYAFTER';
-    const SANTANDER = 'SANTANDER';
-    const TRUSTLY = 'TRUSTLY';
-    const VISA = 'VISA';
-    const VVVBON = 'VVVBON';
+    public const AFTERPAY = 'AFTERPAY';
+    public const BANKTRANS = 'BANKTRANS';
+    public const CREDITCARD = 'CREDITCARD';
+    public const DIRECTBANK = 'DIRECTBANK';
+    public const DIRDEB = 'DIRDEB';
+    public const EINVOICE = 'EINVOICE';
+    public const EPS = 'EPS';
+    public const FASHIONCHQ = 'FASHIONCHQ';
+    public const FASHIONGFT = 'FASHIONGFT';
+    public const GIROPAY = 'GIROPAY';
+    public const IDEAL = 'IDEAL';
+    public const IDEALQR = 'IDEALQR';
+    public const KLARNA = 'KLARNA';
+    public const MAESTRO = 'MAESTRO';
+    public const MASTERCARD = 'MASTERCARD';
+    public const MISTERCASH = 'MISTERCASH';
+    public const PAYAFTER = 'PAYAFTER';
+    public const SANTANDER = 'SANTANDER';
+    public const TRUSTLY = 'TRUSTLY';
+    public const VISA = 'VISA';
+    public const VVVBON = 'VVVBON';
 }

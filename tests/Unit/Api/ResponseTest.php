@@ -1,5 +1,4 @@
 <?php declare(strict_types=1);
-
 namespace MultiSafepay\Tests\Unit\Api;
 
 use MultiSafepay\Api\Base\Response;
@@ -44,7 +43,7 @@ class ResponseTest extends TestCase
             'data' => ['foo' => 'bar'],
             'success' => 0,
             'error_code' => 42,
-            'error_info' => 'Sample error message'
+            'error_info' => 'Sample error message',
         ]);
 
         $this->expectExceptionCode(42);
@@ -53,7 +52,7 @@ class ResponseTest extends TestCase
             'data' => ['foo' => 'bar'],
             'success' => 0,
             'error_code' => 42,
-            'error_info' => 'Sample error message'
+            'error_info' => 'Sample error message',
         ]);
 
         $this->expectExceptionCode(Response::ERROR_UNKNOWN_DATA[0]);

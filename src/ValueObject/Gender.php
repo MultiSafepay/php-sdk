@@ -17,7 +17,7 @@ class Gender
     /**
      * Allowed values
      */
-    const ALLOWED_VALUES = ['male', 'female', 'mr', 'mrs', 'miss'];
+    public const ALLOWED_VALUES = ['male', 'female', 'mr', 'mrs', 'miss'];
 
     /**
      * @var string

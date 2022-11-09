@@ -16,11 +16,11 @@ use Psr\Http\Client\ClientExceptionInterface;
  */
 class GatewayManager extends AbstractManager
 {
-    const ALLOWED_OPTIONS = [
+    public const ALLOWED_OPTIONS = [
         'country' => '',
         'currency' => '',
         'amount' => '',
-        'include' => ''
+        'include' => '',
     ];
 
     /**

@@ -12,7 +12,7 @@ namespace MultiSafepay\Api\Transactions;
  */
 class Gateways
 {
-    const SHOPPING_CART_REQUIRED_GATEWAYS = array(
+    public const SHOPPING_CART_REQUIRED_GATEWAYS = array(
         'AFTERPAY',
         'EINVOICE',
         'IN3',

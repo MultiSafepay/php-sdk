@@ -1,6 +1,4 @@
-<?php
-declare(strict_types=1);
-
+<?php declare(strict_types=1);
 namespace MultiSafepay\Test\Unit\Utils;
 
 use MultiSafepay\Util\Version;

@@ -12,8 +12,8 @@ use MultiSafepay\Api\Base\RequestBodyInterface;
 use MultiSafepay\Api\Base\Response as ApiResponse;
 use MultiSafepay\Exception\StrictModeException;
 use Psr\Http\Client\ClientExceptionInterface;
-use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
@@ -26,16 +26,12 @@ use Psr\Http\Message\StreamInterface;
  */
 class Client
 {
-    const LIVE_URL = 'https://api.multisafepay.com/v1/';
-
-    const TEST_URL = 'https://testapi.multisafepay.com/v1/';
-
-    const METHOD_POST = 'POST';
-
-    const METHOD_GET = 'GET';
-
-    const METHOD_PATCH = 'PATCH';
-    const METHOD_DELETE = 'DELETE';
+    public const LIVE_URL = 'https://api.multisafepay.com/v1/';
+    public const TEST_URL = 'https://testapi.multisafepay.com/v1/';
+    public const METHOD_POST = 'POST';
+    public const METHOD_GET = 'GET';
+    public const METHOD_PATCH = 'PATCH';
+    public const METHOD_DELETE = 'DELETE';
 
     /**
      * @var ApiKey

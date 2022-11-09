@@ -6,8 +6,8 @@
 
 namespace MultiSafepay\Api\Transactions\TransactionResponse;
 
-use MultiSafepay\ValueObject\Money;
 use MultiSafepay\Api\Base\DataObject;
+use MultiSafepay\ValueObject\Money;
 
 /**
  * Class RelatedTransaction

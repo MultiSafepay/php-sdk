@@ -189,7 +189,7 @@ class CartItem extends DataObject
                 'weight' => [
                     'unit' => $this->weight ? strtoupper($this->weight->getUnit()) : null,
                     'value' => $this->weight ? $this->weight->getQuantity() : null,
-                ]
+                ],
             ],
             $this->data
         );

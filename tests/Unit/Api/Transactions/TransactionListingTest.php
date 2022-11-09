@@ -1,5 +1,4 @@
 <?php declare(strict_types=1);
-
 namespace MultiSafepay\Tests\Unit\Api\Transactions;
 
 use MultiSafepay\Api\Categories\CategoryListing;

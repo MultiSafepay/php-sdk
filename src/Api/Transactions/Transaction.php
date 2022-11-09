@@ -12,16 +12,16 @@ namespace MultiSafepay\Api\Transactions;
  */
 class Transaction
 {
-    const COMPLETED = 'completed';
-    const INITIALIZED = 'initialized';
-    const UNCLEARED = 'uncleared';
-    const DECLINED = 'declined';
-    const CANCELLED = 'cancelled';
-    const VOID = 'void';
-    const EXPIRED = 'expired';
-    const REFUNDED = 'refunded';
-    const PARTIAL_REFUNDED = 'partial_refunded';
-    const RESERVED = 'reserved';
-    const CHARGEDBACK = 'chargedback';
-    const SHIPPED = 'shipped';
+    public const COMPLETED = 'completed';
+    public const INITIALIZED = 'initialized';
+    public const UNCLEARED = 'uncleared';
+    public const DECLINED = 'declined';
+    public const CANCELLED = 'cancelled';
+    public const VOID = 'void';
+    public const EXPIRED = 'expired';
+    public const REFUNDED = 'refunded';
+    public const PARTIAL_REFUNDED = 'partial_refunded';
+    public const RESERVED = 'reserved';
+    public const CHARGEDBACK = 'chargedback';
+    public const SHIPPED = 'shipped';
 }

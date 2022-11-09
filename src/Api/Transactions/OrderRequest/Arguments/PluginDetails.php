@@ -110,7 +110,7 @@ class PluginDetails
             'shop' => $this->applicationName,
             'shop_version' => $this->applicationVersion,
             'partner' => $this->partner,
-            'shop_root_url' => $this->shopRootUrl
+            'shop_root_url' => $this->shopRootUrl,
         ];
     }
 

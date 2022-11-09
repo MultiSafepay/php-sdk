@@ -7,10 +7,10 @@
 namespace MultiSafepay\Tests\Fixtures\OrderRequest\Arguments;
 
 use Faker\Factory as FakerFactory;
-use MultiSafepay\ValueObject\Money;
-use MultiSafepay\ValueObject\Weight;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart\Item as ShoppingCartItem;
+use MultiSafepay\ValueObject\Money;
+use MultiSafepay\ValueObject\Weight;
 
 /**
  * Trait ShoppingCartWithTaxFixture

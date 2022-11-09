@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Copyright © 2021 MultiSafepay, Inc. All rights reserved.
  * See DISCLAIMER.md for disclaimer details.
@@ -8,7 +8,9 @@ namespace MultiSafepay\Api\Tokens;
 
 class TokenListing
 {
-    /** @var Token[] */
+    /**
+     * @var Token[]
+     */
     private $tokens;
 
     /**

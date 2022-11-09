@@ -14,7 +14,9 @@ use MultiSafepay\Client\Client;
  */
 abstract class AbstractManager
 {
-    /** @var Client */
+    /**
+     * @var Client
+     */
     protected $client;
 
     /**

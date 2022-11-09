@@ -6,7 +6,6 @@
 
 namespace MultiSafepay\Api\Transactions;
 
-use MultiSafepay\ValueObject\Money;
 use MultiSafepay\Api\Base\RequestBody;
 use MultiSafepay\Api\Gateways\Gateway;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\CheckoutOptions;
@@ -18,8 +17,9 @@ use MultiSafepay\Api\Transactions\OrderRequest\Arguments\PaymentOptions;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\PluginDetails;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\SecondChance;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart;
-use MultiSafepay\Exception\InvalidArgumentException;
 use MultiSafepay\Api\Transactions\OrderRequest\Validators\TotalAmountValidator;
+use MultiSafepay\Exception\InvalidArgumentException;
+use MultiSafepay\ValueObject\Money;
 
 /**
  * Class OrderRequest
@@ -29,7 +29,7 @@ use MultiSafepay\Api\Transactions\OrderRequest\Validators\TotalAmountValidator;
  */
 class OrderRequest extends RequestBody implements OrderRequestInterface
 {
-    const ALLOWED_TYPES = ['direct', 'redirect', 'paymentlink'];
+    public const ALLOWED_TYPES = ['direct', 'redirect', 'paymentlink'];
 
     /** The allowed values for the recurring models. */
     public const ALLOWED_RECURRING_MODELS = ['cardOnFile', 'subscription', 'unscheduled'];
@@ -430,7 +430,7 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
             'checkout_options' => $this->checkoutOptions ? $this->checkoutOptions->getData() : null,
             'days_active' => $this->daysActive,
             'seconds_active' => $this->secondsActive,
-            'plugin' => $this->pluginDetails ? $this->pluginDetails->getData() : null
+            'plugin' => $this->pluginDetails ? $this->pluginDetails->getData() : null,
         ];
 
         $data = $this->removeNullRecursive(array_merge($data, $this->data));

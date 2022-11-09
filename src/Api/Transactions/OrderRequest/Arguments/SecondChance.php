@@ -33,7 +33,7 @@ class SecondChance
     public function getData(): array
     {
         return [
-            'send_email' => $this->sendEmail
+            'send_email' => $this->sendEmail,
         ];
     }
 }

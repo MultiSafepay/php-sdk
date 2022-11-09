@@ -115,7 +115,7 @@ class CheckoutData extends DataObject
         return array_merge(
             [
                 'tax_table' => $this->taxTable ? $this->taxTable->getData() : null,
-                'items' => $itemsData
+                'items' => $itemsData,
             ],
             $this->data
         );

@@ -168,7 +168,7 @@ class PaymentOptions
             'redirect_url' => $this->getRedirectUrl(),
             'cancel_url' => $this->getCancelUrl(),
             'close_window' => $this->isCloseWindow(),
-            'settings' => $this->getSettings()
+            'settings' => $this->getSettings(),
         ];
     }
 }

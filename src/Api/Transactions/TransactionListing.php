@@ -10,10 +10,14 @@ use MultiSafepay\Api\Pager\Pager;
 
 class TransactionListing
 {
-    /** @var array */
+    /**
+     * @var array
+     */
     private $transactions;
 
-    /** @var Pager */
+    /**
+     * @var Pager
+     */
     private $pager;
 
     /**

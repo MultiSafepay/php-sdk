@@ -15,11 +15,11 @@
   "require-dev": {
     "phpunit/phpunit": "^9.0 || ^7.5",
     "guzzlehttp/guzzle": "^7.0",
-    "object-calisthenics/phpcs-calisthenics-rules": "^3.5 || ^2.0",
     "http-interop/http-factory-guzzle": "^1.0",
     "php-http/mock-client": "^1.3",
     "fakerphp/faker": "^1.13",
-    "phpstan/phpstan": "^0.12.23"
+    "phpstan/phpstan": "^0.12.23",
+    "multisafepay/coding-standards": "dev-master"
   },
   "suggest": {
     "jschaedl/iban-validation": "Adds additional IBAN validation for \\MultiSafepay\\ValueObject\\IbanNumber"

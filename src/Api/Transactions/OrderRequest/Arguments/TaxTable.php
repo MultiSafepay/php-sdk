@@ -90,7 +90,7 @@ class TaxTable
         if ($this->defaultRate) {
             $data['default'] = [
                 'shipping_taxed' => $this->shippingTaxed,
-                'rate' => ($this->defaultRate->getRate() / 100)
+                'rate' => ($this->defaultRate->getRate() / 100),
             ];
         }
 

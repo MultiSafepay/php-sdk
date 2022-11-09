@@ -7,10 +7,10 @@
 namespace MultiSafepay\Api\Transactions\TransactionResponse;
 
 use MultiSafepay\Api\Base\DataObject;
-use MultiSafepay\ValueObject\Customer\Country;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\TaxTable;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\TaxTable\TaxRate;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\TaxTable\TaxRule;
-use MultiSafepay\Api\Transactions\OrderRequest\Arguments\TaxTable;
+use MultiSafepay\ValueObject\Customer\Country;
 
 /**
  * Class CheckoutOptions

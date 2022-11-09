@@ -6,25 +6,25 @@
 
 namespace MultiSafepay\Tests\Integration\Api;
 
-use MultiSafepay\ValueObject\Money;
 use MultiSafepay\Api\TransactionManager;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\Description;
 use MultiSafepay\Api\Transactions\RefundRequest;
 use MultiSafepay\Api\Transactions\Transaction;
 use MultiSafepay\Exception\ApiException;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CustomerDetailsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\DescriptionFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\GoogleAnalyticsFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PaymentOptionsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PluginDetailsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\SecondChanceFixture;
-use MultiSafepay\Tests\Fixtures\OrderRequest\GenericOrderRequestFixture;
-use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
-use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CustomerDetailsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\DirectFixture as RequestOrderDirectFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\GenericOrderRequestFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\RedirectFixture as RequestOrderRedirectFixture;
-use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\PaymentOptionsFixture;
+use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
 use MultiSafepay\Tests\Fixtures\ValueObject\CountryFixture;
 use MultiSafepay\Tests\Fixtures\ValueObject\PhoneNumberFixture;
 use MultiSafepay\Tests\Integration\MockClient;
+use MultiSafepay\ValueObject\Money;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientExceptionInterface;
 
@@ -56,7 +56,7 @@ class TransactionManagerTest extends TestCase
         $mockClient->mockResponse(
             [
                 'order_id' => $orderData['order_id'],
-                'payment_url' => 'https://testpayv2.multisafepay.com/'
+                'payment_url' => 'https://testpayv2.multisafepay.com/',
             ]
         );
 
@@ -84,7 +84,7 @@ class TransactionManagerTest extends TestCase
                 'status' => Transaction::COMPLETED,
                 'transaction_id' => 4051823,
                 'refund_id' => 405223823,
-                'amount' => 9743
+                'amount' => 9743,
             ]
         );
 
@@ -111,7 +111,7 @@ class TransactionManagerTest extends TestCase
                 'status' => Transaction::COMPLETED,
                 'transaction_id' => $fakeTransactionId,
                 'currency' => 'EUR',
-                'amount' => 10000
+                'amount' => 10000,
             ]
         );
 

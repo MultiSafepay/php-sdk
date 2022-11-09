@@ -1,10 +1,9 @@
 <?php declare(strict_types=1);
-
 namespace MultiSafepay\Tests\Integration\Api;
 
 use Exception;
-use MultiSafepay\Api\CategoryManager;
 use MultiSafepay\Api\Categories\Category;
+use MultiSafepay\Api\CategoryManager;
 use MultiSafepay\Tests\Integration\MockClient;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientExceptionInterface;

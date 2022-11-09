@@ -14,7 +14,9 @@ use MultiSafepay\Api\Categories\Category;
  */
 class CategoryListing
 {
-    /** @var array */
+    /**
+     * @var array
+     */
     private $categories;
 
     /**
