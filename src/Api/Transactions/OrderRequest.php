@@ -295,6 +295,14 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
     }
 
     /**
+     * @return PluginDetails|null
+     */
+    public function getPluginDetails(): ?PluginDetails
+    {
+        return $this->pluginDetails;
+    }
+
+    /**
      * @param string $recurringId
      * @return OrderRequest
      */

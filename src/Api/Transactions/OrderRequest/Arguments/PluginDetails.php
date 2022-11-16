@@ -12,6 +12,8 @@ use MultiSafepay\Util\Version;
 /**
  * Class PluginDetails
  * @package MultiSafepay\Api\Transactions\OrderRequest\Arguments
+ * phpcs:disable ObjectCalisthenics.Metrics.MethodPerClassLimit
+ * phpcs:disable ObjectCalisthenics.Files.ClassTraitAndInterfaceLength
  */
 class PluginDetails
 {
@@ -59,6 +61,14 @@ class PluginDetails
     }
 
     /**
+     * @return string|null
+     */
+    public function getApplicationVersion(): ?string
+    {
+        return $this->applicationVersion;
+    }
+
+    /**
      * @param string $applicationName
      * @return PluginDetails
      */
@@ -69,12 +79,29 @@ class PluginDetails
     }
 
     /**
+     * @return string|null
+     */
+    public function getApplicationName(): ?string
+    {
+        return $this->applicationName;
+    }
+
+    /**
      * @param string $pluginVersion
+     * @return PluginDetails
      */
     public function addPluginVersion(string $pluginVersion): PluginDetails
     {
         $this->pluginVersion->addPluginVersion($pluginVersion);
         return $this;
+    }
+
+    /**
+     * @return Version
+     */
+    public function getPluginVersion(): Version
+    {
+        return $this->pluginVersion;
     }
 
     /**
