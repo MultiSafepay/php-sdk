@@ -36,6 +36,15 @@ $multiSafepaySdk = new \MultiSafepay\Sdk($yourApiKey, $isProduction);
 $issuers = $multiSafepaySdk->getIssuerManager()->getIssuersByGatewayCode('IDEAL');
 ```
 
+### Get an API Token
+```php
+$yourApiKey = 'your-api-key';
+$isProduction = false;
+$multiSafepaySdk = new \MultiSafepay\Sdk($yourApiKey, $isProduction);
+/** @var \MultiSafepay\Api\ApiTokens\ApiToken $apiToken **/
+$apiToken = $multiSafepaySdk->getApiTokenManager()->get();
+```
+
 ### Create an order without shopping cart
 ```php
 use MultiSafepay\ValueObject\Customer\Country;
