@@ -28,7 +28,7 @@ class CheckoutOptions extends DataObject
      */
     public function generateFromShoppingCart(ShoppingCart $shoppingCart): CheckoutOptions
     {
-        $taxTable = new TaxTable;
+        $taxTable = new TaxTable();
         $taxRules = [];
 
         foreach ($shoppingCart->getItems() as $cartItem) {
@@ -38,7 +38,6 @@ class CheckoutOptions extends DataObject
         }
 
         if (!empty($taxRules)) {
-            //$taxTable->addDefaultRate((new TaxRate)->addRate(0));
             $taxTable->addTaxRules($taxRules);
             $this->addTaxTable($taxTable);
         }
@@ -47,6 +46,21 @@ class CheckoutOptions extends DataObject
     }
 
     /**
+     * Retrieve the tax rules from the tax table
+     *
+     * @return TaxTable
+     */
+    public function getTaxTable(): TaxTable
+    {
+        if (!$this->taxTable) {
+            $this->taxTable = new TaxTable();
+        }
+        return $this->taxTable;
+    }
+
+    /**
+     * Add a new tax table
+     *
      * @param TaxTable $taxTable
      * @return CheckoutOptions
      */

@@ -348,9 +348,9 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
     }
 
     /**
-     * @return ShoppingCart
+     * @return ShoppingCart|null
      */
-    public function getShoppingCart(): ShoppingCart
+    public function getShoppingCart(): ?ShoppingCart
     {
         return $this->shoppingCart;
     }
@@ -361,6 +361,20 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
     public function getGatewayInfo(): GatewayInfoInterface
     {
         return $this->gatewayInfo;
+    }
+
+    /**
+     * Retrieve the checkout_options object from the OrderRequest
+     *
+     * @return CheckoutOptions
+     */
+    public function getCheckoutOptions(): CheckoutOptions
+    {
+        if (!$this->checkoutOptions) {
+            $this->checkoutOptions = new CheckoutOptions();
+        }
+
+        return $this->checkoutOptions;
     }
 
     /**

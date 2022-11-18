@@ -52,6 +52,16 @@ class TaxTable
     }
 
     /**
+     * @param TaxRule $taxRules
+     * @return TaxTable
+     */
+    public function addTaxRule(TaxRule $taxRule): TaxTable
+    {
+        $this->taxRules[] = $taxRule;
+        return $this;
+    }
+
+    /**
      * @param bool $shippingTaxed
      * @return TaxTable
      */
