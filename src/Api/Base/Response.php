@@ -64,9 +64,9 @@ class Response
             $data['success'] = false;
         }
 
+        $this->raw = $raw;
         $this->validate($data, $context);
         $this->data = $data['data'];
-        $this->raw = $raw;
 
         if (isset($data['pager'])) {
             $this->pager = new Pager($data['pager']);
@@ -74,28 +74,29 @@ class Response
     }
 
     /**
+     * Validate the response
+     *
      * @param array $data
      * @param array $context
-     * @return bool
+     * @return void
      */
-    private function validate(array $data, array $context = []): bool
+    private function validate(array $data, array $context = []): void
     {
         if ((bool)$data['success'] === true) {
-            return true;
+            return;
         }
 
         $errorCode = $data['error_code'] ?? self::ERROR_UNKNOWN_DATA[0];
         $errorInfo = $data['error_info'] ?? self::ERROR_UNKNOWN_DATA[1];
 
         if (!empty($data['data']) && !is_array($data['data'])) {
-            list($errorCode, $errorInfo) = self::ERROR_INVALID_DATA_TYPE;
+            [$errorCode, $errorInfo] = self::ERROR_INVALID_DATA_TYPE;
         }
 
         if (!$data['success']) {
+            $context['raw_response_body'] = $this->raw;
             throw (new ApiException($errorInfo, $errorCode))->addContext($context);
         }
-
-        return true;
     }
 
     /**
