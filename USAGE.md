@@ -18,6 +18,24 @@ $multiSafepaySdk = new \MultiSafepay\Sdk($yourApiKey, $isProduction);
 $gateway = $multiSafepaySdk->getGatewayManager()->getByCode('VISA');
 ```
 
+### Getting a list of payment methods and their properties
+```php
+$yourApiKey = 'your-api-key';
+$isProduction = false;
+$multiSafepaySdk = new \MultiSafepay\Sdk($yourApiKey, $isProduction);
+/** @var \MultiSafepay\Api\PaymentMethods\PaymentMethod[] $paymentMethods **/
+$paymentMethods = $multiSafepaySdk->getPaymentMethodManager()->getPaymentMethods();
+```
+
+### Get a specific payment method properties by gateway code 
+```php
+$yourApiKey = 'your-api-key';
+$isProduction = false;
+$multiSafepaySdk = new \MultiSafepay\Sdk($yourApiKey, $isProduction);
+/** @var \MultiSafepay\Api\PaymentMethods\PaymentMethod $paymentMethod **/
+$paymentMethod = $multiSafepaySdk->getPaymentMethodManager()->getByGatewayCode('VISA');
+```
+
 ### Get a list of categories
 ```php
 $yourApiKey = 'your-api-key';

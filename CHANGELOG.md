@@ -4,8 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [5.7.0] - 2022-10-24
+## [Unreleased]
+### Added
+- PHPSDK-85: Add support for "payment-methods" endpoint
 
+## [5.7.0] - 2022-10-24
 ### Added
 - PHPSDK-99: Trim API-KEY in signature validation
 - PHPSDK-96: Add method to get GatewayInfo object from the OrderRequest object

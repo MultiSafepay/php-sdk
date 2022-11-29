@@ -11,6 +11,7 @@ use MultiSafepay\Api\ApiTokenManager;
 use MultiSafepay\Api\CategoryManager;
 use MultiSafepay\Api\GatewayManager;
 use MultiSafepay\Api\IssuerManager;
+use MultiSafepay\Api\PaymentMethodManager;
 use MultiSafepay\Api\TokenManager;
 use MultiSafepay\Api\TransactionManager;
 use MultiSafepay\Api\WalletManager;
@@ -22,6 +23,7 @@ use Psr\Http\Message\StreamFactoryInterface;
 /**
  * Class Sdk
  * @package MultiSafepay
+ * phpcs:disable ObjectCalisthenics.Metrics.MethodPerClassLimit
  */
 class Sdk
 {
@@ -81,6 +83,14 @@ class Sdk
     public function getGatewayManager(): GatewayManager
     {
         return new GatewayManager($this->client);
+    }
+
+    /**
+     * @return PaymentMethodManager
+     */
+    public function getPaymentMethodManager(): PaymentMethodManager
+    {
+        return new PaymentMethodManager($this->client);
     }
 
     /**

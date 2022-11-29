@@ -1,0 +1,106 @@
+{
+  "data": {
+    "additional_data": {
+      "issuers": [
+        {
+          "bic": "ABNANL2A",
+          "code": "0031",
+          "name": "ABN Amro Bank"
+        },
+        {
+          "bic": "ASNBNL21",
+          "code": "0761",
+          "name": "ASN Bank"
+        },
+        {
+          "bic": "BUNQNL2A",
+          "code": "4371",
+          "name": "Bunq"
+        },
+        {
+          "bic": "FVLBNL22",
+          "code": "0161",
+          "name": "Van Lanschot Bankiers"
+        },
+        {
+          "bic": "INGBNL2A",
+          "code": "0721",
+          "name": "ING"
+        },
+        {
+          "bic": "KNABNL2H",
+          "code": "0801",
+          "name": "Knab"
+        },
+        {
+          "bic": "RABONL2U",
+          "code": "0021",
+          "name": "Rabobank"
+        },
+        {
+          "bic": "RBRBNL21",
+          "code": "0771",
+          "name": "RegioBank"
+        },
+        {
+          "bic": "REVOLT21",
+          "code": "1099",
+          "name": "Revolut"
+        },
+        {
+          "bic": "SNSBNL2A",
+          "code": "0751",
+          "name": "SNS Bank"
+        },
+        {
+          "bic": "TESTBANK",
+          "code": "3151",
+          "name": "Test Bank"
+        },
+        {
+          "bic": "TRIONL2U",
+          "code": "0511",
+          "name": "Triodos Bank"
+        }
+      ]
+    },
+    "allowed_amount": {
+      "max": 5000000,
+      "min": 0
+    },
+    "allowed_countries": [],
+    "allowed_currencies": [
+      "EUR"
+    ],
+    "apps": {
+      "fastcheckout": {
+        "is_enabled": true
+      },
+      "payment_components": {
+        "has_fields": true,
+        "is_enabled": true
+      }
+    },
+    "brands": [],
+    "icon_urls": {
+      "large": "https://testmedia.multisafepay.com/img/methods/3x/ideal.png",
+      "medium": "https://testmedia.multisafepay.com/img/methods/2x/ideal.png",
+      "vector": "https://testmedia.multisafepay.com/img/methods/svg/ideal.svg"
+    },
+    "id": "IDEAL",
+    "name": "iDEAL",
+    "preferred_countries": [],
+    "required_customer_data": [],
+    "shopping_cart_required": false,
+    "tokenization": {
+      "is_enabled": true,
+      "models": {
+        "cardonfile": true,
+        "subscription": true,
+        "unscheduled": true
+      }
+    },
+    "type": "payment-method"
+  },
+  "success": true
+}

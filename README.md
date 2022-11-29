@@ -55,6 +55,7 @@ From the SDK, you can get various managers:
 ```php
 $multiSafepaySdk->getTransactionManager();
 $multiSafepaySdk->getGatewayManager();
+$multiSafepaySdk->getPaymentMethodManager();
 $multiSafepaySdk->getIssuerManager();
 $multiSafepaySdk->getCategoryManager();
 $multiSafepaySdk->getTokenManager();
