@@ -194,7 +194,9 @@ class Client
      */
     public function getRequestUrl(string $endpoint, $parameters = []): string
     {
-        $parameters['locale'] = $this->locale;
+        if (!isset($parameters['locale'])) {
+            $parameters['locale'] = $this->locale;
+        }
         $endpoint .= '?' . http_build_query($parameters);
         return $this->url . $endpoint;
     }
