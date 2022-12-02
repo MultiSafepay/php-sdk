@@ -1,0 +1,76 @@
+{
+  "data": {
+    "additional_data": {},
+    "allowed_amount": {
+      "max": null,
+      "min": 0
+    },
+    "allowed_countries": [],
+    "allowed_currencies": [
+      "AED",
+      "AUD",
+      "BRL",
+      "CAD",
+      "CHF",
+      "CLP",
+      "CNY",
+      "CZK",
+      "DKK",
+      "EUR",
+      "GBP",
+      "HKD",
+      "HRK",
+      "HUF",
+      "ILS",
+      "INR",
+      "ISK",
+      "JPY",
+      "MXN",
+      "MYR",
+      "NOK",
+      "NZD",
+      "PEN",
+      "PHP",
+      "PLN",
+      "RUB",
+      "SEK",
+      "SGD",
+      "THB",
+      "TRY",
+      "TWD",
+      "USD",
+      "VEF",
+      "ZAR"
+    ],
+    "apps": {
+      "fastcheckout": {
+        "is_enabled": true
+      },
+      "payment_components": {
+        "has_fields": true,
+        "is_enabled": true
+      }
+    },
+    "brands": [],
+    "icon_urls": {
+      "large": "https://testmedia.multisafepay.com/img/methods/3x/visa.png",
+      "medium": "https://testmedia.multisafepay.com/img/methods/2x/visa.png",
+      "vector": "https://testmedia.multisafepay.com/img/methods/svg/visa.svg"
+    },
+    "id": "VISA",
+    "name": "Visa",
+    "preferred_countries": [],
+    "required_customer_data": [],
+    "shopping_cart_required": false,
+    "tokenization": {
+      "is_enabled": true,
+      "models": {
+        "cardonfile": true,
+        "subscription": true,
+        "unscheduled": true
+      }
+    },
+    "type": "payment-method"
+  },
+  "success": true
+}

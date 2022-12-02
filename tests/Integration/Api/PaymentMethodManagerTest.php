@@ -111,4 +111,20 @@ class PaymentMethodManagerTest extends TestCase
         $gateways = new PaymentMethodManager($mockClient);
         $gateways->getByGatewayCode('WRONG');
     }
+
+    /**
+     * @throws ClientExceptionInterface
+     * @throws Exception
+     */
+    public function testGetVisa()
+    {
+        $mockClient = MockClient::getInstance();
+        $mockClient->mockResponseFromFixtureFile('payment-method-visa');
+
+        $paymentMethodManager = new PaymentMethodManager($mockClient);
+        $paymentMethod = $paymentMethodManager->getByGatewayCode('VISA');
+
+        $this->assertTrue($paymentMethod->supportsPaymentComponent());
+        $this->assertTrue($paymentMethod->supportsTokenization());
+    }
 }

@@ -80,4 +80,27 @@ class GetPaymentMethodsTest extends AbstractTestCase
         $this->expectException(ApiException::class);
         $this->getClient()->createGetRequest('json/gateways-wrong');
     }
+
+    /**
+     * @throws ClientExceptionInterface
+     */
+    public function testGetPaymentMethodByCode()
+    {
+        $response = $this->getClient()->createGetRequest('json/payment-methods/VISA');
+        $paymentMethod = $response->getResponseData();
+
+        $this->assertIsArray($paymentMethod);
+        $this->assertNotEmpty($paymentMethod[PaymentMethod::ID_KEY]);
+        $this->assertNotEmpty($paymentMethod[PaymentMethod::NAME_KEY]);
+        $this->assertNotEmpty($paymentMethod[PaymentMethod::ALLOWED_AMOUNT_KEY]);
+        $this->assertIsArray($paymentMethod[PaymentMethod::ALLOWED_CURRENCIES_KEY]);
+        $this->assertIsArray($paymentMethod[PaymentMethod::BRANDS_KEY]);
+        $this->assertIsArray($paymentMethod[PaymentMethod::PREFERRED_COUNTRIES_KEY]);
+        $this->assertIsArray($paymentMethod[PaymentMethod::REQUIRED_CUSTOMER_DATA_KEY]);
+        $this->assertIsBool($paymentMethod[PaymentMethod::SHOPPING_CART_REQUIRED_KEY]);
+        $this->assertIsArray($paymentMethod[PaymentMethod::APPS_KEY]);
+        $this->assertIsArray($paymentMethod[PaymentMethod::TOKENIZATION_KEY]);
+        $this->assertNotEmpty($paymentMethod[PaymentMethod::TYPE_KEY]);
+        $this->assertIsArray($paymentMethod[PaymentMethod::ICON_URLS_KEY]);
+    }
 }

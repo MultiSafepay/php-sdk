@@ -28,7 +28,7 @@ class PaymentMethod
     public const APPS_KEY = 'apps';
     public const TOKENIZATION_KEY = 'tokenization';
     public const TOKENIZATION_MODELS_KEY = 'models';
-    public const TOKENIZATION_IS_ENABLED_KEY = 'is_enabled';
+    public const IS_ENABLED_KEY = 'is_enabled';
     public const SHOPPING_CART_REQUIRED_KEY = 'shopping_cart_required';
     public const PREFERRED_COUNTRIES_KEY = 'preferred_countries';
     public const ALLOWED_COUNTRIES_KEY = 'allowed_countries';
@@ -37,13 +37,12 @@ class PaymentMethod
     public const ICON_URLS_MEDIUM_KEY = 'medium';
     public const ICON_URLS_VECTOR_KEY = 'vector';
     public const REQUIRED_CUSTOMER_DATA_KEY = 'required_customer_data';
-    public const ALLOWED_APPS_PAYMENT_COMPONENT = 'payment_component';
-    public const ALLOWED_APPS_PAYMENT_COMPONENT_WITH_FIELDS = 'has_fields';
-    public const ALLOWED_APPS_FAST_CHECKOUT = 'fastcheckout';
-    public const RECURRING_MODEL_CARD_ON_FILE = 'cardonfile';
-    public const RECURRING_MODEL_SUBSCRIPTION = 'subscription';
-    public const RECURRING_MODEL_UNSCHEDULED = 'unscheduled';
-
+    public const PAYMENT_COMPONENT_KEY = 'payment_components';
+    public const PAYMENT_COMPONENT_HAS_FIELDS_KEY = 'has_fields';
+    public const FAST_CHECKOUT_KEY = 'fastcheckout';
+    public const RECURRING_MODEL_CARD_ON_FILE_KEY = 'cardonfile';
+    public const RECURRING_MODEL_SUBSCRIPTION_KEY = 'subscription';
+    public const RECURRING_MODEL_UNSCHEDULED_KEY = 'unscheduled';
 
     /**
      * @var string
@@ -61,7 +60,7 @@ class PaymentMethod
     private $type;
 
     /**
-     * $var array
+     * @var array
      */
     private $allowedAmount;
 
@@ -109,7 +108,6 @@ class PaymentMethod
      * @var array
      */
     private $requiredCustomerData;
-
 
     /**
      * Transaction constructor.
@@ -266,19 +264,18 @@ class PaymentMethod
      */
     public function supportsPaymentComponent(): bool
     {
-        return isset($this->apps[self::ALLOWED_APPS_PAYMENT_COMPONENT]) &&
-            $this->apps[self::ALLOWED_APPS_PAYMENT_COMPONENT_WITH_FIELDS] &&
-            $this->apps[self::ALLOWED_APPS_PAYMENT_COMPONENT];
+        return isset($this->apps[self::PAYMENT_COMPONENT_KEY]) &&
+            $this->apps[self::PAYMENT_COMPONENT_KEY][self::IS_ENABLED_KEY] &&
+            $this->apps[self::PAYMENT_COMPONENT_KEY][self::PAYMENT_COMPONENT_HAS_FIELDS_KEY];
     }
-
 
     /**
      * @return bool
      */
     public function supportsFastCheckout(): bool
     {
-        return isset($this->apps[self::ALLOWED_APPS_FAST_CHECKOUT]) &&
-            $this->apps[self::ALLOWED_APPS_FAST_CHECKOUT];
+        return isset($this->apps[self::FAST_CHECKOUT_KEY]) &&
+            $this->apps[self::FAST_CHECKOUT_KEY][self::IS_ENABLED_KEY];
     }
 
     /**
@@ -286,7 +283,7 @@ class PaymentMethod
      */
     public function supportsTokenization(): bool
     {
-        return $this->tokenization[self::TOKENIZATION_IS_ENABLED_KEY];
+        return $this->tokenization[self::IS_ENABLED_KEY];
     }
 
     /**
@@ -298,8 +295,8 @@ class PaymentMethod
             return false;
         }
 
-        return isset($this->tokenization[self::TOKENIZATION_MODELS_KEY][self::RECURRING_MODEL_CARD_ON_FILE]) &&
-            $this->tokenization[self::TOKENIZATION_MODELS_KEY][self::RECURRING_MODEL_CARD_ON_FILE];
+        return isset($this->tokenization[self::TOKENIZATION_MODELS_KEY][self::RECURRING_MODEL_CARD_ON_FILE_KEY]) &&
+            $this->tokenization[self::TOKENIZATION_MODELS_KEY][self::RECURRING_MODEL_CARD_ON_FILE_KEY];
     }
 
     /**
@@ -311,8 +308,8 @@ class PaymentMethod
             return false;
         }
 
-        return isset($this->tokenization[self::TOKENIZATION_MODELS_KEY][self::RECURRING_MODEL_SUBSCRIPTION]) &&
-            $this->tokenization[self::TOKENIZATION_MODELS_KEY][self::RECURRING_MODEL_SUBSCRIPTION];
+        return isset($this->tokenization[self::TOKENIZATION_MODELS_KEY][self::RECURRING_MODEL_SUBSCRIPTION_KEY]) &&
+            $this->tokenization[self::TOKENIZATION_MODELS_KEY][self::RECURRING_MODEL_SUBSCRIPTION_KEY];
     }
 
     /**
@@ -324,8 +321,8 @@ class PaymentMethod
             return false;
         }
 
-        return isset($this->tokenization[self::TOKENIZATION_MODELS_KEY][self::RECURRING_MODEL_UNSCHEDULED]) &&
-            $this->tokenization[self::TOKENIZATION_MODELS_KEY][self::RECURRING_MODEL_UNSCHEDULED];
+        return isset($this->tokenization[self::TOKENIZATION_MODELS_KEY][self::RECURRING_MODEL_UNSCHEDULED_KEY]) &&
+            $this->tokenization[self::TOKENIZATION_MODELS_KEY][self::RECURRING_MODEL_UNSCHEDULED_KEY];
     }
 
     /**
@@ -348,11 +345,11 @@ class PaymentMethod
             self::ALLOWED_COUNTRIES_KEY => $this->allowedCountries,
             self::APPS_KEY => $this->apps,
             self::TOKENIZATION_KEY => [
-                self::TOKENIZATION_IS_ENABLED_KEY => $this->tokenization[self::TOKENIZATION_IS_ENABLED_KEY] ?? false,
+                self::IS_ENABLED_KEY => $this->tokenization[self::IS_ENABLED_KEY] ?? false,
                 self::TOKENIZATION_MODELS_KEY => [
-                    self::RECURRING_MODEL_CARD_ON_FILE => $this->tokenization[self::TOKENIZATION_MODELS_KEY][self::RECURRING_MODEL_CARD_ON_FILE] ?? false,
-                    self::RECURRING_MODEL_SUBSCRIPTION => $this->tokenization[self::TOKENIZATION_MODELS_KEY][self::RECURRING_MODEL_SUBSCRIPTION]  ?? false,
-                    self::RECURRING_MODEL_UNSCHEDULED => $this->tokenization[self::TOKENIZATION_MODELS_KEY][self::RECURRING_MODEL_UNSCHEDULED] ?? false,
+                    self::RECURRING_MODEL_CARD_ON_FILE_KEY => $this->tokenization[self::TOKENIZATION_MODELS_KEY][self::RECURRING_MODEL_CARD_ON_FILE_KEY] ?? false,
+                    self::RECURRING_MODEL_SUBSCRIPTION_KEY => $this->tokenization[self::TOKENIZATION_MODELS_KEY][self::RECURRING_MODEL_SUBSCRIPTION_KEY]  ?? false,
+                    self::RECURRING_MODEL_UNSCHEDULED_KEY => $this->tokenization[self::TOKENIZATION_MODELS_KEY][self::RECURRING_MODEL_UNSCHEDULED_KEY] ?? false,
                 ],
             ],
             self::SHOPPING_CART_REQUIRED_KEY => $this->shoppingCartRequired,
