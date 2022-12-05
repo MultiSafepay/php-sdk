@@ -5,8 +5,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [5.8.0] - 2022-12-05
 ### Added
 - PHPSDK-85: Add support for "payment-methods" endpoint
+- MAGWIRE-3: Add support for accessing the pluginDetails object from the OrderRequest to enable overwriting its data
+- PLGMAG2V2-488: Add methods to the OrderRequest to retrieve the ShoppingCart, CheckoutOptions and TaxTable objects
+- PHPSDK-112: Add the raw_response_body of a request to the context, to always have the actual response available that was retrieved from an API request
+
+### Fixed
+- PHPSDK-113: Fix an issue where the locale argument was being overwritten in GET requests, even if it was already defined
 
 ## [5.7.0] - 2022-10-24
 ### Added
