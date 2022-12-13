@@ -44,6 +44,9 @@ class PaymentMethod
     public const RECURRING_MODEL_SUBSCRIPTION_KEY = 'subscription';
     public const RECURRING_MODEL_UNSCHEDULED_KEY = 'unscheduled';
 
+    public const COUPON_TYPE = 'coupon';
+    public const PAYMENT_METHOD_TYPE = 'payment-method';
+
     /**
      * @var string
      */
@@ -323,6 +326,14 @@ class PaymentMethod
 
         return isset($this->tokenization[self::TOKENIZATION_MODELS_KEY][self::RECURRING_MODEL_UNSCHEDULED_KEY]) &&
             $this->tokenization[self::TOKENIZATION_MODELS_KEY][self::RECURRING_MODEL_UNSCHEDULED_KEY];
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCoupon()
+    {
+        return $this->getType() === self::COUPON_TYPE;
     }
 
     /**
