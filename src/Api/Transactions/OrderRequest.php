@@ -29,10 +29,16 @@ use MultiSafepay\ValueObject\Money;
  */
 class OrderRequest extends RequestBody implements OrderRequestInterface
 {
-    public const ALLOWED_TYPES = ['direct', 'redirect', 'paymentlink'];
+    public const DIRECT_TYPE = 'direct';
+    public const REDIRECT_TYPE = 'redirect';
+    public const PAYMENT_LINK_TYPE = 'paymentlink';
+    public const ALLOWED_TYPES = [self::DIRECT_TYPE, self::REDIRECT_TYPE, self::PAYMENT_LINK_TYPE];
 
     /** The allowed values for the recurring models. */
-    public const ALLOWED_RECURRING_MODELS = ['cardOnFile', 'subscription', 'unscheduled'];
+    public const CARD_ON_FILE_MODEL = 'cardOnFile';
+    public const SUBSCRIPTION_MODEL = 'subscription';
+    public const UNSCHEDULED_MODEL = 'unscheduled';
+    public const ALLOWED_RECURRING_MODELS = [self::CARD_ON_FILE_MODEL, self::SUBSCRIPTION_MODEL, self::UNSCHEDULED_MODEL];
 
     /**
      * @var string
