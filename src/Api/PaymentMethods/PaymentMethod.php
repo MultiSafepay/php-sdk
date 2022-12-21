@@ -269,7 +269,8 @@ class PaymentMethod
     {
         return isset($this->apps[self::PAYMENT_COMPONENT_KEY]) &&
             $this->apps[self::PAYMENT_COMPONENT_KEY][self::IS_ENABLED_KEY] &&
-            $this->apps[self::PAYMENT_COMPONENT_KEY][self::PAYMENT_COMPONENT_HAS_FIELDS_KEY];
+            ($this->apps[self::PAYMENT_COMPONENT_KEY][self::PAYMENT_COMPONENT_HAS_FIELDS_KEY] ||
+            $this->supportsTokenization());
     }
 
     /**
