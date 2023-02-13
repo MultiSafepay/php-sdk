@@ -11,6 +11,7 @@ use MultiSafepay\Exception\InvalidArgumentException;
 /**
  * Class GoogleAnalytics
  * @package MultiSafepay\Api\Transactions\OrderRequest\Arguments
+ * @deprecated since version 5.9.0. Will be removed in version 7.0.0.
  */
 class GoogleAnalytics
 {
