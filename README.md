@@ -100,7 +100,7 @@ $customer = (new CustomerDetails())
     ->addPhoneNumber(new PhoneNumber('0208500500'))
     ->addLocale('nl_NL');
 
-$pluginDetails = (new PluginDetails)
+$pluginDetails = (new PluginDetails())
     ->addApplicationName('My e-commerce application')
     ->addApplicationVersion('0.0.1')
     ->addPluginVersion('1.1.0');

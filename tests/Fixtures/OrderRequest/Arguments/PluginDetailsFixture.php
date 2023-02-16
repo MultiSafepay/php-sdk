@@ -19,7 +19,7 @@ trait PluginDetailsFixture
      */
     public function createPluginDetailsFixture(): PluginDetails
     {
-        return (new PluginDetails)
+        return (new PluginDetails())
             ->addApplicationName('PHP-SDK Test Fixtures')
             ->addApplicationVersion('0.0.1');
     }
