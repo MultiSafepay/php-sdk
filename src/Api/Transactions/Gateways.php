@@ -18,5 +18,6 @@ class Gateways
         'IN3',
         'KLARNA',
         'PAYAFTER',
+        'BNPL_INSTM',
     );
 }
