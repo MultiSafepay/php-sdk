@@ -5,7 +5,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-+ DAVAMS-568: Add deprecated notice for GoogleAnalytics class. Will be removed in version 7.0.0.
+
+## [5.9.0] - 2023-02-20
+### Added
+- DAVAMS-568: Add deprecated notice for GoogleAnalytics class. Will be removed in version 7.0.0
+- DAVAMS-600: Add BNPL_INSTM as a gateway which requires the shopping cart within the orderRequest
+- PHPSDK-116: Add isCoupon function to PaymentMethod object
+
+### Changed
+- PHPSDK-118: Return as true that a payment method supports Payment Components, without fields, but with tokenization
+- PHPSDK-117: Refactor ALLOWED_TYPES and ALLOWED_RECURRING_MODELS constants in the OrderRequest class
+
 
 ## [5.8.0] - 2022-12-05
 ### Added
