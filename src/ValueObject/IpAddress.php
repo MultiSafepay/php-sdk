@@ -22,6 +22,7 @@ class IpAddress
     /**
      * Country constructor.
      * @param string $ipAddress
+     * @throws InvalidArgumentException
      */
     public function __construct(string $ipAddress)
     {

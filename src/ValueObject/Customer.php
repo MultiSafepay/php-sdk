@@ -6,6 +6,7 @@
 
 namespace MultiSafepay\ValueObject;
 
+use MultiSafepay\Exception\InvalidArgumentException;
 use MultiSafepay\ValueObject\Customer\Address;
 use MultiSafepay\ValueObject\Customer\EmailAddress;
 use MultiSafepay\ValueObject\Customer\PhoneNumber;
@@ -65,6 +66,7 @@ class Customer
     /**
      * @param string $ipAddress
      * @return Customer
+     * @throws InvalidArgumentException
      */
     public function addIpAddressAsString(string $ipAddress): Customer
     {
