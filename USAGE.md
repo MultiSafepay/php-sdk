@@ -184,7 +184,6 @@ $items[] = (new Item())
     ->addQuantity(2)
     ->addDescription('1234')
     ->addTaxRate(21)
-    ->addTaxTableSelector('none')
     ->addMerchantItemId('1234')
     ->addWeight(new Weight('KG', 12));
 
@@ -265,7 +264,6 @@ $items[] = (new Item())
     ->addQuantity(2)
     ->addDescription('1234')
     ->addTaxRate(21)
-    ->addTaxTableSelector('none')
     ->addMerchantItemId('1234')
     ->addWeight(new Weight('KG', 12));
 

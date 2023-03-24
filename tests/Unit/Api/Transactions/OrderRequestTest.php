@@ -103,7 +103,6 @@ class OrderRequestTest extends TestCase
             ->addQuantity(1)
             ->addDescription('4321')
             ->addTaxRate(0)
-            ->addTaxTableSelector('none')
             ->addMerchantItemId('4321')
             ->addWeight(
                 new Weight('KG', 42)

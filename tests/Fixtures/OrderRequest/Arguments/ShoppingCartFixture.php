@@ -31,7 +31,6 @@ trait ShoppingCartFixture
             ->addQuantity(2)
             ->addDescription('1234')
             ->addTaxRate(0)
-            ->addTaxTableSelector('none')
             ->addMerchantItemId('1234')
             ->addWeight(
                 new Weight('KG', 12)
@@ -55,7 +54,6 @@ trait ShoppingCartFixture
             ->addMerchantItemId($faker->uuid)
             ->addDescription($faker->sentence(10))
             ->addTaxRate(0)
-            ->addTaxTableSelector('none')
             ->addWeight(
                 new Weight('KG', rand(1, 10))
             );
@@ -75,7 +73,6 @@ trait ShoppingCartFixture
             ->addQuantity(2)
             ->addDescription('1234')
             ->addTaxRate(21.20)
-            ->addTaxTableSelector('21.20')
             ->addMerchantItemId('1234')
             ->addWeight(
                 new Weight('KG', 12)
@@ -86,7 +83,6 @@ trait ShoppingCartFixture
             ->addQuantity(2)
             ->addDescription('1234')
             ->addTaxRate(21.30)
-            ->addTaxTableSelector('21.30')
             ->addMerchantItemId('12345')
             ->addWeight(
                 new Weight('KG', 12)
@@ -106,8 +102,7 @@ trait ShoppingCartFixture
             ->addUnitPrice(new Money(5, 'EUR'))
             ->addQuantity(1)
             ->addDescription('1234')
-            ->addTaxRate(0)
-            ->addTaxTableSelector('none');
+            ->addTaxRate(0);
 
         return new ShoppingCart($items);
     }

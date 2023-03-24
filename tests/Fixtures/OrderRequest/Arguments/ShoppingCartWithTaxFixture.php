@@ -30,7 +30,6 @@ trait ShoppingCartWithTaxFixture
             ->addQuantity(3)
             ->addDescription('1234')
             ->addTaxRate(21)
-            ->addTaxTableSelector('BTW21')
             ->addWeight(
                 new Weight('KG', 12)
             );
@@ -53,7 +52,6 @@ trait ShoppingCartWithTaxFixture
             ->addMerchantItemId($faker->uuid)
             ->addDescription($faker->sentence(10))
             ->addTaxRate(21)
-            ->addTaxTableSelector('BTW21')
             ->addWeight(
                 new Weight('KG', rand(1, 10))
             );
