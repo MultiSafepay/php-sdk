@@ -19,7 +19,9 @@
     "php-http/mock-client": "^1.3",
     "fakerphp/faker": "^1.13",
     "phpstan/phpstan": "^0.12.23",
-    "multisafepay/coding-standards": "dev-master"
+    "multisafepay/coding-standards": "dev-master",
+    "php-http/message": "^1.14",
+    "php-http/message-factory": "^1.1"
   },
   "suggest": {
     "jschaedl/iban-validation": "Adds additional IBAN validation for \\MultiSafepay\\ValueObject\\IbanNumber"

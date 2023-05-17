@@ -15,6 +15,7 @@ use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\ShoppingCartFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\DirectFixture as DirectOrderRequestFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\GenericOrderRequestFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\RedirectFixture as RedirectOrderRequestFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\TerminalFixture;
 use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
 use MultiSafepay\Tests\Fixtures\ValueObject\CountryFixture;
 use MultiSafepay\Tests\Fixtures\ValueObject\PhoneNumberFixture;
@@ -31,6 +32,7 @@ class OrderRequestTest extends TestCase
     use GenericOrderRequestFixture;
     use DirectOrderRequestFixture;
     use RedirectOrderRequestFixture;
+    use TerminalFixture;
     use CustomerDetailsFixture;
     use AddressFixture;
     use PaymentOptionsFixture;
@@ -127,5 +129,17 @@ class OrderRequestTest extends TestCase
             'Type "non-existing-model" is not a known type. Available types: cardOnFile, subscription, unscheduled'
         );
         (new OrderRequest())->addRecurringModel('non-existing-model');
+    }
+
+    /**
+     * Test if order request can be created adding a terminal ID
+     */
+    public function testRequestOrderWithTerminalId()
+    {
+        $orderRequest = $this->createTerminalOrderRedirectRequestFixture();
+        $data = $orderRequest->getData();
+        $this->assertIsArray($data['gateway_info']);
+        $this->assertArrayHasKey('terminal_id', $data['gateway_info']);
+        $this->assertEquals('terminal-id', $data['gateway_info']['terminal_id']);
     }
 }
