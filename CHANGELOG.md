@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [5.10.0] - 2023-05-18
+### Added
+- PHPSDK-124: Add support to set the terminal ID within the OrderRequest, pushing a payment request to the Smart POS terminal
+
+### Fixed
+- PHPSDK-125: Improvement over the IPAddress class, adding in the PHP Docblock the exception it might throw up
+
 ## [5.9.0] - 2023-02-20
 ### Added
 - DAVAMS-568: Add deprecated notice for GoogleAnalytics class. Will be removed in version 7.0.0
