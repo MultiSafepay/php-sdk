@@ -9,7 +9,7 @@ $multiSafepaySdk = new \MultiSafepay\Sdk($yourApiKey, $isProduction);
 $gateways = $multiSafepaySdk->getGatewayManager()->getGateways();
 ```
 
-### Get a specific gateway
+### Getting a specific gateway
 ```php
 $yourApiKey = 'your-api-key';
 $isProduction = false;
@@ -27,7 +27,7 @@ $multiSafepaySdk = new \MultiSafepay\Sdk($yourApiKey, $isProduction);
 $paymentMethods = $multiSafepaySdk->getPaymentMethodManager()->getPaymentMethods();
 ```
 
-### Get a specific payment method properties by gateway code 
+### Getting a specific payment method properties by gateway code 
 ```php
 $yourApiKey = 'your-api-key';
 $isProduction = false;
@@ -36,7 +36,7 @@ $multiSafepaySdk = new \MultiSafepay\Sdk($yourApiKey, $isProduction);
 $paymentMethod = $multiSafepaySdk->getPaymentMethodManager()->getByGatewayCode('VISA');
 ```
 
-### Get a list of categories
+### Getting a list of categories
 ```php
 $yourApiKey = 'your-api-key';
 $isProduction = false;
@@ -45,7 +45,7 @@ $multiSafepaySdk = new \MultiSafepay\Sdk($yourApiKey, $isProduction);
 $categories = $multiSafepaySdk->getCategoryManager()->getCategories();
 ```
 
-### Get a list of iDEAL issuers
+### Getting a list of iDEAL issuers
 ```php
 $yourApiKey = 'your-api-key';
 $isProduction = false;
@@ -54,7 +54,17 @@ $multiSafepaySdk = new \MultiSafepay\Sdk($yourApiKey, $isProduction);
 $issuers = $multiSafepaySdk->getIssuerManager()->getIssuersByGatewayCode('IDEAL');
 ```
 
-### Get an API Token
+### Getting order details by Order ID
+```php
+$yourApiKey = 'your-api-key';
+$orderId = 'order-id';
+$isProduction = false;
+$multiSafepaySdk = new \MultiSafepay\Sdk($yourApiKey, $isProduction);
+/** @var \MultiSafepay\Api\Transactions\TransactionResponse $apiToken **/
+$transaction = $multiSafepaySdk->getTransactionManager()->get($orderId);
+```
+
+### Getting an API Token
 ```php
 $yourApiKey = 'your-api-key';
 $isProduction = false;
