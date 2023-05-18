@@ -294,7 +294,8 @@ $orderRequest = (new OrderRequest())
     ->addGatewayInfo($gatewayInfo);
 
 /** @var TransactionResponse $transaction */
-$transactionManager = $multiSafepaySdk->getTransactionManager()->create($orderRequest);
+$transaction = $multiSafepaySdk->getTransactionManager()->create($orderRequest);
+$transaction->getPaymentUrl();
 ```
 
 ### Creating a full refund without shopping cart
@@ -377,6 +378,75 @@ $transactionListing = $multiSafepaySdk->getTransactionManager()->getTransactions
 $transactions = $transactionListing->getTransactions();
 
 $pager = $transactionListing->getPager(); // If pagination is needed, this Pager object can be used 
+```
+
+### Pushing a payment request to a Smart POS device
+```php
+use MultiSafepay\ValueObject\Customer\Country;
+use MultiSafepay\ValueObject\Customer\Address;
+use MultiSafepay\ValueObject\Customer\PhoneNumber;
+use MultiSafepay\ValueObject\Customer\EmailAddress;
+use MultiSafepay\ValueObject\Money;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\CustomerDetails;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\PluginDetails;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\PaymentOptions;
+use MultiSafepay\Api\Transactions\OrderRequest;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo\Terminal;
+use MultiSafepay\Api\Transactions\TransactionResponse;
+
+$yourApiKey = 'your-api-key';
+$isProduction = false;
+$multiSafepaySdk = new \MultiSafepay\Sdk($yourApiKey, $isProduction);
+$terminalId = 'your-smart-pos-terminal-id';
+
+$orderId = (string) time();
+$description = 'Order #' . $orderId;
+$amount = new Money(12100, 'EUR'); // Amount must be in cents!!
+
+$address = (new Address())
+    ->addStreetName('Kraanspoor')
+    ->addStreetNameAdditional('(blue door)')
+    ->addHouseNumber('39')
+    ->addZipCode('1033SC')
+    ->addCity('Amsterdam')
+    ->addState('Noord Holland')
+    ->addCountry(new Country('NL'));
+
+$customer = (new CustomerDetails())
+    ->addFirstName('John')
+    ->addLastName('Doe')
+    ->addAddress($address)
+    ->addEmailAddress(new EmailAddress('noreply@example.org'))
+    ->addPhoneNumber(new PhoneNumber('0208500500'))
+    ->addLocale('nl_NL');
+
+$pluginDetails = (new PluginDetails())
+    ->addApplicationName('My e-commerce application')
+    ->addApplicationVersion('0.0.1')
+    ->addPluginVersion('1.1.0');
+
+$paymentOptions = (new PaymentOptions())
+    ->addNotificationUrl('http://www.example.com/client/notification?type=notification')
+    ->addRedirectUrl('http://www.example.com/client/notification?type=redirect')
+    ->addCancelUrl('http://www.example.com/client/notification?type=cancel');
+
+$gatewayInfo = (new Terminal())
+    ->addTerminalId($terminalId);
+
+$orderRequest = (new OrderRequest())
+    ->addType('redirect')
+    ->addOrderId($orderId)
+    ->addDescriptionText($description)
+    ->addMoney($amount)
+    ->addGatewayCode('')
+    ->addCustomer($customer)
+    ->addDelivery($customer)
+    ->addPluginDetails($pluginDetails)
+    ->addPaymentOptions( $paymentOptions)
+    ->addGatewayInfo($gatewayInfo);
+
+/** @var TransactionResponse $transaction */
+$transaction = $multiSafepaySdk->getTransactionManager()->create($orderRequest);
 ```
 
 ## Tokenization

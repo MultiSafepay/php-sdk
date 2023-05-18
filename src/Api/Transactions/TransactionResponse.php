@@ -298,6 +298,22 @@ class TransactionResponse extends ResponseBody
     }
 
     /**
+     * @return string
+     */
+    public function getEventsUrl(): string
+    {
+        return (string)$this->get('events_url');
+    }
+
+    /**
+     * @return string
+     */
+    public function getEventsToken(): string
+    {
+        return (string)$this->get('events_token');
+    }
+
+    /**
      * @return RelatedTransaction[]
      */
     public function getRelatedTransactions(): array
