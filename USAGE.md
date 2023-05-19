@@ -392,7 +392,6 @@ use MultiSafepay\Api\Transactions\OrderRequest\Arguments\PluginDetails;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\PaymentOptions;
 use MultiSafepay\Api\Transactions\OrderRequest;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo\Terminal;
-use MultiSafepay\Api\Transactions\TransactionResponse;
 
 $yourApiKey = 'your-api-key';
 $isProduction = false;
@@ -426,9 +425,7 @@ $pluginDetails = (new PluginDetails())
     ->addPluginVersion('1.1.0');
 
 $paymentOptions = (new PaymentOptions())
-    ->addNotificationUrl('http://www.example.com/client/notification?type=notification')
-    ->addRedirectUrl('http://www.example.com/client/notification?type=redirect')
-    ->addCancelUrl('http://www.example.com/client/notification?type=cancel');
+    ->addNotificationUrl('http://www.example.com/client/notification?type=notification');
 
 $gatewayInfo = (new Terminal())
     ->addTerminalId($terminalId);
@@ -445,7 +442,7 @@ $orderRequest = (new OrderRequest())
     ->addPaymentOptions( $paymentOptions)
     ->addGatewayInfo($gatewayInfo);
 
-/** @var TransactionResponse $transaction */
+/** @var \MultiSafepay\Api\Transactions\TransactionResponse $transaction */
 $transaction = $multiSafepaySdk->getTransactionManager()->create($orderRequest);
 ```
 
