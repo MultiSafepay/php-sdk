@@ -30,7 +30,7 @@ class Sdk
     /**
      * @var Client
      */
-    private $client;
+    protected $client;
 
     /**
      * @var TokenManager
