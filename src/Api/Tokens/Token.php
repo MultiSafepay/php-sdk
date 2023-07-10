@@ -13,14 +13,59 @@ namespace MultiSafepay\Api\Tokens;
  */
 class Token
 {
+    public const TOKEN_KEY = 'token';
+    public const CODE_KEY = 'code';
+    public const DISPLAY_KEY = 'display';
+    public const BIN_KEY = 'bin';
+    public const NAME_HOLDER_KEY = 'name_holder';
+    public const EXPIRY_DATE_KEY = 'expiry_date';
+    public const EXPIRED_KEY = 'expired';
+    public const LAST4_KEY = 'last4';
+    public const MODEL_KEY = 'model';
+
+    /**
+     * @var string
+     */
     private $token;
+
+    /**
+     * @var string
+     */
     private $gatewayCode;
+
+    /**
+     * @var string
+     */
     private $display;
+
+    /**
+     * @var int
+     */
     private $bin;
+
+    /**
+     * @var string
+     */
     private $nameHolder;
+
+    /**
+     * @var int
+     */
     private $expiryDate;
+
+    /**
+     * @var bool
+     */
     private $isExpired;
+
+    /**
+     * @var int
+     */
     private $lastFour;
+
+    /**
+     * @var string
+     */
     private $model;
 
     /**
@@ -30,15 +75,15 @@ class Token
      */
     public function __construct(array $data)
     {
-        $this->token = $data['token'];
-        $this->gatewayCode = $data['code'];
-        $this->display = $data['display'];
-        $this->bin = $data['bin'];
-        $this->nameHolder = $data['name_holder'];
-        $this->expiryDate = $data['expiry_date'];
-        $this->isExpired = (bool) $data['expired'];
-        $this->lastFour = $data['last4'];
-        $this->model = $data['model'];
+        $this->token = $data[self::TOKEN_KEY];
+        $this->gatewayCode = $data[self::CODE_KEY];
+        $this->display = $data[self::DISPLAY_KEY];
+        $this->bin = $data[self::BIN_KEY];
+        $this->nameHolder = $data[self::NAME_HOLDER_KEY];
+        $this->expiryDate = $data[self::EXPIRY_DATE_KEY];
+        $this->isExpired = (bool) $data[self::EXPIRED_KEY];
+        $this->lastFour = $data[self::LAST4_KEY];
+        $this->model = $data[self::MODEL_KEY];
     }
 
     /**
@@ -127,5 +172,25 @@ class Token
     public function getModel(): string
     {
         return $this->model;
+    }
+
+    /**
+     * Return an array with the Token object information
+     *
+     * @return array
+     */
+    public function getData(): array
+    {
+        return [
+            self::TOKEN_KEY => $this->token,
+            self::CODE_KEY => $this->gatewayCode,
+            self::DISPLAY_KEY => $this->display,
+            self::BIN_KEY => $this->bin,
+            self::NAME_HOLDER_KEY => $this->nameHolder,
+            self::EXPIRY_DATE_KEY => $this->expiryDate,
+            self::EXPIRED_KEY => $this->isExpired,
+            self::LAST4_KEY => $this->lastFour,
+            self::MODEL_KEY => $this->model,
+        ];
     }
 }

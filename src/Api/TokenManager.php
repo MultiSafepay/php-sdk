@@ -8,6 +8,7 @@ namespace MultiSafepay\Api;
 
 use MultiSafepay\Api\Tokens\Token;
 use MultiSafepay\Api\Tokens\TokenListing;
+use Psr\Http\Client\ClientExceptionInterface;
 
 /**
  * Class TokenManager
@@ -80,6 +81,33 @@ class TokenManager extends AbstractManager
             if ($code === self::CREDIT_CARD_GATEWAY_CODE
                 && in_array($token->getGatewayCode(), self::CREDIT_CARD_GATEWAYS, true)) {
                 $tokens[] = $token;
+            }
+        }
+
+        return $tokens;
+    }
+
+    /**
+     * Return the tokens as array
+     *
+     * @param string $reference
+     * @param string $code
+     * @param bool $forceApiCall
+     * @return array
+     * @throws ClientExceptionInterface
+     */
+    public function getListByGatewayCodeAsArray(string $reference, string $code, bool $forceApiCall = false): array
+    {
+        $tokens = [];
+        /** @var Token $token */
+        foreach ($this->getList($reference, $forceApiCall) as $token) {
+            if ($token->getGatewayCode() === $code) {
+                $tokens[] = $token->getData();
+                continue;
+            }
+            if ($code === self::CREDIT_CARD_GATEWAY_CODE
+                && in_array($token->getGatewayCode(), self::CREDIT_CARD_GATEWAYS, true)) {
+                $tokens[] = $token->getData();
             }
         }
 
