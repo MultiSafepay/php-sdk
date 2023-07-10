@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [5.11.0] - 2023-07-10
+### Added
+- DAVAMS-654: Add new method in TokenManager to return the tokens as array
+
+### Changed
+- PLGMIRAKL-2: Change the visibility of the "client" class property, within the Sdk class, from private to protected
+
 ## [5.10.0] - 2023-05-18
 ### Added
 - PHPSDK-124: Add support to set the terminal ID within the OrderRequest, pushing a payment request to the Smart POS terminal
