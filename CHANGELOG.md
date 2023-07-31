@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [5.11.1] - 2023-07-31
+### Added
+- PHPSDK-128: Add new methods to set the properties within the MerchantSessionRequest object
+
 ## [5.11.0] - 2023-07-10
 ### Added
 - DAVAMS-654: Add new method in TokenManager to return the tokens as array
