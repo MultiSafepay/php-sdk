@@ -15,10 +15,46 @@ use MultiSafepay\Api\Base\RequestBody;
 class MerchantSessionRequest extends RequestBody
 {
     /**
+     * @var string
+     */
+    private $validationUrl;
+
+    /**
+     * @var string
+     */
+    private $originDomain;
+
+    /**
      * @return array
      */
     public function getData(): array
     {
-        return $this->removeNullRecursive($this->data);
+        return $this->removeNullRecursive(array_merge(
+            [
+                'validation_url' => $this->validationUrl ?? null,
+                'origin_domain' => $this->originDomain ?? null,
+            ],
+            $this->data
+        ));
+    }
+
+    /**
+     * @param string $validationUrl
+     * @return MerchantSessionRequest
+     */
+    public function addValidationUrl(string $validationUrl): MerchantSessionRequest
+    {
+        $this->validationUrl = $validationUrl;
+        return $this;
+    }
+
+    /**
+     * @param string $originDomain
+     * @return MerchantSessionRequest
+     */
+    public function addOriginDomain(string $originDomain): MerchantSessionRequest
+    {
+        $this->originDomain = $originDomain;
+        return $this;
     }
 }
