@@ -477,10 +477,6 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
             (new TotalAmountValidator())->validate($data);
         }
 
-        if (!$data['plugin']) {
-            throw new InvalidArgumentException('Required plugin details are missing');
-        }
-
         return true;
     }
 }

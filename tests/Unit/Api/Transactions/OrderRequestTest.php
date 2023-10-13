@@ -14,6 +14,7 @@ use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\SecondChanceFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\ShoppingCartFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\DirectFixture as DirectOrderRequestFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\GenericOrderRequestFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\OrderRequestWithoutPluginDetails;
 use MultiSafepay\Tests\Fixtures\OrderRequest\RedirectFixture as RedirectOrderRequestFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\TerminalFixture;
 use MultiSafepay\Tests\Fixtures\ValueObject\AddressFixture;
@@ -43,6 +44,7 @@ class OrderRequestTest extends TestCase
     use CountryFixture;
     use PhoneNumberFixture;
     use ShoppingCartFixture;
+    use OrderRequestWithoutPluginDetails;
 
     /**
      * Test if regular creation of an order works
@@ -142,7 +144,7 @@ class OrderRequestTest extends TestCase
         $this->assertArrayHasKey('terminal_id', $data['gateway_info']);
         $this->assertEquals('terminal-id', $data['gateway_info']['terminal_id']);
     }
-
+    
     /**
      * Test if we can add a customer object, only setting up the reference, and get the Order Request
      */
@@ -156,5 +158,15 @@ class OrderRequestTest extends TestCase
         $this->assertEquals(2, count($data['customer']));
         $this->assertEquals('customer-reference', $data['customer']['reference']);
         $this->assertArrayNotHasKey('address1', $data['customer']);
+    }
+
+    /**
+     * Test if order request can be created without set pluginDetails
+     */
+    public function testRequestOrderRequestWithoutPluginDetails()
+    {
+        $orderRequest = $this->createOrderRequestWithoutPluginDetails();
+        $data = $orderRequest->getData();
+        $this->assertArrayNotHasKey('plugin', $data);
     }
 }
