@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [5.11.2] - 2023-10-13
+### Fixed
++ PHPSDK-134: Fix errors when only reference is set, within the CustomerDetails object
+
+### Changed
++ PHPSDK-136: Remove PluginDetails as mandatory from the Order Request
+
 ## [5.11.1] - 2023-07-31
 ### Added
 - PHPSDK-128: Add new methods to set the properties within the MerchantSessionRequest object
