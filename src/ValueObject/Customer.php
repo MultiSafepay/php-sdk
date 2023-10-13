@@ -155,7 +155,7 @@ class Customer
     }
 
     /**
-     * @return IpAddress
+     * @return IpAddress|null
      */
     public function getIpAddress(): ?IpAddress
     {
@@ -163,7 +163,7 @@ class Customer
     }
 
     /**
-     * @return EmailAddress
+     * @return EmailAddress|null
      */
     public function getEmailAddress(): ?EmailAddress
     {
@@ -171,7 +171,7 @@ class Customer
     }
 
     /**
-     * @return Address
+     * @return Address|null
      */
     public function getAddress(): ?Address
     {
@@ -203,7 +203,7 @@ class Customer
     }
 
     /**
-     * @return PhoneNumber
+     * @return PhoneNumber|null
      */
     public function getPhoneNumber(): ?PhoneNumber
     {

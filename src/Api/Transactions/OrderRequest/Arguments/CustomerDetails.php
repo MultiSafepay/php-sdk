@@ -54,23 +54,23 @@ class CustomerDetails extends Customer
     {
         $address = $this->getAddress();
         $data = [
-            'firstname' => $this->getFirstName(),
-            'lastname' => $this->getLastName(),
-            'company_name' => $this->getCompanyName(),
-            'address1' => $address->getStreetName(),
-            'address2' => $address->getStreetNameAdditional(),
-            'house_number' => $this->getHouseNumber(),
-            'zip_code' => $address->getZipCode(),
-            'city' => $address->getCity(),
-            'state' => $address->getState(),
-            'country' => $address->getCountry() ? $address->getCountry()->getCode() : null,
+            'firstname' => $this->getFirstName() ?: null,
+            'lastname' => $this->getLastName() ?: null,
+            'company_name' => $this->getCompanyName() ?: null,
+            'address1' => $address ? $address->getStreetName() : null,
+            'address2' => $address ? $address->getStreetNameAdditional() : null,
+            'house_number' => $address ? $this->getHouseNumber() : null,
+            'zip_code' => $address ? $address->getZipCode() : null,
+            'city' => $address ? $address->getCity() : null,
+            'state' => $address ? $address->getState() : null,
+            'country' => $this->getCountryCode() ? $this->getCountryCode() : null,
             'phone' => $this->getPhoneNumber() ? $this->getPhoneNumber()->get() : null,
             'email' => $this->getEmailAddress() ? $this->getEmailAddress()->get() : null,
             'ip_address' => $this->getIpAddress() ? $this->getIpAddress()->get() : null,
             'locale' => $this->getLocale(),
-            'referrer' => $this->getReferrer(),
+            'referrer' => $this->getReferrer() ?: null,
             'forwarded_ip' => $this->getForwardedIp() ? $this->getForwardedIp()->get() : null,
-            'user_agent' => $this->getUserAgent(),
+            'user_agent' => $this->getUserAgent() ?: null,
             'reference' => $this->reference,
         ];
 
@@ -185,6 +185,20 @@ class CustomerDetails extends Customer
         }
 
         return $houseNumber;
+    }
+
+    /**
+     * @return string|null
+     */
+    private function getCountryCode(): ?string
+    {
+        $address = $this->getAddress();
+
+        if (!$address) {
+            return null;
+        }
+
+        return $address->getCountry() ? $address->getCountry()->getCode(): null;
     }
 
     /**

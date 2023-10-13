@@ -473,12 +473,12 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
      */
     protected function validate(array $data): bool
     {
-        if (!$data['plugin']) {
-            throw new InvalidArgumentException('Required plugin details are missing');
-        }
-
         if ($this->strictMode) {
             (new TotalAmountValidator())->validate($data);
+        }
+
+        if (!$data['plugin']) {
+            throw new InvalidArgumentException('Required plugin details are missing');
         }
 
         return true;

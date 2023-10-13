@@ -142,4 +142,19 @@ class OrderRequestTest extends TestCase
         $this->assertArrayHasKey('terminal_id', $data['gateway_info']);
         $this->assertEquals('terminal-id', $data['gateway_info']['terminal_id']);
     }
+
+    /**
+     * Test if we can add a customer object, only setting up the reference, and get the Order Request
+     */
+    public function testCreateAndAddCustomerReference()
+    {
+        $orderRequest = $this->createIdealOrderRedirectRequestFixture();
+        $customer = (new OrderRequest\Arguments\CustomerDetails())->addReference('customer-reference');
+        $orderRequest->addCustomer($customer);
+        $data = $orderRequest->getData();
+        $this->assertIsArray($data['customer']);
+        $this->assertEquals(2, count($data['customer']));
+        $this->assertEquals('customer-reference', $data['customer']['reference']);
+        $this->assertArrayNotHasKey('address1', $data['customer']);
+    }
 }
