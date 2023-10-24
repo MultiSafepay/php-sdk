@@ -98,7 +98,7 @@ class CustomInfo
         return [
             'custom_1' => $this->getCustom1(),
             'custom_2' => $this->getCustom2(),
-            'custom_3' => $this->getCustom3()
+            'custom_3' => $this->getCustom3(),
         ];
     }
 }
