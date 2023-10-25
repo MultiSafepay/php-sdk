@@ -10,6 +10,7 @@ use MultiSafepay\Api\Base\RequestBody;
 use MultiSafepay\Api\Gateways\Gateway;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\CheckoutOptions;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\CustomerDetails;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\CustomInfo;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\Description;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfoInterface;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\GoogleAnalytics;
@@ -129,6 +130,11 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
      * @var string
      */
     private $recurringModel;
+
+    /**
+     * @var CustomInfo
+     */
+    private $customInfo;
 
     /**
      * @param string $type
@@ -433,6 +439,16 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
         return $this;
     }
 
+     /**
+     * @param CustomInfo $customInfo
+     * @return OrderRequest
+     */
+    public function addCustomInfo(CustomInfo $customInfo): OrderRequest
+    {
+        $this->customInfo = $customInfo;
+        return $this;
+    }
+
     /**
      * @return array
      * phpcs:disable ObjectCalisthenics.Files.FunctionLength
@@ -459,6 +475,7 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
             'days_active' => $this->daysActive,
             'seconds_active' => $this->secondsActive,
             'plugin' => $this->pluginDetails ? $this->pluginDetails->getData() : null,
+            'custom_info' => ($this->customInfo) ? $this->customInfo->getData() : null,
         ];
 
         $data = $this->removeNullRecursive(array_merge($data, $this->data));

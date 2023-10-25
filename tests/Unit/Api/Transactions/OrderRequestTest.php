@@ -169,4 +169,17 @@ class OrderRequestTest extends TestCase
         $data = $orderRequest->getData();
         $this->assertArrayNotHasKey('plugin', $data);
     }
+
+    /**
+     * Test if we can add a customer info object, only setting up the reference, and get the Order Request
+     */
+    public function testRequestOrderRequestWithCustomInfo()
+    {
+        $orderRequest = $this->createIdealOrderRedirectRequestFixture();
+        $customInfo =  (new OrderRequest\Arguments\CustomInfo())->addCustom1('Multi')->addCustom2('Safe')->addCustom3('pay');
+        $orderRequest->addCustomInfo($customInfo);
+        $data = $orderRequest->getData();
+        $this->assertIsArray($data['custom_info']);
+        $this->assertEquals(3, count($data['custom_info']));
+    }
 }
