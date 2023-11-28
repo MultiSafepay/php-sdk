@@ -28,8 +28,8 @@ class AddressParserTest extends TestCase
     ): void {
         $result = (new AddressParser())->parse($address1, $address2);
 
-        self::assertEquals($expectedStreet, $result[0]);
-        self::assertEquals($expectedApartment, $result[1]);
+        $this->assertEquals($expectedStreet, $result[0]);
+        $this->assertEquals($expectedApartment, $result[1]);
     }
 
     /**

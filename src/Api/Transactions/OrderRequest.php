@@ -137,6 +137,21 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
     private $customInfo;
 
     /**
+     * @var string
+     */
+    private $var1;
+
+    /**
+     * @var string
+     */
+    private $var2;
+
+    /**
+     * @var string
+     */
+    private $var3;
+
+    /**
      * @param string $type
      * @return OrderRequest
      */
@@ -439,7 +454,7 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
         return $this;
     }
 
-     /**
+    /**
      * @param CustomInfo $customInfo
      * @return OrderRequest
      */
@@ -448,6 +463,63 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
         $this->customInfo = $customInfo;
         return $this;
     }
+
+
+    /**
+     * @param string $var1
+     * @return OrderRequest
+     */
+    public function addVar1(string $var1): OrderRequest
+    {
+        $this->var1 = $var1;
+        return $this;
+    }
+
+    /**
+     * @param string $var2
+     * @return OrderRequest
+     */
+    public function addVar2(string $var2): OrderRequest
+    {
+        $this->var2 = $var2;
+        return $this;
+    }
+
+    /**
+     * @param string $var3
+     * @return OrderRequest
+     */
+    public function addVar3(string $var3): OrderRequest
+    {
+        $this->var3 = $var3;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getVar1(): ?string
+    {
+        return $this->var1;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getVar2(): ?string
+    {
+        return $this->var2;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getVar3(): ?string
+    {
+        return $this->var3;
+    }
+
+
 
     /**
      * @return array
@@ -476,6 +548,9 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
             'seconds_active' => $this->secondsActive,
             'plugin' => $this->pluginDetails ? $this->pluginDetails->getData() : null,
             'custom_info' => ($this->customInfo) ? $this->customInfo->getData() : null,
+            'var1' => $this->getVar1(),
+            'var2' => $this->getVar2(),
+            'var3' => $this->getVar3(),
         ];
 
         $data = $this->removeNullRecursive(array_merge($data, $this->data));

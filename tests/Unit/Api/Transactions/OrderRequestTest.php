@@ -182,4 +182,18 @@ class OrderRequestTest extends TestCase
         $this->assertIsArray($data['custom_info']);
         $this->assertEquals(3, count($data['custom_info']));
     }
+
+    /**
+     * Test if we can get the Var data, within an order request
+     */
+    public function testOrderRequestWithVarCollection()
+    {
+        $orderRequest = $this->createIdealOrderRedirectRequestFixture();
+        $orderRequest->addVar1('Multi');
+        $orderRequest->addVar2('Safe');
+        $orderRequest->addVar3('Pay');
+        $this->assertEquals('Multi', $orderRequest->getVar1());
+        $this->assertEquals('Safe', $orderRequest->getVar2());
+        $this->assertEquals('Pay', $orderRequest->getVar3());
+    }
 }
