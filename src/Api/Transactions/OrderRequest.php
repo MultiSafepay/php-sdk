@@ -464,7 +464,6 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
         return $this;
     }
 
-
     /**
      * @param string $var1
      * @return OrderRequest
@@ -518,8 +517,6 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
     {
         return $this->var3;
     }
-
-
 
     /**
      * @return array

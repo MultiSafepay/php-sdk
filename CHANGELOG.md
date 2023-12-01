@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [5.12.0] - 2023-12-01
+### Added
++ PHPSDK-139: Add support to set var1, var2 and var3, within the OrderRequest object
++ PHPSDK-140: Add support to set custom_info, within the OrderRequest object, thanks to @DaanDeSmedt
+
 ## [5.11.2] - 2023-10-13
 ### Fixed
 + PHPSDK-134: Fix errors when only reference is set, within the CustomerDetails object
