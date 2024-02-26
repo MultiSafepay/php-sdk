@@ -18,7 +18,7 @@
     "http-interop/http-factory-guzzle": "^1.0",
     "php-http/mock-client": "^1.3",
     "fakerphp/faker": "^1.13",
-    "phpstan/phpstan": "^0.12.23",
+    "phpstan/phpstan": "^1.8",
     "multisafepay/coding-standards": "dev-master",
     "php-http/message": "^1.14",
     "php-http/message-factory": "^1.1"
@@ -45,6 +45,7 @@
   "scripts": {
     "phpcs": "@php vendor/bin/phpcs --standard=phpcs.ruleset.xml .",
     "phpcbf": "@php vendor/bin/phpcbf --standard=phpcs.ruleset.xml .",
-    "phpunit": "@php vendor/bin/phpunit"
+    "phpunit": "@php vendor/bin/phpunit",
+    "phpstan": "@php vendor/bin/phpstan analyse --configuration=tests/phpstan/phpstan.neon"
   }
 }
