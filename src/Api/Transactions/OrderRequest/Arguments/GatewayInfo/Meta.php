@@ -8,6 +8,7 @@ namespace MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo;
 
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\CustomerDetails;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfoInterface;
+use MultiSafepay\Exception\InvalidArgumentException;
 use MultiSafepay\ValueObject\BankAccount;
 use MultiSafepay\ValueObject\Customer\EmailAddress;
 use MultiSafepay\ValueObject\Customer\PhoneNumber;
@@ -125,6 +126,7 @@ class Meta implements GatewayInfoInterface
     /**
      * @param string $emailAddress
      * @return Meta
+     * @throws InvalidArgumentException
      */
     public function addEmailAddressAsString(string $emailAddress): Meta
     {
@@ -145,6 +147,7 @@ class Meta implements GatewayInfoInterface
     /**
      * @param string $gender
      * @return Meta
+     * @throws InvalidArgumentException
      */
     public function addGenderAsString(string $gender): Meta
     {

@@ -22,6 +22,7 @@ class Country
     /**
      * Country constructor.
      * @param string $code
+     * @throws InvalidArgumentException
      */
     public function __construct(string $code)
     {

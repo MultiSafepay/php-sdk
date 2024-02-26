@@ -6,6 +6,8 @@
 
 namespace MultiSafepay\Api\PaymentMethods;
 
+use MultiSafepay\Exception\InvalidDataInitializationException;
+
 class PaymentMethodListing
 {
     /**
@@ -16,6 +18,7 @@ class PaymentMethodListing
     /**
      * Transaction constructor.
      * @param array $data
+     * @throws InvalidDataInitializationException
      */
     public function __construct(array $data)
     {

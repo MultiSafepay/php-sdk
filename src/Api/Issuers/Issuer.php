@@ -39,6 +39,7 @@ class Issuer
      * @param string $gatewayCode
      * @param string $code
      * @param string $description
+     * @throws InvalidArgumentException
      */
     public function __construct(string $gatewayCode, string $code, string $description)
     {
@@ -51,6 +52,7 @@ class Issuer
     /**
      * @param string $gatewayCode
      * @return bool
+     * @throws InvalidArgumentException
      */
     private function validateGatewayCode(string $gatewayCode): bool
     {

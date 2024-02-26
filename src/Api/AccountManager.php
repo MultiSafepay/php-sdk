@@ -7,6 +7,8 @@
 namespace MultiSafepay\Api;
 
 use MultiSafepay\Api\Account\Account;
+use MultiSafepay\Exception\ApiException;
+use MultiSafepay\Exception\InvalidDataInitializationException;
 use Psr\Http\Client\ClientExceptionInterface;
 
 /**
@@ -18,7 +20,7 @@ class AccountManager extends AbstractManager
 {
     /**
      * @return Account
-     * @throws ClientExceptionInterface
+     * @throws ClientExceptionInterface|InvalidDataInitializationException|ApiException
      */
     public function get(): Account
     {

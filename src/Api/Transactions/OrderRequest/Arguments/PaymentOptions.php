@@ -56,7 +56,7 @@ class PaymentOptions
     }
 
     /**
-     * @param string $notificationUrl
+     * @param array $settings
      * @return PaymentOptions
      */
     public function addSettings(array $settings): PaymentOptions
@@ -68,6 +68,7 @@ class PaymentOptions
     /**
      * @param string $notificationMethod
      * @return PaymentOptions
+     * @throws InvalidArgumentException
      */
     public function addNotificationMethod(string $notificationMethod = 'POST'): PaymentOptions
     {

@@ -9,6 +9,7 @@ namespace MultiSafepay\Api\Transactions\OrderRequest\Arguments;
 use MultiSafepay\Api\Base\DataObject;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\TaxTable\TaxRate;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\TaxTable\TaxRule;
+use MultiSafepay\Exception\InvalidArgumentException;
 use MultiSafepay\ValueObject\CartItem;
 
 /**
@@ -25,6 +26,7 @@ class CheckoutOptions extends DataObject
     /**
      * @param ShoppingCart $shoppingCart
      * @return CheckoutOptions
+     * @throws InvalidArgumentException
      */
     public function generateFromShoppingCart(ShoppingCart $shoppingCart): CheckoutOptions
     {
@@ -72,6 +74,7 @@ class CheckoutOptions extends DataObject
 
     /**
      * @return array
+     * @throws InvalidArgumentException
      */
     public function getData(): array
     {
@@ -86,6 +89,7 @@ class CheckoutOptions extends DataObject
     /**
      * @param CartItem $cartItem
      * @return TaxRule
+     * @throws InvalidArgumentException
      */
     private function getTaxRuleFromCartItem(CartItem $cartItem): TaxRule
     {

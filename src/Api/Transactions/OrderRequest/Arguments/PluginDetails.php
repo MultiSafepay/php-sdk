@@ -126,6 +126,7 @@ class PluginDetails
 
     /**
      * @return string[]
+     * @throws InvalidArgumentException
      */
     public function getData(): array
     {
@@ -143,6 +144,7 @@ class PluginDetails
 
     /**
      * @return bool
+     * @throws InvalidArgumentException
      */
     public function validate(): bool
     {

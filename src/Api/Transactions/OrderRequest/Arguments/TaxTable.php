@@ -52,7 +52,7 @@ class TaxTable
     }
 
     /**
-     * @param TaxRule $taxRules
+     * @param TaxRule $taxRule
      * @return TaxTable
      */
     public function addTaxRule(TaxRule $taxRule): TaxTable
@@ -73,8 +73,8 @@ class TaxTable
 
     /**
      * TaxTable constructor.
-     * @param TaxRate $defaultRate
-     * @param TaxRule[] $taxRules
+     * @param TaxRate|null $defaultRate
+     * @param array $taxRules
      * @param bool $shippingTaxed
      */
     public function __construct(?TaxRate $defaultRate = null, array $taxRules = [], bool $shippingTaxed = false)
@@ -86,6 +86,7 @@ class TaxTable
 
     /**
      * @return array
+     * @throws InvalidArgumentException
      */
     public function getData(): array
     {
@@ -109,6 +110,7 @@ class TaxTable
 
     /**
      * @return bool
+     * @throws InvalidArgumentException
      */
     public function validate(): bool
     {

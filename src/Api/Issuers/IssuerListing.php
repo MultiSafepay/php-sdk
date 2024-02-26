@@ -6,6 +6,8 @@
 
 namespace MultiSafepay\Api\Issuers;
 
+use MultiSafepay\Exception\InvalidArgumentException;
+
 /**
  * Class IssuerListing
  * @package MultiSafepay\Api\Issuers
@@ -18,6 +20,7 @@ class IssuerListing
      * Issuers constructor.
      * @param string $gatewayCode
      * @param string[] $data
+     * @throws InvalidArgumentException
      */
     public function __construct(string $gatewayCode, array $data)
     {

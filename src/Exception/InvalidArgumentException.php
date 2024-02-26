@@ -5,12 +5,12 @@
  */
 namespace MultiSafepay\Exception;
 
-use LogicException;
+use Exception;
 
 /**
  * Class InvalidArgumentException
  * @package MultiSafepay\Exception
  */
-class InvalidArgumentException extends LogicException
+class InvalidArgumentException extends Exception
 {
 }

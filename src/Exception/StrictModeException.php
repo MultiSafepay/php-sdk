@@ -5,12 +5,12 @@
  */
 namespace MultiSafepay\Exception;
 
-use LogicException;
+use Exception;
 
 /**
  * Class StrictModeException
  * @package MultiSafepay\Exception
  */
-class StrictModeException extends LogicException
+class StrictModeException extends Exception
 {
 }

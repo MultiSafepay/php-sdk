@@ -8,6 +8,8 @@ namespace MultiSafepay\Api;
 
 use MultiSafepay\Api\Categories\Category;
 use MultiSafepay\Api\Categories\CategoryListing;
+use MultiSafepay\Exception\ApiException;
+use MultiSafepay\Exception\InvalidDataInitializationException;
 use Psr\Http\Client\ClientExceptionInterface;
 
 /**
@@ -18,7 +20,7 @@ class CategoryManager extends AbstractManager
 {
     /**
      * @return Category[]
-     * @throws ClientExceptionInterface
+     * @throws ClientExceptionInterface|InvalidDataInitializationException|ApiException
      */
     public function getCategories(): array
     {

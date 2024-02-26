@@ -6,13 +6,13 @@
 
 namespace MultiSafepay\Exception;
 
-use LogicException;
+use Exception;
 
 /**
  * Class ApiException
  * @package MultiSafepay\Exception
  */
-class ApiException extends LogicException
+class ApiException extends Exception
 {
     /**
      * @var array
@@ -30,7 +30,6 @@ class ApiException extends LogicException
     }
 
     /**
-     * @param array $additionalData
      * @return string
      */
     public function getDetails(): string

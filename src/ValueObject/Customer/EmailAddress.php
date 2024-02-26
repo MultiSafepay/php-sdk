@@ -22,6 +22,7 @@ class EmailAddress
     /**
      * Country constructor.
      * @param string $emailAddress
+     * @throws InvalidArgumentException
      */
     public function __construct(string $emailAddress)
     {

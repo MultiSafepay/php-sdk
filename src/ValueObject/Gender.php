@@ -27,6 +27,7 @@ class Gender
     /**
      * Country constructor.
      * @param string $gender
+     * @throws InvalidArgumentException
      */
     public function __construct(string $gender = 'female')
     {

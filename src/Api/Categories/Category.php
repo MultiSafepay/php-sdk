@@ -27,6 +27,7 @@ class Category
     /**
      * Transaction constructor.
      * @param array $data
+     * @throws InvalidDataInitializationException
      */
     public function __construct(array $data)
     {
@@ -54,6 +55,7 @@ class Category
     /**
      * @param array $data
      * @return bool
+     * @throws InvalidDataInitializationException
      */
     private function validate(array $data): bool
     {

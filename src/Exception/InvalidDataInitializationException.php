@@ -5,12 +5,12 @@
  */
 namespace MultiSafepay\Exception;
 
-use LogicException;
+use Exception;
 
 /**
  * Class InvalidDataInitializationException
  * @package MultiSafepay\Exception
  */
-class InvalidDataInitializationException extends LogicException
+class InvalidDataInitializationException extends Exception
 {
 }

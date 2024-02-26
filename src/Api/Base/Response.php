@@ -22,7 +22,7 @@ class Response
      * @var array
      */
     private $data = [];
-    
+
     /**
      * @var string
      */
@@ -37,8 +37,9 @@ class Response
      * @param string $json
      * @param array $context
      * @return Response
+     * @throws ApiException
      */
-    public static function withJson(string $json, array $context = [])
+    public static function withJson(string $json, array $context = []): Response
     {
         $data = json_decode($json, true);
         if (empty($data)) {
@@ -53,6 +54,7 @@ class Response
      * @param array $data
      * @param array $context
      * @param string $raw
+     * @throws ApiException
      */
     public function __construct(array $data, array $context = [], string $raw = '')
     {
@@ -79,6 +81,7 @@ class Response
      * @param array $data
      * @param array $context
      * @return void
+     * @throws ApiException
      */
     private function validate(array $data, array $context = []): void
     {

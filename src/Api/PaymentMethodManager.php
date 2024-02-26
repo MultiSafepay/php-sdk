@@ -9,6 +9,8 @@ namespace MultiSafepay\Api;
 use MultiSafepay\Api\Base\Response;
 use MultiSafepay\Api\PaymentMethods\PaymentMethod;
 use MultiSafepay\Api\PaymentMethods\PaymentMethodListing;
+use MultiSafepay\Exception\ApiException;
+use MultiSafepay\Exception\InvalidDataInitializationException;
 use Psr\Http\Client\ClientExceptionInterface;
 
 /**
@@ -32,7 +34,7 @@ class PaymentMethodManager extends AbstractManager
      * @param bool $includeCoupons
      * @param array $options
      * @return Response
-     * @throws ClientExceptionInterface
+     * @throws ClientExceptionInterface|ApiException
      */
     private function getPaymentMethodsRequest(bool $includeCoupons = true, array $options = []): Response
     {
@@ -50,7 +52,7 @@ class PaymentMethodManager extends AbstractManager
      * @param bool $includeCoupons
      * @param array $options
      * @return array
-     * @throws ClientExceptionInterface
+     * @throws ClientExceptionInterface|InvalidDataInitializationException|ApiException
      */
     public function getPaymentMethods(bool $includeCoupons = true, array $options = []): array
     {
@@ -64,7 +66,7 @@ class PaymentMethodManager extends AbstractManager
      * @param array $options
      * @param bool $includeCoupons
      * @return array
-     * @throws ClientExceptionInterface
+     * @throws ClientExceptionInterface|InvalidDataInitializationException|ApiException
      */
     public function getPaymentMethodsAsArray(bool $includeCoupons = true, array $options = []): array
     {
@@ -78,7 +80,7 @@ class PaymentMethodManager extends AbstractManager
      * @param string $gatewayCode
      * @param array $options
      * @return PaymentMethod
-     * @throws ClientExceptionInterface
+     * @throws ClientExceptionInterface|InvalidDataInitializationException|ApiException
      */
     public function getByGatewayCode(string $gatewayCode, array $options = []): PaymentMethod
     {

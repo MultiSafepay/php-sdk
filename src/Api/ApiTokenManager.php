@@ -7,6 +7,8 @@
 namespace MultiSafepay\Api;
 
 use MultiSafepay\Api\ApiTokens\ApiToken;
+use MultiSafepay\Exception\ApiException;
+use MultiSafepay\Exception\InvalidDataInitializationException;
 use Psr\Http\Client\ClientExceptionInterface;
 
 /**
@@ -17,7 +19,7 @@ class ApiTokenManager extends AbstractManager
 {
     /**
      * @return ApiToken
-     * @throws ClientExceptionInterface
+     * @throws ClientExceptionInterface|InvalidDataInitializationException|ApiException
      */
     public function get(): ApiToken
     {

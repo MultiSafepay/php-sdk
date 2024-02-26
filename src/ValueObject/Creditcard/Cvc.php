@@ -22,6 +22,7 @@ class Cvc
     /**
      * CardNumber constructor.
      * @param string $cvc
+     * @throws InvalidArgumentException
      */
     public function __construct(string $cvc)
     {
@@ -40,6 +41,7 @@ class Cvc
     /**
      * @param string $cvc
      * @return bool
+     * @throws InvalidArgumentException
      */
     public function validate(string $cvc): bool
     {

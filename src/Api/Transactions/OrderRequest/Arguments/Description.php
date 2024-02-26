@@ -40,6 +40,7 @@ class Description
 
     /**
      * @return string
+     * @throws InvalidArgumentException
      */
     public function getData(): string
     {
@@ -50,6 +51,7 @@ class Description
 
     /**
      * @return bool
+     * @throws InvalidArgumentException
      */
     public function validate(): bool
     {

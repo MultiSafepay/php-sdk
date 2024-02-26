@@ -24,6 +24,7 @@ class ApiToken
      * ApiToken constructor.
      *
      * @param array $data
+     * @throws InvalidDataInitializationException
      */
     public function __construct(array $data)
     {
@@ -41,6 +42,7 @@ class ApiToken
 
     /**
      * @param array $data
+     * @throws InvalidDataInitializationException
      */
     private function validate(array $data): void
     {

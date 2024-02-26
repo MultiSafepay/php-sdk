@@ -5,12 +5,12 @@
  */
 namespace MultiSafepay\Exception;
 
-use LogicException;
+use Exception;
 
 /**
  * Class InvalidApiKeyException
  * @package MultiSafepay\Exception
  */
-class InvalidApiKeyException extends LogicException
+class InvalidApiKeyException extends Exception
 {
 }

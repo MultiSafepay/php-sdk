@@ -87,6 +87,7 @@ class Customer
     /**
      * @param string $emailAddress
      * @return Customer
+     * @throws InvalidArgumentException
      */
     public function addEmailAddressAsString(string $emailAddress): Customer
     {

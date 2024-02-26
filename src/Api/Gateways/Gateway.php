@@ -33,6 +33,7 @@ class Gateway
     /**
      * Transaction constructor.
      * @param array $data
+     * @throws InvalidDataInitializationException
      */
     public function __construct(array $data)
     {
@@ -69,6 +70,7 @@ class Gateway
     /**
      * @param array $data
      * @return bool
+     * @throws InvalidDataInitializationException
      */
     private function validate(array $data): bool
     {

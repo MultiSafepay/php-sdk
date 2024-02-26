@@ -20,6 +20,7 @@ use MultiSafepay\Api\Transactions\OrderRequest\Arguments\SecondChance;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart;
 use MultiSafepay\Api\Transactions\OrderRequest\Validators\TotalAmountValidator;
 use MultiSafepay\Exception\InvalidArgumentException;
+use MultiSafepay\Exception\InvalidTotalAmountException;
 use MultiSafepay\ValueObject\Money;
 
 /**
@@ -154,6 +155,7 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
     /**
      * @param string $type
      * @return OrderRequest
+     * @throws InvalidArgumentException
      */
     public function addType(string $type): OrderRequest
     {
@@ -170,6 +172,7 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
     /**
      * @param string $type
      * @return OrderRequest
+     * @throws InvalidArgumentException
      */
     public function addRecurringModel(string $type): OrderRequest
     {
@@ -305,6 +308,7 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
 
     /**
      * @return string
+     * @throws InvalidArgumentException
      */
     public function getDescriptionText(): string
     {
@@ -362,6 +366,7 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
     /**
      * @param ShoppingCart $shoppingCart
      * @return OrderRequest
+     * @throws InvalidArgumentException
      */
     public function addShoppingCart(ShoppingCart $shoppingCart): OrderRequest
     {
@@ -521,6 +526,7 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
     /**
      * @return array
      * phpcs:disable ObjectCalisthenics.Files.FunctionLength
+     * @throws InvalidArgumentException|InvalidTotalAmountException
      */
     public function getData(): array
     {
@@ -559,6 +565,7 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
     /**
      * @param array $data
      * @return bool
+     * @throws InvalidTotalAmountException
      */
     protected function validate(array $data): bool
     {

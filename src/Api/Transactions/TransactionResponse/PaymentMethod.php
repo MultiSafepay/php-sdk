@@ -33,7 +33,7 @@ class PaymentMethod extends DataObject
     }
 
     /**
-     * @return string
+     * @return Money
      */
     public function getMoney(): Money
     {

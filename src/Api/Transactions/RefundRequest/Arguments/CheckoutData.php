@@ -6,11 +6,10 @@
 
 namespace MultiSafepay\Api\Transactions\RefundRequest\Arguments;
 
-use InvalidArgumentException;
 use MultiSafepay\Api\Base\DataObject;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\TaxTable;
-use MultiSafepay\Api\Transactions\RefundRequest\Arguments\CheckoutData\Item;
+use MultiSafepay\Exception\InvalidArgumentException;
 use MultiSafepay\ValueObject\CartItem;
 
 /**
@@ -101,6 +100,7 @@ class CheckoutData extends DataObject
 
     /**
      * @return array
+     * @throws InvalidArgumentException
      */
     public function getData(): array
     {
@@ -124,6 +124,7 @@ class CheckoutData extends DataObject
     /**
      * @param string $merchantItemId
      * @return CartItem
+     * @throws InvalidArgumentException
      */
     private function getItemByMerchantItemId(string $merchantItemId): CartItem
     {

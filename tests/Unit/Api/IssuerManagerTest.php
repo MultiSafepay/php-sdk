@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 namespace MultiSafepay\Tests\Unit\Api\Issuers;
 
-use InvalidArgumentException;
 use MultiSafepay\Api\IssuerManager;
 use MultiSafepay\Client\Client;
+use MultiSafepay\Exception\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 /**

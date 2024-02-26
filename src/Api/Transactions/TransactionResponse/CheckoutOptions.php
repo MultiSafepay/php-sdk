@@ -10,6 +10,7 @@ use MultiSafepay\Api\Base\DataObject;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\TaxTable;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\TaxTable\TaxRate;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\TaxTable\TaxRule;
+use MultiSafepay\Exception\InvalidArgumentException;
 use MultiSafepay\ValueObject\Customer\Country;
 
 /**
@@ -20,6 +21,7 @@ class CheckoutOptions extends DataObject
 {
     /**
      * @return TaxTable
+     * @throws InvalidArgumentException
      */
     public function getTaxTable(): TaxTable
     {
@@ -31,12 +33,13 @@ class CheckoutOptions extends DataObject
             $taxRules[] = $this->getTaxRule($alternateData);
         }
 
-        $taxTable = new TaxTable($defaultTaxRate, $taxRules, (bool)$default['shipping_taxed']);
-        return $taxTable;
+        return new TaxTable($defaultTaxRate, $taxRules, (bool)$default['shipping_taxed']);
     }
 
     /**
+     * @param array $data
      * @return TaxRule
+     * @throws InvalidArgumentException
      */
     private function getTaxRule(array $data): TaxRule
     {
@@ -51,6 +54,7 @@ class CheckoutOptions extends DataObject
     /**
      * @param $data
      * @return TaxRate
+     * @throws InvalidArgumentException
      */
     private function getTaxRateByData($data): TaxRate
     {

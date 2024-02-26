@@ -16,6 +16,7 @@ use MultiSafepay\Api\TokenManager;
 use MultiSafepay\Api\TransactionManager;
 use MultiSafepay\Api\WalletManager;
 use MultiSafepay\Client\Client;
+use MultiSafepay\Exception\InvalidApiKeyException;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
@@ -46,6 +47,7 @@ class Sdk
      * @param StreamFactoryInterface|null $streamFactory
      * @param string $locale
      * @param bool $strictMode
+     * @throws InvalidApiKeyException
      */
     public function __construct(
         string $apiKey,

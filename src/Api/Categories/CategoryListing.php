@@ -6,7 +6,7 @@
 
 namespace MultiSafepay\Api\Categories;
 
-use MultiSafepay\Api\Categories\Category;
+use MultiSafepay\Exception\InvalidDataInitializationException;
 
 /**
  * Class CategoryListing
@@ -22,6 +22,7 @@ class CategoryListing
     /**
      * Transaction constructor.
      * @param array $data
+     * @throws InvalidDataInitializationException
      */
     public function __construct(array $data)
     {

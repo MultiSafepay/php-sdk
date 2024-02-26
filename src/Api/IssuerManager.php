@@ -6,9 +6,10 @@
 
 namespace MultiSafepay\Api;
 
-use InvalidArgumentException;
 use MultiSafepay\Api\Issuers\Issuer;
 use MultiSafepay\Api\Issuers\IssuerListing;
+use MultiSafepay\Exception\ApiException;
+use MultiSafepay\Exception\InvalidArgumentException;
 use Psr\Http\Client\ClientExceptionInterface;
 
 /**
@@ -20,7 +21,7 @@ class IssuerManager extends AbstractManager
     /**
      * @param string $gatewayCode
      * @return Issuer[]
-     * @throws ClientExceptionInterface
+     * @throws ClientExceptionInterface|InvalidArgumentException|ApiException
      */
     public function getIssuersByGatewayCode(string $gatewayCode): array
     {

@@ -16,6 +16,7 @@ use MultiSafepay\Api\Transactions\TransactionListing;
 use MultiSafepay\Api\Transactions\TransactionResponse as Transaction;
 use MultiSafepay\Api\Transactions\UpdateRequest;
 use MultiSafepay\Exception\ApiException;
+use MultiSafepay\Exception\InvalidArgumentException;
 use Psr\Http\Client\ClientExceptionInterface;
 
 /**
@@ -44,7 +45,7 @@ class TransactionManager extends AbstractManager
     /**
      * @param OrderRequestInterface $requestOrder
      * @return Transaction
-     * @throws ClientExceptionInterface
+     * @throws ClientExceptionInterface|ApiException
      */
     public function create(OrderRequestInterface $requestOrder): Transaction
     {
@@ -58,8 +59,7 @@ class TransactionManager extends AbstractManager
      *
      * @param string $orderId
      * @return Transaction
-     * @throws ClientExceptionInterface
-     * @throws ApiException
+     * @throws ClientExceptionInterface|ApiException
      */
     public function get(string $orderId): Transaction
     {
@@ -71,8 +71,9 @@ class TransactionManager extends AbstractManager
     }
 
     /**
+     * @param array $options
      * @return TransactionListing
-     * @throws ClientExceptionInterface
+     * @throws ClientExceptionInterface|ApiException
      */
     public function getTransactions(array $options = []): TransactionListing
     {
@@ -86,7 +87,7 @@ class TransactionManager extends AbstractManager
      * @param string $orderId
      * @param UpdateRequest $updateRequest
      * @return Response
-     * @throws ClientExceptionInterface
+     * @throws ClientExceptionInterface|ApiException
      */
     public function update(string $orderId, UpdateRequest $updateRequest): Response
     {
@@ -101,7 +102,7 @@ class TransactionManager extends AbstractManager
      * @param string $orderId
      * @param CaptureRequest $captureRequest
      * @return Response
-     * @throws ClientExceptionInterface
+     * @throws ClientExceptionInterface|ApiException
      */
     public function capture(string $orderId, CaptureRequest $captureRequest): Response
     {
@@ -116,7 +117,7 @@ class TransactionManager extends AbstractManager
      * @param string $orderId
      * @param CaptureRequest $captureRequest
      * @return Response
-     * @throws ClientExceptionInterface
+     * @throws ClientExceptionInterface|ApiException
      */
     public function captureReservationCancel(string $orderId, CaptureRequest $captureRequest): Response
     {
@@ -133,7 +134,7 @@ class TransactionManager extends AbstractManager
      * @param string|null $orderId Use this parameter for refunding any child invoices, for example: manual capture
      *                             child invoices
      * @return Response
-     * @throws ClientExceptionInterface
+     * @throws ClientExceptionInterface|ApiException
      */
     public function refund(Transaction $transaction, RefundRequest $requestRefund, string $orderId = null): Response
     {
@@ -149,7 +150,7 @@ class TransactionManager extends AbstractManager
      * @param string $merchantItemId
      * @param int $quantity Set to 0 to refund all items
      * @return Response
-     * @throws ClientExceptionInterface
+     * @throws ClientExceptionInterface|InvalidArgumentException|ApiException
      */
     public function refundByItem(Transaction $transaction, string $merchantItemId, int $quantity = 0): Response
     {
@@ -162,6 +163,7 @@ class TransactionManager extends AbstractManager
     /**
      * @param Transaction $transaction
      * @return RefundRequest
+     * @throws InvalidArgumentException
      */
     public function createRefundRequest(Transaction $transaction): RefundRequest
     {

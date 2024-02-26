@@ -10,6 +10,7 @@ use MultiSafepay\Api\Base\RequestBody;
 use MultiSafepay\Api\Base\RequestBodyInterface;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\Description;
 use MultiSafepay\Api\Transactions\RefundRequest\Arguments\CheckoutData;
+use MultiSafepay\Exception\InvalidArgumentException;
 use MultiSafepay\ValueObject\Money;
 
 /**
@@ -35,6 +36,7 @@ class RefundRequest extends RequestBody implements RequestBodyInterface
 
     /**
      * @return array
+     * @throws InvalidArgumentException
      */
     public function getData(): array
     {

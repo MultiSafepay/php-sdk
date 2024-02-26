@@ -7,6 +7,7 @@
 namespace MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo;
 
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfoInterface;
+use MultiSafepay\Exception\InvalidArgumentException;
 use MultiSafepay\ValueObject\Creditcard\CardNumber;
 use MultiSafepay\ValueObject\Creditcard\Cvc;
 use MultiSafepay\ValueObject\Date;
@@ -60,6 +61,7 @@ class Creditcard implements GatewayInfoInterface
     /**
      * @param string $cardNumber
      * @return Creditcard
+     * @throws InvalidArgumentException
      */
     public function addCardNumberAsString(string $cardNumber): Creditcard
     {
@@ -110,6 +112,7 @@ class Creditcard implements GatewayInfoInterface
     /**
      * @param string $cvc
      * @return Creditcard
+     * @throws InvalidArgumentException
      */
     public function addCvcAsString(string $cvc): Creditcard
     {

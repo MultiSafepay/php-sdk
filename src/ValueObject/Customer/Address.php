@@ -6,6 +6,8 @@
 
 namespace MultiSafepay\ValueObject\Customer;
 
+use MultiSafepay\Exception\InvalidArgumentException;
+
 /**
  * Class Address
  * @package MultiSafepay\ValueObject\Customer
@@ -136,6 +138,7 @@ class Address
     /**
      * @param string $countryCode
      * @return Address
+     * @throws InvalidArgumentException
      */
     public function addCountryCode(string $countryCode): Address
     {

@@ -7,6 +7,7 @@
 namespace MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo;
 
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfoInterface;
+use MultiSafepay\Exception\InvalidArgumentException;
 use MultiSafepay\ValueObject\IbanNumber;
 
 /**
@@ -48,6 +49,7 @@ class Account implements GatewayInfoInterface
     /**
      * @param string $accountId
      * @return Account
+     * @throws InvalidArgumentException
      */
     public function addAccountIdAsString(string $accountId): Account
     {
@@ -78,6 +80,7 @@ class Account implements GatewayInfoInterface
     /**
      * @param string $accountHolderIban
      * @return Account
+     * @throws InvalidArgumentException
      */
     public function addAccountHolderIbanAsString(string $accountHolderIban): Account
     {

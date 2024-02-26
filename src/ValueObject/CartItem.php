@@ -61,6 +61,7 @@ class CartItem extends DataObject
     /**
      * @param array $data
      * @return CartItem
+     * @throws InvalidArgumentException
      */
     public static function fromData(array $data): CartItem
     {
@@ -93,6 +94,7 @@ class CartItem extends DataObject
      * @param Money $unitPrice
      * @param float|null $taxRate
      * @return CartItem
+     * @throws InvalidArgumentException
      */
     public function addUnitPrice(Money $unitPrice, float $taxRate = null): CartItem
     {
@@ -107,6 +109,7 @@ class CartItem extends DataObject
     /**
      * @param float $taxRate
      * @return CartItem
+     * @throws InvalidArgumentException
      */
     public function addTaxRate(float $taxRate): CartItem
     {

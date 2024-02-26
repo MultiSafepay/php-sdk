@@ -8,6 +8,7 @@ namespace MultiSafepay\Api;
 
 use MultiSafepay\Api\Tokens\Token;
 use MultiSafepay\Api\Tokens\TokenListing;
+use MultiSafepay\Exception\ApiException;
 use Psr\Http\Client\ClientExceptionInterface;
 
 /**
@@ -28,7 +29,7 @@ class TokenManager extends AbstractManager
      * @param string $reference
      * @param bool $forceApiCall
      * @return array
-     * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @throws ClientExceptionInterface|ApiException
      */
     public function getList(string $reference, bool $forceApiCall = false): array
     {
@@ -43,7 +44,7 @@ class TokenManager extends AbstractManager
      * @param string $token
      * @param string $reference
      * @return Token
-     * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @throws ClientExceptionInterface|ApiException
      */
     public function get(string $token, string $reference): Token
     {
@@ -55,7 +56,7 @@ class TokenManager extends AbstractManager
      * @param string $token
      * @param string $reference
      * @return bool
-     * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @throws ClientExceptionInterface|ApiException
      */
     public function delete(string $token, string $reference): bool
     {
@@ -68,7 +69,7 @@ class TokenManager extends AbstractManager
      * @param string $code
      * @param bool $forceApiCall
      * @return array
-     * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @throws ClientExceptionInterface|ApiException
      */
     public function getListByGatewayCode(string $reference, string $code, bool $forceApiCall = false): array
     {
@@ -94,7 +95,7 @@ class TokenManager extends AbstractManager
      * @param string $code
      * @param bool $forceApiCall
      * @return array
-     * @throws ClientExceptionInterface
+     * @throws ClientExceptionInterface|ApiException
      */
     public function getListByGatewayCodeAsArray(string $reference, string $code, bool $forceApiCall = false): array
     {

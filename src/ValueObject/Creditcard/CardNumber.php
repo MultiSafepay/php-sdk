@@ -22,6 +22,7 @@ class CardNumber
     /**
      * CardNumber constructor.
      * @param string $cardNumber
+     * @throws InvalidArgumentException
      */
     public function __construct(string $cardNumber)
     {
@@ -40,6 +41,7 @@ class CardNumber
     /**
      * @param string $cardNumber
      * @return bool
+     * @throws InvalidArgumentException
      */
     public function validate(string $cardNumber): bool
     {

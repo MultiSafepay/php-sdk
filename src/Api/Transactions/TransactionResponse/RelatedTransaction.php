@@ -32,7 +32,7 @@ class RelatedTransaction extends DataObject
     }
 
     /**
-     * @return string
+     * @return Money
      */
     public function getMoney(): Money
     {

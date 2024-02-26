@@ -23,6 +23,7 @@ class IbanNumber
     /**
      * Country constructor.
      * @param string $ibanNumber
+     * @throws InvalidArgumentException
      */
     public function __construct(string $ibanNumber)
     {

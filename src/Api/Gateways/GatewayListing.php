@@ -6,6 +6,8 @@
 
 namespace MultiSafepay\Api\Gateways;
 
+use MultiSafepay\Exception\InvalidDataInitializationException;
+
 class GatewayListing
 {
     /**
@@ -16,6 +18,7 @@ class GatewayListing
     /**
      * Transaction constructor.
      * @param array $data
+     * @throws InvalidDataInitializationException
      */
     public function __construct(array $data)
     {

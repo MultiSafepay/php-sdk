@@ -30,8 +30,9 @@ class ShoppingCart
     }
 
     /**
-     * @param mixed array|null $data
+     * @param array|null $data
      * @return ShoppingCart
+     * @throws InvalidArgumentException
      */
     public static function fromData(?array $data): ShoppingCart
     {
@@ -75,6 +76,7 @@ class ShoppingCart
 
     /**
      * @return array
+     * @throws InvalidArgumentException
      */
     public function getData(): array
     {
@@ -92,6 +94,7 @@ class ShoppingCart
 
     /**
      * @return bool
+     * @throws InvalidArgumentException
      */
     public function validate(): bool
     {

@@ -18,6 +18,7 @@ class ApiKey
     /**
      * ApiKey constructor.
      * @param string $apiKey
+     * @throws InvalidApiKeyException
      */
     public function __construct(
         string $apiKey
@@ -35,6 +36,7 @@ class ApiKey
 
     /**
      * @param string $apiKey
+     * @throws InvalidApiKeyException
      */
     private function initApiKey(string $apiKey)
     {

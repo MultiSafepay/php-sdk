@@ -8,6 +8,8 @@ namespace MultiSafepay\Api;
 
 use MultiSafepay\Api\Gateways\Gateway;
 use MultiSafepay\Api\Gateways\GatewayListing;
+use MultiSafepay\Exception\ApiException;
+use MultiSafepay\Exception\InvalidDataInitializationException;
 use Psr\Http\Client\ClientExceptionInterface;
 
 /**
@@ -26,7 +28,7 @@ class GatewayManager extends AbstractManager
     /**
      * @param bool $includeCoupons Include coupons (aka giftcards)
      * @return Gateway[]
-     * @throws ClientExceptionInterface
+     * @throws ClientExceptionInterface|InvalidDataInitializationException|ApiException
      */
     public function getGateways(bool $includeCoupons = true): array
     {
@@ -44,7 +46,7 @@ class GatewayManager extends AbstractManager
      * @param string $gatewayCode
      * @param array $options
      * @return Gateway
-     * @throws ClientExceptionInterface
+     * @throws ClientExceptionInterface|InvalidDataInitializationException|ApiException
      */
     public function getByCode(string $gatewayCode, array $options = []): Gateway
     {

@@ -17,6 +17,8 @@ class Notification
      * @param string $apiKey
      * @param int $validationTimeInSeconds
      * phpcs:disable ObjectCalisthenics.Files.FunctionLength.ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff
+     * @return bool
+     * @throws InvalidArgumentException
      */
     public static function verifyNotification(
         $request,

@@ -38,6 +38,7 @@ class Account
      * Account constructor.
      *
      * @param array $data
+     * @throws InvalidDataInitializationException
      */
     public function __construct(array $data)
     {
@@ -85,6 +86,7 @@ class Account
 
     /**
      * @param array $data
+     * @throws InvalidDataInitializationException
      */
     private function validate(array $data): void
     {

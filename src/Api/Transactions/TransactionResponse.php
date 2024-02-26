@@ -14,6 +14,7 @@ use MultiSafepay\Api\Transactions\TransactionResponse\OrderAdjustment;
 use MultiSafepay\Api\Transactions\TransactionResponse\PaymentDetails;
 use MultiSafepay\Api\Transactions\TransactionResponse\PaymentMethod;
 use MultiSafepay\Api\Transactions\TransactionResponse\RelatedTransaction;
+use MultiSafepay\Exception\InvalidArgumentException;
 use MultiSafepay\ValueObject\Customer;
 use MultiSafepay\ValueObject\Customer\Address;
 use MultiSafepay\ValueObject\Customer\Country;
@@ -115,7 +116,7 @@ class TransactionResponse extends ResponseBody
     }
 
     /**
-     * @return string
+     * @return Money
      */
     public function getMoney(): Money
     {
@@ -171,7 +172,7 @@ class TransactionResponse extends ResponseBody
     }
 
     /**
-     * @return string
+     * @return Money
      */
     public function getMoneyRefunded(): Money
     {
@@ -227,7 +228,7 @@ class TransactionResponse extends ResponseBody
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getCustomerAsArray(): array
     {
@@ -236,6 +237,7 @@ class TransactionResponse extends ResponseBody
 
     /**
      * @return Address
+     * @throws InvalidArgumentException
      */
     public function getAddress(): Address
     {
@@ -254,6 +256,7 @@ class TransactionResponse extends ResponseBody
 
     /**
      * @return Customer
+     * @throws InvalidArgumentException
      */
     public function getCustomer(): Customer
     {
@@ -341,6 +344,7 @@ class TransactionResponse extends ResponseBody
 
     /**
      * @return ShoppingCart
+     * @throws InvalidArgumentException
      */
     public function getShoppingCart(): ShoppingCart
     {

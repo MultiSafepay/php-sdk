@@ -10,6 +10,8 @@ use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
 use MultiSafepay\Api\Base\RequestBodyInterface;
 use MultiSafepay\Api\Base\Response as ApiResponse;
+use MultiSafepay\Exception\ApiException;
+use MultiSafepay\Exception\InvalidApiKeyException;
 use MultiSafepay\Exception\StrictModeException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
@@ -77,6 +79,7 @@ class Client
      * @param StreamFactoryInterface|null $streamFactory
      * @param string $locale
      * @param bool $strictMode
+     * @throws InvalidApiKeyException
      */
     public function __construct(
         string $apiKey,
@@ -102,6 +105,7 @@ class Client
      * @param array $context
      * @return ApiResponse
      * @throws ClientExceptionInterface
+     * @throws ApiException
      */
     public function createPostRequest(
         string $endpoint,
@@ -124,7 +128,7 @@ class Client
      * @param RequestBodyInterface|null $requestBody
      * @param array $context
      * @return ApiResponse
-     * @throws ClientExceptionInterface
+     * @throws ClientExceptionInterface|ApiException
      */
     public function createPatchRequest(
         string $endpoint,
@@ -146,7 +150,7 @@ class Client
      * @param array $parameters
      * @param array $context
      * @return ApiResponse
-     * @throws ClientExceptionInterface
+     * @throws ClientExceptionInterface|ApiException
      */
     public function createGetRequest(string $endpoint, array $parameters = [], array $context = []): ApiResponse
     {
@@ -162,7 +166,7 @@ class Client
      * @param array $parameters
      * @param array $context
      * @return ApiResponse
-     * @throws ClientExceptionInterface
+     * @throws ClientExceptionInterface|ApiException
      */
     public function createDeleteRequest(string $endpoint, array $parameters = [], array $context = []): ApiResponse
     {
@@ -253,7 +257,6 @@ class Client
     /**
      * @param RequestBodyInterface $requestBody
      * @return string
-     * @throws StrictModeException
      */
     private function getRequestBody(RequestBodyInterface $requestBody): string
     {

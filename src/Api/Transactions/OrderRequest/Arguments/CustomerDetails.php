@@ -6,6 +6,7 @@
 
 namespace MultiSafepay\Api\Transactions\OrderRequest\Arguments;
 
+use MultiSafepay\Exception\InvalidArgumentException;
 use MultiSafepay\ValueObject\Customer;
 use MultiSafepay\ValueObject\IpAddress;
 
@@ -136,6 +137,7 @@ class CustomerDetails extends Customer
     /**
      * @param string $forwardedIp
      * @return CustomerDetails
+     * @throws InvalidArgumentException
      */
     public function addForwardedIpAsString(string $forwardedIp): CustomerDetails
     {

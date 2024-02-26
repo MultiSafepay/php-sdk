@@ -32,6 +32,7 @@ class GoogleAnalytics
 
     /**
      * @return array
+     * @throws InvalidArgumentException
      */
     public function getData(): array
     {
@@ -44,6 +45,7 @@ class GoogleAnalytics
 
     /**
      * @return bool
+     * @throws InvalidArgumentException
      */
     public function validate(): bool
     {

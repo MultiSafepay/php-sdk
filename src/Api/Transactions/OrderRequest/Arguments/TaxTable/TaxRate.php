@@ -28,6 +28,7 @@ class TaxRate
     /**
      * @param float $rate
      * @return TaxRate
+     * @throws InvalidArgumentException
      */
     public function addRate(float $rate): TaxRate
     {
@@ -52,6 +53,7 @@ class TaxRate
     /**
      * @param string $countryCode
      * @return TaxRate
+     * @throws InvalidArgumentException
      */
     public function addCountryCode(string $countryCode): TaxRate
     {
