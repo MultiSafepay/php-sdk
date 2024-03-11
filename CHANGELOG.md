@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [5.12.1] - 2024-03-11
+### Fixed
++ PHPSDK-146: Fix ApiException not being hinted as a thrown exception, even though it is, by fixing the PHP DocBlocks @throws tags
+
 ## [5.12.0] - 2023-12-01
 ### Added
 + PHPSDK-139: Add support to set var1, var2 and var3, within the OrderRequest object
