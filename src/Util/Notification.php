@@ -43,7 +43,7 @@ class Notification
         $authHeaderDecoded = base64_decode($auth);
         [$timestamp, $sha512hexPayload] = explode(':', $authHeaderDecoded);
 
-        if ($validationTimeInSeconds > 0 && $timestamp + $validationTimeInSeconds < time()) {
+        if ($validationTimeInSeconds > 0 && (int)$timestamp + $validationTimeInSeconds < time()) {
             return false;
         }
 
