@@ -19,5 +19,12 @@ class Gateways
         'KLARNA',
         'PAYAFTER',
         'BNPL_INSTM',
+        'BNPL_INST',
+        'IN3B2B',
+        'SANTANDER',
+        'ZINIA',
+        'ZINIA_IN3',
+        'BNPL_OB',
+        'BNPL_MF',
     );
 }
