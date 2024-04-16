@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [5.13.0] - 2024-04-16
+### Added
++ PHPSDK-151: Update Gateways::SHOPPING_CART_REQUIRED_GATEWAYS adding 'BNPL_INST', 'IN3B2B', 'SANTANDER', 'ZINIA', 'ZINIA_IN3', 'BNPL_OB', 'BNPL_MF' gateways codes
+
 ## [5.12.1] - 2024-03-11
 ### Fixed
 + PHPSDK-146: Fix ApiException not being hinted as a thrown exception, even though it is, by fixing the PHP DocBlocks @throws tags
