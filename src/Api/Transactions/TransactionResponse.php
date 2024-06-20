@@ -30,7 +30,6 @@ use MultiSafepay\ValueObject\Money;
  */
 class TransactionResponse extends ResponseBody
 {
-
     /**
      * @var string
      */
@@ -381,5 +380,27 @@ class TransactionResponse extends ResponseBody
     public function requiresShoppingCart(): bool
     {
         return in_array($this->getPaymentDetails()->getType(), Gateways::SHOPPING_CART_REQUIRED_GATEWAYS, true);
+    }
+
+    /**
+     * Retrieve the gateway ID from the transaction
+     * Will return multiple gateway IDs as a string of comma separated values if multiple payment methods are used
+     *
+     * @return string
+     */
+    public function getGatewayId(): string
+    {
+        $paymentMethods = [];
+
+        foreach ($this->getPaymentMethods() as $paymentMethod) {
+            if ($paymentMethod->getType() === 'COUPON') {
+                $paymentMethods[] = $paymentMethod->getData()['coupon_brand'] ?? 'unknown';
+                continue;
+            }
+
+            $paymentMethods[] = $paymentMethod->getType();
+        }
+
+        return implode(', ', $paymentMethods);
     }
 }
