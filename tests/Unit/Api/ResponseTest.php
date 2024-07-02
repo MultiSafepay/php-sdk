@@ -39,21 +39,31 @@ class ResponseTest extends TestCase
 
         $this->expectExceptionCode(42);
         $this->expectExceptionMessage('Sample error message');
-        new Response([
-            'data' => ['foo' => 'bar'],
-            'success' => 0,
-            'error_code' => 42,
-            'error_info' => 'Sample error message',
-        ]);
+        new Response(
+            [
+                'data' => ['foo' => 'bar'],
+                'success' => 0,
+                'error_code' => 42,
+                'error_info' => 'Sample error message',
+            ],
+            [
+                'http_response_code' => 200,
+            ]
+        );
 
         $this->expectExceptionCode(42);
         $this->expectExceptionMessage('Sample error message');
-        new Response([
-            'data' => ['foo' => 'bar'],
-            'success' => 0,
-            'error_code' => 42,
-            'error_info' => 'Sample error message',
-        ]);
+        new Response(
+            [
+                'data' => ['foo' => 'bar'],
+                'success' => 0,
+                'error_code' => 42,
+                'error_info' => 'Sample error message',
+            ],
+            [
+                'http_response_code' => 200,
+            ]
+        );
 
         $this->expectExceptionCode(Response::ERROR_UNKNOWN_DATA[0]);
         $this->expectExceptionMessage(Response::ERROR_UNKNOWN_DATA[1]);

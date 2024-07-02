@@ -11,8 +11,8 @@ use Http\Discovery\Psr18ClientDiscovery;
 use MultiSafepay\Api\Base\RequestBodyInterface;
 use MultiSafepay\Api\Base\Response as ApiResponse;
 use MultiSafepay\Exception\ApiException;
+use MultiSafepay\Exception\ApiUnavailableException;
 use MultiSafepay\Exception\InvalidApiKeyException;
-use MultiSafepay\Exception\StrictModeException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
@@ -104,8 +104,7 @@ class Client
      * @param RequestBodyInterface|null $requestBody
      * @param array $context
      * @return ApiResponse
-     * @throws ClientExceptionInterface
-     * @throws ApiException
+     * @throws ClientExceptionInterface|ApiException|ApiUnavailableException
      */
     public function createPostRequest(
         string $endpoint,
@@ -115,10 +114,12 @@ class Client
         $request = $this->createRequest($endpoint, self::METHOD_POST)
             ->withBody($this->createBody($this->getRequestBody($requestBody)))
             ->withHeader('Content-Length', strlen($this->getRequestBody($requestBody)));
+        $httpResponse = $this->httpClient->sendRequest($request);
 
         $context['headers'] = $request->getHeaders();
         $context['request_body'] = $this->getRequestBody($requestBody);
-        $httpResponse = $this->httpClient->sendRequest($request);
+        $context['http_response_code'] = $httpResponse->getStatusCode() ?? 0;
+
         return ApiResponse::withJson($httpResponse->getBody()->getContents(), $context);
     }
 
@@ -128,7 +129,7 @@ class Client
      * @param RequestBodyInterface|null $requestBody
      * @param array $context
      * @return ApiResponse
-     * @throws ClientExceptionInterface|ApiException
+     * @throws ClientExceptionInterface|ApiException|ApiUnavailableException
      */
     public function createPatchRequest(
         string $endpoint,
@@ -138,10 +139,12 @@ class Client
         $request = $this->createRequest($endpoint, self::METHOD_PATCH)
             ->withBody($this->createBody($this->getRequestBody($requestBody)))
             ->withHeader('Content-Length', strlen($this->getRequestBody($requestBody)));
+        $httpResponse = $this->httpClient->sendRequest($request);
 
         $context['headers'] = $request->getHeaders();
         $context['request_body'] = $this->getRequestBody($requestBody);
-        $httpResponse = $this->httpClient->sendRequest($request);
+        $context['http_response_code'] = $httpResponse->getStatusCode() ?? 0;
+
         return ApiResponse::withJson($httpResponse->getBody()->getContents(), $context);
     }
 
@@ -150,14 +153,17 @@ class Client
      * @param array $parameters
      * @param array $context
      * @return ApiResponse
-     * @throws ClientExceptionInterface|ApiException
+     * @throws ClientExceptionInterface|ApiException|ApiUnavailableException
      */
     public function createGetRequest(string $endpoint, array $parameters = [], array $context = []): ApiResponse
     {
         $request = $this->createRequest($endpoint, self::METHOD_GET, $parameters);
         $httpResponse = $this->httpClient->sendRequest($request);
+
         $context['headers'] = $request->getHeaders();
         $context['request_params'] = $parameters;
+        $context['http_response_code'] = $httpResponse->getStatusCode() ?? 0;
+
         return ApiResponse::withJson($httpResponse->getBody()->getContents(), $context);
     }
 
@@ -166,14 +172,17 @@ class Client
      * @param array $parameters
      * @param array $context
      * @return ApiResponse
-     * @throws ClientExceptionInterface|ApiException
+     * @throws ClientExceptionInterface|ApiException|ApiUnavailableException
      */
     public function createDeleteRequest(string $endpoint, array $parameters = [], array $context = []): ApiResponse
     {
         $request = $this->createRequest($endpoint, self::METHOD_DELETE, $parameters);
         $httpResponse = $this->httpClient->sendRequest($request);
+
         $context['headers'] = $request->getHeaders();
         $context['request_params'] = $parameters;
+        $context['http_response_code'] = $httpResponse->getStatusCode() ?? 0;
+
         return ApiResponse::withJson($httpResponse->getBody()->getContents(), $context);
     }
 
@@ -202,6 +211,7 @@ class Client
             $parameters['locale'] = $this->locale;
         }
         $endpoint .= '?' . http_build_query($parameters);
+
         return $this->url . $endpoint;
     }
 
@@ -235,6 +245,7 @@ class Client
     public function useStrictMode(bool $strictMode): Client
     {
         $this->strictMode = $strictMode;
+
         return $this;
     }
 
@@ -248,6 +259,7 @@ class Client
     {
         $url = $this->getRequestUrl($endpoint, $parameters);
         $requestFactory = $this->getRequestFactory();
+
         return $requestFactory->createRequest($method, $url)
             ->withHeader('api_key', $this->apiKey->get())
             ->withHeader('accept-encoding', 'application/json')
@@ -261,6 +273,7 @@ class Client
     private function getRequestBody(RequestBodyInterface $requestBody): string
     {
         $requestBody->useStrictMode($this->strictMode);
+
         return json_encode($requestBody->getData(), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
     }
 }

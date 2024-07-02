@@ -8,6 +8,7 @@ namespace MultiSafepay\Api\Base;
 
 use MultiSafepay\Api\Pager\Pager;
 use MultiSafepay\Exception\ApiException;
+use MultiSafepay\Exception\ApiUnavailableException;
 
 /**
  * Class Response
@@ -37,7 +38,7 @@ class Response
      * @param string $json
      * @param array $context
      * @return Response
-     * @throws ApiException
+     * @throws ApiException|ApiUnavailableException
      */
     public static function withJson(string $json, array $context = []): Response
     {
@@ -54,7 +55,7 @@ class Response
      * @param array $data
      * @param array $context
      * @param string $raw
-     * @throws ApiException
+     * @throws ApiException|ApiUnavailableException
      */
     public function __construct(array $data, array $context = [], string $raw = '')
     {
@@ -82,6 +83,7 @@ class Response
      * @param array $context
      * @return void
      * @throws ApiException
+     * @throws ApiUnavailableException
      */
     private function validate(array $data, array $context = []): void
     {
@@ -94,6 +96,13 @@ class Response
 
         if (!empty($data['data']) && !is_array($data['data'])) {
             [$errorCode, $errorInfo] = self::ERROR_INVALID_DATA_TYPE;
+        }
+
+        if (in_array($context['http_response_code'], [501, 503])) {
+            throw (new ApiUnavailableException(
+                'The MultiSafepay API could not be reached',
+                $context['http_response_code']
+            ));
         }
 
         if (!$data['success']) {
