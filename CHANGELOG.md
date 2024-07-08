@@ -6,25 +6,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [5.14.0] - 2024-07-08
+### Added
+- PHPSDK-155: Throw ApiUnavailableException when API returns 501/503 HTTP codes
+- PHPSDK-156: Add getGatewayId in TransactionResponse class
+
 ## [5.13.0] - 2024-04-16
 ### Added
-+ PHPSDK-151: Update Gateways::SHOPPING_CART_REQUIRED_GATEWAYS adding 'BNPL_INST', 'IN3B2B', 'SANTANDER', 'ZINIA', 'ZINIA_IN3', 'BNPL_OB', 'BNPL_MF' gateways codes
+- PHPSDK-151: Update Gateways::SHOPPING_CART_REQUIRED_GATEWAYS adding 'BNPL_INST', 'IN3B2B', 'SANTANDER', 'ZINIA', 'ZINIA_IN3', 'BNPL_OB', 'BNPL_MF' gateways codes
 
 ## [5.12.1] - 2024-03-11
 ### Fixed
-+ PHPSDK-146: Fix ApiException not being hinted as a thrown exception, even though it is, by fixing the PHP DocBlocks @throws tags
+- PHPSDK-146: Fix ApiException not being hinted as a thrown exception, even though it is, by fixing the PHP DocBlocks @throws tags
 
 ## [5.12.0] - 2023-12-01
 ### Added
-+ PHPSDK-139: Add support to set var1, var2 and var3, within the OrderRequest object
-+ PHPSDK-140: Add support to set custom_info, within the OrderRequest object, thanks to @DaanDeSmedt
+- PHPSDK-139: Add support to set var1, var2 and var3, within the OrderRequest object
+- PHPSDK-140: Add support to set custom_info, within the OrderRequest object, thanks to @DaanDeSmedt
 
 ## [5.11.2] - 2023-10-13
 ### Fixed
-+ PHPSDK-134: Fix errors when only reference is set, within the CustomerDetails object
+- PHPSDK-134: Fix errors when only reference is set, within the CustomerDetails object
 
 ### Changed
-+ PHPSDK-136: Remove PluginDetails as mandatory from the Order Request
+- PHPSDK-136: Remove PluginDetails as mandatory from the Order Request
 
 ## [5.11.1] - 2023-07-31
 ### Added
@@ -88,10 +93,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.5.0] - 2022-05-11
 ### Added
-+ PHPSDK-90: Add MAESTRO tokens within the results of the CREDITCARD tokens request
+- PHPSDK-90: Add MAESTRO tokens within the results of the CREDITCARD tokens request
 
 ### Changed
-+ PHPSDK-91: Add trim on API key when initializing the SDK
+- PHPSDK-91: Add trim on API key when initializing the SDK
 
 ## [5.4.0] - 2021-11-30
 ### Added
