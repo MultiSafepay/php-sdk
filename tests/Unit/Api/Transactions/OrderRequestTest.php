@@ -5,6 +5,7 @@ use MultiSafepay\Api\Transactions\OrderRequest;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart\Item as ShoppingCartItem;
 use MultiSafepay\Exception\InvalidArgumentException;
 use MultiSafepay\Tests\Fixtures\Api\Gateways\GatewayFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\AffiliateFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CustomerDetailsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\DescriptionFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\GoogleAnalyticsFixture;
@@ -45,6 +46,7 @@ class OrderRequestTest extends TestCase
     use PhoneNumberFixture;
     use ShoppingCartFixture;
     use OrderRequestWithoutPluginDetails;
+    use AffiliateFixture;
 
     /**
      * Test if regular creation of an order works
@@ -144,7 +146,7 @@ class OrderRequestTest extends TestCase
         $this->assertArrayHasKey('terminal_id', $data['gateway_info']);
         $this->assertEquals('terminal-id', $data['gateway_info']['terminal_id']);
     }
-    
+
     /**
      * Test if we can add a customer object, only setting up the reference, and get the Order Request
      */
@@ -195,5 +197,18 @@ class OrderRequestTest extends TestCase
         $this->assertEquals('Multi', $orderRequest->getVar1());
         $this->assertEquals('Safe', $orderRequest->getVar2());
         $this->assertEquals('Pay', $orderRequest->getVar3());
+    }
+
+    /**
+     * Test if we can get affiliate data, within an order request
+     */
+    public function testOrderWithAffiliate()
+    {
+        $orderRequest = $this->createIdealOrderRedirectRequestFixture();
+        $orderRequest->addAffiliate($this->createAffiliateFixture());
+        $data = $orderRequest->getData();
+
+        $this->assertArrayHasKey('affiliate', $data);
+        $this->assertArrayHasKey('split_payments', $data['affiliate']);
     }
 }
