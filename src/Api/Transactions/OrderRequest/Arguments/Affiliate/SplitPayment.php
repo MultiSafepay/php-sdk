@@ -104,7 +104,7 @@ class SplitPayment implements GatewayInfoInterface
 
         return [
             "merchant" => $this->merchant,
-            "fixed" => $this->fixed->getAmountInCents(),
+            "fixed" => $this->fixed ? (int)round($this->fixed->getAmount()) : null,
             "description" => $this->description,
         ];
     }

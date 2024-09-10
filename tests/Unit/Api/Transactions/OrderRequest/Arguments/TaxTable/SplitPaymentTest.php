@@ -78,7 +78,7 @@ class SplitPaymentTest extends TestCase
         $splitPayment->addDescription('application fee');
         $splitPayment->addMerchant('123123');
         $this->assertEquals([
-            'fixed' => 1000,
+            'fixed' => 10,
             'description' => 'application fee',
             'merchant' => '123123'
         ], $splitPayment->getData());

@@ -28,7 +28,7 @@ class AffiliateTest extends TestCase
         $this->assertSame(1, count($data['split_payments']));
         $this->assertSame([
             'merchant' => 'merchant',
-            'fixed' => (float) 1000,
+            'fixed' => 10,
             'description' => null,
         ], $data['split_payments'][0]);
     }
@@ -49,7 +49,7 @@ class AffiliateTest extends TestCase
         $this->assertSame(1, count($data['split_payments']));
         $this->assertSame([
             'merchant' => 'merchant',
-            'fixed' => (float) 1000,
+            'fixed' => 10,
             'description' => null,
         ], $data['split_payments'][0]);
     }

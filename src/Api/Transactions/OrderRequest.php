@@ -529,9 +529,10 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
         return $this->var3;
     }
 
-    public function addAffiliate(?OrderRequest\Arguments\Affiliate $affiliate)
+    public function addAffiliate(?OrderRequest\Arguments\Affiliate $affiliate): OrderRequest
     {
         $this->affiliate = $affiliate;
+        return $this;
     }
 
     /**

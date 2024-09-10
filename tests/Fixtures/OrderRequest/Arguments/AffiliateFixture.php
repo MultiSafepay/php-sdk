@@ -18,11 +18,12 @@ trait AffiliateFixture
     /**
      * @return Affiliate
      */
-    public function createAffiliateFixture(): Affiliate
+    public function createAffiliateFixture(?string $merchantId = '00000001'): Affiliate
     {
         $splitPayment = new Affiliate\SplitPayment();
-        $splitPayment->addMerchant('00000001');
+        $splitPayment->addMerchant($merchantId);
         $splitPayment->addFixed(new Money(10));
+        $splitPayment->addDescription('test description');
 
         return new Affiliate([$splitPayment]);
     }
