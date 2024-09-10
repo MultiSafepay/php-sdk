@@ -46,4 +46,15 @@ abstract class AbstractTestCase extends TestCase
 
         return new Sdk($apiKey, false);
     }
+
+    /**
+     * @return string
+     */
+    protected function getPartnerAccountId(): string
+    {
+        $accountId = getenv('PARTNER_ACCOUNT_ID');
+        $this->assertNotEmpty($accountId);
+
+        return $accountId;
+    }
 }
