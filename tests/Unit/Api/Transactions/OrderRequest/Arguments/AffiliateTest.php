@@ -21,7 +21,7 @@ class AffiliateTest extends TestCase
 
         $affiliate = new Affiliate();
         $affiliate->addSplitPayments([
-            $splitPayment
+            $splitPayment,
         ]);
 
         $data = $affiliate->getData();

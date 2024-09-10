@@ -48,7 +48,7 @@ class Affiliate
         return [
             'split_payments' => array_map(function (SplitPayment $splitPayment) {
                 return $splitPayment->getData();
-            }, $this->splitPayments)
+            }, $this->splitPayments),
         ];
     }
 }

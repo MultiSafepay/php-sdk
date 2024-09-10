@@ -44,6 +44,9 @@ class Percentage
         return $this->percentage;
     }
 
+    /**
+     * @return string
+     */
     public function __toString(): string
     {
         return (string) $this->percentage . '%';
