@@ -78,7 +78,10 @@
       },
       "payment_components": {
         "has_fields": true,
-        "is_enabled": true
+        "is_enabled": true,
+        "qr": {
+          "supported": false
+        }
       }
     },
     "brands": [],

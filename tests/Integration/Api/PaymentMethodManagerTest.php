@@ -126,5 +126,23 @@ class PaymentMethodManagerTest extends TestCase
 
         $this->assertTrue($paymentMethod->supportsPaymentComponent());
         $this->assertTrue($paymentMethod->supportsTokenization());
+        $this->assertFalse($paymentMethod->supportsQr());
+    }
+
+    /**
+     * @throws ClientExceptionInterface
+     * @throws Exception
+     */
+    public function testGetMisterCash()
+    {
+        $mockClient = MockClient::getInstance();
+        $mockClient->mockResponseFromFixtureFile('payment-method-mistercash');
+
+        $paymentMethodManager = new PaymentMethodManager($mockClient);
+        $paymentMethod = $paymentMethodManager->getByGatewayCode('Bancontact');
+
+        $this->assertTrue($paymentMethod->supportsPaymentComponent());
+        $this->assertTrue($paymentMethod->supportsTokenization());
+        $this->assertTrue($paymentMethod->supportsQr());
     }
 }

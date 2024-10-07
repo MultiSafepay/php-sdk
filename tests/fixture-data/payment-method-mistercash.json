@@ -1,0 +1,52 @@
+{
+    "data": {
+        "additional_data": {},
+        "allowed_amount": {
+            "max": null,
+            "min": 0
+        },
+        "allowed_countries": [],
+        "allowed_currencies": [
+            "EUR"
+        ],
+        "apps": {
+            "fastcheckout": {
+                "is_enabled": true,
+                "qr": {
+                    "supported": true
+                }
+            },
+            "payment_components": {
+                "has_fields": true,
+                "is_enabled": true,
+                "qr": {
+                    "supported": true
+                }
+            }
+        },
+        "brands": [],
+        "icon_urls": {
+            "large": "https://media.multisafepay.com/img/methods/3x/mistercash.png",
+            "medium": "https://media.multisafepay.com/img/methods/2x/mistercash.png",
+            "vector": "https://media.multisafepay.com/img/methods/svg/mistercash.svg"
+        },
+        "id": "MISTERCASH",
+        "name": "Bancontact",
+        "preferred_countries": [
+            "BE",
+            "ZA"
+        ],
+        "required_customer_data": [],
+        "shopping_cart_required": false,
+        "tokenization": {
+            "is_enabled": true,
+            "models": {
+                "cardonfile": true,
+                "subscription": true,
+                "unscheduled": true
+            }
+        },
+        "type": "payment-method"
+    },
+    "success": true
+}

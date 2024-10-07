@@ -39,10 +39,12 @@ class PaymentMethod
     public const REQUIRED_CUSTOMER_DATA_KEY = 'required_customer_data';
     public const PAYMENT_COMPONENT_KEY = 'payment_components';
     public const PAYMENT_COMPONENT_HAS_FIELDS_KEY = 'has_fields';
+    public const PAYMENT_COMPONENT_QR_KEY = 'qr';
     public const FAST_CHECKOUT_KEY = 'fastcheckout';
     public const RECURRING_MODEL_CARD_ON_FILE_KEY = 'cardonfile';
     public const RECURRING_MODEL_SUBSCRIPTION_KEY = 'subscription';
     public const RECURRING_MODEL_UNSCHEDULED_KEY = 'unscheduled';
+    public const SUPPORTED_KEY = 'supported';
 
     public const COUPON_TYPE = 'coupon';
     public const PAYMENT_METHOD_TYPE = 'payment-method';
@@ -277,6 +279,15 @@ class PaymentMethod
     /**
      * @return bool
      */
+    public function supportsQr(): bool
+    {
+        return isset($this->apps[self::PAYMENT_COMPONENT_KEY]) &&
+            $this->apps[self::PAYMENT_COMPONENT_KEY][self::PAYMENT_COMPONENT_QR_KEY][self::SUPPORTED_KEY];
+    }
+
+    /**
+     * @return bool
+     */
     public function supportsFastCheckout(): bool
     {
         return isset($this->apps[self::FAST_CHECKOUT_KEY]) &&
@@ -392,43 +403,61 @@ class PaymentMethod
         }
 
         if (empty($data[self::TYPE_KEY])) {
-            throw new InvalidDataInitializationException('No Type  ' . $data[self::ID_KEY]);
+            throw new InvalidDataInitializationException('No Type ' . $data[self::ID_KEY]);
         }
 
         if (empty($data[self::ALLOWED_AMOUNT_KEY])) {
-            throw new InvalidDataInitializationException('No Allowed Amounts  ' . $data[self::ID_KEY]);
+            throw new InvalidDataInitializationException('No Allowed Amounts ' . $data[self::ID_KEY]);
         }
 
         if (!isset($data[self::ALLOWED_COUNTRIES_KEY]) || !is_array($data[self::ALLOWED_COUNTRIES_KEY])) {
-            throw new InvalidDataInitializationException('No Allowed Countries  ' . $data[self::ID_KEY]);
+            throw new InvalidDataInitializationException('No Allowed Countries ' . $data[self::ID_KEY]);
         }
 
         if (!isset($data[self::BRANDS_KEY]) || !is_array($data[self::BRANDS_KEY])) {
-            throw new InvalidDataInitializationException('No Brands  ' . $data[self::ID_KEY]);
+            throw new InvalidDataInitializationException('No Brands ' . $data[self::ID_KEY]);
         }
 
         if (!isset($data[self::PREFERRED_COUNTRIES_KEY]) || !is_array($data[self::PREFERRED_COUNTRIES_KEY])) {
-            throw new InvalidDataInitializationException('No Preferred Countries  ' . $data[self::ID_KEY]);
+            throw new InvalidDataInitializationException('No Preferred Countries ' . $data[self::ID_KEY]);
         }
 
         if (!isset($data[self::REQUIRED_CUSTOMER_DATA_KEY]) || !is_array($data[self::REQUIRED_CUSTOMER_DATA_KEY])) {
-            throw new InvalidDataInitializationException('No Required Customer Data  ' . $data[self::ID_KEY]);
+            throw new InvalidDataInitializationException('No Required Customer Data ' . $data[self::ID_KEY]);
         }
 
         if (!isset($data[self::SHOPPING_CART_REQUIRED_KEY])) {
-            throw new InvalidDataInitializationException('No Shopping Cart Required  ' . $data[self::ID_KEY]);
+            throw new InvalidDataInitializationException('No Shopping Cart Required ' . $data[self::ID_KEY]);
         }
 
         if (!isset($data[self::TOKENIZATION_KEY]) || !is_array($data[self::TOKENIZATION_KEY])) {
-            throw new InvalidDataInitializationException('No Tokenization  ' . $data[self::ID_KEY]);
+            throw new InvalidDataInitializationException('No Tokenization ' . $data[self::ID_KEY]);
         }
 
         if (!isset($data[self::APPS_KEY]) || !is_array($data[self::APPS_KEY])) {
-            throw new InvalidDataInitializationException('No Apps  ' . $data[self::ID_KEY]);
+            throw new InvalidDataInitializationException('No Apps ' . $data[self::ID_KEY]);
+        }
+
+        if (!isset($data[self::APPS_KEY][self::PAYMENT_COMPONENT_KEY]) || !is_array($data[self::APPS_KEY][self::PAYMENT_COMPONENT_KEY])) {
+            throw new InvalidDataInitializationException('No Payment Components ' . $data[self::ID_KEY]);
+        }
+
+        $paymentComponents = $data[self::APPS_KEY][self::PAYMENT_COMPONENT_KEY];
+
+        if (!isset($paymentComponents[self::PAYMENT_COMPONENT_HAS_FIELDS_KEY])) {
+            throw new InvalidDataInitializationException('No Payment Component has "has_fields" field ' . $data[self::ID_KEY]);
+        }
+
+        if (!isset($paymentComponents[self::IS_ENABLED_KEY])) {
+            throw new InvalidDataInitializationException('No Payment Component has "is_enabled" field ' . $data[self::ID_KEY]);
+        }
+
+        if (!isset($paymentComponents[self::PAYMENT_COMPONENT_QR_KEY])) {
+            throw new InvalidDataInitializationException('No Payment Component has "qr" field ' . $data[self::ID_KEY]);
         }
 
         if (!isset($data[self::ICON_URLS_KEY]) || !is_array($data[self::ICON_URLS_KEY])) {
-            throw new InvalidDataInitializationException('Icon urls is not an array  ' . $data[self::ID_KEY]);
+            throw new InvalidDataInitializationException('Icon urls is not an array ' . $data[self::ID_KEY]);
         }
     }
 }
