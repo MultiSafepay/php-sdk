@@ -24,6 +24,11 @@ class CheckoutOptions extends DataObject
     private $taxTable;
 
     /**
+     * @var bool
+     */
+    private $validateCart = false;
+
+    /**
      * @param ShoppingCart $shoppingCart
      * @return CheckoutOptions
      * @throws InvalidArgumentException
@@ -81,9 +86,22 @@ class CheckoutOptions extends DataObject
         return array_merge(
             [
                 'tax_tables' => $this->taxTable ? $this->taxTable->getData() : null,
+                'validate_cart' => $this->validateCart,
             ],
             $this->data
         );
+    }
+
+    /**
+     * Add cart validation
+     *
+     * @return $this
+     */
+    public function addCartValidation(): CheckoutOptions
+    {
+        $this->validateCart = true;
+
+        return $this;
     }
 
     /**

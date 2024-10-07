@@ -55,4 +55,25 @@ class CheckoutOptionsTest extends TestCase
         $data = $checkoutOptions->getData();
         $this->assertCount(2, $data['tax_tables']['alternate']);
     }
+
+    /**
+     * @covers \MultiSafepay\Api\Transactions\OrderRequest\Arguments\CheckoutOptions::addCartValidation
+     */
+    public function testAddCartValidation()
+    {
+        $checkoutOptions = new CheckoutOptions();
+        $checkoutOptions->addCartValidation(true);
+        $data = $checkoutOptions->getData();
+        $this->assertTrue($data['validate_cart']);
+    }
+
+    /**
+     * @covers \MultiSafepay\Api\Transactions\OrderRequest\Arguments\CheckoutOptions::addCartValidation
+     */
+    public function testNoAddCartValidation()
+    {
+        $checkoutOptions = new CheckoutOptions();
+        $data = $checkoutOptions->getData();
+        $this->assertFalse($data['validate_cart']);
+    }
 }

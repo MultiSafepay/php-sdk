@@ -563,6 +563,7 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
     }
 
     /**
+     * @deprecated since 5.15.0, use Api/Transactions/OrderRequest/Arguments/CheckoutOptions::addCartValidation instead
      * @param array $data
      * @return bool
      * @throws InvalidTotalAmountException
