@@ -30,6 +30,7 @@ class Money
      * @param float $amount
      * Amount in full units like Euros for CartItem $unitPrice
      * Amount in cents for OrderRequest $money
+     * Amount in cents for UpdateRequest $partialShipmentAmount
      *
      * @param string $currency Currency code, like EUR
      */
