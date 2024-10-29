@@ -59,6 +59,11 @@ class CartItem extends DataObject
     protected $description;
 
     /**
+     * @var UnitPrice
+     */
+    private $unitPriceValue;
+
+    /**
      * @param array $data
      * @return CartItem
      * @throws InvalidArgumentException
@@ -67,7 +72,7 @@ class CartItem extends DataObject
     {
         $item = (new self())
             ->addName((string)$data['name'])
-            ->addUnitPrice(new Money($data['unit_price'] * 100, (string)$data['currency']))
+            ->addUnitPriceValue(new UnitPrice((float)$data['unit_price']))
             ->addQuantity((int)$data['quantity'])
             ->addMerchantItemId((string)$data['merchant_item_id'])
             ->addTaxTableSelector((string)$data['tax_table_selector'])
@@ -91,6 +96,26 @@ class CartItem extends DataObject
     }
 
     /**
+     * @param UnitPrice $unitPrice
+     * @param float|null $taxRate
+     * @return $this
+     * @throws InvalidArgumentException
+     */
+    public function addUnitPriceValue(UnitPrice $unitPrice, float $taxRate = null): CartItem
+    {
+        $this->unitPriceValue = $unitPrice;
+
+        if ($taxRate !== null) {
+            $this->addTaxRate($taxRate);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @deprecated since version 5.15.0, will be removed in version 7.0.0.
+     * Replaced by addUnitPriceValue
+     *
      * @param Money $unitPrice
      * @param float|null $taxRate
      * @return CartItem
@@ -179,12 +204,11 @@ class CartItem extends DataObject
      */
     public function getData(): array
     {
-        $moneyFormatter = new MoneyFormatter();
         return array_merge(
             [
                 'name' => $this->name ?? null,
                 'description' => $this->description ?? '',
-                'unit_price' => $moneyFormatter->toDecimalString($this->unitPrice),
+                'unit_price' => $this->getUnitPriceValue(),
                 'currency' => $this->unitPrice ? $this->unitPrice->getCurrency() : '',
                 'quantity' => $this->quantity ?? 0,
                 'merchant_item_id' => !empty($this->getMerchantItemId()) ? $this->getMerchantItemId() : '',
@@ -212,6 +236,18 @@ class CartItem extends DataObject
     public function getUnitPrice(): Money
     {
         return $this->unitPrice;
+    }
+
+    /**
+     * @return float
+     */
+    public function getUnitPriceValue(): float
+    {
+        if ($this->unitPrice) {
+            return $this->unitPrice->getAmount() / 100;
+        }
+
+        return $this->unitPriceValue->get() ?? 0.0;
     }
 
     /**

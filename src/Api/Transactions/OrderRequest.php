@@ -21,6 +21,8 @@ use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart;
 use MultiSafepay\Api\Transactions\OrderRequest\Validators\TotalAmountValidator;
 use MultiSafepay\Exception\InvalidArgumentException;
 use MultiSafepay\Exception\InvalidTotalAmountException;
+use MultiSafepay\ValueObject\Amount;
+use MultiSafepay\ValueObject\Currency;
 use MultiSafepay\ValueObject\Money;
 
 /**
@@ -153,6 +155,16 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
     private $var3;
 
     /**
+     * @var Amount
+     */
+    private $amount;
+
+    /**
+     * @var Currency
+     */
+    private $currency;
+
+    /**
      * @param string $type
      * @return OrderRequest
      * @throws InvalidArgumentException
@@ -223,19 +235,55 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
     }
 
     /**
-     * @return string
+     * @param Amount $amount
+     * @return $this
      */
-    public function getCurrency(): string
+    public function addAmount(Amount $amount): OrderRequest
     {
-        return $this->money->getCurrency();
+        $this->amount = $amount;
+        return $this;
     }
 
     /**
-     * @return float
+     * @param Currency $currency
+     * @return $this
      */
-    public function getAmount(): float
+    public function addCurrency(Currency $currency): OrderRequest
     {
-        return $this->money->getAmount();
+        $this->currency = $currency;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCurrency(): ?string
+    {
+        if ($this->money) {
+            return $this->money->getCurrency() ?? null;
+        }
+
+        if ($this->currency) {
+            return $this->currency->get() ?? null;
+        }
+
+        return null;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getAmount(): ?int
+    {
+        if ($this->money) {
+            return (int)round($this->money->getAmount()) ?? null;
+        }
+
+        if ($this->amount) {
+            return $this->amount->get() ?? null;
+        }
+
+        return null;
     }
 
     /**
@@ -533,8 +581,8 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
         $data = [
             'type' => $this->type,
             'order_id' => $this->orderId,
-            'currency' => $this->money ? (string)$this->money->getCurrency() : null,
-            'amount' => $this->money ? (int)round($this->money->getAmount()) : null,
+            'currency' => $this->getCurrency(),
+            'amount' => $this->getAmount(),
             'gateway' => $this->gatewayCode,
             'gateway_info' => $this->gatewayInfo ? $this->gatewayInfo->getData() : null,
             'payment_options' => $this->paymentOptions ? $this->paymentOptions->getData() : null,

@@ -107,11 +107,11 @@ class TransactionResponse extends ResponseBody
     }
 
     /**
-     * @return float
+     * @return int
      */
-    public function getAmount(): float
+    public function getAmount(): int
     {
-        return (float)$this->get('amount');
+        return (int)$this->get('amount');
     }
 
     /**
@@ -163,11 +163,11 @@ class TransactionResponse extends ResponseBody
     }
 
     /**
-     * @return float
+     * @return int
      */
-    public function getAmountRefunded(): float
+    public function getAmountRefunded(): int
     {
-        return (float)$this->get('amount_refunded');
+        return (int)$this->get('amount_refunded');
     }
 
     /**

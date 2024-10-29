@@ -11,6 +11,8 @@ use MultiSafepay\Api\Base\RequestBodyInterface;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\Description;
 use MultiSafepay\Api\Transactions\RefundRequest\Arguments\CheckoutData;
 use MultiSafepay\Exception\InvalidArgumentException;
+use MultiSafepay\ValueObject\Amount;
+use MultiSafepay\ValueObject\Currency;
 use MultiSafepay\ValueObject\Money;
 
 /**
@@ -33,6 +35,15 @@ class RefundRequest extends RequestBody implements RequestBodyInterface
      * @var CheckoutData
      */
     private $checkoutData;
+    /**
+     * @var Amount
+     */
+    private $amount;
+
+    /**
+     * @var Currency
+     */
+    private $currency;
 
     /**
      * @return array
@@ -42,8 +53,8 @@ class RefundRequest extends RequestBody implements RequestBodyInterface
     {
         return $this->removeNullRecursive(array_merge(
             [
-                'currency' => $this->money ? (string)$this->money->getCurrency() : null,
-                'amount' => $this->money ? (int)round($this->money->getAmount()) : null,
+                'currency' => $this->getCurrency(),
+                'amount' => $this->getAmount(),
                 'description' => $this->description ? $this->description->getData() : null,
                 'checkout_data' => $this->checkoutData ? $this->checkoutData->getData() : null,
             ],
@@ -58,6 +69,26 @@ class RefundRequest extends RequestBody implements RequestBodyInterface
     public function addMoney(Money $money): RefundRequest
     {
         $this->money = $money;
+        return $this;
+    }
+
+    /**
+     * @param Amount $amount
+     * @return $this
+     */
+    public function addAmount(Amount $amount): RefundRequest
+    {
+        $this->amount = $amount;
+        return $this;
+    }
+
+    /**
+     * @param Currency $currency
+     * @return $this
+     */
+    public function addCurrency(Currency $currency): RefundRequest
+    {
+        $this->currency = $currency;
         return $this;
     }
 
@@ -97,5 +128,37 @@ class RefundRequest extends RequestBody implements RequestBodyInterface
     public function getCheckoutData(): CheckoutData
     {
         return $this->checkoutData;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCurrency(): ?string
+    {
+        if ($this->money) {
+            return $this->money->getCurrency() ?? null;
+        }
+
+        if ($this->currency) {
+            return $this->currency->get() ?? null;
+        }
+
+        return null;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getAmount(): ?int
+    {
+        if ($this->money) {
+            return (int)round($this->money->getAmount()) ?? null;
+        }
+
+        if ($this->amount) {
+            return $this->amount->get() ?? null;
+        }
+
+        return null;
     }
 }

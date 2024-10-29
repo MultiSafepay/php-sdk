@@ -79,7 +79,8 @@ use MultiSafepay\ValueObject\Customer\Country;
 use MultiSafepay\ValueObject\Customer\Address;
 use MultiSafepay\ValueObject\Customer\PhoneNumber;
 use MultiSafepay\ValueObject\Customer\EmailAddress;
-use MultiSafepay\ValueObject\Money;
+use MultiSafepay\ValueObject\Amount;
+use MultiSafepay\ValueObject\Currency;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\CustomerDetails;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\PluginDetails;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\PaymentOptions;
@@ -91,7 +92,8 @@ $multiSafepaySdk = new \MultiSafepay\Sdk($yourApiKey, $isProduction);
 
 $orderId = (string) time();
 $description = 'Order #' . $orderId;
-$amount = new Money(2000, 'EUR'); // Amount must be in cents
+$amount = new Amount(2000); // Amount must be in cents
+$currency = new Currency('EUR');
 
 $address = (new Address())
     ->addStreetName('Kraanspoor')
@@ -125,7 +127,8 @@ $orderRequest = (new OrderRequest())
     ->addType('redirect')
     ->addOrderId($orderId)
     ->addDescriptionText($description)
-    ->addMoney($amount)
+    ->addAmount($amount)
+    ->addCurrency($currency)
     ->addGatewayCode('IDEAL')
     ->addCustomer($customer)
     ->addDelivery($customer)
@@ -143,8 +146,10 @@ use MultiSafepay\ValueObject\Customer\Country;
 use MultiSafepay\ValueObject\Customer\Address;
 use MultiSafepay\ValueObject\Customer\PhoneNumber;
 use MultiSafepay\ValueObject\Customer\EmailAddress;
-use MultiSafepay\ValueObject\Money;
+use MultiSafepay\ValueObject\Amount;
+use MultiSafepay\ValueObject\Currency;
 use MultiSafepay\ValueObject\Weight;
+use MultiSafepay\ValueObject\UnitPrice;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\CustomerDetails;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\PluginDetails;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\PaymentOptions;
@@ -158,7 +163,8 @@ $multiSafepaySdk = new \MultiSafepay\Sdk($yourApiKey, $isProduction);
 
 $orderId = (string) time();
 $description = 'Order #' . $orderId;
-$amount = new Money(12100, 'EUR'); // Amount must be in cents
+$amount = new Amount(12100); // Amount must be in cents
+$currency = new Currency('EUR');
 
 $address = (new Address())
     ->addStreetName('Kraanspoor')
@@ -190,7 +196,7 @@ $paymentOptions = (new PaymentOptions())
 
 $items[] = (new Item())
     ->addName('Geometric Candle Holders')
-    ->addUnitPrice(new Money(5000, 'EUR')) // Amount must be in cents
+    ->addUnitPriceValue(new UnitPrice(50.00)) // Amount must be in whole units
     ->addQuantity(2)
     ->addDescription('1234')
     ->addTaxRate(21)
@@ -201,7 +207,8 @@ $orderRequest = (new OrderRequest())
     ->addType('redirect')
     ->addOrderId($orderId)
     ->addDescriptionText($description)
-    ->addMoney($amount)
+    ->addAmount($amount)
+    ->addCurrency($currency)
     ->addGatewayCode('IDEAL')
     ->addCustomer($customer)
     ->addDelivery($customer)
@@ -222,8 +229,10 @@ use MultiSafepay\ValueObject\Customer\Country;
 use MultiSafepay\ValueObject\Customer\Address;
 use MultiSafepay\ValueObject\Customer\PhoneNumber;
 use MultiSafepay\ValueObject\Customer\EmailAddress;
-use MultiSafepay\ValueObject\Money;
+use MultiSafepay\ValueObject\Amount;
+use MultiSafepay\ValueObject\Currency;
 use MultiSafepay\ValueObject\Weight;
+use MultiSafepay\ValueObject\UnitPrice;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\CustomerDetails;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\PluginDetails;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\PaymentOptions;
@@ -238,7 +247,8 @@ $multiSafepaySdk = new \MultiSafepay\Sdk($yourApiKey, $isProduction);
 
 $orderId = (string) time();
 $description = 'Order #' . $orderId;
-$amount = new Money(12100, 'EUR'); // Amount must be in cents!!
+$amount = new Amount(12100); // Amount must be in cents!!
+$currency = new Currency('EUR');
 
 $address = (new Address())
     ->addStreetName('Kraanspoor')
@@ -270,7 +280,7 @@ $paymentOptions = (new PaymentOptions())
 
 $items[] = (new Item())
     ->addName('Geometric Candle Holders')
-    ->addUnitPrice(new Money(5000, 'EUR'))
+    ->addUnitPriceValue(new UnitPrice(50.00))
     ->addQuantity(2)
     ->addDescription('1234')
     ->addTaxRate(21)
@@ -284,7 +294,8 @@ $orderRequest = (new OrderRequest())
     ->addType('direct')
     ->addOrderId($orderId)
     ->addDescriptionText($description)
-    ->addMoney($amount)
+    ->addAmount($amount)
+    ->addCurrency($currency)
     ->addGatewayCode('IDEAL')
     ->addCustomer($customer)
     ->addDelivery($customer)
@@ -301,33 +312,37 @@ $transaction->getPaymentUrl();
 ### Creating a full refund without shopping cart
 ```php
 use MultiSafepay\Api\Transactions\RefundRequest;
-use MultiSafepay\ValueObject\Money;
+use MultiSafepay\ValueObject\Amount;
+use MultiSafepay\ValueObject\Currency;
 
 $yourApiKey = 'your-api-key';
 $isProduction = false;
 $multiSafepaySdk = new \MultiSafepay\Sdk($yourApiKey, $isProduction);
 
 $orderId = XXXXX;  // An order ID created and completed previously
-$refundAmount = new Money(0, 'EUR'); // Using zero you will trigger a full refund
+$refundAmount = new Amount(0); // Using zero you will trigger a full refund
+$refundCurrency = new Currency('EUR');
 $transactionManager = $multiSafepaySdk->getTransactionManager();
 $transaction = $transactionManager->get($orderId);
-$transactionManager->refund($transaction, (new RefundRequest())->addMoney( $refundAmount ) );
+$transactionManager->refund($transaction, (new RefundRequest())->addAmount($refundAmount)->addCurrency($refundCurrency));
 ```
 
 ### Creating a partial refund without shopping cart
 ```php
 use MultiSafepay\Api\Transactions\RefundRequest;
-use MultiSafepay\ValueObject\Money;
+use MultiSafepay\ValueObject\Amount;
+use MultiSafepay\ValueObject\Currency;
 
 $yourApiKey = 'your-api-key';
 $isProduction = false;
 $multiSafepaySdk = new \MultiSafepay\Sdk($yourApiKey, $isProduction);
 
 $orderId = XXXXX;  // An order ID created and completed previously
-$refundAmount = new Money(2000, 'EUR'); // Set the amount that should be refunded in cents
+$refundAmount = new Amount(2000); // Set the amount that should be refunded in cents
+$refundCurrency = new Currency('EUR');
 $transactionManager = $multiSafepaySdk->getTransactionManager();
 $transaction = $transactionManager->get($orderId);
-$transactionManager->refund($transaction, (new RefundRequest())->addMoney( $refundAmount ) );
+$transactionManager->refund($transaction, (new RefundRequest())->addAmount($refundAmount)->addCurrency($refundCurrency));
 ```
 
 ### Creating a full refund with shopping cart
@@ -386,7 +401,8 @@ use MultiSafepay\ValueObject\Customer\Country;
 use MultiSafepay\ValueObject\Customer\Address;
 use MultiSafepay\ValueObject\Customer\PhoneNumber;
 use MultiSafepay\ValueObject\Customer\EmailAddress;
-use MultiSafepay\ValueObject\Money;
+use MultiSafepay\ValueObject\Amount;
+use MultiSafepay\ValueObject\Currency;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\CustomerDetails;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\PluginDetails;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\PaymentOptions;
@@ -400,7 +416,8 @@ $terminalId = 'your-smart-pos-terminal-id';
 
 $orderId = (string) time();
 $description = 'Order #' . $orderId;
-$amount = new Money(12100, 'EUR'); // Amount must be in cents!!
+$amount = new Amount(12100); // Amount must be in cents!!
+$currency = new Currency('EUR');
 
 $address = (new Address())
     ->addStreetName('Kraanspoor')
@@ -434,7 +451,8 @@ $orderRequest = (new OrderRequest())
     ->addType('redirect')
     ->addOrderId($orderId)
     ->addDescriptionText($description)
-    ->addMoney($amount)
+    ->addAmount($amount)
+    ->addCurrency($currency)
     ->addGatewayCode('')
     ->addCustomer($customer)
     ->addDelivery($customer)

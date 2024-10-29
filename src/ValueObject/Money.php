@@ -11,6 +11,8 @@ use MultiSafepay\Util\MoneyFormatter;
 /**
  * Class Money
  * @package MultiSafepay\ValueObject
+ * @deprecated since version 5.15.0, will be removed in version 7.0.0
+ * Replaced by ValueObject\Amount, ValueObject\UnitPrice and ValueObject\Currency
  */
 class Money
 {
