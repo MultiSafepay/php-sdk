@@ -24,12 +24,12 @@ class AccountTest extends TestCase
         $account->addAccountId($iban);
         $account->addAccountHolderIban($iban);
         $account->addAccountHolderName('John Doe');
-        $account->addEmanDate('1 januari 1970');
+        $account->addEmandate('id_xxxx');
         $data = $account->getData();
         $this->assertSame($iban->get(), $data['account_id']);
         $this->assertSame($iban->get(), $data['account_holder_iban']);
         $this->assertSame('John Doe', $data['account_holder_name']);
-        $this->assertSame('1 januari 1970', $data['emandate']);
+        $this->assertSame('id_xxxx', $data['emandate']);
     }
 
     /**
