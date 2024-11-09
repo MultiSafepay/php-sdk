@@ -13,7 +13,7 @@ class AccountTest extends TestCase
      * @covers \MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo\Account::addAccountId
      * @covers \MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo\Account::addAccountHolderIban
      * @covers \MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo\Account::addAccountHolderName
-     * @covers \MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo\Account::addEmanDate
+     * @covers \MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo\Account::addEmandate
      */
     public function testGetData()
     {
@@ -37,7 +37,6 @@ class AccountTest extends TestCase
      *
      * @covers \MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo\Account::addAccountIdAsString
      * @covers \MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo\Account::addAccountHolderIbanAsString
-     * @covers \MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo\Account::addEmanDate
      */
     public function testSettingValueObjectsUsingAsStringMethods()
     {
