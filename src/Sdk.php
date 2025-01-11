@@ -52,7 +52,7 @@ class Sdk
     public function __construct(
         string $apiKey,
         bool $isProduction,
-        ClientInterface $httpClient = null,
+        ?ClientInterface $httpClient = null,
         ?RequestFactoryInterface $requestFactory = null,
         ?StreamFactoryInterface $streamFactory = null,
         string $locale = 'en_US',
