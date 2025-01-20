@@ -136,7 +136,7 @@ class TransactionManager extends AbstractManager
      * @return Response
      * @throws ClientExceptionInterface|ApiException
      */
-    public function refund(Transaction $transaction, RefundRequest $requestRefund, string $orderId = null): Response
+    public function refund(Transaction $transaction, RefundRequest $requestRefund, ?string $orderId = null): Response
     {
         return $this->client->createPostRequest(
             'json/orders/' . ($orderId ?: $transaction->getOrderId()) . '/refunds',

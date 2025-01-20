@@ -101,7 +101,7 @@ class CartItem extends DataObject
      * @return $this
      * @throws InvalidArgumentException
      */
-    public function addUnitPriceValue(UnitPrice $unitPrice, float $taxRate = null): CartItem
+    public function addUnitPriceValue(UnitPrice $unitPrice, ?float $taxRate = null): CartItem
     {
         $this->unitPriceValue = $unitPrice;
 

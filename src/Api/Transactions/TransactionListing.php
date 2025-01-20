@@ -25,7 +25,7 @@ class TransactionListing
      * @param array $data
      * @param Pager|null $pager
      */
-    public function __construct(array $data, Pager $pager = null)
+    public function __construct(array $data, ?Pager $pager = null)
     {
         $transactions = [];
         if (!empty($data)) {

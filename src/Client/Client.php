@@ -108,7 +108,7 @@ class Client
      */
     public function createPostRequest(
         string $endpoint,
-        RequestBodyInterface $requestBody = null,
+        ?RequestBodyInterface $requestBody = null,
         array $context = []
     ): ApiResponse {
         $request = $this->createRequest($endpoint, self::METHOD_POST)
@@ -133,7 +133,7 @@ class Client
      */
     public function createPatchRequest(
         string $endpoint,
-        RequestBodyInterface $requestBody = null,
+        ?RequestBodyInterface $requestBody = null,
         array $context = []
     ): ApiResponse {
         $request = $this->createRequest($endpoint, self::METHOD_PATCH)
