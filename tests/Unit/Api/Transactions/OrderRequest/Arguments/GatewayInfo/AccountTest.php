@@ -13,7 +13,7 @@ class AccountTest extends TestCase
      * @covers \MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo\Account::addAccountId
      * @covers \MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo\Account::addAccountHolderIban
      * @covers \MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo\Account::addAccountHolderName
-     * @covers \MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo\Account::addEmanDate
+     * @covers \MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo\Account::addEmandate
      */
     public function testGetData()
     {
@@ -24,12 +24,12 @@ class AccountTest extends TestCase
         $account->addAccountId($iban);
         $account->addAccountHolderIban($iban);
         $account->addAccountHolderName('John Doe');
-        $account->addEmanDate('1 januari 1970');
+        $account->addEmandate('id_xxxx');
         $data = $account->getData();
         $this->assertSame($iban->get(), $data['account_id']);
         $this->assertSame($iban->get(), $data['account_holder_iban']);
         $this->assertSame('John Doe', $data['account_holder_name']);
-        $this->assertSame('1 januari 1970', $data['emandate']);
+        $this->assertSame('id_xxxx', $data['emandate']);
     }
 
     /**
@@ -37,7 +37,6 @@ class AccountTest extends TestCase
      *
      * @covers \MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo\Account::addAccountIdAsString
      * @covers \MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo\Account::addAccountHolderIbanAsString
-     * @covers \MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo\Account::addEmanDate
      */
     public function testSettingValueObjectsUsingAsStringMethods()
     {

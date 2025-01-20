@@ -34,7 +34,7 @@ class Account implements GatewayInfoInterface
     /**
      * @var string
      */
-    private $emanDate;
+    private $emandate;
 
     /**
      * @param IbanNumber $accountId
@@ -89,12 +89,12 @@ class Account implements GatewayInfoInterface
     }
 
     /**
-     * @param string $emanDate
+     * @param string $emandate
      * @return Account
      */
-    public function addEmanDate(string $emanDate): Account
+    public function addEmandate(string $emandate): Account
     {
-        $this->emanDate = $emanDate;
+        $this->emandate = $emandate;
         return $this;
     }
 
@@ -107,7 +107,7 @@ class Account implements GatewayInfoInterface
             'account_id' => $this->accountId ? $this->accountId->get() : null,
             'account_holder_iban' => $this->accountHolderIban ? $this->accountHolderIban->get() : null,
             'account_holder_name' => $this->accountHolderName,
-            'emandate' => $this->emanDate,
+            'emandate' => $this->emandate,
         ];
     }
 }
