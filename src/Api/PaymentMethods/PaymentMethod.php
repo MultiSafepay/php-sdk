@@ -174,6 +174,10 @@ class PaymentMethod
      */
     public function getMinAmount(): float
     {
+        if ($this->getType() === self::COUPON_TYPE) {
+            return 0.0;
+        }
+
         return (float)$this->allowedAmount[self::ALLOWED_MIN_AMOUNT_KEY];
     }
 
@@ -182,6 +186,10 @@ class PaymentMethod
      */
     public function getMaxAmount(): ?float
     {
+        if ($this->getType() === self::COUPON_TYPE) {
+            return null;
+        }
+
         return $this->allowedAmount[self::ALLOWED_MAX_AMOUNT_KEY] ?? null;
     }
 
