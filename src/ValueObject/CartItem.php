@@ -72,7 +72,7 @@ class CartItem extends DataObject
     {
         $item = (new self())
             ->addName((string)$data['name'])
-            ->addUnitPrice(new Money((float)$data['unit_price'], (string)$data['currency']))
+            ->addUnitPrice(new Money((float)$data['unit_price'] * 100, (string)$data['currency']))
             ->addQuantity((int)$data['quantity'])
             ->addMerchantItemId((string)$data['merchant_item_id'])
             ->addTaxTableSelector((string)$data['tax_table_selector'])
