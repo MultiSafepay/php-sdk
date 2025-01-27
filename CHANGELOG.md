@@ -6,6 +6,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [5.15.0] - 2025-01-27
+### Added
+- PHPSDK-158: Add "Amount" and "UnitPrice" objects and deprecate the Money object
+- PHPSDK-160: Add missing request parameters to UpdateRequest, like excludeOrder, extendExpiration, reason, partialShipmentAmount, carrier, invoiceId, invoiceUrl, poNumber, shipDate, trackTraceCode, trackTraceUrl, newOrderId
+- PHPSDK-159: Add support within the SDK to get the QR related properties
+- PHPSDK-154: Add cart validation to replace strict mode in the future
+
+### Fixed
+- PHPSDK-163: Fix PHP 8.4 deprecations, thanks to @RV7PR
+- PLUGINSUP-637: Fix missing MultiSafepay logo in README document, thanks to @DaanDeSmedt
+- PHPSDK-162: Use correct case for emandate property, thanks to @malles
+
+### Changed
+- PHPSDK-164: Overwrite max amount for gift cards to be null, because these might accept partial payment
+
 ## [5.14.0] - 2024-07-08
 ### Added
 - PHPSDK-155: Throw ApiUnavailableException when API returns 501/503 HTTP codes
