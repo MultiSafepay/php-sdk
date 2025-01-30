@@ -4,7 +4,9 @@ namespace MultiSafepay\Tests\Unit\Api\Transactions;
 use MultiSafepay\Api\Transactions\OrderRequest;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart\Item as ShoppingCartItem;
 use MultiSafepay\Exception\InvalidArgumentException;
+use MultiSafepay\Exception\InvalidTotalAmountException;
 use MultiSafepay\Tests\Fixtures\Api\Gateways\GatewayFixture;
+use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\AffiliateFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\CustomerDetailsFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\DescriptionFixture;
 use MultiSafepay\Tests\Fixtures\OrderRequest\Arguments\GoogleAnalyticsFixture;
@@ -45,9 +47,12 @@ class OrderRequestTest extends TestCase
     use PhoneNumberFixture;
     use ShoppingCartFixture;
     use OrderRequestWithoutPluginDetails;
+    use AffiliateFixture;
 
     /**
      * Test if regular creation of an order works
+     * @throws InvalidArgumentException
+     * @throws InvalidTotalAmountException
      */
     public function testRequestOrderWithTypeRedirect()
     {
@@ -70,6 +75,8 @@ class OrderRequestTest extends TestCase
 
     /**
      * Test if regular creation of an order works
+     * @throws InvalidArgumentException
+     * @throws InvalidTotalAmountException
      */
     public function testRequestOrderWithTypeDirect()
     {
@@ -92,6 +99,8 @@ class OrderRequestTest extends TestCase
 
     /**
      * Test if we can modify the shopping cart after having created the order request
+     * @throws InvalidArgumentException
+     * @throws InvalidTotalAmountException
      */
     public function testCreateAndAddNewItem()
     {
@@ -135,6 +144,8 @@ class OrderRequestTest extends TestCase
 
     /**
      * Test if order request can be created adding a terminal ID
+     * @throws InvalidArgumentException
+     * @throws InvalidTotalAmountException
      */
     public function testRequestOrderWithTerminalId()
     {
@@ -144,9 +155,11 @@ class OrderRequestTest extends TestCase
         $this->assertArrayHasKey('terminal_id', $data['gateway_info']);
         $this->assertEquals('terminal-id', $data['gateway_info']['terminal_id']);
     }
-    
+
     /**
      * Test if we can add a customer object, only setting up the reference, and get the Order Request
+     * @throws InvalidArgumentException
+     * @throws InvalidTotalAmountException
      */
     public function testCreateAndAddCustomerReference()
     {
@@ -162,6 +175,8 @@ class OrderRequestTest extends TestCase
 
     /**
      * Test if order request can be created without set pluginDetails
+     * @throws InvalidTotalAmountException
+     * @throws InvalidArgumentException
      */
     public function testRequestOrderRequestWithoutPluginDetails()
     {
@@ -172,6 +187,8 @@ class OrderRequestTest extends TestCase
 
     /**
      * Test if we can add a customer info object, only setting up the reference, and get the Order Request
+     * @throws InvalidArgumentException
+     * @throws InvalidTotalAmountException
      */
     public function testRequestOrderRequestWithCustomInfo()
     {
@@ -185,6 +202,7 @@ class OrderRequestTest extends TestCase
 
     /**
      * Test if we can get the Var data, within an order request
+     * @throws InvalidArgumentException
      */
     public function testOrderRequestWithVarCollection()
     {
@@ -195,5 +213,20 @@ class OrderRequestTest extends TestCase
         $this->assertEquals('Multi', $orderRequest->getVar1());
         $this->assertEquals('Safe', $orderRequest->getVar2());
         $this->assertEquals('Pay', $orderRequest->getVar3());
+    }
+
+    /**
+     * Test if we can get affiliate data, within an order request
+     * @throws InvalidArgumentException
+     * @throws InvalidTotalAmountException
+     */
+    public function testOrderWithAffiliate()
+    {
+        $orderRequest = $this->createIdealOrderRedirectRequestFixture();
+        $orderRequest->addAffiliate($this->createAffiliateFixture());
+        $data = $orderRequest->getData();
+
+        $this->assertArrayHasKey('affiliate', $data);
+        $this->assertArrayHasKey('split_payments', $data['affiliate']);
     }
 }

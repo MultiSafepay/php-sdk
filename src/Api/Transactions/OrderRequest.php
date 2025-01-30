@@ -8,6 +8,7 @@ namespace MultiSafepay\Api\Transactions;
 
 use MultiSafepay\Api\Base\RequestBody;
 use MultiSafepay\Api\Gateways\Gateway;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\Affiliate;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\CheckoutOptions;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\CustomerDetails;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\CustomInfo;
@@ -163,6 +164,11 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
      * @var Currency
      */
     private $currency;
+
+    /**
+     * @var ?OrderRequest\Arguments\Affiliate
+     */
+    private $affiliate = null;
 
     /**
      * @param string $type
@@ -572,6 +578,24 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
     }
 
     /**
+     * @param ?OrderRequest\Arguments\Affiliate $affiliate
+     * @return OrderRequest
+     */
+    public function addAffiliate(?OrderRequest\Arguments\Affiliate $affiliate): OrderRequest
+    {
+        $this->affiliate = $affiliate;
+        return $this;
+    }
+
+    /**
+     * @return Affiliate|null
+     */
+    public function getAffiliate(): ?OrderRequest\Arguments\Affiliate
+    {
+        return $this->affiliate;
+    }
+
+    /**
      * @return array
      * phpcs:disable ObjectCalisthenics.Files.FunctionLength
      * @throws InvalidArgumentException|InvalidTotalAmountException
@@ -602,6 +626,7 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
             'var1' => $this->getVar1(),
             'var2' => $this->getVar2(),
             'var3' => $this->getVar3(),
+            'affiliate' => $this->affiliate ? $this->affiliate->getData() : null,
         ];
 
         $data = $this->removeNullRecursive(array_merge($data, $this->data));

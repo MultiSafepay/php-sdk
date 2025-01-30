@@ -45,5 +45,6 @@ jobs:
         run: |
           cp .env.php.example .env.php
           sed -i "s/'API_KEY' => ''/'API_KEY' => '${{ secrets.API_KEY }}'/g" .env.php
+          sed -i "s/'PARTNER_ACCOUNT_ID' => ''/'PARTNER_ACCOUNT_ID' => '1001001'/g" .env.php
       - name: Run PHPUnit tests
         run:  vendor/bin/phpunit
