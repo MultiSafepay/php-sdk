@@ -8,7 +8,6 @@ namespace MultiSafepay\ValueObject;
 
 use MultiSafepay\Api\Base\DataObject;
 use MultiSafepay\Exception\InvalidArgumentException;
-use MultiSafepay\Util\MoneyFormatter;
 
 /**
  * Class CartItem
@@ -121,7 +120,7 @@ class CartItem extends DataObject
      * @return CartItem
      * @throws InvalidArgumentException
      */
-    public function addUnitPrice(Money $unitPrice, float $taxRate = null): CartItem
+    public function addUnitPrice(Money $unitPrice, ?float $taxRate = null): CartItem
     {
         $this->unitPrice = $unitPrice;
         if ($taxRate !== null) {

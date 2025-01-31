@@ -7,6 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     name: PHP Unit Test with PHP version ${{ matrix.php-version }}
     strategy:
+      max-parallel: 1
       matrix:
         php-version:
           - '7.2'
@@ -15,6 +16,8 @@ jobs:
           - '8.0'
           - '8.1'
           - '8.2'
+          - '8.3'
+          - '8.4'
     steps:
       - name: Install php
         uses: shivammathur/setup-php@v2
