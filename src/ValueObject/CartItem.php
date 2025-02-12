@@ -164,7 +164,7 @@ class CartItem extends DataObject
      */
     public function addMerchantItemId(string $merchantItemId): CartItem
     {
-        $this->merchantItemId = $merchantItemId;
+        $this->merchantItemId = trim($merchantItemId);
         return $this;
     }
 
