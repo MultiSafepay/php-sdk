@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [5.16.0] - 2025-03-19
+### Added
+- PHPSDK-166: Add support for affiliates & split payments to create order endpoint
+- PHPSDK-168: Add unit tests for covering IPV6 in IpAddress class
+- PLGMAG2V2-401: Add new type 'checkout' to the allowed types in the OrderRequest class
+- PLGMAG2V2-401: Add new 'feed_url' methods to the OrderRequest class
+
+### Fixed
+- PHPSDK-143: Trim merchant item id in order request
+
 ## [5.15.0] - 2025-01-27
 ### Added
 - PHPSDK-158: Add "Amount" and "UnitPrice" objects and deprecate the Money object
