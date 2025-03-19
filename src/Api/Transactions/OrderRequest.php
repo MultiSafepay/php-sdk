@@ -37,7 +37,8 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
     public const DIRECT_TYPE = 'direct';
     public const REDIRECT_TYPE = 'redirect';
     public const PAYMENT_LINK_TYPE = 'paymentlink';
-    public const ALLOWED_TYPES = [self::DIRECT_TYPE, self::REDIRECT_TYPE, self::PAYMENT_LINK_TYPE];
+    public const CHECKOUT_TYPE = 'checkout';
+    public const ALLOWED_TYPES = [self::DIRECT_TYPE, self::REDIRECT_TYPE, self::PAYMENT_LINK_TYPE, self::CHECKOUT_TYPE];
 
     /** The allowed values for the recurring models. */
     public const CARD_ON_FILE_MODEL = 'cardOnFile';

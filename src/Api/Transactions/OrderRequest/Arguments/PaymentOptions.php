@@ -21,6 +21,11 @@ class PaymentOptions
     private $notificationUrl = '';
 
     /**
+     * @var string
+     */
+    private $feedUrl = '';
+
+    /**
      * @var array
      */
     private $settings = [];
@@ -81,6 +86,16 @@ class PaymentOptions
     }
 
     /**
+     * @param string $feedUrl
+     * @return PaymentOptions
+     */
+    public function addFeedUrl(string $feedUrl): PaymentOptions
+    {
+        $this->feedUrl = $feedUrl;
+        return $this;
+    }
+
+    /**
      * @param string $redirectUrl
      * @return PaymentOptions
      */
@@ -116,6 +131,14 @@ class PaymentOptions
     public function getNotificationUrl(): string
     {
         return $this->notificationUrl;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFeedUrl(): string
+    {
+        return $this->feedUrl;
     }
 
     /**
@@ -165,6 +188,7 @@ class PaymentOptions
     {
         return [
             'notification_url' => $this->getNotificationUrl(),
+            'feed_url' => $this->getFeedUrl(),
             'notification_method' => $this->getNotificationMethod(),
             'redirect_url' => $this->getRedirectUrl(),
             'cancel_url' => $this->getCancelUrl(),
