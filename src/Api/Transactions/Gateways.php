@@ -26,5 +26,6 @@ class Gateways
         'ZINIA_IN3',
         'BNPL_OB',
         'BNPL_MF',
+        'BILLINK',
     );
 }
