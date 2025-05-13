@@ -147,8 +147,8 @@ class Creditcard implements GatewayInfoInterface
     {
         return [
             'card_number' => $this->cardNumber ? $this->cardNumber->get() : null,
-            'cart_holder_name' => $this->cardHolderName,
-            'cart_expiry_date' => $this->cardExpiryDate ? $this->cardExpiryDate->get('my') : null,
+            'card_holder_name' => $this->cardHolderName,
+            'card_expiry_date' => $this->cardExpiryDate ? $this->cardExpiryDate->get('ym') : null,
             'cvc' => $this->cvc ? $this->cvc->get() : null,
             'card_cvc' => $this->cvc ? $this->cvc->get() : null,
             'flexible_3d' => $this->flexible3d,

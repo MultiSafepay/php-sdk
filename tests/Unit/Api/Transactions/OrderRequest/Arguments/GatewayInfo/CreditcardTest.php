@@ -31,8 +31,8 @@ class CreditcardTest extends TestCase
         $creditcard->addFlexible3d(true);
         $creditcard->addTermUrl('http://example.org/');
         $data = $creditcard->getData();
-        $this->assertSame('0101', $data['cart_expiry_date']);
-        $this->assertSame('John Doe', $data['cart_holder_name']);
+        $this->assertSame('0101', $data['card_expiry_date']);
+        $this->assertSame('John Doe', $data['card_holder_name']);
         $this->assertSame($creditcardNumber, $data['card_number']);
         $this->assertSame('111', $data['cvc']);
         $this->assertSame(true, $data['flexible_3d']);
@@ -56,7 +56,7 @@ class CreditcardTest extends TestCase
         $creditcard->addCvcAsString('111');
 
         $data = $creditcard->getData();
-        $this->assertSame('0101', $data['cart_expiry_date']);
+        $this->assertSame('0101', $data['card_expiry_date']);
         $this->assertSame($creditcardNumber, $data['card_number']);
         $this->assertSame('111', $data['cvc']);
     }
