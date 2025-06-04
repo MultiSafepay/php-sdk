@@ -14,7 +14,7 @@ class UnitPrice
     private $unitPrice;
 
     /**
-     * Should be given in full units excluding tax, preferably including all decimal places, e.g. 3.305785124
+     * Should be given in full units excluding tax, preferably including 10 decimal at most, e.g. 3.305785124
      *
      * @param float $unitPrice
      */

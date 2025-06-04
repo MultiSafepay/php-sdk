@@ -243,10 +243,10 @@ class CartItem extends DataObject
     public function getUnitPriceValue(): float
     {
         if ($this->unitPrice) {
-            return $this->unitPrice->getAmount() / 100;
+            return round($this->unitPrice->getAmount() / 100, 10);
         }
 
-        return $this->unitPriceValue->get() ?? 0.0;
+        return round(($this->unitPriceValue->get() ?? 0.0), 10);
     }
 
     /**
