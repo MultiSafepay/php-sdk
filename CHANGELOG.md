@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [5.17.0] - 2025-06-04
+### Added
+- PHPSDK-172: Add BILLINK to SHOPPING_CART_REQUIRED_GATEWAYS constant
+
+### Fixed 
+- PHPSDK-173: Fix typo in \MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo\Creditcard object
+
 ## [5.16.0] - 2025-03-19
 ### Added
 - PHPSDK-166: Add support for affiliates & split payments to create order endpoint
