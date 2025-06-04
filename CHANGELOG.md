@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed 
 - PHPSDK-173: Fix typo in \MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo\Creditcard object
+- PHPSDK-174: Fix UnitPrice sometimes having more than 10 decimals
 
 ## [5.16.0] - 2025-03-19
 ### Added
