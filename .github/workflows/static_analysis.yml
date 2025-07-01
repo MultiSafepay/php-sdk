@@ -1,5 +1,8 @@
 name: Static Analysis
 on:
+  push:
+    branches:
+      - master
   pull_request:
     branches:
       - master

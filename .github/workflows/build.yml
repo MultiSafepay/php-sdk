@@ -50,4 +50,7 @@ jobs:
           sed -i "s/'API_KEY' => ''/'API_KEY' => '${{ secrets.API_KEY }}'/g" .env.php
           sed -i "s/'PARTNER_ACCOUNT_ID' => ''/'PARTNER_ACCOUNT_ID' => '1001001'/g" .env.php
       - name: Run PHPUnit tests
-        run:  vendor/bin/phpunit
+        run:  vendor/bin/phpunit --coverage-clover=coverage.xml
+      - if: matrix.php-version == '8.3'
+        name: Send clover to codecov
+        run: test -z "${{ secrets.CODECOV_TOKEN }}" || (bash <(curl -s https://codecov.io/bash) -t ${{ secrets.CODECOV_TOKEN }} -f "*.php" -Z -R .)
