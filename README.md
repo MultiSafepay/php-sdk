@@ -4,7 +4,12 @@
 
 # MultiSafepay PHP SDK
 
-[![Latest stable version](https://img.shields.io/packagist/v/multisafepay/php-sdk)](https://packagist.org/packages/multisafepay/php-sdk)
+[![Build](https://img.shields.io/github/actions/workflow/status/multisafepay/php-sdk/build.yml?style=for-the-badge)](https://github.com/MultiSafepay/php-sdk/actions)
+[![Codecov](https://img.shields.io/codecov/c/github/multisafepay/php-sdk?style=for-the-badge)](https://app.codecov.io/gh/MultiSafepay/php-sdk)
+[![Latest stable version](https://img.shields.io/github/v/release/multisafepay/php-sdk?style=for-the-badge)](https://packagist.org/packages/multisafepay/php-sdk)
+[![Total downloads](https://img.shields.io/packagist/dt/multisafepay/php-sdk?style=for-the-badge)](https://packagist.org/packages/multisafepay/php-sdk/stats)
+[![License](https://img.shields.io/github/license/multisafepay/php-sdk?style=for-the-badge)](https://github.com/MultiSafepay/php-sdk/blob/master/LICENSE.md)
+
 
 ## About MultiSafepay
 MultiSafepay is a Dutch payment services provider, which takes care of contracts, processing transactions, and collecting payment for a range of local and international payment methods. Start selling online today and manage all your transactions in one place!
