@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [5.17.1] - 2025-08-21
+### Added
+- PLGMAG2V2-859: Add CODE_OF_CONDUCT.md
+- PHPSDK-176: Add badges to the README.md document
+
+### Changed
+- PHPSDK-180: Use constant-time string comparison in Notification::verifyNotification, thanks to @CasEbb
+
 ## [5.17.0] - 2025-06-04
 ### Added
 - PHPSDK-172: Add BILLINK to SHOPPING_CART_REQUIRED_GATEWAYS constant
