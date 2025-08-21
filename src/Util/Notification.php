@@ -50,6 +50,6 @@ class Notification
         $payload = $timestamp . ':' . $request;
         $hash = hash_hmac('sha512', $payload, trim($apiKey));
 
-        return $hash === $sha512hexPayload;
+        return hash_equals($hash, $sha512hexPayload);
     }
 }
