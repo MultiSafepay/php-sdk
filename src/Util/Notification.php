@@ -12,6 +12,25 @@ use MultiSafepay\Exception\InvalidArgumentException;
 class Notification
 {
     /**
+     * Method for scenarios where instance-based calls are required
+     *
+     * @param TransactionResponse|string $request
+     * @param string $auth
+     * @param string $apiKey
+     * @param int $validationTimeInSeconds
+     * @return bool
+     * @throws InvalidArgumentException
+     */
+    public function verify(
+        $request,
+        string $auth,
+        string $apiKey,
+        int $validationTimeInSeconds = 600
+    ): bool {
+        return self::verifyNotification($request, $auth, $apiKey, $validationTimeInSeconds);
+    }
+
+    /**
      * @param TransactionResponse|string $request
      * @param string $auth
      * @param string $apiKey
