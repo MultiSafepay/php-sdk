@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [5.17.2] - 2025-09-17
+### Added
+- PHPSDK-181: Add an auxiliary non-static method for verifyNotification()
+
 ## [5.17.1] - 2025-08-21
 ### Added
 - PLGMAG2V2-859: Add CODE_OF_CONDUCT.md

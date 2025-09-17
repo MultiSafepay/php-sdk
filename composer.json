@@ -3,7 +3,7 @@
   "description": "MultiSafepay PHP SDK",
   "type": "library",
   "license": "OSL-3.0",
-  "version": "5.17.1",
+  "version": "5.17.2",
   "require": {
     "php": "^7.2|^8.0",
     "ext-json": "*",
