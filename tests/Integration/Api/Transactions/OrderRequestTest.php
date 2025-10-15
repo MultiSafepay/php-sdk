@@ -4,7 +4,7 @@
  * See DISCLAIMER.md for disclaimer details.
  */
 
-namespace MultiSafepay\Tests\Api\Integration\Transactions;
+namespace MultiSafepay\Tests\Integration\Api\Transactions;
 
 use Faker\Factory as FakerFactory;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart;

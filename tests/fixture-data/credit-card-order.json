@@ -1,0 +1,101 @@
+{
+  "success": true,
+  "data": {
+    "amount": 1000,
+    "amount_refunded": 0,
+    "completed": "2025-07-31T11:58:26",
+    "costs": [
+      {
+        "amount": 0.6,
+        "description": "2.9 % For Visa CreditCards Transactions (min 0.6)",
+        "transaction_id": 12551564,
+        "type": "SYSTEM"
+      }
+    ],
+    "created": "2025-07-31T11:14:35",
+    "currency": "EUR",
+    "custom_info": {
+      "custom_1": null,
+      "custom_2": null,
+      "custom_3": null
+    },
+    "customer": {
+      "address1": "Neherkade",
+      "address2": null,
+      "city": "Gravenhage",
+      "company_name": null,
+      "country": "NL",
+      "country_name": "Netherlands",
+      "email": "example@multisafepay.com",
+      "first_name": "Testperson-nl",
+      "house_number": "XI",
+      "last_name": "Approved",
+      "locale": "nl_NL",
+      "phone1": "0612345678",
+      "phone2": null,
+      "state": null,
+      "zip_code": "2521VA"
+    },
+    "description": "product description",
+    "fastcheckout": "NO",
+    "financial_status": "completed",
+    "items": null,
+    "modified": "2025-07-31T11:58:26",
+    "order_id": "apitool_9290375",
+    "payment_details": {
+      "account_holder_name": "Test Holder Name",
+      "account_id": null,
+      "authorization_code": "876543",
+      "card_acceptor_id": null,
+      "card_acceptor_location": null,
+      "card_acceptor_name": null,
+      "card_additional_response_data": {
+        "cavv_results_code": "2"
+      },
+      "card_authentication_details": {
+        "flow": "challenge"
+      },
+      "card_authentication_result": {
+        "acs_transaction_id": "c6de9eea-6dee-11f0-b568-f107cb810105",
+        "cavv": "jBOUYcbPJm91ETNudFHohpeBero=",
+        "ds_transaction_id": "c6dee954-6dee-11f0-b568-f107cb810105",
+        "eci": "05",
+        "status": "Y",
+        "version": "2.1.0"
+      },
+      "card_entry_mode": "UNKNOWN",
+      "card_expiry_date": "3012",
+      "card_verification_result": "M",
+      "external_transaction_id": "234205872",
+      "last4": "1111",
+      "mcc": null,
+      "recurring_flow": null,
+      "recurring_id": "998163177297134120",
+      "recurring_model": null,
+      "response_code": "00",
+      "scheme_reference_id": null,
+      "type": "VISA"
+    },
+    "payment_methods": [
+      {
+        "account_holder_name": "Test Holder Name",
+        "amount": 1000,
+        "card_expiry_date": "3012",
+        "currency": "EUR",
+        "description": "product description",
+        "external_transaction_id": "234205872",
+        "payment_description": "Visa",
+        "status": "completed",
+        "type": "VISA"
+      }
+    ],
+    "reason": null,
+    "reason_code": "1000",
+    "related_transactions": null,
+    "status": "completed",
+    "transaction_id": 1753953275109182,
+    "var1": null,
+    "var2": null,
+    "var3": null
+  }
+}

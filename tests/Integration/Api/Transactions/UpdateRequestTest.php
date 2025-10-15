@@ -4,7 +4,7 @@
  * See DISCLAIMER.md for disclaimer details.
  */
 
-namespace MultiSafepay\Tests\Api\Integration\Transactions;
+namespace MultiSafepay\Tests\Integration\Api\Transactions;
 
 use MultiSafepay\Api\Transactions\UpdateRequest;
 use MultiSafepay\ValueObject\Money;

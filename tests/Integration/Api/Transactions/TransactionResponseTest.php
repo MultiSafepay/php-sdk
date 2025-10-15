@@ -4,9 +4,13 @@
  * See DISCLAIMER.md for disclaimer details.
  */
 
-namespace MultiSafepay\Tests\Api\Integration\Transactions;
+namespace MultiSafepay\Tests\Integration\Api\Transactions;
 
+use Exception;
 use MultiSafepay\Api\Transactions\TransactionResponse;
+use MultiSafepay\Api\Transactions\TransactionResponse\PaymentDetails\CardAuthenticationDetails;
+use MultiSafepay\Api\Transactions\TransactionResponse\PaymentDetails\CardAuthenticationResult;
+use MultiSafepay\Tests\Utils\FixtureLoader;
 use PHPUnit\Framework\TestCase;
 
 class TransactionResponseTest extends TestCase
@@ -69,6 +73,32 @@ class TransactionResponseTest extends TestCase
     }
 
     /**
+     * Test if getPaymentDetails->getCardAuthenticationResult returns a CardAuthenticationResult instance
+     *
+     * @return void
+     * @throws Exception
+     */
+    public function testGetPaymentDetailsReturnsCardAuthenticationResult(): void
+    {
+        $transactionResponse = $this->createTransactionResponseWithCreditCardOrderFixture();
+        $paymentDetails = $transactionResponse->getPaymentDetails();
+        $this->assertInstanceOf(CardAuthenticationResult::class, $paymentDetails->getCardAuthenticationResult());
+    }
+
+    /**
+     * Test if getPaymentDetails->getCardAuthenticationDetails returns a CardAuthenticationDetails instance
+     *
+     * @return void
+     * @throws Exception
+     */
+    public function testGetPaymentDetailsReturnsCardAuthenticationDetails(): void
+    {
+        $transactionResponse = $this->createTransactionResponseWithCreditCardOrderFixture();
+        $paymentDetails = $transactionResponse->getPaymentDetails();
+        $this->assertInstanceOf(CardAuthenticationDetails::class, $paymentDetails->getCardAuthenticationDetails());
+    }
+
+    /**
      * Retrieve a TransactionResponse with the provided payment methods
      *
      * @param array $paymentMethods
@@ -78,5 +108,16 @@ class TransactionResponseTest extends TestCase
     {
         $data = ['payment_methods' => $paymentMethods];
         return new TransactionResponse($data);
+    }
+
+    /**
+     * Retrieve a TransactionResponse with the provided credit card order details fixture
+     * @return TransactionResponse
+     * @throws Exception
+     */
+    private function createTransactionResponseWithCreditCardOrderFixture(): TransactionResponse
+    {
+        $data = FixtureLoader::loadFixtureDataById('credit-card-order');
+        return new TransactionResponse($data['data']);
     }
 }
