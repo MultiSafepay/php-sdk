@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [5.18.0] - 2025-10-15
+### Added
+- PHPSDK-178: Extend PaymentDetails object, including Card Payment related information
+
 ## [5.17.2] - 2025-09-17
 ### Added
 - PHPSDK-181: Add an auxiliary non-static method for verifyNotification()

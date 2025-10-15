@@ -17,7 +17,7 @@ use RuntimeException;
  */
 class Version
 {
-    public const SDK_VERSION = '5.17.2';
+    public const SDK_VERSION = '5.18.0';
 
     /**
      * @var Version
