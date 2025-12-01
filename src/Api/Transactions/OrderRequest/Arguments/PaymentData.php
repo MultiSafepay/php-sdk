@@ -25,6 +25,11 @@ class PaymentData extends DataObject
     private $gateway;
 
     /**
+     * @var bool
+     */
+    private $tokenize;
+
+    /**
      * @param string $payload
      * @return PaymentData
      */
@@ -45,13 +50,24 @@ class PaymentData extends DataObject
     }
 
     /**
+     * @param bool $tokenize
+     * @return PaymentData
+     */
+    public function addTokenize(bool $tokenize): PaymentData
+    {
+        $this->tokenize = $tokenize;
+        return $this;
+    }
+
+    /**
      * @return array
      */
     public function getData(): array
     {
-        return [
+        return $this->removeNullRecursive([
             'payload' => $this->payload,
             'gateway' => $this->gateway,
-        ];
+            'tokenize' => $this->tokenize,
+        ]);
     }
 }
