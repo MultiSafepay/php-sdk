@@ -451,6 +451,16 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
     }
 
     /**
+     * Retrieve the payment_options object from the OrderRequest
+     *
+     * @return PaymentOptions|null
+     */
+    public function getPaymentOptions(): ?PaymentOptions
+    {
+        return $this->paymentOptions;
+    }
+
+    /**
      * Retrieve the checkout_options object from the OrderRequest
      *
      * @return CheckoutOptions
