@@ -239,9 +239,7 @@ class OrderRequestTest extends TestCase
     public function testOrderWithPaymentData()
     {
         $orderRequest = $this->createIdealOrderRedirectRequestFixture();
-        $orderRequest->addPaymentData((new PaymentData())
-            ->addPayload('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30')
-        );
+        $orderRequest->addPaymentData((new PaymentData())->addPayload('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30'));
         $data = $orderRequest->getData();
 
         $this->assertArrayHasKey('payment_data', $data);
