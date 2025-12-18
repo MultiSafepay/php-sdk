@@ -15,6 +15,7 @@ use MultiSafepay\Api\Transactions\OrderRequest\Arguments\CustomInfo;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\Description;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfoInterface;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\GoogleAnalytics;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\PaymentData;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\PaymentOptions;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\PluginDetails;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\SecondChance;
@@ -115,6 +116,11 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
      * @var CheckoutOptions
      */
     protected $checkoutOptions;
+
+    /**
+     * @var PaymentData
+     */
+    protected $paymentData;
 
     /**
      * @var int
@@ -505,6 +511,16 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
     }
 
     /**
+     * @param PaymentData $paymentData
+     * @return OrderRequest
+     */
+    public function addPaymentData(PaymentData $paymentData): OrderRequest
+    {
+        $this->paymentData = $paymentData;
+        return $this;
+    }
+
+    /**
      * @param int $seconds
      * @return OrderRequest
      */
@@ -630,6 +646,7 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
             'delivery' => $this->delivery ? $this->delivery->getData() : null,
             'shopping_cart' => $this->shoppingCart ? $this->shoppingCart->getData() : null,
             'checkout_options' => $this->checkoutOptions ? $this->checkoutOptions->getData() : null,
+            'payment_data' => $this->paymentData ? $this->paymentData->getData() : null,
             'days_active' => $this->daysActive,
             'seconds_active' => $this->secondsActive,
             'plugin' => $this->pluginDetails ? $this->pluginDetails->getData() : null,

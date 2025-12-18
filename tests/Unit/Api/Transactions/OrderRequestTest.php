@@ -2,6 +2,7 @@
 namespace MultiSafepay\Tests\Unit\Api\Transactions;
 
 use MultiSafepay\Api\Transactions\OrderRequest;
+use MultiSafepay\Api\Transactions\OrderRequest\Arguments\PaymentData;
 use MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart\Item as ShoppingCartItem;
 use MultiSafepay\Exception\InvalidArgumentException;
 use MultiSafepay\Exception\InvalidTotalAmountException;
@@ -228,5 +229,33 @@ class OrderRequestTest extends TestCase
 
         $this->assertArrayHasKey('affiliate', $data);
         $this->assertArrayHasKey('split_payments', $data['affiliate']);
+    }
+
+    /**
+     * Test if we can get payment data, within an order request
+     * @throws InvalidArgumentException
+     * @throws InvalidTotalAmountException
+     */
+    public function testOrderWithPaymentData()
+    {
+        $orderRequest = $this->createIdealOrderRedirectRequestFixture();
+        $orderRequest->addPaymentData((new PaymentData())
+            ->addPayload('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30'));
+        $data = $orderRequest->getData();
+
+        $this->assertArrayHasKey('payment_data', $data);
+    }
+
+    /**
+     * Test if we can get payment data, within an order request
+     * @throws InvalidArgumentException
+     * @throws InvalidTotalAmountException
+     */
+    public function testOrderWithoutPaymentData()
+    {
+        $orderRequest = $this->createIdealOrderRedirectRequestFixture();
+        $data = $orderRequest->getData();
+
+        $this->assertArrayNotHasKey('payment_data', $data);
     }
 }
