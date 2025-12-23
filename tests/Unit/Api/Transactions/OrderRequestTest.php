@@ -258,4 +258,59 @@ class OrderRequestTest extends TestCase
 
         $this->assertArrayNotHasKey('payment_data', $data);
     }
+
+    /**
+     * Test if we can get the manual capture flag, with an explicitly set correct value
+     * @throws InvalidArgumentException
+     * @throws InvalidTotalAmountException
+     */
+    public function testOrderWithManualCapture()
+    {
+        $orderRequest = $this->createOrderIdealDirectRequestFixture();
+        $orderRequest->addCapture('manual');
+        $data = $orderRequest->getData();
+
+        $this->assertEquals('manual', $data['capture'] ?? '');
+    }
+
+    /**
+     * Test if we can get the manual capture flag, with an explicitly set value
+     * @throws InvalidArgumentException
+     * @throws InvalidTotalAmountException
+     */
+    public function testOrderWithFreestyleManualCapture()
+    {
+        $orderRequest = $this->createOrderIdealDirectRequestFixture();
+        $orderRequest->addCapture('example');
+        $data = $orderRequest->getData();
+
+        $this->assertEquals('example', $data['capture'] ?? '');
+    }
+
+    /**
+     * Test if we can set the manual capture flag by using the default
+     * @throws InvalidArgumentException
+     * @throws InvalidTotalAmountException
+     */
+    public function testOrderWithDefaultManualCapture()
+    {
+        $orderRequest = $this->createOrderIdealDirectRequestFixture();
+        $orderRequest->addCapture();
+        $data = $orderRequest->getData();
+
+        $this->assertEquals('manual', $data['capture'] ?? '');
+    }
+
+    /**
+     * Test if the capture flag is truly missing when the order is created without setting it
+     * @throws InvalidArgumentException
+     * @throws InvalidTotalAmountException
+     */
+    public function testOrderWithoutManualCapture()
+    {
+        $orderRequest = $this->createOrderIdealDirectRequestFixture();
+        $data = $orderRequest->getData();
+
+        $this->assertArrayNotHasKey('capture', $data);
+    }
 }
