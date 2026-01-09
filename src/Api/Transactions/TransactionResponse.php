@@ -187,6 +187,14 @@ class TransactionResponse extends ResponseBody
     }
 
     /**
+     * @return bool
+     */
+    public function isCompleted(): bool
+    {
+        return $this->getStatus() === Transaction::COMPLETED;
+    }
+
+    /**
      * @return string
      */
     public function getFinancialStatus(): string

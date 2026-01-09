@@ -40,6 +40,7 @@ class TransactionResponseTest extends TestCase
         $this->assertEquals('completed', $transactionResponse->getFinancialStatus());
         $this->assertEquals('1000', $transactionResponse->getReasonCode());
         $this->assertEquals('', $transactionResponse->getReason());
+        $this->assertTrue($transactionResponse->isCompleted());
 
         // Custom variables
         $this->assertEquals('', $transactionResponse->getVar1());
