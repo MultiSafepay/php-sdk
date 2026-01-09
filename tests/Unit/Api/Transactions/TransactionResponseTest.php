@@ -135,5 +135,9 @@ class TransactionResponseTest extends TestCase
 
         // Gateway ID
         $this->assertEquals('VISA', $transactionResponse->getGatewayId());
+
+        // Shopping Cart
+        $shoppingCart = $transactionResponse->getShoppingCart();
+        $this->assertNull($shoppingCart);
     }
 }

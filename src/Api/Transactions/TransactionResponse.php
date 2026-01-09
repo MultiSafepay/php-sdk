@@ -350,12 +350,18 @@ class TransactionResponse extends ResponseBody
     }
 
     /**
-     * @return ShoppingCart
+     * @return ShoppingCart|null
      * @throws InvalidArgumentException
      */
-    public function getShoppingCart(): ShoppingCart
+    public function getShoppingCart(): ?ShoppingCart
     {
-        return ShoppingCart::fromData($this->get('shopping_cart'));
+        $shoppingCartData = $this->get('shopping_cart');
+
+        if (empty($shoppingCartData)) {
+            return null;
+        }
+
+        return ShoppingCart::fromData($shoppingCartData);
     }
 
     /**
