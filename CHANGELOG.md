@@ -6,6 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [5.19.0] - 2026-01-15
+### Added
+- PLGMAG2V2-881: Add a method to easily retrieve the payment_options from the OrderRequest
+- PHPSDK-184: Add the PaymentData object to an OrderRequest, thanks to @firstred
+- PHPSDK-185: Add all the properties of a CaptureRequest, thanks to @firstred
+- PHPSDK-186: Add the capture property to an OrderRequest, thanks to @firstred
+- PHPSDK-68: Add a cleaner function for checking order status completed
+
+### Fixed
+- PHPSDK-69: Fix type error when trying to retrieve shopping cart from TransactionResponse that does not have it
+
 ## [5.18.0] - 2025-10-15
 ### Added
 - PHPSDK-178: Extend PaymentDetails object, including Card Payment related information
