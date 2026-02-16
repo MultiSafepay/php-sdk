@@ -42,8 +42,12 @@ jobs:
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
             ${{ runner.os }}-composer-
-      - name: Install dependencies
-        run:  composer install
+      - name: Install dependencies (PHP >= 7.3)
+        if: matrix.php-version != '7.2'
+        run: composer install
+      - name: Install dependencies (PHP 7.2)
+        if: matrix.php-version == '7.2'
+        run: composer update --prefer-dist --no-interaction --no-progress
       - name: Update environment file
         run: |
           cp .env.php.example .env.php

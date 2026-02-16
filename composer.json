@@ -13,7 +13,7 @@
     "php-http/discovery": "^1.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "^9.0 || ^7.5",
+    "phpunit/phpunit": "^8.5 || ^9.0",
     "guzzlehttp/guzzle": "^7.0",
     "http-interop/http-factory-guzzle": "^1.0",
     "php-http/mock-client": "^1.3",
