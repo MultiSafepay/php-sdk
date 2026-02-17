@@ -395,6 +395,49 @@ $transactions = $transactionListing->getTransactions();
 $pager = $transactionListing->getPager(); // If pagination is needed, this Pager object can be used 
 ```
 
+### List terminals
+List all POS terminals bound to a MultiSafepay account.
+
+Authentication for this endpoint requires a **Merchant Account API Key**. Note: according to the public API documentation, this endpoint is not available in the TEST environment.
+More information at our [Documentation Center](https://docs.multisafepay.com/reference/listterminals).
+```php
+$yourMerchantAccountApiKey = 'your-merchant-account-api-key';
+$isProduction = true;
+$multiSafepaySdk = new \MultiSafepay\Sdk($yourMerchantAccountApiKey, $isProduction);
+
+$options = [
+    'page' => 1,
+    'limit' => 50,
+];
+
+$terminalListing = $multiSafepaySdk->getTerminalManager()->getTerminals($options);
+$terminals = $terminalListing->getTerminals();
+
+$pager = $terminalListing->getPager(); // If pagination is needed, this Pager object can be used
+```
+
+### List terminals by group
+Filter POS devices bound to a MultiSafepay account using a `terminal_group_id`.
+
+Authentication for this endpoint requires a **Merchant Account API Key**. Note: according to the public API documentation, this endpoint is not available in the TEST environment.
+More information at our [Documentation Center](https://docs.multisafepay.com/reference/listterminalsbygroup).
+```php
+$yourMerchantAccountApiKey = 'your-merchant-account-api-key';
+$isProduction = true;
+$multiSafepaySdk = new \MultiSafepay\Sdk($yourMerchantAccountApiKey, $isProduction);
+
+$terminalGroupId = 'your-terminal-group-id';
+$options = [
+    'page' => 1,
+    'limit' => 50,
+];
+
+$terminalListing = $multiSafepaySdk->getTerminalManager()->getTerminalsByGroup($terminalGroupId, $options);
+$terminals = $terminalListing->getTerminals();
+
+$pager = $terminalListing->getPager(); // If pagination is needed, this Pager object can be used
+```
+
 ### Pushing a payment request to a Smart POS device
 ```php
 use MultiSafepay\ValueObject\Customer\Country;

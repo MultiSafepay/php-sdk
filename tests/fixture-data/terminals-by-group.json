@@ -1,0 +1,35 @@
+{
+  "success": true,
+  "data": [
+    {
+      "id": "000013Z1312312",
+      "provider": "SMARTPOS",
+      "name": "Terminal 000013Z1312312",
+      "created": "2025-12-15T09:18:50",
+      "last_updated": "2026-01-22T16:35:46",
+      "manufacturer_id": "SUNMI",
+      "serial_number": "P211226V231232320181",
+      "active": true,
+      "group_id": 10722265,
+      "country": "NL"
+    },
+    {
+      "id": "000013YX1375675FDFW",
+      "provider": "SMARTPOS",
+      "name": "Terminal 000013YX1375675FDFW",
+      "code": "8bc6d17f-e6c0-474c-b8b9-bed8d9c002ae",
+      "created": "2025-12-15T09:18:13",
+      "last_updated": "2025-12-15T09:20:08",
+      "manufacturer_id": null,
+      "serial_number": null,
+      "active": false,
+      "group_id": 10722265,
+      "country": null
+    }
+  ],
+  "pager": {
+    "limit": 50,
+    "page": 1,
+    "total_items": 2
+  }
+}

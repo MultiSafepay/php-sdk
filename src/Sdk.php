@@ -12,6 +12,7 @@ use MultiSafepay\Api\CategoryManager;
 use MultiSafepay\Api\GatewayManager;
 use MultiSafepay\Api\IssuerManager;
 use MultiSafepay\Api\PaymentMethodManager;
+use MultiSafepay\Api\TerminalManager;
 use MultiSafepay\Api\TokenManager;
 use MultiSafepay\Api\TransactionManager;
 use MultiSafepay\Api\WalletManager;
@@ -141,6 +142,14 @@ class Sdk
     public function getCategoryManager(): CategoryManager
     {
         return new CategoryManager($this->client);
+    }
+
+    /**
+     * @return TerminalManager
+     */
+    public function getTerminalManager(): TerminalManager
+    {
+        return new TerminalManager($this->client);
     }
 
     /**
