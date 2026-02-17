@@ -17,6 +17,7 @@ use MultiSafepay\Api\Transactions\TransactionResponse as Transaction;
 use MultiSafepay\Api\Transactions\UpdateRequest;
 use MultiSafepay\Exception\ApiException;
 use MultiSafepay\Exception\InvalidArgumentException;
+use MultiSafepay\Util\Encode;
 use Psr\Http\Client\ClientExceptionInterface;
 
 /**
@@ -63,8 +64,9 @@ class TransactionManager extends AbstractManager
      */
     public function get(string $orderId): Transaction
     {
-        $endpoint = 'json/orders/' . $orderId;
-        $context = ['order_id' => $orderId];
+        $encodedOrderId = Encode::encode($orderId);
+        $endpoint = 'json/orders/' . $encodedOrderId;
+        $context = ['order_id' => $encodedOrderId];
         $response = $this->client->createGetRequest($endpoint, [], $context);
 
         return new Transaction($response->getResponseData());
@@ -91,8 +93,10 @@ class TransactionManager extends AbstractManager
      */
     public function update(string $orderId, UpdateRequest $updateRequest): Response
     {
+        $encodedOrderId = Encode::encode($orderId);
+
         return $this->client->createPatchRequest(
-            'json/orders/' . $orderId,
+            'json/orders/' . $encodedOrderId,
             $updateRequest,
             ['request_body' => $updateRequest->getData()]
         );
@@ -106,8 +110,10 @@ class TransactionManager extends AbstractManager
      */
     public function capture(string $orderId, CaptureRequest $captureRequest): Response
     {
+        $encodedOrderId = Encode::encode($orderId);
+
         return $this->client->createPostRequest(
-            'json/orders/' . $orderId . '/capture',
+            'json/orders/' . $encodedOrderId . '/capture',
             $captureRequest,
             ['request_body' => $captureRequest->getData()]
         );
@@ -121,8 +127,10 @@ class TransactionManager extends AbstractManager
      */
     public function captureReservationCancel(string $orderId, CaptureRequest $captureRequest): Response
     {
+        $encodedOrderId = Encode::encode($orderId);
+
         return $this->client->createPatchRequest(
-            'json/capture/' . $orderId,
+            'json/capture/' . $encodedOrderId,
             $captureRequest,
             ['request_body' => $captureRequest->getData()]
         );
@@ -138,8 +146,11 @@ class TransactionManager extends AbstractManager
      */
     public function refund(Transaction $transaction, RefundRequest $requestRefund, ?string $orderId = null): Response
     {
+        $originalOrderId = $orderId ?? $transaction->getOrderId();
+        $encodedOrderId   = Encode::encode($originalOrderId);
+
         return $this->client->createPostRequest(
-            'json/orders/' . ($orderId ?: $transaction->getOrderId()) . '/refunds',
+            'json/orders/' . $encodedOrderId . '/refunds',
             $requestRefund,
             ['transaction' => $transaction->getData()]
         );
