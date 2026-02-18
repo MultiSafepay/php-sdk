@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [5.20.0] - 2026-02-18
+### Added
+- PLGWOOS-1025: PHP SDK support for terminal endpoints
+- PLGMAG2V2-886: Encode parameters
+ 
 ## [5.19.0] - 2026-01-15
 ### Added
 - PLGMAG2V2-881: Add a method to easily retrieve the payment_options from the OrderRequest
