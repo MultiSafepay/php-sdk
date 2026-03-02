@@ -40,6 +40,7 @@ class PaymentMethod
     public const PAYMENT_COMPONENT_KEY = 'payment_components';
     public const PAYMENT_COMPONENT_HAS_FIELDS_KEY = 'has_fields';
     public const PAYMENT_COMPONENT_QR_KEY = 'qr';
+    public const MANUAL_CAPTURE_KEY = 'manual_capture';
     public const FAST_CHECKOUT_KEY = 'fastcheckout';
     public const RECURRING_MODEL_CARD_ON_FILE_KEY = 'cardonfile';
     public const RECURRING_MODEL_SUBSCRIPTION_KEY = 'subscription';
@@ -115,6 +116,11 @@ class PaymentMethod
     private $requiredCustomerData;
 
     /**
+     * @var array
+     */
+    private $manualCapture;
+
+    /**
      * Transaction constructor.
      * @param array $data
      * @throws InvalidDataInitializationException
@@ -135,6 +141,7 @@ class PaymentMethod
         $this->allowedCountries = $data[self::ALLOWED_COUNTRIES_KEY] ?? null;
         $this->iconUrls = $data[self::ICON_URLS_KEY] ?? '';
         $this->requiredCustomerData = $data[self::REQUIRED_CUSTOMER_DATA_KEY] ?? null;
+        $this->manualCapture = $data[self::MANUAL_CAPTURE_KEY] ?? [];
     }
 
     /**
@@ -296,6 +303,16 @@ class PaymentMethod
     /**
      * @return bool
      */
+    public function supportsManualCapture(): bool
+    {
+        return isset($this->manualCapture[self::IS_ENABLED_KEY], $this->manualCapture[self::SUPPORTED_KEY]) &&
+            $this->manualCapture[self::IS_ENABLED_KEY] &&
+            $this->manualCapture[self::SUPPORTED_KEY];
+    }
+
+    /**
+     * @return bool
+     */
     public function supportsFastCheckout(): bool
     {
         return isset($this->apps[self::FAST_CHECKOUT_KEY]) &&
@@ -384,6 +401,10 @@ class PaymentMethod
                     self::RECURRING_MODEL_UNSCHEDULED_KEY => $this->tokenization[self::TOKENIZATION_MODELS_KEY][self::RECURRING_MODEL_UNSCHEDULED_KEY] ?? false,
                 ],
             ],
+            self::MANUAL_CAPTURE_KEY => [
+                self::IS_ENABLED_KEY => $this->manualCapture[self::IS_ENABLED_KEY] ?? false,
+                self::SUPPORTED_KEY => $this->manualCapture[self::SUPPORTED_KEY] ?? false,
+            ],
             self::SHOPPING_CART_REQUIRED_KEY => $this->shoppingCartRequired,
             self::PREFERRED_COUNTRIES_KEY => $this->preferredCountries,
             self::ICON_URLS_KEY => [
@@ -462,6 +483,22 @@ class PaymentMethod
 
         if (!isset($paymentComponents[self::PAYMENT_COMPONENT_QR_KEY])) {
             throw new InvalidDataInitializationException('No Payment Component has "qr" field ' . $data[self::ID_KEY]);
+        }
+
+        if (isset($data[self::MANUAL_CAPTURE_KEY])) {
+            $manualCapture = $data[self::MANUAL_CAPTURE_KEY];
+
+            if (!is_array($manualCapture)) {
+                throw new InvalidDataInitializationException('Manual capture is not an array ' . $data[self::ID_KEY]);
+            }
+
+            if (!isset($manualCapture[self::IS_ENABLED_KEY])) {
+                throw new InvalidDataInitializationException('No Manual Capture has "is_enabled" field ' . $data[self::ID_KEY]);
+            }
+
+            if (!isset($manualCapture[self::SUPPORTED_KEY])) {
+                throw new InvalidDataInitializationException('No Manual Capture has "supported" field ' . $data[self::ID_KEY]);
+            }
         }
 
         if (!isset($data[self::ICON_URLS_KEY]) || !is_array($data[self::ICON_URLS_KEY])) {
