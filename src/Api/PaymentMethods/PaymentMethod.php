@@ -29,6 +29,7 @@ class PaymentMethod
     public const TOKENIZATION_KEY = 'tokenization';
     public const TOKENIZATION_MODELS_KEY = 'models';
     public const IS_ENABLED_KEY = 'is_enabled';
+    public const IS_WALLET_KEY = 'is_wallet';
     public const SHOPPING_CART_REQUIRED_KEY = 'shopping_cart_required';
     public const PREFERRED_COUNTRIES_KEY = 'preferred_countries';
     public const ALLOWED_COUNTRIES_KEY = 'allowed_countries';
@@ -121,6 +122,11 @@ class PaymentMethod
     private $manualCapture;
 
     /**
+     * @var bool
+     */
+    private $isWallet;
+
+    /**
      * Transaction constructor.
      * @param array $data
      * @throws InvalidDataInitializationException
@@ -142,6 +148,7 @@ class PaymentMethod
         $this->iconUrls = $data[self::ICON_URLS_KEY] ?? '';
         $this->requiredCustomerData = $data[self::REQUIRED_CUSTOMER_DATA_KEY] ?? null;
         $this->manualCapture = $data[self::MANUAL_CAPTURE_KEY] ?? [];
+        $this->isWallet = (bool)($data[self::IS_WALLET_KEY] ?? false);
     }
 
     /**
@@ -375,6 +382,14 @@ class PaymentMethod
     }
 
     /**
+     * @return bool
+     */
+    public function isWallet(): bool
+    {
+        return $this->isWallet;
+    }
+
+    /**
      * Return an array with the payment method object information
      *
      * @return array
@@ -393,6 +408,7 @@ class PaymentMethod
             self::ALLOWED_CURRENCIES_KEY => $this->allowedCurrencies,
             self::ALLOWED_COUNTRIES_KEY => $this->allowedCountries,
             self::APPS_KEY => $this->apps,
+            self::IS_WALLET_KEY => $this->isWallet,
             self::TOKENIZATION_KEY => [
                 self::IS_ENABLED_KEY => $this->tokenization[self::IS_ENABLED_KEY] ?? false,
                 self::TOKENIZATION_MODELS_KEY => [

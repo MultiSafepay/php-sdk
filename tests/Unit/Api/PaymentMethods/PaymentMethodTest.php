@@ -1,11 +1,13 @@
 <?php declare(strict_types=1);
 namespace MultiSafepay\Tests\Unit\Api\PaymentMethods;
 
+use Exception;
 use MultiSafepay\Api\PaymentMethodManager;
 use MultiSafepay\Api\PaymentMethods\PaymentMethod;
 use MultiSafepay\Exception\InvalidDataInitializationException;
 use MultiSafepay\Tests\Integration\MockClient;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Client\ClientExceptionInterface;
 
 /**
  * Class PaymentMethodTest
@@ -23,9 +25,11 @@ class PaymentMethodTest extends TestCase
      */
     private $wrongData;
 
-
     /**
      * Test normal initialization
+     *
+     * @throws Exception
+     * @throws ClientExceptionInterface
      */
     public function testNormalInitialization()
     {
@@ -50,6 +54,9 @@ class PaymentMethodTest extends TestCase
 
     /**
      * Test wrong initialization
+     *
+     * @throws Exception
+     * @throws ClientExceptionInterface
      */
     public function testIncompleteData()
     {
@@ -151,6 +158,65 @@ class PaymentMethodTest extends TestCase
         $this->assertTrue($result[PaymentMethod::MANUAL_CAPTURE_KEY][PaymentMethod::IS_ENABLED_KEY]);
         $this->assertTrue($result[PaymentMethod::MANUAL_CAPTURE_KEY][PaymentMethod::SUPPORTED_KEY]);
     }
+    
+    /**
+     * Test if the wallet payment method is detected from the payload
+     *
+     * @throws InvalidDataInitializationException
+     */
+    public function testIsWalletReturnsTrueWhenPayloadMarksWallet()
+    {
+        $data = $this->getValidData();
+        $data[PaymentMethod::IS_WALLET_KEY] = true;
+        
+        $paymentMethod = new PaymentMethod($data);
+        
+        $this->assertTrue($paymentMethod->isWallet());
+    }
+    
+    /**
+     * Test if a non-wallet payment method is detected from the payload
+     *
+     * @throws InvalidDataInitializationException
+     */
+    public function testIsWalletReturnsFalseWhenPayloadDoesNotMarkWallet()
+    {
+        $paymentMethod = new PaymentMethod($this->getValidData());
+        
+        $this->assertFalse($paymentMethod->isWallet());
+    }
+    
+    /**
+     * Test if wallet defaults to false when payload omits is_wallet
+     *
+     * @throws InvalidDataInitializationException
+     */
+    public function testIsWalletReturnsFalseWhenIsWalletKeyIsMissing()
+    {
+        $data = $this->getValidData();
+        unset($data[PaymentMethod::IS_WALLET_KEY]);
+        
+        $paymentMethod = new PaymentMethod($data);
+        
+        $this->assertFalse($paymentMethod->isWallet());
+    }
+    
+    /**
+     * Test if getData includes wallet flag
+     *
+     * @throws InvalidDataInitializationException
+     */
+    public function testGetDataIncludesIsWallet()
+    {
+        $data = $this->getValidData();
+        $data[PaymentMethod::IS_WALLET_KEY] = true;
+        
+        $paymentMethod = new PaymentMethod($data);
+        $result = $paymentMethod->getData();
+        
+        $this->assertArrayHasKey(PaymentMethod::IS_WALLET_KEY, $result);
+        $this->assertTrue($result[PaymentMethod::IS_WALLET_KEY]);
+    }
 
     /**
      * @return array
@@ -205,6 +271,7 @@ class PaymentMethodTest extends TestCase
                 PaymentMethod::ICON_URLS_VECTOR_KEY => 'https://example.com/visa.svg',
             ],
             PaymentMethod::ALLOWED_CURRENCIES_KEY => ['EUR'],
+            PaymentMethod::IS_WALLET_KEY => false,
         ];
     }
 
