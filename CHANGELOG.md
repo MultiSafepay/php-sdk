@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [5.21.0] - 2026-03-01
+### Added
+- PHPSDK-192 Create method to know if payment method is defined as a wallet
+- PHPSDK-191: Create method to know if 'Manual Capture' is supported
+
 ## [5.20.0] - 2026-02-18
 ### Added
 - PLGWOOS-1025: PHP SDK support for terminal endpoints
