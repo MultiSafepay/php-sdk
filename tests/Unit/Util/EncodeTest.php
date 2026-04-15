@@ -61,6 +61,95 @@ class EncodeTest extends TestCase
     }
 
     /**
+     * @return array[]
+     */
+    public static function findInvalidUtf8FieldsProvider(): array
+    {
+        return [
+            'all valid utf8 strings' => [
+                [
+                    'name' => 'José',
+                    'city' => 'München',
+                    'nested' => [
+                        'message' => 'こんにちは',
+                        'emoji' => '😊',
+                    ],
+                ],
+                '',
+                [],
+            ],
+            'top level invalid utf8' => [
+                [
+                    'valid' => 'Hello',
+                    'invalid' => "\xB1\x31",
+                ],
+                '',
+                ['invalid'],
+            ],
+            'nested invalid utf8' => [
+                [
+                    'user' => [
+                        'profile' => [
+                            'bio' => "\xB1\x31",
+                        ],
+                    ],
+                ],
+                '',
+                ['user.profile.bio'],
+            ],
+            'multiple invalid utf8 fields' => [
+                [
+                    'first' => "\xB1\x31",
+                    'nested' => [
+                        'second' => "\xC3\x28",
+                        'deep' => [
+                            'third' => "\xA0\xA1",
+                        ],
+                    ],
+                    'valid' => 'Normal text',
+                ],
+                '',
+                [
+                    'first',
+                    'nested.second',
+                    'nested.deep.third',
+                ],
+            ],
+            'ignores non string values' => [
+                [
+                    'int' => 123,
+                    'float' => 12.34,
+                    'bool' => true,
+                    'null' => null,
+                    'array' => [
+                        'items' => [1, 2, 3],
+                    ],
+                ],
+                '',
+                [],
+            ],
+            'uses provided prefix' => [
+                [
+                    'field' => "\xB1\x31",
+                    'nested' => [
+                        'child' => "\xC3\x28",
+                    ],
+                ],
+                'root',
+                [
+                    'root.field',
+                    'root.nested.child',
+                ],
+            ],
+            'empty input' => [
+                [],
+                '',
+                [],
+            ],
+        ];
+    }
+
+    /**
      * @dataProvider encodeDataProvider
      * @param string $input
      * @param string $expected
@@ -68,5 +157,21 @@ class EncodeTest extends TestCase
     public function testEncode(string $input, string $expected): void
     {
         $this->assertEquals($expected, Encode::encode($input));
+    }
+
+    /**
+     * Tests the findInvalidUtf8Fields method with various input scenarios
+     *
+     * @dataProvider findInvalidUtf8FieldsProvider
+     * @param array $data
+     * @param string $prefix
+     * @param array $expected
+     * @return void
+     */
+    public function testFindInvalidUtf8Fields(array $data, string $prefix, array $expected): void
+    {
+        $result = Encode::findInvalidUtf8Fields($data, $prefix);
+
+        $this->assertSame($expected, $result);
     }
 }

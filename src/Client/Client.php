@@ -13,6 +13,8 @@ use MultiSafepay\Api\Base\Response as ApiResponse;
 use MultiSafepay\Exception\ApiException;
 use MultiSafepay\Exception\ApiUnavailableException;
 use MultiSafepay\Exception\InvalidApiKeyException;
+use MultiSafepay\Exception\InvalidArgumentException;
+use MultiSafepay\Util\Encode;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
@@ -104,20 +106,18 @@ class Client
      * @param RequestBodyInterface|null $requestBody
      * @param array $context
      * @return ApiResponse
-     * @throws ClientExceptionInterface|ApiException|ApiUnavailableException
+     * @throws ClientExceptionInterface|ApiException|ApiUnavailableException|InvalidArgumentException
      */
     public function createPostRequest(
         string $endpoint,
         ?RequestBodyInterface $requestBody = null,
         array $context = []
     ): ApiResponse {
-        $request = $this->createRequest($endpoint, self::METHOD_POST)
-            ->withBody($this->createBody($this->getRequestBody($requestBody)))
-            ->withHeader('Content-Length', strlen($this->getRequestBody($requestBody)));
+        $request = $this->createRequest($endpoint, self::METHOD_POST);
+        [$request, $context] = $this->withOptionalJsonBody($request, $requestBody, $context);
         $httpResponse = $this->httpClient->sendRequest($request);
 
         $context['headers'] = $request->getHeaders();
-        $context['request_body'] = $this->getRequestBody($requestBody);
         $context['http_response_code'] = $httpResponse->getStatusCode() ?? 0;
 
         return ApiResponse::withJson($httpResponse->getBody()->getContents(), $context);
@@ -129,20 +129,18 @@ class Client
      * @param RequestBodyInterface|null $requestBody
      * @param array $context
      * @return ApiResponse
-     * @throws ClientExceptionInterface|ApiException|ApiUnavailableException
+     * @throws ClientExceptionInterface|ApiException|ApiUnavailableException|InvalidArgumentException
      */
     public function createPatchRequest(
         string $endpoint,
         ?RequestBodyInterface $requestBody = null,
         array $context = []
     ): ApiResponse {
-        $request = $this->createRequest($endpoint, self::METHOD_PATCH)
-            ->withBody($this->createBody($this->getRequestBody($requestBody)))
-            ->withHeader('Content-Length', strlen($this->getRequestBody($requestBody)));
+        $request = $this->createRequest($endpoint, self::METHOD_PATCH);
+        [$request, $context] = $this->withOptionalJsonBody($request, $requestBody, $context);
         $httpResponse = $this->httpClient->sendRequest($request);
 
         $context['headers'] = $request->getHeaders();
-        $context['request_body'] = $this->getRequestBody($requestBody);
         $context['http_response_code'] = $httpResponse->getStatusCode() ?? 0;
 
         return ApiResponse::withJson($httpResponse->getBody()->getContents(), $context);
@@ -262,18 +260,62 @@ class Client
 
         return $requestFactory->createRequest($method, $url)
             ->withHeader('api_key', $this->apiKey->get())
-            ->withHeader('accept-encoding', 'application/json')
+            ->withHeader('Accept', 'application/json')
             ->withHeader('Content-Type', 'application/json');
     }
 
     /**
+     * Convert the request body to JSON, with error handling for invalid UTF-8 data.
+     *
      * @param RequestBodyInterface $requestBody
      * @return string
+     * @throws InvalidArgumentException
      */
-    private function getRequestBody(RequestBodyInterface $requestBody): string
+    private function getRequestBodyAsJson(RequestBodyInterface $requestBody): string
     {
         $requestBody->useStrictMode($this->strictMode);
 
-        return json_encode($requestBody->getData(), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+        $data = $requestBody->getData();
+        $json = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+
+        if ($json === false || json_last_error() !== JSON_ERROR_NONE) {
+            $invalidData = Encode::findInvalidUtf8Fields($data);
+
+            throw new InvalidArgumentException(
+                'Failed to JSON-encode request body. JSON error: ' .
+                json_last_error_msg() . ': ' . json_encode($invalidData)
+            );
+        }
+
+        return $json;
+    }
+
+    /**
+     * Attach a JSON body to the request if $requestBody is provided.
+     *
+     * @param RequestInterface $request
+     * @param RequestBodyInterface|null $requestBody
+     * @param array $context
+     * @return array
+     * @throws InvalidArgumentException
+     */
+    private function withOptionalJsonBody(
+        RequestInterface $request,
+        ?RequestBodyInterface $requestBody,
+        array $context
+    ): array {
+        if ($requestBody === null) {
+            return [$request, $context];
+        }
+
+        $bodyJson = $this->getRequestBodyAsJson($requestBody);
+
+        $request = $request
+            ->withBody($this->createBody($bodyJson))
+            ->withHeader('Content-Length', (string) strlen($bodyJson));
+
+        $context['request_body'] = $bodyJson;
+
+        return [$request, $context];
     }
 }

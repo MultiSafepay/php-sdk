@@ -54,4 +54,25 @@ class Encode
 
         return $encoded;
     }
+
+    /**
+     * Recursively checks an array for string values that are not valid UTF-8.
+     *
+     * @param array $data The array to check.
+     * @param string $prefix The prefix for the field path (used in recursion).
+     * @return array An array of field paths that contain invalid UTF-8 strings.
+     */
+    public static function findInvalidUtf8Fields(array $data, string $prefix = ''): array
+    {
+        $invalid = [];
+        foreach ($data as $key => $value) {
+            $path = $prefix ? "{$prefix}.{$key}" : $key;
+            if (is_string($value) && !mb_check_encoding($value, 'UTF-8')) {
+                $invalid[] = $path;
+            } elseif (is_array($value)) {
+                $invalid = array_merge($invalid, self::findInvalidUtf8Fields($value, $path));
+            }
+        }
+        return $invalid;
+    }
 }
