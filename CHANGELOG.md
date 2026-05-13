@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [5.21.1] - 2026-05-13
+
+### Fixed
+- PHPSDK-194: Throw InvalidArgumentException on JSON encoding failure
+
 ## [5.21.0] - 2026-03-01
 
 ### Added
