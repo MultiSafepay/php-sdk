@@ -7,16 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [5.21.0] - 2026-03-01
+
 ### Added
 - PHPSDK-192 Create method to know if payment method is defined as a wallet
 - PHPSDK-191: Create method to know if 'Manual Capture' is supported
 
 ## [5.20.0] - 2026-02-18
+
 ### Added
 - PLGWOOS-1025: PHP SDK support for terminal endpoints
 - PLGMAG2V2-886: Encode parameters
  
 ## [5.19.0] - 2026-01-15
+
 ### Added
 - PLGMAG2V2-881: Add a method to easily retrieve the payment_options from the OrderRequest
 - PHPSDK-184: Add the PaymentData object to an OrderRequest, thanks to @firstred
@@ -28,14 +31,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - PHPSDK-69: Fix type error when trying to retrieve shopping cart from TransactionResponse that does not have it
 
 ## [5.18.0] - 2025-10-15
+
 ### Added
 - PHPSDK-178: Extend PaymentDetails object, including Card Payment related information
 
 ## [5.17.2] - 2025-09-17
+
 ### Added
 - PHPSDK-181: Add an auxiliary non-static method for verifyNotification()
 
 ## [5.17.1] - 2025-08-21
+
 ### Added
 - PLGMAG2V2-859: Add CODE_OF_CONDUCT.md
 - PHPSDK-176: Add badges to the README.md document
@@ -44,6 +50,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - PHPSDK-180: Use constant-time string comparison in Notification::verifyNotification, thanks to @CasEbb
 
 ## [5.17.0] - 2025-06-04
+
 ### Added
 - PHPSDK-172: Add BILLINK to SHOPPING_CART_REQUIRED_GATEWAYS constant
 
@@ -52,6 +59,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - PHPSDK-174: Fix UnitPrice sometimes having more than 10 decimals
 
 ## [5.16.0] - 2025-03-19
+
 ### Added
 - PHPSDK-166: Add support for affiliates & split payments to create order endpoint
 - PHPSDK-168: Add unit tests for covering IPV6 in IpAddress class
@@ -62,6 +70,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - PHPSDK-143: Trim merchant item id in order request
 
 ## [5.15.0] - 2025-01-27
+
 ### Added
 - PHPSDK-158: Add "Amount" and "UnitPrice" objects and deprecate the Money object
 - PHPSDK-160: Add missing request parameters to UpdateRequest, like excludeOrder, extendExpiration, reason, partialShipmentAmount, carrier, invoiceId, invoiceUrl, poNumber, shipDate, trackTraceCode, trackTraceUrl, newOrderId
@@ -77,24 +86,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - PHPSDK-164: Overwrite max amount for gift cards to be null, because these might accept partial payment
 
 ## [5.14.0] - 2024-07-08
+
 ### Added
 - PHPSDK-155: Throw ApiUnavailableException when API returns 501/503 HTTP codes
 - PHPSDK-156: Add getGatewayId in TransactionResponse class
 
 ## [5.13.0] - 2024-04-16
+
 ### Added
 - PHPSDK-151: Update Gateways::SHOPPING_CART_REQUIRED_GATEWAYS adding 'BNPL_INST', 'IN3B2B', 'SANTANDER', 'ZINIA', 'ZINIA_IN3', 'BNPL_OB', 'BNPL_MF' gateways codes
 
 ## [5.12.1] - 2024-03-11
+
 ### Fixed
 - PHPSDK-146: Fix ApiException not being hinted as a thrown exception, even though it is, by fixing the PHP DocBlocks @throws tags
 
 ## [5.12.0] - 2023-12-01
+
 ### Added
 - PHPSDK-139: Add support to set var1, var2 and var3, within the OrderRequest object
 - PHPSDK-140: Add support to set custom_info, within the OrderRequest object, thanks to @DaanDeSmedt
 
 ## [5.11.2] - 2023-10-13
+
 ### Fixed
 - PHPSDK-134: Fix errors when only reference is set, within the CustomerDetails object
 
@@ -102,10 +116,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - PHPSDK-136: Remove PluginDetails as mandatory from the Order Request
 
 ## [5.11.1] - 2023-07-31
+
 ### Added
 - PHPSDK-128: Add new methods to set the properties within the MerchantSessionRequest object
 
 ## [5.11.0] - 2023-07-10
+
 ### Added
 - DAVAMS-654: Add new method in TokenManager to return the tokens as array
 
@@ -113,6 +129,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - PLGMIRAKL-2: Change the visibility of the "client" class property, within the Sdk class, from private to protected
 
 ## [5.10.0] - 2023-05-18
+
 ### Added
 - PHPSDK-124: Add support to set the terminal ID within the OrderRequest, pushing a payment request to the Smart POS terminal
 
@@ -120,6 +137,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - PHPSDK-125: Improvement over the IPAddress class, adding in the PHP Docblock the exception it might throw up
 
 ## [5.9.0] - 2023-02-20
+
 ### Added
 - DAVAMS-568: Add deprecated notice for GoogleAnalytics class. Will be removed in version 7.0.0
 - DAVAMS-600: Add BNPL_INSTM as a gateway which requires the shopping cart within the orderRequest
@@ -131,6 +149,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [5.8.0] - 2022-12-05
+
 ### Added
 - PHPSDK-85: Add support for "payment-methods" endpoint
 - MAGWIRE-3: Add support for accessing the pluginDetails object from the OrderRequest to enable overwriting its data
@@ -141,6 +160,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - PHPSDK-113: Fix an issue where the locale argument was being overwritten in GET requests, even if it was already defined
 
 ## [5.7.0] - 2022-10-24
+
 ### Added
 - PHPSDK-99: Trim API-KEY in signature validation
 - PHPSDK-96: Add method to get GatewayInfo object from the OrderRequest object
@@ -150,6 +170,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - PHPSDK-107: Fix issuer listing when response from API is an empty array (Thanks to @barryvdh)
 
 ## [5.6.0] - 2022-07-12
+
 ### Added
 - PHPSDK-94: Support for listing transactions 
 - DAVAMS-491: Add GatewayInfo object for MyBank issuers
@@ -162,6 +183,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - PHPSDK-98: Fix the filter for allowed options in the GatewayManager
 
 ## [5.5.0] - 2022-05-11
+
 ### Added
 - PHPSDK-90: Add MAESTRO tokens within the results of the CREDITCARD tokens request
 
@@ -169,6 +191,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - PHPSDK-91: Add trim on API key when initializing the SDK
 
 ## [5.4.0] - 2021-11-30
+
 ### Added
 - Added the AccountManager class which can be used for retrieving MultiSafepay account data
 
@@ -176,32 +199,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated the API token endpoint url to use 'json' instead of 'connect', since 'connect' will be deprecated
 
 ## [5.3.1] - 2021-10-29
+
 ### Added
 - Added possibility to add settings along with payment options in the transaction request
 
-
 ## [5.3.0] - 2021-10-15
+
 ### Added
 - Added support for [Apple Pay direct payment method](https://docs.multisafepay.com/payment-methods/apple-pay/direct/)
 - Add class WalletManager which can be used for getting specific data needed for wallets payment methods
 
 ## [5.2.2] - 2021-09-30
+
 ### Fixed
 - Fixed a bug where some addresses that start with a number would return null.
 
 ## [5.2.1] - 2021-09-06
+
 ### Fixed
 - Fixed a bug where a refund could not be created if the orderId parameter wasn't provided.
 
 ## [5.2.0] - 2021-08-27
+
 ### Added
 - Added support for [API manual capture endpoints](https://docs.multisafepay.com/api/#manual-capture-orders)
 
 ## [5.1.1] - 2021-07-13
+
 ### Changed
 - Removal of phone number filtering in PhoneNumber value object.
 
 ## [5.1.0] - 2021-06-01
+
 ### Changed
 - Deprecation of duplicate method TransactionResponse->getPaymentLink().
 
@@ -214,12 +243,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix bug when requesting transaction details for an order registered without a ShoppingCart returning InvalidArgumentException with clear error message
 
 ## [5.0.1] - 2021-03-11
+
 ### Changed
 - getGateways will now include all merchant enabled gift cards by default
 - Prevent validation error on comma-separated IP addresses, now using first IP address
 - Remove type hint for CartItem quantity to allow for float values
 
 ## [5.0.0] - 2021-02-17
+
 ### Added
 - Add support for PHP 8.0
 
@@ -227,6 +258,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed support for PHP 7.1
 
 ## [4.1.0] - 2021-02-03
+
 ### Added
 - Add support for company_name in Customer object
 - Add support for tokenization
@@ -234,15 +266,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add new methods to simplify how to set properties in multiple objects
 
 ## [4.0.3] - 2020-12-17
+
 ### Fixed
 - Fixed overwriting tax rules in shopping cart when tax rates are too close in range
 - Fixed TypeError when quantity in Weight is not a float
 
 ## [4.0.2] - 2020-11-24
+
 ### Fixed
 - Fixed PHP rounding issues when casting amount to int
 
 ## [4.0.1] - 2020-10-26
+
 ### Fixed
 - Fix wrong namespace for QrEnabled class
 
@@ -250,6 +285,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Remove html tags from item name, item description in CartItem, and from order description in OrderRequest
 
 ## [4.0.0] - 2020-09-11
+
 ### Removed
 - Removed obsolete support for `country_name`
 - Removed dependency on `league/iso3166`
@@ -261,14 +297,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added dependency on `psr/http-factory-implementation` 
 
 ## [3.0.2] - 2020-09-03
+
 ### Fixed
 - Fix bug where issuers wouldn't be able to load because of wrong issuer code type (int instead of string)
 
 ## [3.0.1] - 2020-09-02
+
 ### Fixed
 - SDK_VERSION constant is now up to date
 
 ## [3.0.0] - 2020-08-19
+
 ### Fixed
 - Make sure QrCode `min_amount` and `max_amount` make sense
 - Fix call to undefined method negative when using refundByMerchantItemId 
@@ -277,6 +316,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed `phone2` and `addPhoneNumbers()` from `Customer` class
 
 ## [2.0.0] - 2020-07-07
+
 ### Removed
 - Changed `Money\Money` into custom ValueObject `MultiSafepay\ValueObject\Money`. Make sure to update all code.
 
@@ -286,5 +326,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Additional unit tests
 
 ## [1.0.0] - 2020-06-05
+
 ### Added
 - First public release with coverage of all previous functionality
