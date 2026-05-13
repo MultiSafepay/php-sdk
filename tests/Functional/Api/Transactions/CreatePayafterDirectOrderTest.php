@@ -96,7 +96,7 @@ class CreatePayafterDirectOrderTest extends AbstractTestCase
         return $this->createGenericOrderRequestFixture()
             ->addType('direct')
             ->addMoney(new Money(10000, 'EUR'))
-            ->addGatewayCode(GatewayFixture::PAYAFTER)
+            ->addGatewayCode(GatewayFixture::AFTERPAY)
             ->addGatewayInfo($this->createRandomMetaGatewayInfoFixture())
             ->addPaymentOptions($this->createPaymentOptionsFixture())
             ->addShoppingCart($this->createShoppingCartFixture());
@@ -111,7 +111,7 @@ class CreatePayafterDirectOrderTest extends AbstractTestCase
         return $this->createGenericOrderRequestFixture()
             ->addType('direct')
             ->addMoney(new Money(1887, 'EUR'))
-            ->addGatewayCode(GatewayFixture::PAYAFTER)
+            ->addGatewayCode(GatewayFixture::AFTERPAY)
             ->addGatewayInfo($this->createRandomMetaGatewayInfoFixture())
             ->addPaymentOptions($this->createPaymentOptionsFixture())
             ->addShoppingCart($this->createRandomShoppingCartWithTaxFixture());

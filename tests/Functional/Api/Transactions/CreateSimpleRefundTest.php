@@ -132,7 +132,7 @@ class CreateSimpleRefundTest extends AbstractTestCase
             ->addType('direct')
             ->addShoppingCart($this->createShoppingCartFixture())
             ->addMoney(new Money(10000, 'EUR'))
-            ->addGatewayCode(GatewayFixture::PAYAFTER)
+            ->addGatewayCode(GatewayFixture::AFTERPAY)
             ->addGatewayInfo($this->createRandomMetaGatewayInfoFixture())
             ->addPaymentOptions($this->createPaymentOptionsFixture());
     }
